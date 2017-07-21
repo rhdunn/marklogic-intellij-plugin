@@ -1,0 +1,47 @@
+buildscript {
+    repositories {
+        maven { url 'http://dl.bintray.com/jetbrains/intellij-plugin-service' }
+    }
+}
+
+plugins {
+    id "org.jetbrains.intellij" version "0.1.10"
+}
+
+apply plugin: 'org.jetbrains.intellij'
+
+allprojects {
+    apply plugin: 'idea'
+    apply plugin: 'java'
+    apply plugin: 'jacoco'
+
+    group 'uk.co.reecedunn.intellij.plugin.marklogic'
+    version '0.1-dev'
+
+    repositories {
+        mavenCentral()
+        mavenLocal()
+    }
+}
+
+dependencies {
+    testCompile 'org.junit.jupiter:junit-jupiter-api:5.0.0-M4'
+}
+
+intellij {
+    def ideaVersion = System.getenv("IDEA_VERSION")
+    version = ideaVersion ? ideaVersion : 'IC-2017.2' // IntelliJ IDEA dependency
+    println "Building for IntelliJ version: ${version}"
+
+    plugins 'coverage'  // Bundled plugin dependencies
+    pluginName 'marklogic-intellij-plugin'
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+}
+
+check.dependsOn jacocoTestReport
