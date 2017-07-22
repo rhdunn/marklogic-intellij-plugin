@@ -40,6 +40,7 @@ public class MarkLogicRunConfiguration extends RunConfigurationBase {
         public int serverPort = 8000;
         public String userName = "";
         public String password = "";
+        public String contentDatabase = null;
     }
 
     private ConfigData data = new ConfigData();
@@ -109,5 +110,13 @@ public class MarkLogicRunConfiguration extends RunConfigurationBase {
 
     public void setPassword(String password) {
         this.data.password = password;
+    }
+
+    public String getContentDatabase() {
+        return data.contentDatabase;
+    }
+
+    public void setContentDatabase(String contentDatabase) {
+        data.contentDatabase = contentDatabase;
     }
 }

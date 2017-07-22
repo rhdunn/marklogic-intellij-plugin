@@ -18,8 +18,11 @@ package uk.co.reecedunn.intellij.plugin.marklogic.configuration;
 import com.intellij.openapi.project.Project;
 import org.jetbrains.annotations.NotNull;
 import uk.co.reecedunn.intellij.plugin.marklogic.runner.MarkLogicResultsHandler;
+import uk.co.reecedunn.intellij.plugin.marklogic.ui.DocumentChangedListener;
+import uk.co.reecedunn.intellij.plugin.marklogic.ui.MarkLogicQueryComboBox;
 
 import javax.swing.*;
+import javax.swing.event.DocumentListener;
 
 public class MarkLogicSettingsEditorUI {
     private final MarkLogicConfigurationFactory mFactory;
@@ -30,6 +33,7 @@ public class MarkLogicSettingsEditorUI {
     private JTextField mServerPort;
     private JTextField mUserName;
     private JPasswordField mPassword;
+    private JComboBox<String> mContentDatabase;
 
     public MarkLogicSettingsEditorUI(@NotNull MarkLogicConfigurationFactory factory, @NotNull Project project) {
         mFactory = factory;
@@ -42,6 +46,19 @@ public class MarkLogicSettingsEditorUI {
         mServerPort = new JTextField();
         mUserName = new JTextField();
         mPassword = new JPasswordField();
+        mContentDatabase = new MarkLogicQueryComboBox("(none)");
+
+        DocumentListener listener = new DocumentChangedListener() {
+            @Override
+            public void changed() {
+                String query = "for $name in xdmp:databases() ! xdmp:database-name(.) order by $name return $name";
+                run(query, (MarkLogicQueryComboBox)mContentDatabase);
+            }
+        };
+        mServerHost.getDocument().addDocumentListener(listener);
+        mServerPort.getDocument().addDocumentListener(listener);
+        mUserName.getDocument().addDocumentListener(listener);
+        mPassword.getDocument().addDocumentListener(listener);
     }
 
     public void reset(@NotNull MarkLogicRunConfiguration configuration) {
@@ -49,6 +66,7 @@ public class MarkLogicSettingsEditorUI {
         mServerPort.setText(Integer.toString(configuration.getServerPort()));
         mUserName.setText(configuration.getUserName());
         mPassword.setText(configuration.getPassword());
+        ((MarkLogicQueryComboBox)mContentDatabase).setItem(configuration.getContentDatabase());
     }
 
     public void apply(@NotNull MarkLogicRunConfiguration configuration) {
@@ -56,6 +74,7 @@ public class MarkLogicSettingsEditorUI {
         configuration.setServerPort(toInteger(mServerPort.getText(), configuration.getServerPort()));
         configuration.setUserName(mUserName.getText());
         configuration.setPassword(String.valueOf(mPassword.getPassword()));
+        configuration.setContentDatabase(((MarkLogicQueryComboBox)mContentDatabase).getItem());
     }
 
     @NotNull
