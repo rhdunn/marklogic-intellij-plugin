@@ -16,6 +16,7 @@
 package uk.co.reecedunn.intellij.plugin.marklogic.configuration;
 
 import com.intellij.openapi.fileChooser.FileChooserDescriptor;
+import com.intellij.openapi.fileChooser.FileTypeDescriptor;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.ComponentWithBrowseButton;
 import com.intellij.openapi.ui.TextComponentAccessor;
@@ -40,6 +41,7 @@ public class MarkLogicSettingsEditorUI {
     private JComboBox<String> mContentDatabase;
     private JComboBox<String> mModuleDatabase;
     private ComponentWithBrowseButton<JTextField> mModuleRoot;
+    private ComponentWithBrowseButton<JTextField> mMainModulePath;
 
     public MarkLogicSettingsEditorUI(@NotNull MarkLogicConfigurationFactory factory, @NotNull Project project) {
         mFactory = factory;
@@ -55,6 +57,7 @@ public class MarkLogicSettingsEditorUI {
         mContentDatabase = new MarkLogicQueryComboBox(MarkLogicBundle.message("database.none"));
         mModuleDatabase = new MarkLogicQueryComboBox(MarkLogicBundle.message("database.file.system"));
         mModuleRoot = new ComponentWithBrowseButton<>(new JTextField(), null);
+        mMainModulePath = new ComponentWithBrowseButton<>(new JTextField(), null);
 
         DocumentListener listener = new DocumentChangedListener() {
             @Override
@@ -75,6 +78,13 @@ public class MarkLogicSettingsEditorUI {
             null,
             new FileChooserDescriptor(false, true, false, false, false, false),
             TextComponentAccessor.TEXT_FIELD_WHOLE_TEXT);
+
+        mMainModulePath.addBrowseFolderListener(
+            MarkLogicBundle.message("browser.choose.main.module"),
+            null,
+            mProject,
+            new FileTypeDescriptor(MarkLogicBundle.message("browser.choose.main.module"), MarkLogicRunConfiguration.EXTENSIONS),
+            TextComponentAccessor.TEXT_FIELD_WHOLE_TEXT);
     }
 
     public void reset(@NotNull MarkLogicRunConfiguration configuration) {
@@ -85,6 +95,7 @@ public class MarkLogicSettingsEditorUI {
         ((MarkLogicQueryComboBox)mContentDatabase).setItem(configuration.getContentDatabase());
         ((MarkLogicQueryComboBox)mModuleDatabase).setItem(configuration.getModuleDatabase());
         mModuleRoot.getChildComponent().setText(configuration.getModuleRoot());
+        mMainModulePath.getChildComponent().setText(configuration.getMainModulePath());
     }
 
     public void apply(@NotNull MarkLogicRunConfiguration configuration) {
@@ -95,6 +106,7 @@ public class MarkLogicSettingsEditorUI {
         configuration.setContentDatabase(((MarkLogicQueryComboBox)mContentDatabase).getItem());
         configuration.setModuleDatabase(((MarkLogicQueryComboBox)mModuleDatabase).getItem());
         configuration.setModuleRoot(mModuleRoot.getChildComponent().getText());
+        configuration.setMainModulePath(mMainModulePath.getChildComponent().getText());
     }
 
     @NotNull

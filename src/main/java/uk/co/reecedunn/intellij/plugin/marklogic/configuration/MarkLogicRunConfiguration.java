@@ -34,6 +34,10 @@ import uk.co.reecedunn.intellij.plugin.marklogic.runner.MarkLogicResultsHandler;
 import uk.co.reecedunn.intellij.plugin.marklogic.runner.MarkLogicRunProfileState;
 
 public class MarkLogicRunConfiguration extends RunConfigurationBase {
+    public static final String[] EXTENSIONS = new String[]{
+            "xq", "xqy", "xquery", "xql", "xqu",
+    };
+
     @SuppressWarnings("WeakerAccess") // DefaultJDOMExternalizer requires public access to the fields.
     static class ConfigData {
         public String serverHost = "localhost";
@@ -43,6 +47,7 @@ public class MarkLogicRunConfiguration extends RunConfigurationBase {
         public String contentDatabase = null;
         public String moduleDatabase = null;
         public String moduleRoot = "/";
+        public String mainModulePath = "";
     }
 
     private ConfigData data = new ConfigData();
@@ -136,5 +141,13 @@ public class MarkLogicRunConfiguration extends RunConfigurationBase {
 
     public void setModuleRoot(String moduleRoot) {
         data.moduleRoot = moduleRoot;
+    }
+
+    public String getMainModulePath() {
+        return data.mainModulePath;
+    }
+
+    public void setMainModulePath(String mainModulePath) {
+        data.mainModulePath = mainModulePath;
     }
 }
