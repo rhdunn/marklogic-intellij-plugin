@@ -34,6 +34,7 @@ public class MarkLogicSettingsEditorUI {
     private JTextField mUserName;
     private JPasswordField mPassword;
     private JComboBox<String> mContentDatabase;
+    private JComboBox<String> mModuleDatabase;
 
     public MarkLogicSettingsEditorUI(@NotNull MarkLogicConfigurationFactory factory, @NotNull Project project) {
         mFactory = factory;
@@ -47,12 +48,14 @@ public class MarkLogicSettingsEditorUI {
         mUserName = new JTextField();
         mPassword = new JPasswordField();
         mContentDatabase = new MarkLogicQueryComboBox("(none)");
+        mModuleDatabase = new MarkLogicQueryComboBox("(file system)");
 
         DocumentListener listener = new DocumentChangedListener() {
             @Override
             public void changed() {
                 String query = "for $name in xdmp:databases() ! xdmp:database-name(.) order by $name return $name";
                 run(query, (MarkLogicQueryComboBox)mContentDatabase);
+                run(query, (MarkLogicQueryComboBox)mModuleDatabase);
             }
         };
         mServerHost.getDocument().addDocumentListener(listener);
@@ -67,6 +70,7 @@ public class MarkLogicSettingsEditorUI {
         mUserName.setText(configuration.getUserName());
         mPassword.setText(configuration.getPassword());
         ((MarkLogicQueryComboBox)mContentDatabase).setItem(configuration.getContentDatabase());
+        ((MarkLogicQueryComboBox)mModuleDatabase).setItem(configuration.getModuleDatabase());
     }
 
     public void apply(@NotNull MarkLogicRunConfiguration configuration) {
@@ -75,6 +79,7 @@ public class MarkLogicSettingsEditorUI {
         configuration.setUserName(mUserName.getText());
         configuration.setPassword(String.valueOf(mPassword.getPassword()));
         configuration.setContentDatabase(((MarkLogicQueryComboBox)mContentDatabase).getItem());
+        configuration.setModuleDatabase(((MarkLogicQueryComboBox)mModuleDatabase).getItem());
     }
 
     @NotNull
