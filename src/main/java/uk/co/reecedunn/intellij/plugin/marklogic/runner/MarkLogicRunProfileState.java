@@ -34,13 +34,13 @@ public class MarkLogicRunProfileState extends CommandLineState {
         MarkLogicRunConfiguration configuration = (MarkLogicRunConfiguration)getEnvironment().getRunProfile();
         Session session = createSession(configuration);
         Request request = session.newAdhocQuery(configuration.getAdhocQuery());
-        return new MarkLogicRequestHandler(session, request);
+        return new MarkLogicRequestHandler(session, request, configuration.getMainModulePath());
     }
 
     public boolean run(String query, MarkLogicResultsHandler handler, MarkLogicRunConfiguration configuration) {
         Session session = createSession(configuration);
         Request request = session.newAdhocQuery(query);
-        MarkLogicRequestHandler requestHandler = new MarkLogicRequestHandler(session, request);
+        MarkLogicRequestHandler requestHandler = new MarkLogicRequestHandler(session, request, "/eval");
         return requestHandler.run(handler);
     }
 

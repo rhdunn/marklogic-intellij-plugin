@@ -18,9 +18,8 @@ package uk.co.reecedunn.intellij.plugin.marklogic.runner;
 import com.intellij.execution.process.ProcessHandler;
 import com.marklogic.xcc.*;
 import com.marklogic.xcc.exceptions.QueryException;
-import com.marklogic.xcc.exceptions.XccException;
+import com.marklogic.xcc.exceptions.QueryStackFrame;
 import com.marklogic.xcc.types.ItemType;
-import com.sun.org.apache.regexp.internal.RE;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -29,10 +28,12 @@ import java.io.OutputStream;
 public class MarkLogicRequestHandler extends ProcessHandler implements MarkLogicResultsHandler {
     private final Session session;
     private final Request request;
+    private final String mainModulePath;
 
-    public MarkLogicRequestHandler(@NotNull Session session, @NotNull Request request) {
+    public MarkLogicRequestHandler(@NotNull Session session, @NotNull Request request, @NotNull String mainModulePath) {
         this.session = session;
         this.request = request;
+        this.mainModulePath = mainModulePath;
     }
 
     @Override
@@ -83,8 +84,12 @@ public class MarkLogicRequestHandler extends ProcessHandler implements MarkLogic
 
     @Override
     public void onException(Exception e) {
-        notifyTextAvailable(e.toString(), null);
-        notifyTextAvailable("\n", null);
+        if (e instanceof QueryException) {
+            formatError((QueryException)e);
+        } else {
+            notifyTextAvailable(e.toString(), null);
+            notifyTextAvailable("\n", null);
+        }
     }
 
     @Override
@@ -99,5 +104,40 @@ public class MarkLogicRequestHandler extends ProcessHandler implements MarkLogic
 
     @Override
     public void onCompleted() {
+    }
+
+    private void formatError(QueryException e) {
+        String error = e.getFormatString() + "\n";
+        notifyTextAvailable(error, null);
+
+        QueryStackFrame eval = null;
+        for (QueryStackFrame s : e.getStack()) {
+            final String path = s.getUri();
+            if (eval != null) {
+                if (path.equals("/eval")) {
+                    formatStackFrame(eval, mainModulePath);
+                } else {
+                    formatStackFrame(eval, "xdmp:eval");
+                }
+                eval = null;
+            }
+
+            if (path == null) {
+                eval = s;
+            } else if (!path.equals("/eval")) {
+                formatStackFrame(s, path);
+            }
+        }
+    }
+
+    private void formatStackFrame(QueryStackFrame s, String path) {
+        String context = s.getContextItem();
+        String line;
+        if (context == null) {
+            line = "\tat " + path + ":" + s.getLineNumber() + "\n";
+        } else {
+            line = "\tat " + context + "(" + path + ":" + s.getLineNumber() + ")\n";
+        }
+        notifyTextAvailable(line, null);
     }
 }
