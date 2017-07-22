@@ -17,15 +17,20 @@ package uk.co.reecedunn.intellij.plugin.marklogic.runner;
 
 import com.intellij.execution.ExecutionException;
 import com.intellij.execution.configurations.CommandLineState;
+import com.intellij.execution.filters.RegexpFilter;
 import com.intellij.execution.process.ProcessHandler;
 import com.intellij.execution.runners.ExecutionEnvironment;
 import com.marklogic.xcc.*;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import uk.co.reecedunn.intellij.plugin.marklogic.configuration.MarkLogicRunConfiguration;
 
 public class MarkLogicRunProfileState extends CommandLineState {
-    public MarkLogicRunProfileState(ExecutionEnvironment environment) {
+    public MarkLogicRunProfileState(@Nullable ExecutionEnvironment environment) {
         super(environment);
+        if (environment != null) {
+            addConsoleFilters(new RegexpFilter(environment.getProject(), "$FILE_PATH$:$LINE$"));
+        }
     }
 
     @NotNull
