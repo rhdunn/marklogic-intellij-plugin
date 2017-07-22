@@ -33,17 +33,13 @@ public class MarkLogicRunProfileState extends CommandLineState {
     protected ProcessHandler startProcess() throws ExecutionException {
         MarkLogicRunConfiguration configuration = (MarkLogicRunConfiguration)getEnvironment().getRunProfile();
         Session session = createSession(configuration);
-        RequestOptions options = new RequestOptions();
-        options.setQueryLanguage("xquery");
-        Request request = session.newAdhocQuery("\"done\"", options);
+        Request request = session.newAdhocQuery("\"done\"");
         return new MarkLogicRequestHandler(session, request);
     }
 
     public boolean run(String query, MarkLogicResultsHandler handler, MarkLogicRunConfiguration configuration) {
         Session session = createSession(configuration);
-        RequestOptions options = new RequestOptions();
-        options.setQueryLanguage("xquery");
-        Request request = session.newAdhocQuery(query, options);
+        Request request = session.newAdhocQuery(query);
         MarkLogicRequestHandler requestHandler = new MarkLogicRequestHandler(session, request);
         return requestHandler.run(handler);
     }
