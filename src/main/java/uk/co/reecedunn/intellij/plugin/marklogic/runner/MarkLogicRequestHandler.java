@@ -77,6 +77,7 @@ public class MarkLogicRequestHandler extends ProcessHandler implements MarkLogic
         }
 
         results.close();
+        handler.onCompleted();
         return true;
     }
 
@@ -94,5 +95,9 @@ public class MarkLogicRequestHandler extends ProcessHandler implements MarkLogic
     public void onResult(String value, ItemType type) {
         notifyTextAvailable(value, null);
         notifyTextAvailable("\n", null);
+    }
+
+    @Override
+    public void onCompleted() {
     }
 }

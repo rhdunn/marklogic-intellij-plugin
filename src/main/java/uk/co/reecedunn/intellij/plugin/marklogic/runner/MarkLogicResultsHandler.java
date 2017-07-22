@@ -23,4 +23,6 @@ public interface MarkLogicResultsHandler {
     void onStart();
 
     void onResult(String value, ItemType type);
+
+    void onCompleted();
 }
