@@ -22,10 +22,11 @@
     </ol>
   ]]></change-notes>
 
-  <idea-version since-build="161"/>
+  <idea-version since-build="171"/>
 
   <depends>com.intellij.modules.lang</depends>
 
   <extensions defaultExtensionNs="com.intellij">
+    <configurationType implementation="uk.co.reecedunn.intellij.plugin.marklogic.configuration.MarkLogicConfigurationType"/>
   </extensions>
 </idea-plugin>
