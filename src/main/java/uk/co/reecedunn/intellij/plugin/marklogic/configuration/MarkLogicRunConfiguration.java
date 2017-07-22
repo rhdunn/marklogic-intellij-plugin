@@ -33,11 +33,12 @@ import org.jetbrains.annotations.Nullable;
 import uk.co.reecedunn.intellij.plugin.marklogic.runner.MarkLogicRunProfileState;
 
 public class MarkLogicRunConfiguration extends RunConfigurationBase {
+    @SuppressWarnings("WeakerAccess") // DefaultJDOMExternalizer requires public access to the fields.
     static class ConfigData {
-        String serverHost = "localhost";
-        int serverPort = 8000;
-        String userName = "";
-        String password = "";
+        public String serverHost = "localhost";
+        public int serverPort = 8000;
+        public String userName = "";
+        public String password = "";
     }
 
     private ConfigData data = new ConfigData();
