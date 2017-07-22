@@ -32,8 +32,7 @@ public class MarkLogicRunProfileState extends CommandLineState {
     @Override
     protected ProcessHandler startProcess() throws ExecutionException {
         MarkLogicRunConfiguration configuration = (MarkLogicRunConfiguration)getEnvironment().getRunProfile();
-        ContentSource source = createContentSource(configuration);
-        Session session = source.newSession();
+        Session session = createSession(configuration);
         RequestOptions options = new RequestOptions();
         options.setQueryLanguage("xquery");
         Request request = session.newAdhocQuery("\"done\"", options);
@@ -41,8 +40,7 @@ public class MarkLogicRunProfileState extends CommandLineState {
     }
 
     public boolean run(String query, MarkLogicResultsHandler handler, MarkLogicRunConfiguration configuration) {
-        ContentSource source = createContentSource(configuration);
-        Session session = source.newSession();
+        Session session = createSession(configuration);
         RequestOptions options = new RequestOptions();
         options.setQueryLanguage("xquery");
         Request request = session.newAdhocQuery(query, options);
@@ -50,12 +48,12 @@ public class MarkLogicRunProfileState extends CommandLineState {
         return requestHandler.run(handler);
     }
 
-    private ContentSource createContentSource(MarkLogicRunConfiguration configuration) {
+    private Session createSession(MarkLogicRunConfiguration configuration) {
         return ContentSourceFactory.newContentSource(
             configuration.getServerHost(),
             configuration.getServerPort(),
             nullableValueOf(configuration.getUserName()),
-            nullableValueOf(configuration.getPassword()));
+            nullableValueOf(configuration.getPassword())).newSession();
     }
 
     private String nullableValueOf(String value) {
