@@ -30,10 +30,14 @@ import com.intellij.openapi.util.WriteExternalException;
 import org.jdom.Element;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import uk.co.reecedunn.intellij.plugin.marklogic.configuration.script.ScriptFactory;
+import uk.co.reecedunn.intellij.plugin.marklogic.configuration.script.XQueryScript;
 import uk.co.reecedunn.intellij.plugin.marklogic.runner.MarkLogicResultsHandler;
 import uk.co.reecedunn.intellij.plugin.marklogic.runner.MarkLogicRunProfileState;
 
 public class MarkLogicRunConfiguration extends RunConfigurationBase {
+    private static ScriptFactory XQUERY_SCRIPT = new XQueryScript();
+
     public static final String[] EXTENSIONS = new String[]{
             "xq", "xqy", "xquery", "xql", "xqu",
     };
@@ -149,5 +153,9 @@ public class MarkLogicRunConfiguration extends RunConfigurationBase {
 
     public void setMainModulePath(String mainModulePath) {
         data.mainModulePath = mainModulePath;
+    }
+
+    public String getAdhocQuery() {
+        return XQUERY_SCRIPT.createScript(this);
     }
 }

@@ -33,7 +33,7 @@ public class MarkLogicRunProfileState extends CommandLineState {
     protected ProcessHandler startProcess() throws ExecutionException {
         MarkLogicRunConfiguration configuration = (MarkLogicRunConfiguration)getEnvironment().getRunProfile();
         Session session = createSession(configuration);
-        Request request = session.newAdhocQuery("\"done\"");
+        Request request = session.newAdhocQuery(configuration.getAdhocQuery());
         return new MarkLogicRequestHandler(session, request);
     }
 
