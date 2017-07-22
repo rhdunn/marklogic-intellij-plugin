@@ -22,48 +22,22 @@ import org.jetbrains.annotations.NotNull;
 import javax.swing.*;
 
 public class MarkLogicSettingsEditor extends SettingsEditor<MarkLogicRunConfiguration> {
-    private JPanel mPanel;
-    private JTextField mServerHost;
-    private JTextField mServerPort;
-    private JTextField mUserName;
-    private JPasswordField mPassword;
-
-    private void createUIComponents() {
-        mPanel = new JPanel();
-        mServerHost = new JTextField();
-        mServerPort = new JTextField();
-        mUserName = new JTextField();
-        mPassword = new JPasswordField();
-    }
+    private MarkLogicSettingsEditorUI mSettings;
 
     @Override
     protected void resetEditorFrom(@NotNull MarkLogicRunConfiguration configuration) {
-        mServerHost.setText(configuration.getServerHost());
-        mServerPort.setText(Integer.toString(configuration.getServerPort()));
-        mUserName.setText(configuration.getUserName());
-        mPassword.setText(configuration.getPassword());
+        mSettings.reset(configuration);
     }
 
-    @SuppressWarnings("ImplicitArrayToString")
     @Override
     protected void applyEditorTo(@NotNull MarkLogicRunConfiguration configuration) throws ConfigurationException {
-        configuration.setServerHost(mServerHost.getText());
-        configuration.setServerPort(toInteger(mServerPort.getText(), configuration.getServerPort()));
-        configuration.setUserName(mUserName.getText());
-        configuration.setPassword(mPassword.getPassword().toString());
+        mSettings.apply(configuration);
     }
 
     @NotNull
     @Override
     protected JComponent createEditor() {
-        return mPanel;
-    }
-
-    private int toInteger(String value, int defaultValue) {
-        try {
-            return Integer.valueOf(value);
-        } catch (NumberFormatException e) {
-            return defaultValue;
-        }
+        mSettings = new MarkLogicSettingsEditorUI();
+        return mSettings.getPanel();
     }
 }
