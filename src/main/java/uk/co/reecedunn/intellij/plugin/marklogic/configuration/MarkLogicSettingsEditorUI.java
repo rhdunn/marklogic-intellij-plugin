@@ -15,7 +15,10 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.configuration;
 
+import com.intellij.openapi.fileChooser.FileChooserDescriptor;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.ui.ComponentWithBrowseButton;
+import com.intellij.openapi.ui.TextComponentAccessor;
 import org.jetbrains.annotations.NotNull;
 import uk.co.reecedunn.intellij.plugin.marklogic.resources.MarkLogicBundle;
 import uk.co.reecedunn.intellij.plugin.marklogic.runner.MarkLogicResultsHandler;
@@ -36,6 +39,7 @@ public class MarkLogicSettingsEditorUI {
     private JPasswordField mPassword;
     private JComboBox<String> mContentDatabase;
     private JComboBox<String> mModuleDatabase;
+    private ComponentWithBrowseButton<JTextField> mModuleRoot;
 
     public MarkLogicSettingsEditorUI(@NotNull MarkLogicConfigurationFactory factory, @NotNull Project project) {
         mFactory = factory;
@@ -50,6 +54,7 @@ public class MarkLogicSettingsEditorUI {
         mPassword = new JPasswordField();
         mContentDatabase = new MarkLogicQueryComboBox(MarkLogicBundle.message("database.none"));
         mModuleDatabase = new MarkLogicQueryComboBox(MarkLogicBundle.message("database.file.system"));
+        mModuleRoot = new ComponentWithBrowseButton<>(new JTextField(), null);
 
         DocumentListener listener = new DocumentChangedListener() {
             @Override
@@ -63,6 +68,13 @@ public class MarkLogicSettingsEditorUI {
         mServerPort.getDocument().addDocumentListener(listener);
         mUserName.getDocument().addDocumentListener(listener);
         mPassword.getDocument().addDocumentListener(listener);
+
+        mModuleRoot.addBrowseFolderListener(
+            MarkLogicBundle.message("browser.choose.module.root"),
+            null,
+            null,
+            new FileChooserDescriptor(false, true, false, false, false, false),
+            TextComponentAccessor.TEXT_FIELD_WHOLE_TEXT);
     }
 
     public void reset(@NotNull MarkLogicRunConfiguration configuration) {
@@ -72,6 +84,7 @@ public class MarkLogicSettingsEditorUI {
         mPassword.setText(configuration.getPassword());
         ((MarkLogicQueryComboBox)mContentDatabase).setItem(configuration.getContentDatabase());
         ((MarkLogicQueryComboBox)mModuleDatabase).setItem(configuration.getModuleDatabase());
+        mModuleRoot.getChildComponent().setText(configuration.getModuleRoot());
     }
 
     public void apply(@NotNull MarkLogicRunConfiguration configuration) {
@@ -81,6 +94,7 @@ public class MarkLogicSettingsEditorUI {
         configuration.setPassword(String.valueOf(mPassword.getPassword()));
         configuration.setContentDatabase(((MarkLogicQueryComboBox)mContentDatabase).getItem());
         configuration.setModuleDatabase(((MarkLogicQueryComboBox)mModuleDatabase).getItem());
+        configuration.setModuleRoot(mModuleRoot.getChildComponent().getText());
     }
 
     @NotNull

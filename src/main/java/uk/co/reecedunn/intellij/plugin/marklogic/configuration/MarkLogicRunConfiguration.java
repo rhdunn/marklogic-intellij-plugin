@@ -42,6 +42,7 @@ public class MarkLogicRunConfiguration extends RunConfigurationBase {
         public String password = "";
         public String contentDatabase = null;
         public String moduleDatabase = null;
+        public String moduleRoot = "/";
     }
 
     private ConfigData data = new ConfigData();
@@ -127,5 +128,13 @@ public class MarkLogicRunConfiguration extends RunConfigurationBase {
 
     public void setModuleDatabase(String moduleDatabase) {
         data.moduleDatabase = moduleDatabase;
+    }
+
+    public String getModuleRoot() {
+        return data.moduleRoot;
+    }
+
+    public void setModuleRoot(String moduleRoot) {
+        data.moduleRoot = moduleRoot;
     }
 }
