@@ -16,16 +16,22 @@
 package uk.co.reecedunn.intellij.plugin.marklogic.runner;
 
 import com.intellij.execution.process.ProcessHandler;
-import com.marklogic.xcc.Session;
+import com.marklogic.xcc.*;
+import com.marklogic.xcc.exceptions.QueryException;
+import com.marklogic.xcc.exceptions.XccException;
+import com.sun.org.apache.regexp.internal.RE;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.OutputStream;
 
 public class MarkLogicRequestHandler extends ProcessHandler {
     private final Session session;
+    private final Request request;
 
-    public MarkLogicRequestHandler(Session session) {
+    public MarkLogicRequestHandler(@NotNull Session session, @NotNull Request request) {
         this.session = session;
+        this.request = request;
     }
 
     @Override
@@ -45,5 +51,29 @@ public class MarkLogicRequestHandler extends ProcessHandler {
     @Override
     public OutputStream getProcessInput() {
         return null;
+    }
+
+    @Override
+    public void startNotify() {
+        super.startNotify();
+
+        ResultSequence results;
+        try {
+            results = session.submitRequest(request);
+        } catch (XccException e) {
+            notifyTextAvailable(e.toString(), null);
+            notifyTextAvailable("\n", null);
+            notifyProcessDetached();
+            return;
+        }
+
+        while (results.hasNext()) {
+            ResultItem result = results.next();
+            notifyTextAvailable(result.asString(), null);
+            notifyTextAvailable("\n", null);
+        }
+
+        results.close();
+        notifyProcessDetached();
     }
 }
