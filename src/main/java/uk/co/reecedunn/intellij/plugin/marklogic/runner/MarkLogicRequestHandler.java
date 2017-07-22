@@ -19,13 +19,14 @@ import com.intellij.execution.process.ProcessHandler;
 import com.marklogic.xcc.*;
 import com.marklogic.xcc.exceptions.QueryException;
 import com.marklogic.xcc.exceptions.XccException;
+import com.marklogic.xcc.types.ItemType;
 import com.sun.org.apache.regexp.internal.RE;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.OutputStream;
 
-public class MarkLogicRequestHandler extends ProcessHandler {
+public class MarkLogicRequestHandler extends ProcessHandler implements MarkLogicResultsHandler {
     private final Session session;
     private final Request request;
 
@@ -61,19 +62,29 @@ public class MarkLogicRequestHandler extends ProcessHandler {
         try {
             results = session.submitRequest(request);
         } catch (XccException e) {
-            notifyTextAvailable(e.toString(), null);
-            notifyTextAvailable("\n", null);
+            onException(e);
             notifyProcessDetached();
             return;
         }
 
         while (results.hasNext()) {
             ResultItem result = results.next();
-            notifyTextAvailable(result.asString(), null);
-            notifyTextAvailable("\n", null);
+            onResult(result.asString(), result.getItem().getItemType());
         }
 
         results.close();
         notifyProcessDetached();
+    }
+
+    @Override
+    public void onException(XccException e) {
+        notifyTextAvailable(e.toString(), null);
+        notifyTextAvailable("\n", null);
+    }
+
+    @Override
+    public void onResult(String value, ItemType type) {
+        notifyTextAvailable(value, null);
+        notifyTextAvailable("\n", null);
     }
 }
