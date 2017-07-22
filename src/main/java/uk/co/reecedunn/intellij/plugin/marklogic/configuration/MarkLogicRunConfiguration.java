@@ -30,6 +30,7 @@ import com.intellij.openapi.util.WriteExternalException;
 import org.jdom.Element;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import uk.co.reecedunn.intellij.plugin.marklogic.runner.MarkLogicResultsHandler;
 import uk.co.reecedunn.intellij.plugin.marklogic.runner.MarkLogicRunProfileState;
 
 public class MarkLogicRunConfiguration extends RunConfigurationBase {
@@ -57,6 +58,11 @@ public class MarkLogicRunConfiguration extends RunConfigurationBase {
     @Override
     public RunProfileState getState(@NotNull Executor executor, @NotNull ExecutionEnvironment environment) throws ExecutionException {
         return new MarkLogicRunProfileState(environment);
+    }
+
+    public boolean run(String query, MarkLogicResultsHandler handler) {
+        MarkLogicRunProfileState state = new MarkLogicRunProfileState(null);
+        return state.run(query, handler, this);
     }
 
     @SuppressWarnings("deprecation")

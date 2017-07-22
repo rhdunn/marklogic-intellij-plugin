@@ -21,5 +21,7 @@ import com.marklogic.xcc.types.ItemType;
 public interface MarkLogicResultsHandler {
     void onException(XccException e);
 
+    void onStart();
+
     void onResult(String value, ItemType type);
 }

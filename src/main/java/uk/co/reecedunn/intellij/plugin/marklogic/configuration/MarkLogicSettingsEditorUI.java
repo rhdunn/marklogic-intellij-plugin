@@ -15,17 +15,24 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.configuration;
 
-import com.intellij.util.ArrayUtil;
+import com.intellij.openapi.util.Factory;
 import org.jetbrains.annotations.NotNull;
+import uk.co.reecedunn.intellij.plugin.marklogic.runner.MarkLogicResultsHandler;
 
 import javax.swing.*;
 
 public class MarkLogicSettingsEditorUI {
+    private final Factory<MarkLogicRunConfiguration> mFactory;
+
     private JPanel mPanel;
     private JTextField mServerHost;
     private JTextField mServerPort;
     private JTextField mUserName;
     private JPasswordField mPassword;
+
+    public MarkLogicSettingsEditorUI(Factory<MarkLogicRunConfiguration> factory) {
+        mFactory = factory;
+    }
 
     private void createUIComponents() {
         mPanel = new JPanel();
@@ -60,5 +67,11 @@ public class MarkLogicSettingsEditorUI {
         } catch (NumberFormatException e) {
             return defaultValue;
         }
+    }
+
+    private boolean run(String query, MarkLogicResultsHandler handler) {
+        MarkLogicRunConfiguration configuration = mFactory.create();
+        apply(configuration);
+        return configuration.run(query, handler);
     }
 }

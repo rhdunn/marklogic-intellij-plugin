@@ -70,6 +70,7 @@ public class MarkLogicRequestHandler extends ProcessHandler implements MarkLogic
             return false;
         }
 
+        handler.onStart();
         while (results.hasNext()) {
             ResultItem result = results.next();
             handler.onResult(result.asString(), result.getItem().getItemType());
@@ -83,6 +84,10 @@ public class MarkLogicRequestHandler extends ProcessHandler implements MarkLogic
     public void onException(XccException e) {
         notifyTextAvailable(e.toString(), null);
         notifyTextAvailable("\n", null);
+    }
+
+    @Override
+    public void onStart() {
     }
 
     @Override

@@ -40,6 +40,16 @@ public class MarkLogicRunProfileState extends CommandLineState {
         return new MarkLogicRequestHandler(session, request);
     }
 
+    public boolean run(String query, MarkLogicResultsHandler handler, MarkLogicRunConfiguration configuration) {
+        ContentSource source = createContentSource(configuration);
+        Session session = source.newSession();
+        RequestOptions options = new RequestOptions();
+        options.setQueryLanguage("xquery");
+        Request request = session.newAdhocQuery(query, options);
+        MarkLogicRequestHandler requestHandler = new MarkLogicRequestHandler(session, request);
+        return requestHandler.run(handler);
+    }
+
     private ContentSource createContentSource(MarkLogicRunConfiguration configuration) {
         return ContentSourceFactory.newContentSource(
             configuration.getServerHost(),

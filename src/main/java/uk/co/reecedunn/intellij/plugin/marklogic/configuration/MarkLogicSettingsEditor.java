@@ -37,7 +37,7 @@ public class MarkLogicSettingsEditor extends SettingsEditor<MarkLogicRunConfigur
     @NotNull
     @Override
     protected JComponent createEditor() {
-        mSettings = new MarkLogicSettingsEditorUI();
+        mSettings = new MarkLogicSettingsEditorUI(getFactory());
         return mSettings.getPanel();
     }
 }
