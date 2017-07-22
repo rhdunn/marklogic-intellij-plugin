@@ -17,11 +17,19 @@ package uk.co.reecedunn.intellij.plugin.marklogic.configuration.script;
 
 import uk.co.reecedunn.intellij.plugin.marklogic.configuration.MarkLogicRunConfiguration;
 
-public class XQueryScript extends ScriptFactory {
+public class QueryScript extends ScriptFactory {
+    private final String mEvalFunction;
+
+    public QueryScript(String evalFunction) {
+        mEvalFunction = evalFunction;
+    }
+
     @Override
     public String createEvalScript(String script, MarkLogicRunConfiguration configuration) {
         StringBuilder query = new StringBuilder();
-        query.append("xdmp:eval(\"");
+        query.append("xdmp:");
+        query.append(mEvalFunction);
+        query.append("(\"");
         query.append(asXQueryStringContent(script));
         query.append("\", ");
         query.append("()"); // no variables

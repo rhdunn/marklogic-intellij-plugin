@@ -27,19 +27,28 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.DefaultJDOMExternalizer;
 import com.intellij.openapi.util.InvalidDataException;
 import com.intellij.openapi.util.WriteExternalException;
+import com.intellij.util.ArrayUtil;
+import com.intellij.util.PathUtil;
 import org.jdom.Element;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import uk.co.reecedunn.intellij.plugin.marklogic.configuration.script.ScriptFactory;
-import uk.co.reecedunn.intellij.plugin.marklogic.configuration.script.XQueryScript;
+import uk.co.reecedunn.intellij.plugin.marklogic.configuration.script.QueryScript;
 import uk.co.reecedunn.intellij.plugin.marklogic.runner.MarkLogicResultsHandler;
 import uk.co.reecedunn.intellij.plugin.marklogic.runner.MarkLogicRunProfileState;
 
 public class MarkLogicRunConfiguration extends RunConfigurationBase {
-    private static ScriptFactory XQUERY_SCRIPT = new XQueryScript();
+    private static ScriptFactory XQUERY_SCRIPT = new QueryScript("eval");
+    private static ScriptFactory JAVASCRIPT_SCRIPT = new QueryScript("javascript-eval");
 
     public static final String[] EXTENSIONS = new String[]{
-            "xq", "xqy", "xquery", "xql", "xqu",
+        "xq", "xqy", "xquery", "xql", "xqu",
+        "js", "sjs",
+    };
+
+    public static final ScriptFactory[] SCRIPT_FACTORIES = new ScriptFactory[] {
+        XQUERY_SCRIPT, XQUERY_SCRIPT, XQUERY_SCRIPT, XQUERY_SCRIPT, XQUERY_SCRIPT,
+        JAVASCRIPT_SCRIPT, JAVASCRIPT_SCRIPT,
     };
 
     @SuppressWarnings("WeakerAccess") // DefaultJDOMExternalizer requires public access to the fields.
@@ -156,6 +165,12 @@ public class MarkLogicRunConfiguration extends RunConfigurationBase {
     }
 
     public String getAdhocQuery() {
-        return XQUERY_SCRIPT.createScript(this);
+        final String ext = PathUtil.getFileExtension(getMainModulePath());
+        final int index = ArrayUtil.indexOf(EXTENSIONS, ext);
+        if (index < 0) {
+            return null;
+        }
+
+        return SCRIPT_FACTORIES[index].createScript(this);
     }
 }
