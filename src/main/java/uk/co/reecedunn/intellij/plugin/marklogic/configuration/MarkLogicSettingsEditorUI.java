@@ -17,6 +17,7 @@ package uk.co.reecedunn.intellij.plugin.marklogic.configuration;
 
 import com.intellij.openapi.project.Project;
 import org.jetbrains.annotations.NotNull;
+import uk.co.reecedunn.intellij.plugin.marklogic.resources.MarkLogicBundle;
 import uk.co.reecedunn.intellij.plugin.marklogic.runner.MarkLogicResultsHandler;
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.DocumentChangedListener;
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.MarkLogicQueryComboBox;
@@ -47,8 +48,8 @@ public class MarkLogicSettingsEditorUI {
         mServerPort = new JTextField();
         mUserName = new JTextField();
         mPassword = new JPasswordField();
-        mContentDatabase = new MarkLogicQueryComboBox("(none)");
-        mModuleDatabase = new MarkLogicQueryComboBox("(file system)");
+        mContentDatabase = new MarkLogicQueryComboBox(MarkLogicBundle.message("database.none"));
+        mModuleDatabase = new MarkLogicQueryComboBox(MarkLogicBundle.message("database.file.system"));
 
         DocumentListener listener = new DocumentChangedListener() {
             @Override
