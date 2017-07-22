@@ -15,6 +15,7 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.configuration;
 
+import com.intellij.util.ArrayUtil;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
@@ -41,12 +42,11 @@ public class MarkLogicSettingsEditorUI {
         mPassword.setText(configuration.getPassword());
     }
 
-    @SuppressWarnings("ImplicitArrayToString")
     public void apply(@NotNull MarkLogicRunConfiguration configuration) {
         configuration.setServerHost(mServerHost.getText());
         configuration.setServerPort(toInteger(mServerPort.getText(), configuration.getServerPort()));
         configuration.setUserName(mUserName.getText());
-        configuration.setPassword(mPassword.getPassword().toString());
+        configuration.setPassword(String.valueOf(mPassword.getPassword()));
     }
 
     @NotNull
