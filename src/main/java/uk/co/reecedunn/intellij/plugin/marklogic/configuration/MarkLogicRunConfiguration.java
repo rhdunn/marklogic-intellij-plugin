@@ -51,7 +51,7 @@ public class MarkLogicRunConfiguration extends RunConfigurationBase {
     @NotNull
     @Override
     public SettingsEditor<? extends RunConfiguration> getConfigurationEditor() {
-        return new MarkLogicSettingsEditor();
+        return new MarkLogicSettingsEditor((MarkLogicConfigurationFactory)getFactory(), getProject());
     }
 
     @Nullable

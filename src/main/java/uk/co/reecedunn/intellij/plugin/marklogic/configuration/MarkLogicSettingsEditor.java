@@ -17,12 +17,21 @@ package uk.co.reecedunn.intellij.plugin.marklogic.configuration;
 
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.options.SettingsEditor;
+import com.intellij.openapi.project.Project;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 
 public class MarkLogicSettingsEditor extends SettingsEditor<MarkLogicRunConfiguration> {
+    private final MarkLogicConfigurationFactory mFactory;
+    private final Project mProject;
+
     private MarkLogicSettingsEditorUI mSettings;
+
+    public MarkLogicSettingsEditor(@NotNull MarkLogicConfigurationFactory factory, @NotNull Project project) {
+        mFactory = factory;
+        mProject = project;
+    }
 
     @Override
     protected void resetEditorFrom(@NotNull MarkLogicRunConfiguration configuration) {
@@ -37,7 +46,7 @@ public class MarkLogicSettingsEditor extends SettingsEditor<MarkLogicRunConfigur
     @NotNull
     @Override
     protected JComponent createEditor() {
-        mSettings = new MarkLogicSettingsEditorUI(getFactory());
+        mSettings = new MarkLogicSettingsEditorUI(mFactory, mProject);
         return mSettings.getPanel();
     }
 }

@@ -15,14 +15,15 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.configuration;
 
-import com.intellij.openapi.util.Factory;
+import com.intellij.openapi.project.Project;
 import org.jetbrains.annotations.NotNull;
 import uk.co.reecedunn.intellij.plugin.marklogic.runner.MarkLogicResultsHandler;
 
 import javax.swing.*;
 
 public class MarkLogicSettingsEditorUI {
-    private final Factory<MarkLogicRunConfiguration> mFactory;
+    private final MarkLogicConfigurationFactory mFactory;
+    private final Project mProject;
 
     private JPanel mPanel;
     private JTextField mServerHost;
@@ -30,8 +31,9 @@ public class MarkLogicSettingsEditorUI {
     private JTextField mUserName;
     private JPasswordField mPassword;
 
-    public MarkLogicSettingsEditorUI(Factory<MarkLogicRunConfiguration> factory) {
+    public MarkLogicSettingsEditorUI(@NotNull MarkLogicConfigurationFactory factory, @NotNull Project project) {
         mFactory = factory;
+        mProject = project;
     }
 
     private void createUIComponents() {
@@ -70,7 +72,9 @@ public class MarkLogicSettingsEditorUI {
     }
 
     private boolean run(String query, MarkLogicResultsHandler handler) {
-        MarkLogicRunConfiguration configuration = mFactory.create();
+        // NOTE: Using SettingsEditor.getFactory or getSnapshot don't work, as
+        // they throw a NullPointerException when processing the events.
+        MarkLogicRunConfiguration configuration = (MarkLogicRunConfiguration)mFactory.createTemplateConfiguration(mProject);
         apply(configuration);
         return configuration.run(query, handler);
     }
