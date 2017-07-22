@@ -28,5 +28,6 @@
 
   <extensions defaultExtensionNs="com.intellij">
     <configurationType implementation="uk.co.reecedunn.intellij.plugin.marklogic.configuration.MarkLogicConfigurationType"/>
+    <programRunner implementation="uk.co.reecedunn.intellij.plugin.marklogic.runner.MarkLogicProgramRunner"/>
   </extensions>
 </idea-plugin>
