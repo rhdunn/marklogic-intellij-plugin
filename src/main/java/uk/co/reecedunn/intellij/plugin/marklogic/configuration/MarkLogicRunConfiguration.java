@@ -24,12 +24,25 @@ import com.intellij.execution.configurations.RunProfileState;
 import com.intellij.execution.runners.ExecutionEnvironment;
 import com.intellij.openapi.options.SettingsEditor;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.util.DefaultJDOMExternalizer;
+import com.intellij.openapi.util.InvalidDataException;
+import com.intellij.openapi.util.WriteExternalException;
+import org.jdom.Element;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import uk.co.reecedunn.intellij.plugin.marklogic.runner.MarkLogicRunProfileState;
 
 public class MarkLogicRunConfiguration extends RunConfigurationBase {
-    protected MarkLogicRunConfiguration(@NotNull Project project, @NotNull ConfigurationFactory factory, String name) {
+    static class ConfigData {
+        String serverHost = "localhost";
+        int serverPort = 8000;
+        String userName = "";
+        String password = "";
+    }
+
+    private ConfigData data = new ConfigData();
+
+    MarkLogicRunConfiguration(@NotNull Project project, @NotNull ConfigurationFactory factory, String name) {
         super(project, factory, name);
     }
 
@@ -43,5 +56,51 @@ public class MarkLogicRunConfiguration extends RunConfigurationBase {
     @Override
     public RunProfileState getState(@NotNull Executor executor, @NotNull ExecutionEnvironment environment) throws ExecutionException {
         return new MarkLogicRunProfileState(environment);
+    }
+
+    @SuppressWarnings("deprecation")
+    @Override
+    public void readExternal(Element element) throws InvalidDataException {
+        super.readExternal(element);
+        DefaultJDOMExternalizer.readExternal(data, element);
+    }
+
+    @SuppressWarnings("deprecation")
+    @Override
+    public void writeExternal(Element element) throws WriteExternalException {
+        super.writeExternal(element);
+        DefaultJDOMExternalizer.writeExternal(data, element);
+    }
+
+    public String getServerHost() {
+        return data.serverHost;
+    }
+
+    public void setServerHost(String host) {
+        data.serverHost = host;
+    }
+
+    public int getServerPort() {
+        return data.serverPort;
+    }
+
+    public void setServerPort(int port) {
+        data.serverPort = port;
+    }
+
+    public String getUserName() {
+        return data.userName;
+    }
+
+    public void setUserName(String userName) {
+        this.data.userName = userName;
+    }
+
+    public String getPassword() {
+        return data.password;
+    }
+
+    public void setPassword(String password) {
+        this.data.password = password;
     }
 }

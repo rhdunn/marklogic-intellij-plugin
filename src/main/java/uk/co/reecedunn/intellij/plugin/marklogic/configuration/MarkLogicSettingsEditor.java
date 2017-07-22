@@ -23,23 +23,47 @@ import javax.swing.*;
 
 public class MarkLogicSettingsEditor extends SettingsEditor<MarkLogicRunConfiguration> {
     private JPanel mPanel;
+    private JTextField mServerHost;
+    private JTextField mServerPort;
+    private JTextField mUserName;
+    private JPasswordField mPassword;
 
     private void createUIComponents() {
         mPanel = new JPanel();
+        mServerHost = new JTextField();
+        mServerPort = new JTextField();
+        mUserName = new JTextField();
+        mPassword = new JPasswordField();
     }
 
     @Override
-    protected void resetEditorFrom(@NotNull MarkLogicRunConfiguration s) {
+    protected void resetEditorFrom(@NotNull MarkLogicRunConfiguration configuration) {
+        mServerHost.setText(configuration.getServerHost());
+        mServerPort.setText(Integer.toString(configuration.getServerPort()));
+        mUserName.setText(configuration.getUserName());
+        mPassword.setText(configuration.getPassword());
     }
 
+    @SuppressWarnings("ImplicitArrayToString")
     @Override
-    protected void applyEditorTo(@NotNull MarkLogicRunConfiguration s) throws ConfigurationException {
+    protected void applyEditorTo(@NotNull MarkLogicRunConfiguration configuration) throws ConfigurationException {
+        configuration.setServerHost(mServerHost.getText());
+        configuration.setServerPort(toInteger(mServerPort.getText(), configuration.getServerPort()));
+        configuration.setUserName(mUserName.getText());
+        configuration.setPassword(mPassword.getPassword().toString());
     }
 
     @NotNull
     @Override
     protected JComponent createEditor() {
-        createUIComponents();
         return mPanel;
+    }
+
+    private int toInteger(String value, int defaultValue) {
+        try {
+            return Integer.valueOf(value);
+        } catch (NumberFormatException e) {
+            return defaultValue;
+        }
     }
 }

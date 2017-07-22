@@ -16,11 +16,18 @@
 package uk.co.reecedunn.intellij.plugin.marklogic.runner;
 
 import com.intellij.execution.process.ProcessHandler;
+import com.marklogic.xcc.Session;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.OutputStream;
 
 public class MarkLogicRequestHandler extends ProcessHandler {
+    private final Session session;
+
+    public MarkLogicRequestHandler(Session session) {
+        this.session = session;
+    }
+
     @Override
     protected void destroyProcessImpl() {
     }

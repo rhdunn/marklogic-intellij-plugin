@@ -19,7 +19,11 @@ import com.intellij.execution.ExecutionException;
 import com.intellij.execution.configurations.CommandLineState;
 import com.intellij.execution.process.ProcessHandler;
 import com.intellij.execution.runners.ExecutionEnvironment;
+import com.marklogic.xcc.ContentSource;
+import com.marklogic.xcc.ContentSourceFactory;
+import com.marklogic.xcc.Session;
 import org.jetbrains.annotations.NotNull;
+import uk.co.reecedunn.intellij.plugin.marklogic.configuration.MarkLogicRunConfiguration;
 
 public class MarkLogicRunProfileState extends CommandLineState {
     public MarkLogicRunProfileState(ExecutionEnvironment environment) {
@@ -29,6 +33,23 @@ public class MarkLogicRunProfileState extends CommandLineState {
     @NotNull
     @Override
     protected ProcessHandler startProcess() throws ExecutionException {
-        return new MarkLogicRequestHandler();
+        MarkLogicRunConfiguration configuration = (MarkLogicRunConfiguration)getEnvironment().getRunProfile();
+        ContentSource source = createContentSource(configuration);
+        Session session = source.newSession();
+
+        return new MarkLogicRequestHandler(session);
+    }
+
+    private ContentSource createContentSource(MarkLogicRunConfiguration configuration) {
+        return ContentSourceFactory.newContentSource(
+            configuration.getServerHost(),
+            configuration.getServerPort(),
+            nullableValueOf(configuration.getUserName()),
+            nullableValueOf(configuration.getPassword()));
+    }
+
+    private String nullableValueOf(String value) {
+        if (value == null || value.isEmpty()) return null;
+        return value;
     }
 }
