@@ -15,11 +15,10 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.runner;
 
-import com.marklogic.xcc.exceptions.XccException;
 import com.marklogic.xcc.types.ItemType;
 
 public interface MarkLogicResultsHandler {
-    void onException(XccException e);
+    void onException(Exception e);
 
     void onStart();
 

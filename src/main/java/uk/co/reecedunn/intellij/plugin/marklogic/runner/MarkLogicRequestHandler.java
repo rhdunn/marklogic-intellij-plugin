@@ -65,7 +65,7 @@ public class MarkLogicRequestHandler extends ProcessHandler implements MarkLogic
         ResultSequence results;
         try {
             results = session.submitRequest(request);
-        } catch (XccException e) {
+        } catch (Exception e) {
             handler.onException(e);
             return false;
         }
@@ -81,7 +81,7 @@ public class MarkLogicRequestHandler extends ProcessHandler implements MarkLogic
     }
 
     @Override
-    public void onException(XccException e) {
+    public void onException(Exception e) {
         notifyTextAvailable(e.toString(), null);
         notifyTextAvailable("\n", null);
     }
