@@ -1,8 +1,5 @@
 # MarkLogic XQuery Plugin
 
-[![Build Status](https://travis-ci.org/rhdunn/marklogic-intellij-plugin.svg)](https://travis-ci.org/rhdunn/marklogic-intellij-plugin)
-[![codecov.io](https://codecov.io/github/rhdunn/marklogic-intellij-plugin/coverage.svg)](https://codecov.io/github/rhdunn/marklogic-intellij-plugin)
-
 - [License Information](#license-information)
 
 ----------
