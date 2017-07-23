@@ -39,9 +39,9 @@ import uk.co.reecedunn.intellij.plugin.marklogic.runner.MarkLogicResultsHandler;
 import uk.co.reecedunn.intellij.plugin.marklogic.runner.MarkLogicRunProfileState;
 
 public class MarkLogicRunConfiguration extends RunConfigurationBase {
-    private static ScriptFactory JAVASCRIPT_SCRIPT = new EvalScript("xdmp:javascript-eval");
-    private static ScriptFactory SQL_SCRIPT = new QueryScript("xdmp:sql");
-    private static ScriptFactory XQUERY_SCRIPT = new EvalScript("xdmp:eval");
+    private static ScriptFactory JAVASCRIPT = new EvalScript("xdmp:javascript-eval");
+    private static ScriptFactory SQL = new QueryScript("xdmp:sql");
+    private static ScriptFactory XQUERY = new EvalScript("xdmp:eval");
 
     public static final String[] EXTENSIONS = new String[]{
         "xq", "xqy", "xquery", "xql", "xqu",
@@ -50,9 +50,9 @@ public class MarkLogicRunConfiguration extends RunConfigurationBase {
     };
 
     public static final ScriptFactory[] SCRIPT_FACTORIES = new ScriptFactory[] {
-        XQUERY_SCRIPT, XQUERY_SCRIPT, XQUERY_SCRIPT, XQUERY_SCRIPT, XQUERY_SCRIPT,
-        JAVASCRIPT_SCRIPT, JAVASCRIPT_SCRIPT,
-        SQL_SCRIPT,
+        XQUERY, XQUERY, XQUERY, XQUERY, XQUERY,
+        JAVASCRIPT, JAVASCRIPT,
+        SQL,
     };
 
     @SuppressWarnings("WeakerAccess") // DefaultJDOMExternalizer requires public access to the fields.
