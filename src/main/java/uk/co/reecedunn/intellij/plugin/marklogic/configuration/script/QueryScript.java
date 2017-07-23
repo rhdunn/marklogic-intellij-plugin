@@ -42,6 +42,10 @@ public class QueryScript extends ScriptFactory {
     }
 
     private void appendDatabaseOption(StringBuilder options, String option, String database) {
+        if (database == null || database.isEmpty()) {
+            return;
+        }
+
         final String selector = "{xdmp:database(\"" + asXQueryStringContent(database) + "\")}";
         appendOption(options, option, selector);
     }
