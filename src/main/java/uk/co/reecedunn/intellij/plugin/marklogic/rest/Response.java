@@ -34,14 +34,6 @@ public class Response {
         response.close();
     }
 
-    public int getStatusCode() {
-        return response.getStatusLine().getStatusCode();
-    }
-
-    public String getStatusReason() {
-        return response.getStatusLine().getReasonPhrase();
-    }
-
     private String getHeader(String name, String defaultValue) {
         Header[] headers = response.getHeaders(name);
         if (headers.length == 0) {
@@ -55,6 +47,11 @@ public class Response {
     }
 
     public Result[] getResults() throws IOException {
+        int statusCode = response.getStatusLine().getStatusCode();
+        if (statusCode != 200) {
+            throw new IOException(statusCode + " " + response.getStatusLine().getReasonPhrase() + "\n");
+        }
+
         List<Result> results = new ArrayList<>();
         String contentType = getHeader("Content-Type", "application/octet-stream");
         if (contentType.startsWith("multipart/")) {

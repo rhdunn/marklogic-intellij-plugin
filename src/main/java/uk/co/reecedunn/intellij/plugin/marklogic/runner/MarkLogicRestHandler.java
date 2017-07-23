@@ -64,9 +64,6 @@ public class MarkLogicRestHandler extends ProcessHandler implements MarkLogicRes
         Result[] results;
         try {
             Response response = request.run();
-            if (response.getStatusCode() != 200) {
-                throw new IOException(response.getStatusCode() + " " + response.getStatusReason());
-            }
             results = response.getResults();
             response.close();
         } catch (IOException e) {
