@@ -16,7 +16,6 @@
 package uk.co.reecedunn.intellij.plugin.marklogic.ui;
 
 import com.intellij.openapi.ui.ComboBox;
-import com.marklogic.xcc.types.ItemType;
 import uk.co.reecedunn.intellij.plugin.marklogic.runner.MarkLogicResultsHandler;
 
 public class MarkLogicQueryComboBox extends ComboBox<String> implements MarkLogicResultsHandler {
@@ -58,7 +57,7 @@ public class MarkLogicQueryComboBox extends ComboBox<String> implements MarkLogi
     }
 
     @Override
-    public void onResult(String value, ItemType type) {
+    public void onResult(String value, String itemType, String contentType) {
         addItem(value);
     }
 

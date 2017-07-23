@@ -16,7 +16,6 @@
 package uk.co.reecedunn.intellij.plugin.marklogic.runner;
 
 import com.intellij.execution.process.ProcessHandler;
-import com.marklogic.xcc.types.ItemType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import uk.co.reecedunn.intellij.plugin.marklogic.rest.Request;
@@ -74,7 +73,7 @@ public class MarkLogicRestHandler extends ProcessHandler implements MarkLogicRes
 
         handler.onStart();
         try {
-            handler.onResult(response.getResponse(), null);
+            handler.onResult(response.getResponse(), null, "text/plain");
             response.close();
         } catch (IOException e) {
             handler.onException(e);
@@ -97,7 +96,8 @@ public class MarkLogicRestHandler extends ProcessHandler implements MarkLogicRes
     }
 
     @Override
-    public void onResult(String value, ItemType type) {
+    public void onResult(String value, String itemType, String contentType) {
+        notifyTextAvailable("----- " + itemType + " [" + contentType  + "]\n", null);
         notifyTextAvailable(value, null);
         notifyTextAvailable("\n", null);
     }

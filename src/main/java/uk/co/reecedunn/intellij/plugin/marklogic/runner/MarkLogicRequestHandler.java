@@ -19,7 +19,6 @@ import com.intellij.execution.process.ProcessHandler;
 import com.marklogic.xcc.*;
 import com.marklogic.xcc.exceptions.QueryException;
 import com.marklogic.xcc.exceptions.QueryStackFrame;
-import com.marklogic.xcc.types.ItemType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -74,7 +73,7 @@ public class MarkLogicRequestHandler extends ProcessHandler implements MarkLogic
         handler.onStart();
         while (results.hasNext()) {
             ResultItem result = results.next();
-            handler.onResult(result.asString(), result.getItem().getItemType());
+            handler.onResult(result.asString(), result.getItem().getItemType().toString(), "text/plain");
         }
 
         results.close();
@@ -97,7 +96,8 @@ public class MarkLogicRequestHandler extends ProcessHandler implements MarkLogic
     }
 
     @Override
-    public void onResult(String value, ItemType type) {
+    public void onResult(String value, String itemType, String contentType) {
+        notifyTextAvailable("----- " + itemType + " [" + contentType  + "]\n", null);
         notifyTextAvailable(value, null);
         notifyTextAvailable("\n", null);
     }

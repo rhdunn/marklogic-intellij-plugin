@@ -15,14 +15,12 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.runner;
 
-import com.marklogic.xcc.types.ItemType;
-
 public interface MarkLogicResultsHandler {
     void onException(Exception e);
 
     void onStart();
 
-    void onResult(String value, ItemType type);
+    void onResult(String value, String itemType, String contentType);
 
     void onCompleted();
 }
