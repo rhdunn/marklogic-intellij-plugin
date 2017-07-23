@@ -20,6 +20,8 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Response {
     private final CloseableHttpResponse response;
@@ -40,15 +42,22 @@ public class Response {
         return response.getStatusLine().getReasonPhrase();
     }
 
-    public String getContentType() {
-        Header[] headers = response.getHeaders("Content-Type");
+    private String getHeader(String name, String defaultValue) {
+        Header[] headers = response.getHeaders(name);
         if (headers.length == 0) {
-            return "application/octet-stream";
+            return defaultValue;
         }
         return headers[0].getValue();
     }
 
-    public String getResponse() throws IOException {
+    private String getResponse() throws IOException {
         return EntityUtils.toString(response.getEntity());
+    }
+
+    public Result[] getResults() throws IOException {
+        List<Result> results = new ArrayList<>();
+        String contentType = getHeader("Content-Type", "application/octet-stream");
+        results.add(new Result(getResponse(), contentType, getHeader("X-Primitive", null)));
+        return results.toArray(new Result[results.size()]);
     }
 }

@@ -20,6 +20,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import uk.co.reecedunn.intellij.plugin.marklogic.rest.Request;
 import uk.co.reecedunn.intellij.plugin.marklogic.rest.Response;
+import uk.co.reecedunn.intellij.plugin.marklogic.rest.Result;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -60,27 +61,23 @@ public class MarkLogicRestHandler extends ProcessHandler implements MarkLogicRes
     }
 
     public boolean run(MarkLogicResultsHandler handler) {
-        Response response;
+        Result[] results;
         try {
-            response = request.run();
+            Response response = request.run();
             if (response.getStatusCode() != 200) {
                 throw new IOException(response.getStatusCode() + " " + response.getStatusReason());
             }
+            results = response.getResults();
+            response.close();
         } catch (IOException e) {
             handler.onException(e);
             return false;
         }
 
         handler.onStart();
-        try {
-            handler.onResult(response.getResponse(), null, response.getContentType());
-            response.close();
-        } catch (IOException e) {
-            handler.onException(e);
-            handler.onCompleted();
-            return false;
+        for (Result result : results) {
+            handler.onResult(result.getContent(), result.getPrimitive(), result.getContentType());
         }
-
         handler.onCompleted();
         return true;
     }
