@@ -57,7 +57,42 @@ public class Response {
     public Result[] getResults() throws IOException {
         List<Result> results = new ArrayList<>();
         String contentType = getHeader("Content-Type", "application/octet-stream");
-        results.add(new Result(getResponse(), contentType, getHeader("X-Primitive", null)));
+        if (contentType.startsWith("multipart/")) {
+            parseMultiPartResponse(results, getResponse(), contentType);
+        } else {
+            results.add(new Result(getResponse(), contentType, getHeader("X-Primitive", null)));
+        }
         return results.toArray(new Result[results.size()]);
+    }
+
+    private void parseMultiPartResponse(List<Result> results, String multipart, String contentType) throws IOException {
+        String[] boundaryParts = contentType.split("boundary=");
+        if (boundaryParts.length == 0) {
+            throw new IOException("Unsupported content type: " + contentType);
+        }
+
+        String boundary = "\r\n--" + boundaryParts[1];
+        for (String part : multipart.split(boundary)) {
+            if (part.isEmpty() || part.startsWith("--")) {
+                continue;
+            }
+
+            String[] headersContent = part.split("\r\n\r\n");
+            if (headersContent.length != 2) {
+                throw new IOException("Incorrect part format: no MIME headers found");
+            }
+
+            String resultContentType = "application/octet-stream";
+            String resultPrimitive = null;
+            for (String header : headersContent[0].split("\r\n")) {
+                if (header.startsWith("Content-Type:")) {
+                    resultContentType = header.replaceAll("Content-Type:\\s+", "");
+                } else if (header.startsWith("X-Primitive:")) {
+                    resultPrimitive = header.replaceAll("X-Primitive:\\s+", "");
+                }
+            }
+
+            results.add(new Result(headersContent[1], resultContentType, resultPrimitive));
+        }
     }
 }
