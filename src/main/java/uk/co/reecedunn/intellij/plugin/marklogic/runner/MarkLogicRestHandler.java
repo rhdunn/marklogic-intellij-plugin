@@ -73,7 +73,7 @@ public class MarkLogicRestHandler extends ProcessHandler implements MarkLogicRes
 
         handler.onStart();
         try {
-            handler.onResult(response.getResponse(), null, "text/plain");
+            handler.onResult(response.getResponse(), null, response.getContentType());
             response.close();
         } catch (IOException e) {
             handler.onException(e);

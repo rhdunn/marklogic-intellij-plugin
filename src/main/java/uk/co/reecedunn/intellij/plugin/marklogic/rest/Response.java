@@ -15,6 +15,7 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.rest;
 
+import org.apache.http.Header;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.util.EntityUtils;
 
@@ -37,6 +38,14 @@ public class Response {
 
     public String getStatusReason() {
         return response.getStatusLine().getReasonPhrase();
+    }
+
+    public String getContentType() {
+        Header[] headers = response.getHeaders("Content-Type");
+        if (headers.length == 0) {
+            return "application/octet-stream";
+        }
+        return headers[0].getValue();
     }
 
     public String getResponse() throws IOException {
