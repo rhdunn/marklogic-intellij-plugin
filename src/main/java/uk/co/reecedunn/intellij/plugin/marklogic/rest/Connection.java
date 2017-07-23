@@ -35,7 +35,11 @@ public class Connection {
     }
 
     public void close() throws IOException {
-        this.client.close();
+        client.close();
+    }
+
+    public String getBaseUri() {
+        return baseUri;
     }
 
     public static Connection newConnection(String hostname, int port, String username, String password) {
