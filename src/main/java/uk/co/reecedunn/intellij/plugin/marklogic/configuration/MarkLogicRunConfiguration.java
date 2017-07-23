@@ -168,13 +168,13 @@ public class MarkLogicRunConfiguration extends RunConfigurationBase {
         data.mainModulePath = mainModulePath;
     }
 
-    public String getAdhocQuery() {
+    public ScriptFactory getScriptFactory() {
         final String ext = PathUtil.getFileExtension(getMainModulePath());
         final int index = ArrayUtil.indexOf(EXTENSIONS, ext);
         if (index < 0) {
             return null;
         }
 
-        return SCRIPT_FACTORIES[index].createScript(this);
+        return SCRIPT_FACTORIES[index];
     }
 }

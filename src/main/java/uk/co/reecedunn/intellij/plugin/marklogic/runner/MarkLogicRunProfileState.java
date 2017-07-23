@@ -24,6 +24,7 @@ import com.marklogic.xcc.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import uk.co.reecedunn.intellij.plugin.marklogic.configuration.MarkLogicRunConfiguration;
+import uk.co.reecedunn.intellij.plugin.marklogic.configuration.script.ScriptFactory;
 import uk.co.reecedunn.intellij.plugin.marklogic.rest.Connection;
 import uk.co.reecedunn.intellij.plugin.marklogic.rest.EvalRequestBuilder;
 
@@ -41,15 +42,16 @@ public class MarkLogicRunProfileState extends CommandLineState {
     @Override
     protected ProcessHandler startProcess() throws ExecutionException {
         MarkLogicRunConfiguration configuration = (MarkLogicRunConfiguration)getEnvironment().getRunProfile();
+        ScriptFactory scriptFactory = configuration.getScriptFactory();
         if (USE_EXPERIMENTAL_REST_API) {
             Connection connection = createConnection(configuration);
             EvalRequestBuilder builder = new EvalRequestBuilder();
             builder.setContentDatabase(configuration.getContentDatabase());
-            builder.setXQuery(configuration.getAdhocQuery());
+            builder.setXQuery(scriptFactory.createScript(configuration));
             return new MarkLogicRestHandler(builder.build(connection), configuration.getMainModulePath());
         } else {
             Session session = createSession(configuration);
-            Request request = session.newAdhocQuery(configuration.getAdhocQuery());
+            Request request = session.newAdhocQuery(scriptFactory.createScript(configuration));
             return new MarkLogicRequestHandler(session, request, configuration.getMainModulePath());
         }
     }
