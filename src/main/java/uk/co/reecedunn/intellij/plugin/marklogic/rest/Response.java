@@ -49,7 +49,7 @@ public class Response {
     public Result[] getResults() throws IOException {
         int statusCode = response.getStatusLine().getStatusCode();
         if (statusCode != 200) {
-            throw new IOException(statusCode + " " + response.getStatusLine().getReasonPhrase() + "\n");
+            throw new IOException(statusCode + " " + response.getStatusLine().getReasonPhrase() + "\n" + getResponse());
         }
 
         List<Result> results = new ArrayList<>();
