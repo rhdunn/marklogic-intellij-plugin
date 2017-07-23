@@ -42,6 +42,10 @@ public class Connection {
         return baseUri;
     }
 
+    CloseableHttpClient getClient() {
+        return client;
+    }
+
     public static Connection newConnection(String hostname, int port, String username, String password) {
         final String baseUri = "http://" + hostname + ":" + port;
         if (username == null || password == null) {

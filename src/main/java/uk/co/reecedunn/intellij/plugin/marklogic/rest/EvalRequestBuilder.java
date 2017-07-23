@@ -16,7 +16,6 @@
 package uk.co.reecedunn.intellij.plugin.marklogic.rest;
 
 import com.google.gson.JsonObject;
-import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.methods.RequestBuilder;
 
 public class EvalRequestBuilder {
@@ -51,7 +50,7 @@ public class EvalRequestBuilder {
         this.txid = txid;
     }
 
-    public HttpUriRequest build(Connection connection) {
+    public Request build(Connection connection) {
         RequestBuilder builder = RequestBuilder.post(connection.getBaseUri() + "/v1/eval");
         if (xquery != null) {
             builder.addParameter("xquery", xquery);
@@ -68,6 +67,6 @@ public class EvalRequestBuilder {
         if (txid != null) {
             builder.addParameter("txid", txid);
         }
-        return builder.build();
+        return new Request(builder.build(), connection);
     }
 }
