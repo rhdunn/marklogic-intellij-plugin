@@ -31,6 +31,20 @@ public class QueryScript extends ScriptFactory {
 
     @Override
     public String createEvalScript(String script, MarkLogicRunConfiguration configuration) {
-        return mQueryFunction + "(\"" + asXQueryStringContent(script) + "\")";
+        if (mQueryFunction.equals("xdmp:sql")) {
+            return mQueryFunction + "(\"" + asXQueryStringContent(script) + "\")";
+        } else {
+            StringBuilder query = new StringBuilder();
+            query.append("import module namespace sem = \"http://marklogic.com/semantics\" at \"/MarkLogic/semantics.xqy\";\n");
+            query.append("let $ret := sem:sparql(\"").append(asXQueryStringContent(script)).append("\")\n");
+            query.append("return if (count($ret) > 0 and $ret[1] instance of sem:triple) then\n");
+            // NOTE: Using xdmp:set-response-content-type overrides the multipart Content-Type for the response, but
+            // still writes out the multipart data.
+            query.append("    let $_ := xdmp:add-response-header(\"X-Content-Type\", \"application/n-triples\")");
+            query.append("    return sem:rdf-serialize($ret, \"ntriple\")\n");
+            query.append("else\n");
+            query.append("    $ret\n");
+            return query.toString();
+        }
     }
 }

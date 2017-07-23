@@ -55,14 +55,15 @@ public class Response {
         List<Result> results = new ArrayList<>();
         String contentType = getHeader("Content-Type", "application/octet-stream");
         if (contentType.startsWith("multipart/")) {
-            parseMultiPartResponse(results, getResponse(), contentType);
+            String internalContentType = getHeader("X-Content-Type", null); // e.g. from the SPARQL queries.
+            parseMultiPartResponse(results, getResponse(), contentType, internalContentType);
         } else {
             results.add(new Result(getResponse(), contentType, getHeader("X-Primitive", null)));
         }
         return results.toArray(new Result[results.size()]);
     }
 
-    private void parseMultiPartResponse(List<Result> results, String multipart, String contentType) throws IOException {
+    private void parseMultiPartResponse(List<Result> results, String multipart, String contentType, String internalContentType) throws IOException {
         String[] boundaryParts = contentType.split("boundary=");
         if (boundaryParts.length == 0) {
             throw new IOException("Unsupported content type: " + contentType);
@@ -89,7 +90,11 @@ public class Response {
                 }
             }
 
-            results.add(new Result(headersContent[1], resultContentType, resultPrimitive));
+            if (internalContentType == null) {
+                results.add(new Result(headersContent[1], resultContentType, resultPrimitive));
+            } else {
+                results.add(new Result(headersContent[1], internalContentType, resultPrimitive));
+            }
         }
     }
 }
