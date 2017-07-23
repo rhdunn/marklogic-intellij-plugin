@@ -16,6 +16,7 @@
 package uk.co.reecedunn.intellij.plugin.marklogic.configuration.script;
 
 import uk.co.reecedunn.intellij.plugin.marklogic.configuration.MarkLogicRunConfiguration;
+import uk.co.reecedunn.intellij.plugin.marklogic.rest.RDFFormat;
 
 public class QueryScript extends ScriptFactory {
     private final String mQueryFunction;
@@ -34,16 +35,22 @@ public class QueryScript extends ScriptFactory {
         if (mQueryFunction.equals("xdmp:sql")) {
             return mQueryFunction + "(\"" + asXQueryStringContent(script) + "\")";
         } else {
+            RDFFormat tripleFormat = configuration.getTripleFormat();
+
             StringBuilder query = new StringBuilder();
             query.append("import module namespace sem = \"http://marklogic.com/semantics\" at \"/MarkLogic/semantics.xqy\";\n");
             query.append("let $ret := sem:sparql(\"").append(asXQueryStringContent(script)).append("\")\n");
-            query.append("return if (count($ret) > 0 and $ret[1] instance of sem:triple) then\n");
-            // NOTE: Using xdmp:set-response-content-type overrides the multipart Content-Type for the response, but
-            // still writes out the multipart data.
-            query.append("    let $_ := xdmp:add-response-header(\"X-Content-Type\", \"application/n-triples\")");
-            query.append("    return sem:rdf-serialize($ret, \"ntriple\")\n");
-            query.append("else\n");
-            query.append("    $ret\n");
+            if (tripleFormat == RDFFormat.SEM_TRIPLE) {
+                query.append("return $ret");
+            } else {
+                query.append("return if (count($ret) > 0 and $ret[1] instance of sem:triple) then\n");
+                // NOTE: Using xdmp:set-response-content-type overrides the multipart Content-Type for the response, but
+                // still writes out the multipart data.
+                query.append("    let $_ := xdmp:add-response-header(\"X-Content-Type\", \"").append(tripleFormat.getContentType()).append("\")");
+                query.append("    return sem:rdf-serialize($ret, \"").append(tripleFormat.getMarkLogicName()).append("\")\n");
+                query.append("else\n");
+                query.append("    $ret\n");
+            }
             return query.toString();
         }
     }

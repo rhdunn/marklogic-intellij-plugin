@@ -18,10 +18,12 @@ package uk.co.reecedunn.intellij.plugin.marklogic.configuration;
 import com.intellij.openapi.fileChooser.FileChooserDescriptor;
 import com.intellij.openapi.fileChooser.FileTypeDescriptor;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.ui.ComboBox;
 import com.intellij.openapi.ui.ComponentWithBrowseButton;
 import com.intellij.openapi.ui.TextComponentAccessor;
 import org.jetbrains.annotations.NotNull;
 import uk.co.reecedunn.intellij.plugin.marklogic.resources.MarkLogicBundle;
+import uk.co.reecedunn.intellij.plugin.marklogic.rest.RDFFormat;
 import uk.co.reecedunn.intellij.plugin.marklogic.runner.MarkLogicResultsHandler;
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.DocumentChangedListener;
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.MarkLogicQueryComboBox;
@@ -42,6 +44,7 @@ public class MarkLogicSettingsEditorUI {
     private JComboBox<String> mModuleDatabase;
     private ComponentWithBrowseButton<JTextField> mModuleRoot;
     private ComponentWithBrowseButton<JTextField> mMainModulePath;
+    private JComboBox<RDFFormat> mTripleFormat;
 
     public MarkLogicSettingsEditorUI(@NotNull MarkLogicConfigurationFactory factory, @NotNull Project project) {
         mFactory = factory;
@@ -58,6 +61,7 @@ public class MarkLogicSettingsEditorUI {
         mModuleDatabase = new MarkLogicQueryComboBox(MarkLogicBundle.message("database.file.system"));
         mModuleRoot = new ComponentWithBrowseButton<>(new JTextField(), null);
         mMainModulePath = new ComponentWithBrowseButton<>(new JTextField(), null);
+        mTripleFormat = new ComboBox<>(RDFFormat.values());
 
         DocumentListener listener = new DocumentChangedListener() {
             @Override
@@ -96,6 +100,7 @@ public class MarkLogicSettingsEditorUI {
         ((MarkLogicQueryComboBox)mModuleDatabase).setItem(configuration.getModuleDatabase());
         mModuleRoot.getChildComponent().setText(configuration.getModuleRoot());
         mMainModulePath.getChildComponent().setText(configuration.getMainModulePath());
+        mTripleFormat.setSelectedItem(configuration.getTripleFormat());
     }
 
     public void apply(@NotNull MarkLogicRunConfiguration configuration) {
@@ -107,6 +112,7 @@ public class MarkLogicSettingsEditorUI {
         configuration.setModuleDatabase(((MarkLogicQueryComboBox)mModuleDatabase).getItem());
         configuration.setModuleRoot(mModuleRoot.getChildComponent().getText());
         configuration.setMainModulePath(mMainModulePath.getChildComponent().getText());
+        configuration.setTripleFormat((RDFFormat)mTripleFormat.getSelectedItem());
     }
 
     @NotNull

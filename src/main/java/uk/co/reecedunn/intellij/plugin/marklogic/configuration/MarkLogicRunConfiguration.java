@@ -35,6 +35,7 @@ import org.jetbrains.annotations.Nullable;
 import uk.co.reecedunn.intellij.plugin.marklogic.configuration.script.QueryScript;
 import uk.co.reecedunn.intellij.plugin.marklogic.configuration.script.ScriptFactory;
 import uk.co.reecedunn.intellij.plugin.marklogic.configuration.script.EvalScript;
+import uk.co.reecedunn.intellij.plugin.marklogic.rest.RDFFormat;
 import uk.co.reecedunn.intellij.plugin.marklogic.runner.MarkLogicResultsHandler;
 import uk.co.reecedunn.intellij.plugin.marklogic.runner.MarkLogicRunProfileState;
 
@@ -71,6 +72,7 @@ public class MarkLogicRunConfiguration extends RunConfigurationBase {
         public String moduleDatabase = null;
         public String moduleRoot = "/";
         public String mainModulePath = "";
+        public String tripleFormat = RDFFormat.SEM_TRIPLE.getMarkLogicName();
     }
 
     private ConfigData data = new ConfigData();
@@ -172,6 +174,14 @@ public class MarkLogicRunConfiguration extends RunConfigurationBase {
 
     public void setMainModulePath(String mainModulePath) {
         data.mainModulePath = mainModulePath;
+    }
+
+    public RDFFormat getTripleFormat() {
+        return RDFFormat.parse(data.tripleFormat);
+    }
+
+    public void setTripleFormat(RDFFormat tripleFormat) {
+        data.tripleFormat = tripleFormat.getMarkLogicName();
     }
 
     public ScriptFactory getScriptFactory() {
