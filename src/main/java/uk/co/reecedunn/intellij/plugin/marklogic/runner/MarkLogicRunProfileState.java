@@ -24,6 +24,7 @@ import com.marklogic.xcc.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import uk.co.reecedunn.intellij.plugin.marklogic.configuration.MarkLogicRunConfiguration;
+import uk.co.reecedunn.intellij.plugin.marklogic.rest.Connection;
 
 public class MarkLogicRunProfileState extends CommandLineState {
     public MarkLogicRunProfileState(@Nullable ExecutionEnvironment environment) {
@@ -56,6 +57,14 @@ public class MarkLogicRunProfileState extends CommandLineState {
             nullableValueOf(configuration.getUserName()),
             nullableValueOf(configuration.getPassword()),
             nullableValueOf(configuration.getContentDatabase())).newSession();
+    }
+
+    private Connection createConnection(MarkLogicRunConfiguration configuration) {
+        return Connection.newConnection(
+            configuration.getServerHost(),
+            configuration.getServerPort(),
+            nullableValueOf(configuration.getUserName()),
+            nullableValueOf(configuration.getPassword()));
     }
 
     private String nullableValueOf(String value) {
