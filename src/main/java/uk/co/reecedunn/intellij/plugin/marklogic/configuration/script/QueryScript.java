@@ -1,4 +1,4 @@
-    /*
+/*
  * Copyright (C) 2017 Reece H. Dunn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,9 +17,15 @@ package uk.co.reecedunn.intellij.plugin.marklogic.configuration.script;
 
 import uk.co.reecedunn.intellij.plugin.marklogic.configuration.MarkLogicRunConfiguration;
 
-public class SQLScript extends ScriptFactory {
+public class QueryScript extends ScriptFactory {
+    private final String mQueryFunction;
+
+    public QueryScript(String queryFunction) {
+        mQueryFunction = queryFunction;
+    }
+
     @Override
     public String createEvalScript(String script, MarkLogicRunConfiguration configuration) {
-        return "xdmp:sql(\"" + asXQueryStringContent(script) + "\")";
+        return mQueryFunction + "(\"" + asXQueryStringContent(script) + "\")";
     }
 }
