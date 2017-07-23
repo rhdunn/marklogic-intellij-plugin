@@ -40,6 +40,8 @@ import uk.co.reecedunn.intellij.plugin.marklogic.runner.MarkLogicRunProfileState
 
 public class MarkLogicRunConfiguration extends RunConfigurationBase {
     private static ScriptFactory JAVASCRIPT = new EvalScript("xdmp:javascript-eval");
+    private static ScriptFactory SPARQL_QUERY = new QueryScript("sem:sparql");
+    private static ScriptFactory SPARQL_UPDATE = new QueryScript("sem:sparql-update");
     private static ScriptFactory SQL = new QueryScript("xdmp:sql");
     private static ScriptFactory XQUERY = new EvalScript("xdmp:eval");
 
@@ -47,12 +49,16 @@ public class MarkLogicRunConfiguration extends RunConfigurationBase {
         "xq", "xqy", "xquery", "xql", "xqu",
         "js", "sjs",
         "sql",
+        "sparql", "rq",
+        "ru",
     };
 
     public static final ScriptFactory[] SCRIPT_FACTORIES = new ScriptFactory[] {
         XQUERY, XQUERY, XQUERY, XQUERY, XQUERY,
         JAVASCRIPT, JAVASCRIPT,
         SQL,
+        SPARQL_QUERY, SPARQL_QUERY,
+        SPARQL_UPDATE,
     };
 
     @SuppressWarnings("WeakerAccess") // DefaultJDOMExternalizer requires public access to the fields.
