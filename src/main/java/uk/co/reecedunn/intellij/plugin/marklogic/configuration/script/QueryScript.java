@@ -25,6 +25,11 @@ public class QueryScript extends ScriptFactory {
     }
 
     @Override
+    public String getConnectionType() {
+        return "REST";
+    }
+
+    @Override
     public String createEvalScript(String script, MarkLogicRunConfiguration configuration) {
         return mQueryFunction + "(\"" + asXQueryStringContent(script) + "\")";
     }

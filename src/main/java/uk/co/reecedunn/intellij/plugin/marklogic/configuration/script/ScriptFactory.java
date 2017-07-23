@@ -29,6 +29,8 @@ public abstract class ScriptFactory {
         return createEvalScript(script, configuration);
     }
 
+    public abstract String getConnectionType();
+
     public abstract String createEvalScript(String script, MarkLogicRunConfiguration configuration);
 
     protected String asXQueryStringContent(String query) {

@@ -29,8 +29,6 @@ import uk.co.reecedunn.intellij.plugin.marklogic.rest.Connection;
 import uk.co.reecedunn.intellij.plugin.marklogic.rest.EvalRequestBuilder;
 
 public class MarkLogicRunProfileState extends CommandLineState {
-    private boolean USE_EXPERIMENTAL_REST_API = false;
-
     public MarkLogicRunProfileState(@Nullable ExecutionEnvironment environment) {
         super(environment);
         if (environment != null) {
@@ -43,7 +41,7 @@ public class MarkLogicRunProfileState extends CommandLineState {
     protected ProcessHandler startProcess() throws ExecutionException {
         MarkLogicRunConfiguration configuration = (MarkLogicRunConfiguration)getEnvironment().getRunProfile();
         ScriptFactory scriptFactory = configuration.getScriptFactory();
-        if (USE_EXPERIMENTAL_REST_API) {
+        if (scriptFactory.getConnectionType().equals("REST")) {
             Connection connection = createConnection(configuration);
             EvalRequestBuilder builder = new EvalRequestBuilder();
             builder.setContentDatabase(configuration.getContentDatabase());
