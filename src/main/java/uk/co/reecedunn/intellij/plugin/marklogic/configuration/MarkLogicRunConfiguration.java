@@ -32,23 +32,27 @@ import com.intellij.util.PathUtil;
 import org.jdom.Element;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import uk.co.reecedunn.intellij.plugin.marklogic.configuration.script.SQLScript;
 import uk.co.reecedunn.intellij.plugin.marklogic.configuration.script.ScriptFactory;
 import uk.co.reecedunn.intellij.plugin.marklogic.configuration.script.QueryScript;
 import uk.co.reecedunn.intellij.plugin.marklogic.runner.MarkLogicResultsHandler;
 import uk.co.reecedunn.intellij.plugin.marklogic.runner.MarkLogicRunProfileState;
 
 public class MarkLogicRunConfiguration extends RunConfigurationBase {
-    private static ScriptFactory XQUERY_SCRIPT = new QueryScript("eval");
     private static ScriptFactory JAVASCRIPT_SCRIPT = new QueryScript("javascript-eval");
+    private static ScriptFactory SQL_SCRIPT = new SQLScript();
+    private static ScriptFactory XQUERY_SCRIPT = new QueryScript("eval");
 
     public static final String[] EXTENSIONS = new String[]{
         "xq", "xqy", "xquery", "xql", "xqu",
         "js", "sjs",
+        "sql",
     };
 
     public static final ScriptFactory[] SCRIPT_FACTORIES = new ScriptFactory[] {
         XQUERY_SCRIPT, XQUERY_SCRIPT, XQUERY_SCRIPT, XQUERY_SCRIPT, XQUERY_SCRIPT,
         JAVASCRIPT_SCRIPT, JAVASCRIPT_SCRIPT,
+        SQL_SCRIPT,
     };
 
     @SuppressWarnings("WeakerAccess") // DefaultJDOMExternalizer requires public access to the fields.
