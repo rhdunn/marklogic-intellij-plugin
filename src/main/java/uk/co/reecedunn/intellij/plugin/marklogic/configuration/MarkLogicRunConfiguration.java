@@ -39,9 +39,9 @@ import uk.co.reecedunn.intellij.plugin.marklogic.runner.MarkLogicResultsHandler;
 import uk.co.reecedunn.intellij.plugin.marklogic.runner.MarkLogicRunProfileState;
 
 public class MarkLogicRunConfiguration extends RunConfigurationBase {
-    private static ScriptFactory JAVASCRIPT_SCRIPT = new EvalScript("javascript-eval");
+    private static ScriptFactory JAVASCRIPT_SCRIPT = new EvalScript("xdmp:javascript-eval");
     private static ScriptFactory SQL_SCRIPT = new QueryScript("xdmp:sql");
-    private static ScriptFactory XQUERY_SCRIPT = new EvalScript("eval");
+    private static ScriptFactory XQUERY_SCRIPT = new EvalScript("xdmp:eval");
 
     public static final String[] EXTENSIONS = new String[]{
         "xq", "xqy", "xquery", "xql", "xqu",

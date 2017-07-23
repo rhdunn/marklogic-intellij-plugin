@@ -27,7 +27,6 @@ public class EvalScript extends ScriptFactory {
     @Override
     public String createEvalScript(String script, MarkLogicRunConfiguration configuration) {
         StringBuilder query = new StringBuilder();
-        query.append("xdmp:");
         query.append(mEvalFunction);
         query.append("(\"");
         query.append(asXQueryStringContent(script));
