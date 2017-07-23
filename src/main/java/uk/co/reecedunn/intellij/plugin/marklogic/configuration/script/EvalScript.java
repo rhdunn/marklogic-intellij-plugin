@@ -17,10 +17,10 @@ package uk.co.reecedunn.intellij.plugin.marklogic.configuration.script;
 
 import uk.co.reecedunn.intellij.plugin.marklogic.configuration.MarkLogicRunConfiguration;
 
-public class QueryScript extends ScriptFactory {
+public class EvalScript extends ScriptFactory {
     private final String mEvalFunction;
 
-    public QueryScript(String evalFunction) {
+    public EvalScript(String evalFunction) {
         mEvalFunction = evalFunction;
     }
 
