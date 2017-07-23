@@ -28,7 +28,7 @@ public class Request {
         this.connection = connection;
     }
 
-    Response run() throws IOException {
+    public Response run() throws IOException {
         return new Response(connection.getClient().execute(request));
     }
 }

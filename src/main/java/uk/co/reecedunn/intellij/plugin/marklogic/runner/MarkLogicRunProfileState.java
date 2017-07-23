@@ -25,8 +25,11 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import uk.co.reecedunn.intellij.plugin.marklogic.configuration.MarkLogicRunConfiguration;
 import uk.co.reecedunn.intellij.plugin.marklogic.rest.Connection;
+import uk.co.reecedunn.intellij.plugin.marklogic.rest.EvalRequestBuilder;
 
 public class MarkLogicRunProfileState extends CommandLineState {
+    private boolean USE_EXPERIMENTAL_REST_API = false;
+
     public MarkLogicRunProfileState(@Nullable ExecutionEnvironment environment) {
         super(environment);
         if (environment != null) {
@@ -38,9 +41,17 @@ public class MarkLogicRunProfileState extends CommandLineState {
     @Override
     protected ProcessHandler startProcess() throws ExecutionException {
         MarkLogicRunConfiguration configuration = (MarkLogicRunConfiguration)getEnvironment().getRunProfile();
-        Session session = createSession(configuration);
-        Request request = session.newAdhocQuery(configuration.getAdhocQuery());
-        return new MarkLogicRequestHandler(session, request, configuration.getMainModulePath());
+        if (USE_EXPERIMENTAL_REST_API) {
+            Connection connection = createConnection(configuration);
+            EvalRequestBuilder builder = new EvalRequestBuilder();
+            builder.setContentDatabase(configuration.getContentDatabase());
+            builder.setXQuery(configuration.getAdhocQuery());
+            return new MarkLogicRestHandler(builder.build(connection), configuration.getMainModulePath());
+        } else {
+            Session session = createSession(configuration);
+            Request request = session.newAdhocQuery(configuration.getAdhocQuery());
+            return new MarkLogicRequestHandler(session, request, configuration.getMainModulePath());
+        }
     }
 
     public boolean run(String query, MarkLogicResultsHandler handler, MarkLogicRunConfiguration configuration) {
