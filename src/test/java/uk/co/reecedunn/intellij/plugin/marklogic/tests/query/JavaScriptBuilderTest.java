@@ -18,6 +18,7 @@ package uk.co.reecedunn.intellij.plugin.marklogic.tests.query;
 import junit.framework.TestCase;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.JavaScriptBuilder;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.QueryBuilder;
+import uk.co.reecedunn.intellij.plugin.marklogic.query.options.EvalOptionsBuilder;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.vars.MapVarsBuilder;
 
 import static org.hamcrest.CoreMatchers.*;
@@ -34,15 +35,19 @@ public class JavaScriptBuilderTest extends TestCase {
 
         assertThat(js.createEvalBuilder(QueryBuilder.ExecMode.Run, 8.0), is(notNullValue()));
         assertThat(js.createEvalBuilder(QueryBuilder.ExecMode.Run, 8.0).getFunction(),
-                   is("xdmp:javascript-eval($query, $vars, $options)"));
+                is("xdmp:javascript-eval($query, $vars, $options)"));
         assertThat(js.createEvalBuilder(QueryBuilder.ExecMode.Run, 8.0).getVarsBuilder(),
                    is(instanceOf(MapVarsBuilder.class)));
+        assertThat(js.createEvalBuilder(QueryBuilder.ExecMode.Run, 8.0).getOptionsBuilder(),
+                is(instanceOf(EvalOptionsBuilder.class)));
 
         assertThat(js.createEvalBuilder(QueryBuilder.ExecMode.Run, 9.0), is(notNullValue()));
         assertThat(js.createEvalBuilder(QueryBuilder.ExecMode.Run, 9.0).getFunction(),
                 is("xdmp:javascript-eval($query, $vars, $options)"));
         assertThat(js.createEvalBuilder(QueryBuilder.ExecMode.Run, 9.0).getVarsBuilder(),
                 is(instanceOf(MapVarsBuilder.class)));
+        assertThat(js.createEvalBuilder(QueryBuilder.ExecMode.Run, 9.0).getOptionsBuilder(),
+                is(instanceOf(EvalOptionsBuilder.class)));
     }
 
     public void testEvalProfile() {
@@ -77,12 +82,16 @@ public class JavaScriptBuilderTest extends TestCase {
                 is("xdmp:invoke($path, $vars, $options)"));
         assertThat(js.createInvokeBuilder(QueryBuilder.ExecMode.Run, 8.0).getVarsBuilder(),
                 is(instanceOf(MapVarsBuilder.class)));
+        assertThat(js.createInvokeBuilder(QueryBuilder.ExecMode.Run, 8.0).getOptionsBuilder(),
+                is(instanceOf(EvalOptionsBuilder.class)));
 
         assertThat(js.createInvokeBuilder(QueryBuilder.ExecMode.Run, 9.0), is(notNullValue()));
         assertThat(js.createInvokeBuilder(QueryBuilder.ExecMode.Run, 9.0).getFunction(),
                 is("xdmp:invoke($path, $vars, $options)"));
         assertThat(js.createInvokeBuilder(QueryBuilder.ExecMode.Run, 9.0).getVarsBuilder(),
                 is(instanceOf(MapVarsBuilder.class)));
+        assertThat(js.createInvokeBuilder(QueryBuilder.ExecMode.Run, 9.0).getOptionsBuilder(),
+                is(instanceOf(EvalOptionsBuilder.class)));
     }
 
     public void testInvokeProfile() {

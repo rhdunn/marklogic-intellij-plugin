@@ -16,15 +16,18 @@
 package uk.co.reecedunn.intellij.plugin.marklogic.query;
 
 import org.jetbrains.annotations.Nullable;
+import uk.co.reecedunn.intellij.plugin.marklogic.query.options.EvalOptionsBuilder;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.vars.MapVarsBuilder;
 
 public class JavaScriptBuilder implements QueryBuilder {
     private static FunctionBuilder XDMP_JAVASCRIPT_EVAL = new FunctionBuilder(
         "xdmp:javascript-eval($query, $vars, $options)",
-        new MapVarsBuilder());
+        new MapVarsBuilder(),
+        new EvalOptionsBuilder());
     private static FunctionBuilder XDMP_INVOKE = new FunctionBuilder(
         "xdmp:invoke($path, $vars, $options)",
-        new MapVarsBuilder());
+        new MapVarsBuilder(),
+        new EvalOptionsBuilder());
 
     @Nullable
     public FunctionBuilder createEvalBuilder(ExecMode mode, double markLogicVersion) {

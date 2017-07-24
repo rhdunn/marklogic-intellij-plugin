@@ -34,15 +34,19 @@ public class SQLBuilderTest extends TestCase {
 
         assertThat(sql.createEvalBuilder(QueryBuilder.ExecMode.Run, 8.0), is(notNullValue()));
         assertThat(sql.createEvalBuilder(QueryBuilder.ExecMode.Run, 8.0).getFunction(),
-                   is("xdmp:sql($query)"));
+                is("xdmp:sql($query)"));
         assertThat(sql.createEvalBuilder(QueryBuilder.ExecMode.Run, 8.0).getVarsBuilder(),
-                   is(nullValue()));
+                is(nullValue()));
+        assertThat(sql.createEvalBuilder(QueryBuilder.ExecMode.Run, 8.0).getOptionsBuilder(),
+                is(nullValue()));
 
         assertThat(sql.createEvalBuilder(QueryBuilder.ExecMode.Run, 9.0), is(notNullValue()));
         assertThat(sql.createEvalBuilder(QueryBuilder.ExecMode.Run, 9.0).getFunction(),
                 is("xdmp:sql($query, (), $vars)"));
         assertThat(sql.createEvalBuilder(QueryBuilder.ExecMode.Run, 9.0).getVarsBuilder(),
                 is(instanceOf(MapVarsBuilder.class)));
+        assertThat(sql.createEvalBuilder(QueryBuilder.ExecMode.Run, 9.0).getOptionsBuilder(),
+                is(nullValue()));
     }
 
     public void testEvalProfile() {

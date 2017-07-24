@@ -19,8 +19,14 @@ import org.jetbrains.annotations.Nullable;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.vars.MapVarsBuilder;
 
 public class SQLBuilder implements QueryBuilder {
-    private static FunctionBuilder XDMP_SQL_80 = new FunctionBuilder("xdmp:sql($query)", null);
-    private static FunctionBuilder XDMP_SQL_90 = new FunctionBuilder("xdmp:sql($query, (), $vars)", new MapVarsBuilder());
+    private static FunctionBuilder XDMP_SQL_80 = new FunctionBuilder(
+        "xdmp:sql($query)",
+        null,
+        null);
+    private static FunctionBuilder XDMP_SQL_90 = new FunctionBuilder(
+        "xdmp:sql($query, (), $vars)",
+        new MapVarsBuilder(),
+        null);
 
     @Nullable
     public FunctionBuilder createEvalBuilder(ExecMode mode, double markLogicVersion) {

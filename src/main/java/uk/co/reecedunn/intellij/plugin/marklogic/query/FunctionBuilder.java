@@ -15,15 +15,18 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.query;
 
+import uk.co.reecedunn.intellij.plugin.marklogic.query.options.OptionsBuilder;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.vars.VarsBuilder;
 
 public class FunctionBuilder {
     private final String function;
     private final VarsBuilder varsBuilder;
+    private final OptionsBuilder optionsBuilder;
 
-    FunctionBuilder(String function, VarsBuilder varsBuilder) {
+    FunctionBuilder(String function, VarsBuilder varsBuilder, OptionsBuilder optionsBuilder) {
         this.function = function;
         this.varsBuilder = varsBuilder;
+        this.optionsBuilder = optionsBuilder;
     }
 
     public String getFunction() {
@@ -32,5 +35,9 @@ public class FunctionBuilder {
 
     public VarsBuilder getVarsBuilder() {
         return varsBuilder;
+    }
+
+    public OptionsBuilder getOptionsBuilder() {
+        return optionsBuilder;
     }
 }
