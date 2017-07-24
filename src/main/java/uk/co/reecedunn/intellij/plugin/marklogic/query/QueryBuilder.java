@@ -25,8 +25,8 @@ public interface QueryBuilder {
     }
 
     @Nullable
-    FunctionBuilder createEvalBuilder(ExecMode mode, double markLogicVersion);
+    Function createEvalBuilder(ExecMode mode, double markLogicVersion);
 
     @Nullable
-    FunctionBuilder createInvokeBuilder(ExecMode mode, double markLogicVersion);
+    Function createInvokeBuilder(ExecMode mode, double markLogicVersion);
 }

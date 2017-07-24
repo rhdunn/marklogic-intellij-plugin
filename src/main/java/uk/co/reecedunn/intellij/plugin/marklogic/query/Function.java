@@ -18,12 +18,12 @@ package uk.co.reecedunn.intellij.plugin.marklogic.query;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.options.OptionsBuilder;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.vars.VarsBuilder;
 
-public class FunctionBuilder {
+public class Function {
     private final String function;
     private final VarsBuilder varsBuilder;
     private final OptionsBuilder optionsBuilder;
 
-    FunctionBuilder(String function, VarsBuilder varsBuilder, OptionsBuilder optionsBuilder) {
+    Function(String function, VarsBuilder varsBuilder, OptionsBuilder optionsBuilder) {
         this.function = function;
         this.varsBuilder = varsBuilder;
         this.optionsBuilder = optionsBuilder;

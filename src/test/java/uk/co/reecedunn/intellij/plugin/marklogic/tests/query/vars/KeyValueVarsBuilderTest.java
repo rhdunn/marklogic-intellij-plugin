@@ -16,9 +16,6 @@
 package uk.co.reecedunn.intellij.plugin.marklogic.tests.query.vars;
 
 import junit.framework.TestCase;
-import uk.co.reecedunn.intellij.plugin.marklogic.query.FunctionBuilder;
-import uk.co.reecedunn.intellij.plugin.marklogic.query.QueryBuilder;
-import uk.co.reecedunn.intellij.plugin.marklogic.query.SQLBuilder;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.vars.KeyValueVarsBuilder;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.vars.VarsBuilder;
 
