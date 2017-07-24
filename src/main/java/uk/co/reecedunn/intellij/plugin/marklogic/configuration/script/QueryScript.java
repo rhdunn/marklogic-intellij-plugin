@@ -26,11 +26,6 @@ public class QueryScript extends ScriptFactory {
     }
 
     @Override
-    public String getConnectionType() {
-        return "REST";
-    }
-
-    @Override
     public void createEvalScript(StringBuilder query, String script, MarkLogicRunConfiguration configuration) {
         if (mQueryFunction.equals("xdmp:sql")) {
             query.append(mQueryFunction);

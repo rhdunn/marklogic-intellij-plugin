@@ -20,7 +20,6 @@ import com.intellij.execution.configurations.CommandLineState;
 import com.intellij.execution.filters.RegexpFilter;
 import com.intellij.execution.process.ProcessHandler;
 import com.intellij.execution.runners.ExecutionEnvironment;
-import com.marklogic.xcc.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import uk.co.reecedunn.intellij.plugin.marklogic.configuration.MarkLogicRunConfiguration;
@@ -41,33 +40,20 @@ public class MarkLogicRunProfileState extends CommandLineState {
     protected ProcessHandler startProcess() throws ExecutionException {
         MarkLogicRunConfiguration configuration = (MarkLogicRunConfiguration)getEnvironment().getRunProfile();
         ScriptFactory scriptFactory = configuration.getScriptFactory();
-        if (scriptFactory.getConnectionType().equals("REST")) {
-            Connection connection = createConnection(configuration);
-            EvalRequestBuilder builder = new EvalRequestBuilder();
-            builder.setContentDatabase(configuration.getContentDatabase());
-            builder.setXQuery(scriptFactory.createScript(configuration));
-            return new MarkLogicRestHandler(builder.build(connection), configuration.getMainModulePath());
-        } else {
-            Session session = createSession(configuration);
-            Request request = session.newAdhocQuery(scriptFactory.createScript(configuration));
-            return new MarkLogicRequestHandler(session, request, configuration.getMainModulePath());
-        }
+        Connection connection = createConnection(configuration);
+        EvalRequestBuilder builder = new EvalRequestBuilder();
+        builder.setContentDatabase(configuration.getContentDatabase());
+        builder.setXQuery(scriptFactory.createScript(configuration));
+        return new MarkLogicRestHandler(builder.build(connection), configuration.getMainModulePath());
     }
 
     public boolean run(String query, MarkLogicResultsHandler handler, MarkLogicRunConfiguration configuration) {
-        Session session = createSession(configuration);
-        Request request = session.newAdhocQuery(query);
-        MarkLogicRequestHandler requestHandler = new MarkLogicRequestHandler(session, request, "/eval");
-        return requestHandler.run(handler);
-    }
-
-    private Session createSession(MarkLogicRunConfiguration configuration) {
-        return ContentSourceFactory.newContentSource(
-            configuration.getServerHost(),
-            configuration.getServerPort(),
-            nullableValueOf(configuration.getUserName()),
-            nullableValueOf(configuration.getPassword()),
-            nullableValueOf(configuration.getContentDatabase())).newSession();
+        Connection connection = createConnection(configuration);
+        EvalRequestBuilder builder = new EvalRequestBuilder();
+        builder.setContentDatabase(configuration.getContentDatabase());
+        builder.setXQuery(query);
+        MarkLogicRestHandler restHandler = new MarkLogicRestHandler(builder.build(connection), "/eval");
+        return restHandler.run(handler);
     }
 
     private Connection createConnection(MarkLogicRunConfiguration configuration) {

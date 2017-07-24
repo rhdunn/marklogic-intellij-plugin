@@ -25,11 +25,6 @@ public class EvalScript extends ScriptFactory {
     }
 
     @Override
-    public String getConnectionType() {
-        return "XCC";
-    }
-
-    @Override
     public void createEvalScript(StringBuilder query, String script, MarkLogicRunConfiguration configuration) {
         query.append(mEvalFunction);
         query.append("(\"");

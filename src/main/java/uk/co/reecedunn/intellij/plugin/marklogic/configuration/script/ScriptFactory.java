@@ -33,8 +33,6 @@ public abstract class ScriptFactory {
         return query.toString();
     }
 
-    public abstract String getConnectionType();
-
     public abstract void createEvalScript(StringBuilder result, String script, MarkLogicRunConfiguration configuration);
 
     protected String asXQueryStringContent(String query) {
