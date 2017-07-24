@@ -15,10 +15,31 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.query;
 
+import uk.co.reecedunn.intellij.plugin.marklogic.query.options.EvalOptionsBuilder;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.options.OptionsBuilder;
+import uk.co.reecedunn.intellij.plugin.marklogic.query.vars.MapVarsBuilder;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.vars.VarsBuilder;
 
-public class Function {
+public enum Function {
+    XDMP_INVOKE_70(
+        "xdmp:invoke($path, $vars, $options)",
+        MapVarsBuilder.INSTANCE,
+        EvalOptionsBuilder.INSTANCE),
+
+    XDMP_JAVASCRIPT_EVAL_80(
+        "xdmp:javascript-eval($query, $vars, $options)",
+        MapVarsBuilder.INSTANCE,
+        EvalOptionsBuilder.INSTANCE),
+
+    XDMP_SQL_80(
+        "xdmp:sql($query)",
+        null,
+        null),
+    XDMP_SQL_90(
+        "xdmp:sql($query, (), $vars)",
+        MapVarsBuilder.INSTANCE,
+        null);
+
     private final String function;
     private final VarsBuilder varsBuilder;
     private final OptionsBuilder optionsBuilder;

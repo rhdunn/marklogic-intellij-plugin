@@ -16,20 +16,9 @@
 package uk.co.reecedunn.intellij.plugin.marklogic.query;
 
 import org.jetbrains.annotations.Nullable;
-import uk.co.reecedunn.intellij.plugin.marklogic.query.options.EvalOptionsBuilder;
-import uk.co.reecedunn.intellij.plugin.marklogic.query.vars.MapVarsBuilder;
 
 public class JavaScriptBuilder implements QueryBuilder {
     public static QueryBuilder INSTANCE = new JavaScriptBuilder();
-
-    private static Function XDMP_JAVASCRIPT_EVAL = new Function(
-        "xdmp:javascript-eval($query, $vars, $options)",
-        MapVarsBuilder.INSTANCE,
-        EvalOptionsBuilder.INSTANCE);
-    private static Function XDMP_INVOKE = new Function(
-        "xdmp:invoke($path, $vars, $options)",
-        MapVarsBuilder.INSTANCE,
-        EvalOptionsBuilder.INSTANCE);
 
     private JavaScriptBuilder() {
     }
@@ -37,7 +26,7 @@ public class JavaScriptBuilder implements QueryBuilder {
     @Nullable
     public Function createEvalBuilder(ExecMode mode, double markLogicVersion) {
         if (mode == ExecMode.Run && markLogicVersion >= 8.0) {
-            return XDMP_JAVASCRIPT_EVAL;
+            return Function.XDMP_JAVASCRIPT_EVAL_80;
         }
         return null;
     }
@@ -45,7 +34,7 @@ public class JavaScriptBuilder implements QueryBuilder {
     @Nullable
     public Function createInvokeBuilder(ExecMode mode, double markLogicVersion) {
         if (mode == ExecMode.Run && markLogicVersion >= 8.0) {
-            return XDMP_INVOKE;
+            return Function.XDMP_INVOKE_70;
         }
         return null;
     }
