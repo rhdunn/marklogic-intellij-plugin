@@ -22,11 +22,11 @@ import uk.co.reecedunn.intellij.plugin.marklogic.query.vars.MapVarsBuilder;
 public class JavaScriptBuilder implements QueryBuilder {
     private static Function XDMP_JAVASCRIPT_EVAL = new Function(
         "xdmp:javascript-eval($query, $vars, $options)",
-        new MapVarsBuilder(),
+        MapVarsBuilder.INSTANCE,
         new EvalOptionsBuilder());
     private static Function XDMP_INVOKE = new Function(
         "xdmp:invoke($path, $vars, $options)",
-        new MapVarsBuilder(),
+        MapVarsBuilder.INSTANCE,
         new EvalOptionsBuilder());
 
     @Nullable

@@ -18,6 +18,11 @@ package uk.co.reecedunn.intellij.plugin.marklogic.query.vars;
 import org.jetbrains.annotations.NotNull;
 
 public class MapVarsBuilder implements VarsBuilder {
+    public static VarsBuilder INSTANCE = new MapVarsBuilder();
+
+    private MapVarsBuilder() {
+    }
+
     public void start(@NotNull StringBuilder builder) {
         builder.append("let $vars := map:map()\n");
     }

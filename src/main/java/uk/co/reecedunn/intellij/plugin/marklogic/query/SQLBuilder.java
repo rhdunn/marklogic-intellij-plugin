@@ -25,7 +25,7 @@ public class SQLBuilder implements QueryBuilder {
         null);
     private static Function XDMP_SQL_90 = new Function(
         "xdmp:sql($query, (), $vars)",
-        new MapVarsBuilder(),
+        MapVarsBuilder.INSTANCE,
         null);
 
     @Nullable
