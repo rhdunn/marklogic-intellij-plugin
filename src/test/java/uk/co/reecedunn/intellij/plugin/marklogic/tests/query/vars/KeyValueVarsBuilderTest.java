@@ -25,7 +25,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 @SuppressWarnings("ConstantConditions")
 public class KeyValueVarsBuilderTest extends TestCase {
     public void testNoVars() {
-        VarsBuilder builder = new KeyValueVarsBuilder();
+        VarsBuilder builder = KeyValueVarsBuilder.INSTANCE;
         StringBuilder vars = new StringBuilder();
 
         builder.start(vars);
@@ -35,7 +35,7 @@ public class KeyValueVarsBuilderTest extends TestCase {
     }
 
     public void testVarsSingle() {
-        VarsBuilder builder = new KeyValueVarsBuilder();
+        VarsBuilder builder = KeyValueVarsBuilder.INSTANCE;
         StringBuilder vars = new StringBuilder();
 
         builder.start(vars);
@@ -46,7 +46,7 @@ public class KeyValueVarsBuilderTest extends TestCase {
     }
 
     public void testVarsMultiple() {
-        VarsBuilder builder = new KeyValueVarsBuilder();
+        VarsBuilder builder = KeyValueVarsBuilder.INSTANCE;
         StringBuilder vars = new StringBuilder();
 
         builder.start(vars);

@@ -18,10 +18,16 @@ package uk.co.reecedunn.intellij.plugin.marklogic.query.vars;
 import org.jetbrains.annotations.NotNull;
 
 public class KeyValueVarsBuilder implements VarsBuilder {
+    public static VarsBuilder INSTANCE = new KeyValueVarsBuilder();
+
     private boolean isFirstItem = true;
+
+    private KeyValueVarsBuilder() {
+    }
 
     public void start(@NotNull StringBuilder builder) {
         builder.append('(');
+        isFirstItem = true;
     }
 
     public void add(@NotNull StringBuilder builder, String key, String value) {
