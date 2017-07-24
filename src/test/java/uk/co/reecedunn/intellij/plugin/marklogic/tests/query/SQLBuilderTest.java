@@ -26,7 +26,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 @SuppressWarnings("ConstantConditions")
 public class SQLBuilderTest extends TestCase {
     public void testEvalRun() {
-        SQLBuilder sql = new SQLBuilder();
+        QueryBuilder sql = SQLBuilder.INSTANCE;
 
         assertThat(sql.createEvalBuilder(QueryBuilder.ExecMode.Run, 5.0), is(nullValue()));
         assertThat(sql.createEvalBuilder(QueryBuilder.ExecMode.Run, 6.0), is(nullValue()));
@@ -50,7 +50,7 @@ public class SQLBuilderTest extends TestCase {
     }
 
     public void testEvalProfile() {
-        SQLBuilder sql = new SQLBuilder();
+        QueryBuilder sql = SQLBuilder.INSTANCE;
 
         assertThat(sql.createEvalBuilder(QueryBuilder.ExecMode.Profile, 5.0), is(nullValue()));
         assertThat(sql.createEvalBuilder(QueryBuilder.ExecMode.Profile, 6.0), is(nullValue()));
@@ -60,7 +60,7 @@ public class SQLBuilderTest extends TestCase {
     }
 
     public void testEvalDebug() {
-        SQLBuilder sql = new SQLBuilder();
+        QueryBuilder sql = SQLBuilder.INSTANCE;
 
         assertThat(sql.createEvalBuilder(QueryBuilder.ExecMode.Debug, 5.0), is(nullValue()));
         assertThat(sql.createEvalBuilder(QueryBuilder.ExecMode.Debug, 6.0), is(nullValue()));
@@ -70,7 +70,7 @@ public class SQLBuilderTest extends TestCase {
     }
 
     public void testInvokeRun() {
-        SQLBuilder sql = new SQLBuilder();
+        QueryBuilder sql = SQLBuilder.INSTANCE;
 
         assertThat(sql.createInvokeBuilder(QueryBuilder.ExecMode.Run, 5.0), is(nullValue()));
         assertThat(sql.createInvokeBuilder(QueryBuilder.ExecMode.Run, 6.0), is(nullValue()));
@@ -80,7 +80,7 @@ public class SQLBuilderTest extends TestCase {
     }
 
     public void testInvokeProfile() {
-        SQLBuilder sql = new SQLBuilder();
+        QueryBuilder sql = SQLBuilder.INSTANCE;
 
         assertThat(sql.createInvokeBuilder(QueryBuilder.ExecMode.Profile, 5.0), is(nullValue()));
         assertThat(sql.createInvokeBuilder(QueryBuilder.ExecMode.Profile, 6.0), is(nullValue()));
@@ -90,7 +90,7 @@ public class SQLBuilderTest extends TestCase {
     }
 
     public void testInvokeDebug() {
-        SQLBuilder sql = new SQLBuilder();
+        QueryBuilder sql = SQLBuilder.INSTANCE;
 
         assertThat(sql.createInvokeBuilder(QueryBuilder.ExecMode.Debug, 5.0), is(nullValue()));
         assertThat(sql.createInvokeBuilder(QueryBuilder.ExecMode.Debug, 6.0), is(nullValue()));
