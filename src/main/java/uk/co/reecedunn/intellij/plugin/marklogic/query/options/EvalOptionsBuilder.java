@@ -18,9 +18,14 @@ package uk.co.reecedunn.intellij.plugin.marklogic.query.options;
 import org.jetbrains.annotations.NotNull;
 
 public class EvalOptionsBuilder implements OptionsBuilder {
+    public static OptionsBuilder INSTANCE = new EvalOptionsBuilder();
+
     private String contentDatabase = null;
     private String modulesDatabase = null;
     private String modulesRoot = null;
+
+    private EvalOptionsBuilder() {
+    }
 
     @Override
     public void reset() {

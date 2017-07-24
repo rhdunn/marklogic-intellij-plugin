@@ -23,11 +23,11 @@ public class JavaScriptBuilder implements QueryBuilder {
     private static Function XDMP_JAVASCRIPT_EVAL = new Function(
         "xdmp:javascript-eval($query, $vars, $options)",
         MapVarsBuilder.INSTANCE,
-        new EvalOptionsBuilder());
+        EvalOptionsBuilder.INSTANCE);
     private static Function XDMP_INVOKE = new Function(
         "xdmp:invoke($path, $vars, $options)",
         MapVarsBuilder.INSTANCE,
-        new EvalOptionsBuilder());
+        EvalOptionsBuilder.INSTANCE);
 
     @Nullable
     public Function createEvalBuilder(ExecMode mode, double markLogicVersion) {

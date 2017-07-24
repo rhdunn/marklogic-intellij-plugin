@@ -25,9 +25,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
 @SuppressWarnings("ConstantConditions")
 public class EvalOptionsBuilderTest extends TestCase {
     public void testNoOptions() {
-        OptionsBuilder builder = new EvalOptionsBuilder();
+        OptionsBuilder builder = EvalOptionsBuilder.INSTANCE;
         StringBuilder vars = new StringBuilder();
 
+        builder.reset();
         builder.build(vars);
 
         final String expected =
@@ -37,9 +38,10 @@ public class EvalOptionsBuilderTest extends TestCase {
     }
 
     public void testContentDatabaseOption() {
-        OptionsBuilder builder = new EvalOptionsBuilder();
+        OptionsBuilder builder = EvalOptionsBuilder.INSTANCE;
         StringBuilder vars = new StringBuilder();
 
+        builder.reset();
         builder.setContentDatabase("lorem");
         builder.build(vars);
 
@@ -51,9 +53,10 @@ public class EvalOptionsBuilderTest extends TestCase {
     }
 
     public void testModulesDatabaseOption() {
-        OptionsBuilder builder = new EvalOptionsBuilder();
+        OptionsBuilder builder = EvalOptionsBuilder.INSTANCE;
         StringBuilder vars = new StringBuilder();
 
+        builder.reset();
         builder.setModulesDatabase("lorem");
         builder.build(vars);
 
@@ -65,9 +68,10 @@ public class EvalOptionsBuilderTest extends TestCase {
     }
 
     public void testModulesRootOption() {
-        OptionsBuilder builder = new EvalOptionsBuilder();
+        OptionsBuilder builder = EvalOptionsBuilder.INSTANCE;
         StringBuilder vars = new StringBuilder();
 
+        builder.reset();
         builder.setModulesRoot("lorem");
         builder.build(vars);
 
@@ -79,9 +83,10 @@ public class EvalOptionsBuilderTest extends TestCase {
     }
 
     public void testResetOptions() {
-        OptionsBuilder builder = new EvalOptionsBuilder();
+        OptionsBuilder builder = EvalOptionsBuilder.INSTANCE;
         StringBuilder vars = new StringBuilder();
 
+        builder.reset();
         builder.setContentDatabase("lorem");
         builder.setModulesDatabase("ipsum");
         builder.setModulesRoot("/dolor");
