@@ -16,9 +16,9 @@
 package uk.co.reecedunn.intellij.plugin.marklogic.tests.query;
 
 import junit.framework.TestCase;
-import uk.co.reecedunn.intellij.plugin.marklogic.query.FunctionBuilder;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.SQLBuilder;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.QueryBuilder;
+import uk.co.reecedunn.intellij.plugin.marklogic.query.vars.MapVarsBuilder;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -35,14 +35,14 @@ public class SQLBuilderTest extends TestCase {
         assertThat(sql.createEvalBuilder(QueryBuilder.ExecMode.Run, 8.0), is(notNullValue()));
         assertThat(sql.createEvalBuilder(QueryBuilder.ExecMode.Run, 8.0).getFunction(),
                    is("xdmp:sql($query)"));
-        assertThat(sql.createEvalBuilder(QueryBuilder.ExecMode.Run, 8.0).getVarsFormat(),
-                   is(FunctionBuilder.VarsFormat.NotSupported));
+        assertThat(sql.createEvalBuilder(QueryBuilder.ExecMode.Run, 8.0).getVarsBuilder(),
+                   is(nullValue()));
 
         assertThat(sql.createEvalBuilder(QueryBuilder.ExecMode.Run, 9.0), is(notNullValue()));
         assertThat(sql.createEvalBuilder(QueryBuilder.ExecMode.Run, 9.0).getFunction(),
                 is("xdmp:sql($query, (), $vars)"));
-        assertThat(sql.createEvalBuilder(QueryBuilder.ExecMode.Run, 9.0).getVarsFormat(),
-                is(FunctionBuilder.VarsFormat.Map));
+        assertThat(sql.createEvalBuilder(QueryBuilder.ExecMode.Run, 9.0).getVarsBuilder(),
+                is(instanceOf(MapVarsBuilder.class)));
     }
 
     public void testEvalProfile() {

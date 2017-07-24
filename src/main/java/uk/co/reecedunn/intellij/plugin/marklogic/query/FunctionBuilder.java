@@ -15,26 +15,22 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.query;
 
+import uk.co.reecedunn.intellij.plugin.marklogic.query.vars.VarsBuilder;
+
 public class FunctionBuilder {
-    public enum VarsFormat {
-        NotSupported,
-        KeyValueSequence,
-        Map,
-    }
-
     private final String function;
-    private final VarsFormat varsFormat;
+    private final VarsBuilder varsBuilder;
 
-    FunctionBuilder(String function, VarsFormat varsFormat) {
+    FunctionBuilder(String function, VarsBuilder varsBuilder) {
         this.function = function;
-        this.varsFormat = varsFormat;
+        this.varsBuilder = varsBuilder;
     }
 
     public String getFunction() {
         return function;
     }
 
-    public VarsFormat getVarsFormat() {
-        return varsFormat;
+    public VarsBuilder getVarsBuilder() {
+        return varsBuilder;
     }
 }
