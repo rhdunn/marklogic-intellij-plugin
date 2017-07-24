@@ -20,6 +20,8 @@ import uk.co.reecedunn.intellij.plugin.marklogic.query.options.EvalOptionsBuilde
 import uk.co.reecedunn.intellij.plugin.marklogic.query.vars.MapVarsBuilder;
 
 public class JavaScriptBuilder implements QueryBuilder {
+    public static QueryBuilder INSTANCE = new JavaScriptBuilder();
+
     private static Function XDMP_JAVASCRIPT_EVAL = new Function(
         "xdmp:javascript-eval($query, $vars, $options)",
         MapVarsBuilder.INSTANCE,
@@ -28,6 +30,9 @@ public class JavaScriptBuilder implements QueryBuilder {
         "xdmp:invoke($path, $vars, $options)",
         MapVarsBuilder.INSTANCE,
         EvalOptionsBuilder.INSTANCE);
+
+    private JavaScriptBuilder() {
+    }
 
     @Nullable
     public Function createEvalBuilder(ExecMode mode, double markLogicVersion) {

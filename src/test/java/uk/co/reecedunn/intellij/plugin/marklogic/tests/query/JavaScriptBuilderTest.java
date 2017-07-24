@@ -27,7 +27,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 @SuppressWarnings("ConstantConditions")
 public class JavaScriptBuilderTest extends TestCase {
     public void testEvalRun() {
-        JavaScriptBuilder js = new JavaScriptBuilder();
+        QueryBuilder js = JavaScriptBuilder.INSTANCE;
 
         assertThat(js.createEvalBuilder(QueryBuilder.ExecMode.Run, 5.0), is(nullValue()));
         assertThat(js.createEvalBuilder(QueryBuilder.ExecMode.Run, 6.0), is(nullValue()));
@@ -51,7 +51,7 @@ public class JavaScriptBuilderTest extends TestCase {
     }
 
     public void testEvalProfile() {
-        JavaScriptBuilder js = new JavaScriptBuilder();
+        QueryBuilder js = JavaScriptBuilder.INSTANCE;
 
         assertThat(js.createEvalBuilder(QueryBuilder.ExecMode.Profile, 5.0), is(nullValue()));
         assertThat(js.createEvalBuilder(QueryBuilder.ExecMode.Profile, 6.0), is(nullValue()));
@@ -61,7 +61,7 @@ public class JavaScriptBuilderTest extends TestCase {
     }
 
     public void testEvalDebug() {
-        JavaScriptBuilder js = new JavaScriptBuilder();
+        QueryBuilder js = JavaScriptBuilder.INSTANCE;
 
         assertThat(js.createEvalBuilder(QueryBuilder.ExecMode.Debug, 5.0), is(nullValue()));
         assertThat(js.createEvalBuilder(QueryBuilder.ExecMode.Debug, 6.0), is(nullValue()));
@@ -71,7 +71,7 @@ public class JavaScriptBuilderTest extends TestCase {
     }
 
     public void testInvokeRun() {
-        JavaScriptBuilder js = new JavaScriptBuilder();
+        QueryBuilder js = JavaScriptBuilder.INSTANCE;
 
         assertThat(js.createInvokeBuilder(QueryBuilder.ExecMode.Run, 5.0), is(nullValue()));
         assertThat(js.createInvokeBuilder(QueryBuilder.ExecMode.Run, 6.0), is(nullValue()));
@@ -95,7 +95,7 @@ public class JavaScriptBuilderTest extends TestCase {
     }
 
     public void testInvokeProfile() {
-        JavaScriptBuilder js = new JavaScriptBuilder();
+        QueryBuilder js = JavaScriptBuilder.INSTANCE;
 
         assertThat(js.createInvokeBuilder(QueryBuilder.ExecMode.Profile, 5.0), is(nullValue()));
         assertThat(js.createInvokeBuilder(QueryBuilder.ExecMode.Profile, 6.0), is(nullValue()));
@@ -105,7 +105,7 @@ public class JavaScriptBuilderTest extends TestCase {
     }
 
     public void testInvokeDebug() {
-        JavaScriptBuilder js = new JavaScriptBuilder();
+        QueryBuilder js = JavaScriptBuilder.INSTANCE;
 
         assertThat(js.createInvokeBuilder(QueryBuilder.ExecMode.Debug, 5.0), is(nullValue()));
         assertThat(js.createInvokeBuilder(QueryBuilder.ExecMode.Debug, 6.0), is(nullValue()));
