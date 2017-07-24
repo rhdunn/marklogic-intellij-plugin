@@ -26,12 +26,16 @@ import java.io.*;
 public abstract class ScriptFactory {
     public String createScript(MarkLogicRunConfiguration configuration) {
         final String script = readFileContent(configuration.getMainModulePath());
-        return createEvalScript(script, configuration);
+        StringBuilder query = new StringBuilder();
+        query.append("try {");
+        createEvalScript(query, script, configuration);
+        query.append("} catch ($e) { $e }");
+        return query.toString();
     }
 
     public abstract String getConnectionType();
 
-    public abstract String createEvalScript(String script, MarkLogicRunConfiguration configuration);
+    public abstract void createEvalScript(StringBuilder result, String script, MarkLogicRunConfiguration configuration);
 
     protected String asXQueryStringContent(String query) {
         return query.replaceAll("\"", "\"\"").replaceAll("&", "&amp;");

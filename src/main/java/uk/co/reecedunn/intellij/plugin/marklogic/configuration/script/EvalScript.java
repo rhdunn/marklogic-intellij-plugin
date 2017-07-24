@@ -30,8 +30,7 @@ public class EvalScript extends ScriptFactory {
     }
 
     @Override
-    public String createEvalScript(String script, MarkLogicRunConfiguration configuration) {
-        StringBuilder query = new StringBuilder();
+    public void createEvalScript(StringBuilder query, String script, MarkLogicRunConfiguration configuration) {
         query.append(mEvalFunction);
         query.append("(\"");
         query.append(asXQueryStringContent(script));
@@ -42,7 +41,6 @@ public class EvalScript extends ScriptFactory {
         appendDatabaseOption(query, "modules", configuration.getModuleDatabase());
         appendOption(query, "root", configuration.getModuleRoot());
         query.append("</options>)");
-        return query.toString();
     }
 
     private void appendDatabaseOption(StringBuilder options, String option, String database) {

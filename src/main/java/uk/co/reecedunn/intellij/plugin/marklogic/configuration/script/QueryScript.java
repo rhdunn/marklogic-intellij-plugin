@@ -31,13 +31,15 @@ public class QueryScript extends ScriptFactory {
     }
 
     @Override
-    public String createEvalScript(String script, MarkLogicRunConfiguration configuration) {
+    public void createEvalScript(StringBuilder query, String script, MarkLogicRunConfiguration configuration) {
         if (mQueryFunction.equals("xdmp:sql")) {
-            return mQueryFunction + "(\"" + asXQueryStringContent(script) + "\")";
+            query.append(mQueryFunction);
+            query.append("(\"");
+            query.append(asXQueryStringContent(script));
+            query.append("\")");
         } else {
             RDFFormat tripleFormat = configuration.getTripleFormat();
 
-            StringBuilder query = new StringBuilder();
             query.append("import module namespace sem = \"http://marklogic.com/semantics\" at \"/MarkLogic/semantics.xqy\";\n");
             query.append("let $ret := sem:sparql(\"").append(asXQueryStringContent(script)).append("\")\n");
             if (tripleFormat == RDFFormat.SEM_TRIPLE) {
@@ -51,7 +53,6 @@ public class QueryScript extends ScriptFactory {
                 query.append("else\n");
                 query.append("    $ret\n");
             }
-            return query.toString();
         }
     }
 }
