@@ -16,7 +16,7 @@
 package uk.co.reecedunn.intellij.plugin.marklogic.configuration.script;
 
 import uk.co.reecedunn.intellij.plugin.marklogic.configuration.MarkLogicRunConfiguration;
-import uk.co.reecedunn.intellij.plugin.marklogic.api.rest.RDFFormat;
+import uk.co.reecedunn.intellij.plugin.marklogic.api.RDFFormat;
 
 public class QueryScript extends ScriptFactory {
     private final String mQueryFunction;

@@ -32,7 +32,7 @@ import org.jetbrains.annotations.Nullable;
 import uk.co.reecedunn.intellij.plugin.marklogic.configuration.script.QueryScript;
 import uk.co.reecedunn.intellij.plugin.marklogic.configuration.script.ScriptFactory;
 import uk.co.reecedunn.intellij.plugin.marklogic.configuration.script.EvalScript;
-import uk.co.reecedunn.intellij.plugin.marklogic.api.rest.RDFFormat;
+import uk.co.reecedunn.intellij.plugin.marklogic.api.RDFFormat;
 import uk.co.reecedunn.intellij.plugin.marklogic.runner.MarkLogicResultsHandler;
 import uk.co.reecedunn.intellij.plugin.marklogic.runner.MarkLogicRunProfileState;
 
