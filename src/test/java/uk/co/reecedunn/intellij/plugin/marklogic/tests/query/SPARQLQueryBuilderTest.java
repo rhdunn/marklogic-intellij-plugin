@@ -17,7 +17,6 @@ package uk.co.reecedunn.intellij.plugin.marklogic.tests.query;
 
 import junit.framework.TestCase;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.Function;
-import uk.co.reecedunn.intellij.plugin.marklogic.query.JavaScriptBuilder;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.QueryBuilder;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.SPARQLQueryBuilder;
 

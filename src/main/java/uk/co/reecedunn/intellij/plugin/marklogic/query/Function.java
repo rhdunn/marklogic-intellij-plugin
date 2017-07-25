@@ -58,6 +58,15 @@ public enum Function {
         MapVarsBuilder.INSTANCE,
         EvalOptionsBuilder.INSTANCE),
 
+    PROF_XSLT_EVAL_50(
+            "prof:xslt-eval($query, $input, $vars, $options)",
+            MapVarsBuilder.INSTANCE,
+            EvalOptionsBuilder.INSTANCE),
+    PROF_XSLT_INVOKE_50(
+            "prof:xslt-invoke($path, $input, $vars, $options)",
+            MapVarsBuilder.INSTANCE,
+            EvalOptionsBuilder.INSTANCE),
+
     SEM_SPARQL_70(
         "sem:sparql($query, $vars)",
         MapVarsBuilder.INSTANCE,
@@ -98,7 +107,16 @@ public enum Function {
     XDMP_SQL_90(
         "xdmp:sql($query, (), $vars)",
         MapVarsBuilder.INSTANCE,
-        null);
+        null),
+
+    XDMP_XSLT_EVAL_50(
+            "xdmp:xslt-eval($query, $input, $vars, $options)",
+            MapVarsBuilder.INSTANCE,
+            EvalOptionsBuilder.INSTANCE),
+    XDMP_XSLT_INVOKE_50(
+            "xdmp:xslt-invoke($path, $input, $vars, $options)",
+            MapVarsBuilder.INSTANCE,
+            EvalOptionsBuilder.INSTANCE);
 
     private final String function;
     private final VarsBuilder varsBuilder;
