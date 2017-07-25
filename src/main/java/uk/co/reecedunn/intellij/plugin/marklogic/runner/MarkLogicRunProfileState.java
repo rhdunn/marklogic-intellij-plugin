@@ -24,7 +24,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import uk.co.reecedunn.intellij.plugin.marklogic.configuration.MarkLogicRunConfiguration;
 import uk.co.reecedunn.intellij.plugin.marklogic.configuration.script.ScriptFactory;
-import uk.co.reecedunn.intellij.plugin.marklogic.api.rest.Connection;
+import uk.co.reecedunn.intellij.plugin.marklogic.api.rest.RestConnection;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.rest.EvalRequestBuilder;
 
 public class MarkLogicRunProfileState extends CommandLineState {
@@ -40,7 +40,7 @@ public class MarkLogicRunProfileState extends CommandLineState {
     protected ProcessHandler startProcess() throws ExecutionException {
         MarkLogicRunConfiguration configuration = (MarkLogicRunConfiguration)getEnvironment().getRunProfile();
         ScriptFactory scriptFactory = configuration.getScriptFactory();
-        Connection connection = createConnection(configuration);
+        RestConnection connection = createConnection(configuration);
         EvalRequestBuilder builder = new EvalRequestBuilder();
         builder.setContentDatabase(configuration.getContentDatabase());
         builder.setXQuery(scriptFactory.createScript(configuration));
@@ -48,7 +48,7 @@ public class MarkLogicRunProfileState extends CommandLineState {
     }
 
     public boolean run(String query, MarkLogicResultsHandler handler, MarkLogicRunConfiguration configuration) {
-        Connection connection = createConnection(configuration);
+        RestConnection connection = createConnection(configuration);
         EvalRequestBuilder builder = new EvalRequestBuilder();
         builder.setContentDatabase(configuration.getContentDatabase());
         builder.setXQuery(query);
@@ -56,8 +56,8 @@ public class MarkLogicRunProfileState extends CommandLineState {
         return restHandler.run(handler);
     }
 
-    private Connection createConnection(MarkLogicRunConfiguration configuration) {
-        return Connection.newConnection(
+    private RestConnection createConnection(MarkLogicRunConfiguration configuration) {
+        return RestConnection.newConnection(
             configuration.getServerHost(),
             configuration.getServerPort(),
             nullableValueOf(configuration.getUserName()),

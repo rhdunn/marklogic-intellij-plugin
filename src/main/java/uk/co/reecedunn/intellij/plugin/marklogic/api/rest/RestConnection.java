@@ -22,23 +22,25 @@ import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.jetbrains.annotations.NotNull;
+import uk.co.reecedunn.intellij.plugin.marklogic.api.Connection;
 
 import java.io.IOException;
 
-public class Connection {
+public class RestConnection extends Connection {
     private final String baseUri;
     private final CloseableHttpClient client;
 
-    private Connection(@NotNull String baseUri, @NotNull CloseableHttpClient client) {
+    private RestConnection(@NotNull String baseUri, @NotNull CloseableHttpClient client) {
         this.baseUri = baseUri;
         this.client = client;
     }
 
+    @Override
     public void close() throws IOException {
         client.close();
     }
 
-    public String getBaseUri() {
+    String getBaseUri() {
         return baseUri;
     }
 
@@ -46,16 +48,16 @@ public class Connection {
         return client;
     }
 
-    public static Connection newConnection(String hostname, int port, String username, String password) {
+    public static RestConnection newConnection(String hostname, int port, String username, String password) {
         final String baseUri = "http://" + hostname + ":" + port;
         if (username == null || password == null) {
-            return new Connection(baseUri, HttpClients.createDefault());
+            return new RestConnection(baseUri, HttpClients.createDefault());
         }
 
         final CredentialsProvider credentials = new BasicCredentialsProvider();
         credentials.setCredentials(
             new AuthScope(hostname, port),
             new UsernamePasswordCredentials(username, password));
-        return new Connection(baseUri, HttpClients.custom().setDefaultCredentialsProvider(credentials).build());
+        return new RestConnection(baseUri, HttpClients.custom().setDefaultCredentialsProvider(credentials).build());
     }
 }

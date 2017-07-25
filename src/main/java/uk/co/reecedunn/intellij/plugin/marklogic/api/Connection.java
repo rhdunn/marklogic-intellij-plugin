@@ -13,22 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package uk.co.reecedunn.intellij.plugin.marklogic.api.rest;
+package uk.co.reecedunn.intellij.plugin.marklogic.api;
 
-import org.apache.http.client.methods.HttpUriRequest;
+import uk.co.reecedunn.intellij.plugin.marklogic.api.rest.RestConnection;
 
 import java.io.IOException;
 
-public class Request {
-    private final HttpUriRequest request;
-    private final RestConnection connection;
-
-    Request(HttpUriRequest request, RestConnection connection) {
-        this.request = request;
-        this.connection = connection;
+public abstract class Connection {
+    protected Connection() {
     }
 
-    public Response run() throws IOException {
-        return new Response(connection.getClient().execute(request));
+    public abstract void close() throws IOException;
+
+    public static Connection newConnection(String hostname, int port, String username, String password, double markLogicVersion) {
+        if (markLogicVersion > 8.0) {
+            return RestConnection.newConnection(hostname, port, username, password);
+        }
+        return null;
     }
 }
