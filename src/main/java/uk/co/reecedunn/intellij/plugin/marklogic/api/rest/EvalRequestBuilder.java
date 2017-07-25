@@ -19,11 +19,16 @@ import com.google.gson.JsonObject;
 import org.apache.http.client.methods.RequestBuilder;
 
 public class EvalRequestBuilder {
+    private final RestConnection connection;
     private String xquery = null;
     private String javascript = null;
     private JsonObject vars = null;
     private String database = null;
     private String txid = null;
+
+    EvalRequestBuilder(RestConnection connection) {
+        this.connection = connection;
+    }
 
     public void setXQuery(String xquery) {
         this.xquery = xquery;
@@ -50,7 +55,7 @@ public class EvalRequestBuilder {
         this.txid = txid;
     }
 
-    public RestRequest build(RestConnection connection) {
+    public RestRequest build() {
         RequestBuilder builder = RequestBuilder.post(connection.getBaseUri() + "/v1/eval");
         if (xquery != null) {
             builder.addParameter("xquery", xquery);

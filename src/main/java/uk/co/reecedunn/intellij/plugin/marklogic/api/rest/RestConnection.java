@@ -40,6 +40,10 @@ public class RestConnection extends Connection {
         client.close();
     }
 
+    public EvalRequestBuilder createEvalRequestBuilder() {
+        return new EvalRequestBuilder(this);
+    }
+
     String getBaseUri() {
         return baseUri;
     }

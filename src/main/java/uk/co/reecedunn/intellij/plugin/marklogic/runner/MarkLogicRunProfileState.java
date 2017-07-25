@@ -41,18 +41,18 @@ public class MarkLogicRunProfileState extends CommandLineState {
         MarkLogicRunConfiguration configuration = (MarkLogicRunConfiguration)getEnvironment().getRunProfile();
         ScriptFactory scriptFactory = configuration.getScriptFactory();
         RestConnection connection = createConnection(configuration);
-        EvalRequestBuilder builder = new EvalRequestBuilder();
+        EvalRequestBuilder builder = connection.createEvalRequestBuilder();
         builder.setContentDatabase(configuration.getContentDatabase());
         builder.setXQuery(scriptFactory.createScript(configuration));
-        return new MarkLogicRestHandler(builder.build(connection), configuration.getMainModulePath());
+        return new MarkLogicRestHandler(builder.build(), configuration.getMainModulePath());
     }
 
     public boolean run(String query, MarkLogicResultsHandler handler, MarkLogicRunConfiguration configuration) {
         RestConnection connection = createConnection(configuration);
-        EvalRequestBuilder builder = new EvalRequestBuilder();
+        EvalRequestBuilder builder = connection.createEvalRequestBuilder();
         builder.setContentDatabase(configuration.getContentDatabase());
         builder.setXQuery(query);
-        MarkLogicRestHandler restHandler = new MarkLogicRestHandler(builder.build(connection), "/eval");
+        MarkLogicRestHandler restHandler = new MarkLogicRestHandler(builder.build(), "/eval");
         return restHandler.run(handler);
     }
 
