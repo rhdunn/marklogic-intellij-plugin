@@ -50,7 +50,7 @@ public class EvalRequestBuilder {
         this.txid = txid;
     }
 
-    public Request build(RestConnection connection) {
+    public RestRequest build(RestConnection connection) {
         RequestBuilder builder = RequestBuilder.post(connection.getBaseUri() + "/v1/eval");
         if (xquery != null) {
             builder.addParameter("xquery", xquery);
@@ -67,6 +67,6 @@ public class EvalRequestBuilder {
         if (txid != null) {
             builder.addParameter("txid", txid);
         }
-        return new Request(builder.build(), connection);
+        return new RestRequest(builder.build(), connection);
     }
 }

@@ -16,19 +16,24 @@
 package uk.co.reecedunn.intellij.plugin.marklogic.api.rest;
 
 import org.apache.http.client.methods.HttpUriRequest;
+import org.jetbrains.annotations.NotNull;
+import uk.co.reecedunn.intellij.plugin.marklogic.api.Request;
+import uk.co.reecedunn.intellij.plugin.marklogic.api.Response;
 
 import java.io.IOException;
 
-public class Request {
+public class RestRequest implements Request {
     private final HttpUriRequest request;
     private final RestConnection connection;
 
-    Request(HttpUriRequest request, RestConnection connection) {
+    RestRequest(HttpUriRequest request, RestConnection connection) {
         this.request = request;
         this.connection = connection;
     }
 
-    public RestResponse run() throws IOException {
+    @NotNull
+    @Override
+    public Response run() throws IOException {
         return new RestResponse(connection.getClient().execute(request));
     }
 }
