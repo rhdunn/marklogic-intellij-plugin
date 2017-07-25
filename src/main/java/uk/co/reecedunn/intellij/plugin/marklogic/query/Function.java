@@ -17,10 +17,60 @@ package uk.co.reecedunn.intellij.plugin.marklogic.query;
 
 import uk.co.reecedunn.intellij.plugin.marklogic.query.options.EvalOptionsBuilder;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.options.OptionsBuilder;
+import uk.co.reecedunn.intellij.plugin.marklogic.query.vars.KeyValueVarsBuilder;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.vars.MapVarsBuilder;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.vars.VarsBuilder;
 
 public enum Function {
+    DBG_EVAL_50(
+        "dbg:eval($query, $vars, $options)",
+        KeyValueVarsBuilder.INSTANCE,
+        EvalOptionsBuilder.INSTANCE),
+    DBG_EVAL_80(
+        "dbg:eval($query, $vars, $options)",
+        MapVarsBuilder.INSTANCE,
+        EvalOptionsBuilder.INSTANCE),
+
+    DBG_INVOKE_50(
+        "dbg:invoke($path, $vars, $options)",
+        KeyValueVarsBuilder.INSTANCE,
+        EvalOptionsBuilder.INSTANCE),
+    DBG_INVOKE_80(
+        "dbg:invoke($path, $vars, $options)",
+        MapVarsBuilder.INSTANCE,
+        EvalOptionsBuilder.INSTANCE),
+
+    PROF_EVAL_50(
+        "prof:eval($query, $vars, $options)",
+        KeyValueVarsBuilder.INSTANCE,
+        EvalOptionsBuilder.INSTANCE),
+    PROF_EVAL_80(
+        "prof:eval($query, $vars, $options)",
+        MapVarsBuilder.INSTANCE,
+        EvalOptionsBuilder.INSTANCE),
+
+    PROF_INVOKE_50(
+        "prof:invoke($path, $vars, $options)",
+        KeyValueVarsBuilder.INSTANCE,
+        EvalOptionsBuilder.INSTANCE),
+    PROF_INVOKE_80(
+        "prof:invoke($path, $vars, $options)",
+        MapVarsBuilder.INSTANCE,
+        EvalOptionsBuilder.INSTANCE),
+
+    XDMP_EVAL_50(
+        "xdmp:eval($query, $vars, $options)",
+        KeyValueVarsBuilder.INSTANCE,
+        EvalOptionsBuilder.INSTANCE),
+    XDMP_EVAL_70(
+        "xdmp:eval($query, $vars, $options)",
+        MapVarsBuilder.INSTANCE,
+        EvalOptionsBuilder.INSTANCE),
+
+    XDMP_INVOKE_50(
+        "xdmp:invoke($path, $vars, $options)",
+        KeyValueVarsBuilder.INSTANCE,
+        EvalOptionsBuilder.INSTANCE),
     XDMP_INVOKE_70(
         "xdmp:invoke($path, $vars, $options)",
         MapVarsBuilder.INSTANCE,
