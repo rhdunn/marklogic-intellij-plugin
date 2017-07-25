@@ -15,6 +15,7 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.tests.query;
 
+import com.intellij.util.ArrayUtil;
 import junit.framework.TestCase;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.*;
 
@@ -29,6 +30,14 @@ public class QueryBuilderFactoryTest extends TestCase {
     }
 
     public void testXQuery() {
+        assertThat(ArrayUtil.indexOf(QueryBuilderFactory.EXTENSIONS, "xq"), is(not(-1)));
+        assertThat(ArrayUtil.indexOf(QueryBuilderFactory.EXTENSIONS, "xqy"), is(not(-1)));
+        assertThat(ArrayUtil.indexOf(QueryBuilderFactory.EXTENSIONS, "xquery"), is(not(-1)));
+        assertThat(ArrayUtil.indexOf(QueryBuilderFactory.EXTENSIONS, "xql"), is(not(-1))); // XQuery Language File
+        assertThat(ArrayUtil.indexOf(QueryBuilderFactory.EXTENSIONS, "xqm"), is(-1)); // XQuery Module File
+        assertThat(ArrayUtil.indexOf(QueryBuilderFactory.EXTENSIONS, "xqu"), is(not(-1)));
+        assertThat(ArrayUtil.indexOf(QueryBuilderFactory.EXTENSIONS, "xqws"), is(-1)); // XQuery Web Service
+
         assertThat(QueryBuilderFactory.createQueryBuilderForFile("test.xq"),
                 is(instanceOf(XQueryBuilder.class)));
         assertThat(QueryBuilderFactory.createQueryBuilderForFile("test.xqy"),
@@ -42,6 +51,9 @@ public class QueryBuilderFactoryTest extends TestCase {
     }
 
     public void testJavaScript() {
+        assertThat(ArrayUtil.indexOf(QueryBuilderFactory.EXTENSIONS, "js"), is(not(-1)));
+        assertThat(ArrayUtil.indexOf(QueryBuilderFactory.EXTENSIONS, "sjs"), is(not(-1))); // Server-side JavaScript
+
         assertThat(QueryBuilderFactory.createQueryBuilderForFile("test.js"),
                 is(instanceOf(JavaScriptBuilder.class)));
         assertThat(QueryBuilderFactory.createQueryBuilderForFile("test.sjs"),
@@ -49,11 +61,16 @@ public class QueryBuilderFactoryTest extends TestCase {
     }
 
     public void testSQL() {
+        assertThat(ArrayUtil.indexOf(QueryBuilderFactory.EXTENSIONS, "sql"), is(not(-1)));
+
         assertThat(QueryBuilderFactory.createQueryBuilderForFile("test.sql"),
                 is(instanceOf(SQLBuilder.class)));
     }
 
     public void testSPARQLQuery() {
+        assertThat(ArrayUtil.indexOf(QueryBuilderFactory.EXTENSIONS, "sparql"), is(not(-1)));
+        assertThat(ArrayUtil.indexOf(QueryBuilderFactory.EXTENSIONS, "rq"), is(not(-1)));
+
         assertThat(QueryBuilderFactory.createQueryBuilderForFile("test.sparql"),
                 is(instanceOf(SPARQLQueryBuilder.class)));
         assertThat(QueryBuilderFactory.createQueryBuilderForFile("test.rq"),
@@ -61,11 +78,16 @@ public class QueryBuilderFactoryTest extends TestCase {
     }
 
     public void testSPARQLUpdate() {
+        assertThat(ArrayUtil.indexOf(QueryBuilderFactory.EXTENSIONS, "ru"), is(not(-1)));
+
         assertThat(QueryBuilderFactory.createQueryBuilderForFile("test.ru"),
                 is(instanceOf(SPARQLUpdateBuilder.class)));
     }
 
     public void testXSLT() {
+        assertThat(ArrayUtil.indexOf(QueryBuilderFactory.EXTENSIONS, "xsl"), is(not(-1)));
+        assertThat(ArrayUtil.indexOf(QueryBuilderFactory.EXTENSIONS, "xslt"), is(not(-1)));
+
         assertThat(QueryBuilderFactory.createQueryBuilderForFile("test.xsl"),
                 is(instanceOf(XSLTBuilder.class)));
         assertThat(QueryBuilderFactory.createQueryBuilderForFile("test.xslt"),
