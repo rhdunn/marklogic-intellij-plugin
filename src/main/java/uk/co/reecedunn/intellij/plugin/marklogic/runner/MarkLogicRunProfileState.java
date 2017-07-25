@@ -24,8 +24,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import uk.co.reecedunn.intellij.plugin.marklogic.configuration.MarkLogicRunConfiguration;
 import uk.co.reecedunn.intellij.plugin.marklogic.configuration.script.ScriptFactory;
-import uk.co.reecedunn.intellij.plugin.marklogic.rest.Connection;
-import uk.co.reecedunn.intellij.plugin.marklogic.rest.EvalRequestBuilder;
+import uk.co.reecedunn.intellij.plugin.marklogic.api.rest.Connection;
+import uk.co.reecedunn.intellij.plugin.marklogic.api.rest.EvalRequestBuilder;
 
 public class MarkLogicRunProfileState extends CommandLineState {
     public MarkLogicRunProfileState(@Nullable ExecutionEnvironment environment) {

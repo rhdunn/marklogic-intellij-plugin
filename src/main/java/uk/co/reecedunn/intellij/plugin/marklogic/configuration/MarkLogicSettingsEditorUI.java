@@ -23,7 +23,7 @@ import com.intellij.openapi.ui.ComponentWithBrowseButton;
 import com.intellij.openapi.ui.TextComponentAccessor;
 import org.jetbrains.annotations.NotNull;
 import uk.co.reecedunn.intellij.plugin.marklogic.resources.MarkLogicBundle;
-import uk.co.reecedunn.intellij.plugin.marklogic.rest.RDFFormat;
+import uk.co.reecedunn.intellij.plugin.marklogic.api.rest.RDFFormat;
 import uk.co.reecedunn.intellij.plugin.marklogic.runner.MarkLogicResultsHandler;
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.DocumentChangedListener;
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.MarkLogicQueryComboBox;
