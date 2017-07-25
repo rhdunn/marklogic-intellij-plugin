@@ -62,7 +62,7 @@ public class MarkLogicRunProfileState extends CommandLineState {
             configuration.getServerPort(),
             nullableValueOf(configuration.getUserName()),
             nullableValueOf(configuration.getPassword()),
-            8.0);
+            configuration.getMarkLogicVersion());
     }
 
     private String nullableValueOf(String value) {

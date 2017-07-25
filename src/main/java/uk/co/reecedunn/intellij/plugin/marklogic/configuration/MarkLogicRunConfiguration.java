@@ -65,6 +65,7 @@ public class MarkLogicRunConfiguration extends RunConfigurationBase {
         public int serverPort = 8000;
         public String userName = "";
         public String password = "";
+        public double markLogicVersion = 7.0;
         public String contentDatabase = null;
         public String moduleDatabase = null;
         public String moduleRoot = "/";
@@ -143,6 +144,14 @@ public class MarkLogicRunConfiguration extends RunConfigurationBase {
 
     public void setPassword(String password) {
         this.data.password = password;
+    }
+
+    public double getMarkLogicVersion() {
+        return data.markLogicVersion;
+    }
+
+    public void setMarkLogicVersion(double markLogicVersion) {
+        data.markLogicVersion = markLogicVersion;
     }
 
     public String getContentDatabase() {

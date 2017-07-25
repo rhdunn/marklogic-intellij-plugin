@@ -22,6 +22,10 @@ import uk.co.reecedunn.intellij.plugin.marklogic.api.xcc.XCCConnection;
 import java.io.IOException;
 
 public abstract class Connection {
+    public static final Double[] SUPPORTED_MARKLOGIC_VERSIONS = new Double[] {
+        5.0, 6.0, 7.0, 8.0, 9.0,
+    };
+
     protected Connection() {
     }
 

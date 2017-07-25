@@ -22,6 +22,7 @@ import com.intellij.openapi.ui.ComboBox;
 import com.intellij.openapi.ui.ComponentWithBrowseButton;
 import com.intellij.openapi.ui.TextComponentAccessor;
 import org.jetbrains.annotations.NotNull;
+import uk.co.reecedunn.intellij.plugin.marklogic.api.Connection;
 import uk.co.reecedunn.intellij.plugin.marklogic.resources.MarkLogicBundle;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.RDFFormat;
 import uk.co.reecedunn.intellij.plugin.marklogic.runner.MarkLogicResultsHandler;
@@ -40,6 +41,7 @@ public class MarkLogicSettingsEditorUI {
     private JTextField mServerPort;
     private JTextField mUserName;
     private JPasswordField mPassword;
+    private JComboBox<Double> mServerVersion;
     private JComboBox<String> mContentDatabase;
     private JComboBox<String> mModuleDatabase;
     private ComponentWithBrowseButton<JTextField> mModuleRoot;
@@ -57,6 +59,7 @@ public class MarkLogicSettingsEditorUI {
         mServerPort = new JTextField();
         mUserName = new JTextField();
         mPassword = new JPasswordField();
+        mServerVersion = new ComboBox<>(Connection.SUPPORTED_MARKLOGIC_VERSIONS);
         mContentDatabase = new MarkLogicQueryComboBox(MarkLogicBundle.message("database.none"));
         mModuleDatabase = new MarkLogicQueryComboBox(MarkLogicBundle.message("database.file.system"));
         mModuleRoot = new ComponentWithBrowseButton<>(new JTextField(), null);
@@ -96,6 +99,7 @@ public class MarkLogicSettingsEditorUI {
         mServerPort.setText(Integer.toString(configuration.getServerPort()));
         mUserName.setText(configuration.getUserName());
         mPassword.setText(configuration.getPassword());
+        mServerVersion.setSelectedItem(configuration.getMarkLogicVersion());
         ((MarkLogicQueryComboBox)mContentDatabase).setItem(configuration.getContentDatabase());
         ((MarkLogicQueryComboBox)mModuleDatabase).setItem(configuration.getModuleDatabase());
         mModuleRoot.getChildComponent().setText(configuration.getModuleRoot());
@@ -108,6 +112,7 @@ public class MarkLogicSettingsEditorUI {
         configuration.setServerPort(toInteger(mServerPort.getText(), configuration.getServerPort()));
         configuration.setUserName(mUserName.getText());
         configuration.setPassword(String.valueOf(mPassword.getPassword()));
+        configuration.setMarkLogicVersion((Double)mServerVersion.getSelectedItem());
         configuration.setContentDatabase(((MarkLogicQueryComboBox)mContentDatabase).getItem());
         configuration.setModuleDatabase(((MarkLogicQueryComboBox)mModuleDatabase).getItem());
         configuration.setModuleRoot(mModuleRoot.getChildComponent().getText());
