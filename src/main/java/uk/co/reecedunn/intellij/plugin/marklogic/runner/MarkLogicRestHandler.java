@@ -19,7 +19,7 @@ import com.intellij.execution.process.ProcessHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.rest.Request;
-import uk.co.reecedunn.intellij.plugin.marklogic.api.rest.Response;
+import uk.co.reecedunn.intellij.plugin.marklogic.api.rest.RestResponse;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Result;
 
 import java.io.IOException;
@@ -63,7 +63,7 @@ public class MarkLogicRestHandler extends ProcessHandler implements MarkLogicRes
     public boolean run(MarkLogicResultsHandler handler) {
         Result[] results;
         try {
-            Response response = request.run();
+            RestResponse response = request.run();
             results = response.getResults();
             response.close();
         } catch (IOException e) {

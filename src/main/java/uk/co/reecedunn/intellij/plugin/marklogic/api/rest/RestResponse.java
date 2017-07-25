@@ -18,35 +18,28 @@ package uk.co.reecedunn.intellij.plugin.marklogic.api.rest;
 import org.apache.http.Header;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.util.EntityUtils;
+import org.jetbrains.annotations.NotNull;
+import uk.co.reecedunn.intellij.plugin.marklogic.api.Response;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Result;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Response {
+public class RestResponse implements Response {
     private final CloseableHttpResponse response;
 
-    Response(CloseableHttpResponse response) {
+    RestResponse(CloseableHttpResponse response) {
         this.response = response;
     }
 
+    @Override
     public void close() throws IOException {
         response.close();
     }
 
-    private String getHeader(String name, String defaultValue) {
-        Header[] headers = response.getHeaders(name);
-        if (headers.length == 0) {
-            return defaultValue;
-        }
-        return headers[0].getValue();
-    }
-
-    private String getResponse() throws IOException {
-        return EntityUtils.toString(response.getEntity());
-    }
-
+    @NotNull
+    @Override
     public Result[] getResults() throws IOException {
         int statusCode = response.getStatusLine().getStatusCode();
         if (statusCode != 200) {
@@ -62,6 +55,18 @@ public class Response {
             results.add(new Result(getResponse(), contentType, getHeader("X-Primitive", null)));
         }
         return results.toArray(new Result[results.size()]);
+    }
+
+    private String getHeader(String name, String defaultValue) {
+        Header[] headers = response.getHeaders(name);
+        if (headers.length == 0) {
+            return defaultValue;
+        }
+        return headers[0].getValue();
+    }
+
+    private String getResponse() throws IOException {
+        return EntityUtils.toString(response.getEntity());
     }
 
     private void parseMultiPartResponse(List<Result> results, String multipart, String contentType, String internalContentType) throws IOException {
