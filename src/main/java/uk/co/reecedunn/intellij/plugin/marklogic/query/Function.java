@@ -25,117 +25,139 @@ public enum Function {
     DBG_EVAL_50(
         "dbg:eval($query, $vars, $options)",
         KeyValueVarsBuilder.INSTANCE,
-        EvalOptionsBuilder.INSTANCE),
+        EvalOptionsBuilder.INSTANCE,
+        Parameters.Eval),
     DBG_EVAL_80(
         "dbg:eval($query, $vars, $options)",
         MapVarsBuilder.INSTANCE,
-        EvalOptionsBuilder.INSTANCE),
+        EvalOptionsBuilder.INSTANCE,
+        Parameters.Eval),
 
     DBG_INVOKE_50(
         "dbg:invoke($path, $vars, $options)",
         KeyValueVarsBuilder.INSTANCE,
-        EvalOptionsBuilder.INSTANCE),
+        EvalOptionsBuilder.INSTANCE,
+        Parameters.Invoke),
     DBG_INVOKE_80(
         "dbg:invoke($path, $vars, $options)",
         MapVarsBuilder.INSTANCE,
-        EvalOptionsBuilder.INSTANCE),
+        EvalOptionsBuilder.INSTANCE,
+        Parameters.Invoke),
 
     PROF_EVAL_50(
         "prof:eval($query, $vars, $options)",
         KeyValueVarsBuilder.INSTANCE,
-        EvalOptionsBuilder.INSTANCE),
+        EvalOptionsBuilder.INSTANCE,
+        Parameters.Eval),
     PROF_EVAL_80(
         "prof:eval($query, $vars, $options)",
         MapVarsBuilder.INSTANCE,
-        EvalOptionsBuilder.INSTANCE),
+        EvalOptionsBuilder.INSTANCE,
+        Parameters.Eval),
 
     PROF_INVOKE_50(
         "prof:invoke($path, $vars, $options)",
         KeyValueVarsBuilder.INSTANCE,
-        EvalOptionsBuilder.INSTANCE),
+        EvalOptionsBuilder.INSTANCE,
+        Parameters.Invoke),
     PROF_INVOKE_80(
         "prof:invoke($path, $vars, $options)",
         MapVarsBuilder.INSTANCE,
-        EvalOptionsBuilder.INSTANCE),
+        EvalOptionsBuilder.INSTANCE,
+        Parameters.Invoke),
 
     PROF_XSLT_EVAL_50(
-            "prof:xslt-eval($query, $input, $vars, $options)",
-            MapVarsBuilder.INSTANCE,
-            EvalOptionsBuilder.INSTANCE,
-            true),
+        "prof:xslt-eval($query, $input, $vars, $options)",
+        MapVarsBuilder.INSTANCE,
+        EvalOptionsBuilder.INSTANCE,
+        Parameters.EvalStylesheet),
     PROF_XSLT_INVOKE_50(
-            "prof:xslt-invoke($path, $input, $vars, $options)",
-            MapVarsBuilder.INSTANCE,
-            EvalOptionsBuilder.INSTANCE,
-            true),
+        "prof:xslt-invoke($path, $input, $vars, $options)",
+        MapVarsBuilder.INSTANCE,
+        EvalOptionsBuilder.INSTANCE,
+        Parameters.InvokeStylesheet),
 
     SEM_SPARQL_70(
         "sem:sparql($query, $vars)",
         MapVarsBuilder.INSTANCE,
-        null),
+        null,
+        Parameters.Eval),
 
     SEM_SPARQL_UPDATE_80(
-            "sem:sparql-update($query, $vars)",
-            MapVarsBuilder.INSTANCE,
-            null),
+        "sem:sparql-update($query, $vars)",
+        MapVarsBuilder.INSTANCE,
+        null,
+        Parameters.Eval),
 
     XDMP_EVAL_50(
         "xdmp:eval($query, $vars, $options)",
         KeyValueVarsBuilder.INSTANCE,
-        EvalOptionsBuilder.INSTANCE),
+        EvalOptionsBuilder.INSTANCE,
+        Parameters.Eval),
     XDMP_EVAL_70(
         "xdmp:eval($query, $vars, $options)",
         MapVarsBuilder.INSTANCE,
-        EvalOptionsBuilder.INSTANCE),
+        EvalOptionsBuilder.INSTANCE,
+        Parameters.Eval),
 
     XDMP_INVOKE_50(
         "xdmp:invoke($path, $vars, $options)",
         KeyValueVarsBuilder.INSTANCE,
-        EvalOptionsBuilder.INSTANCE),
+        EvalOptionsBuilder.INSTANCE,
+        Parameters.Invoke),
     XDMP_INVOKE_70(
         "xdmp:invoke($path, $vars, $options)",
         MapVarsBuilder.INSTANCE,
-        EvalOptionsBuilder.INSTANCE),
+        EvalOptionsBuilder.INSTANCE,
+        Parameters.Invoke),
 
     XDMP_JAVASCRIPT_EVAL_80(
         "xdmp:javascript-eval($query, $vars, $options)",
         MapVarsBuilder.INSTANCE,
-        EvalOptionsBuilder.INSTANCE),
+        EvalOptionsBuilder.INSTANCE,
+        Parameters.Eval),
 
     XDMP_SQL_80(
         "xdmp:sql($query)",
         null,
-        null),
+        null,
+        Parameters.Eval),
     XDMP_SQL_90(
         "xdmp:sql($query, (), $vars)",
         MapVarsBuilder.INSTANCE,
-        null),
+        null,
+        Parameters.Eval),
 
     XDMP_XSLT_EVAL_50(
-            "xdmp:xslt-eval($query, $input, $vars, $options)",
-            MapVarsBuilder.INSTANCE,
-            EvalOptionsBuilder.INSTANCE,
-            true),
+        "xdmp:xslt-eval($query, $input, $vars, $options)",
+        MapVarsBuilder.INSTANCE,
+        EvalOptionsBuilder.INSTANCE,
+        Parameters.EvalStylesheet),
     XDMP_XSLT_INVOKE_50(
-            "xdmp:xslt-invoke($path, $input, $vars, $options)",
-            MapVarsBuilder.INSTANCE,
-            EvalOptionsBuilder.INSTANCE,
-            true);
+        "xdmp:xslt-invoke($path, $input, $vars, $options)",
+        MapVarsBuilder.INSTANCE,
+        EvalOptionsBuilder.INSTANCE,
+        Parameters.InvokeStylesheet);
+
+    public enum Parameters {
+        //                // $query    | $path     | $input | $vars   | $options |
+        //----------------//-----------|-----------|--------|---------|----------|
+        Eval,             // xs:string | -         | -      | item()* | item()*  |
+        Invoke,           // -         | xs:string | -      | item()* | item()*  |
+        EvalStylesheet,   // node()    | -         | node() | item()* | item()*  |
+        InvokeStylesheet, // -         | xs:string | node() | item()* | item()*  |
+    }
 
     private final String function;
     private final VarsBuilder varsBuilder;
     private final OptionsBuilder optionsBuilder;
-    private final boolean isStylesheet;
+    private final Parameters parameters;
 
-    Function(String function, VarsBuilder varsBuilder, OptionsBuilder optionsBuilder) {
-        this(function, varsBuilder, optionsBuilder, false);
-    }
-
-    Function(String function, VarsBuilder varsBuilder, OptionsBuilder optionsBuilder, boolean isStylesheet) {
+    Function(String function, VarsBuilder varsBuilder, OptionsBuilder optionsBuilder, Parameters parameters) {
         this.function = function;
         this.varsBuilder = varsBuilder;
         this.optionsBuilder = optionsBuilder;
-        this.isStylesheet = isStylesheet;
+        this.parameters = parameters;
     }
 
     public String getFunction() {
@@ -150,7 +172,7 @@ public enum Function {
         return optionsBuilder;
     }
 
-    public boolean isStylesheetQuery() {
-        return isStylesheet;
+    public Parameters getParameters() {
+        return parameters;
     }
 }
