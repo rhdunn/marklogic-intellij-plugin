@@ -58,6 +58,11 @@ public enum Function {
         MapVarsBuilder.INSTANCE,
         EvalOptionsBuilder.INSTANCE),
 
+    SEM_SPARQL_70(
+        "sem:sparql($query, $vars)",
+        MapVarsBuilder.INSTANCE,
+        null),
+
     XDMP_EVAL_50(
         "xdmp:eval($query, $vars, $options)",
         KeyValueVarsBuilder.INSTANCE,
