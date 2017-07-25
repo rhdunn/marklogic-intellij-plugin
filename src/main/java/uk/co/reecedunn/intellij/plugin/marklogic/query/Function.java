@@ -61,11 +61,13 @@ public enum Function {
     PROF_XSLT_EVAL_50(
             "prof:xslt-eval($query, $input, $vars, $options)",
             MapVarsBuilder.INSTANCE,
-            EvalOptionsBuilder.INSTANCE),
+            EvalOptionsBuilder.INSTANCE,
+            true),
     PROF_XSLT_INVOKE_50(
             "prof:xslt-invoke($path, $input, $vars, $options)",
             MapVarsBuilder.INSTANCE,
-            EvalOptionsBuilder.INSTANCE),
+            EvalOptionsBuilder.INSTANCE,
+            true),
 
     SEM_SPARQL_70(
         "sem:sparql($query, $vars)",
@@ -112,20 +114,28 @@ public enum Function {
     XDMP_XSLT_EVAL_50(
             "xdmp:xslt-eval($query, $input, $vars, $options)",
             MapVarsBuilder.INSTANCE,
-            EvalOptionsBuilder.INSTANCE),
+            EvalOptionsBuilder.INSTANCE,
+            true),
     XDMP_XSLT_INVOKE_50(
             "xdmp:xslt-invoke($path, $input, $vars, $options)",
             MapVarsBuilder.INSTANCE,
-            EvalOptionsBuilder.INSTANCE);
+            EvalOptionsBuilder.INSTANCE,
+            true);
 
     private final String function;
     private final VarsBuilder varsBuilder;
     private final OptionsBuilder optionsBuilder;
+    private final boolean isStylesheet;
 
     Function(String function, VarsBuilder varsBuilder, OptionsBuilder optionsBuilder) {
+        this(function, varsBuilder, optionsBuilder, false);
+    }
+
+    Function(String function, VarsBuilder varsBuilder, OptionsBuilder optionsBuilder, boolean isStylesheet) {
         this.function = function;
         this.varsBuilder = varsBuilder;
         this.optionsBuilder = optionsBuilder;
+        this.isStylesheet = isStylesheet;
     }
 
     public String getFunction() {
@@ -138,5 +148,9 @@ public enum Function {
 
     public OptionsBuilder getOptionsBuilder() {
         return optionsBuilder;
+    }
+
+    public boolean isStylesheetQuery() {
+        return isStylesheet;
     }
 }
