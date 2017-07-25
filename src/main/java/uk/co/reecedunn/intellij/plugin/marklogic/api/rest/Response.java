@@ -18,6 +18,7 @@ package uk.co.reecedunn.intellij.plugin.marklogic.api.rest;
 import org.apache.http.Header;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.util.EntityUtils;
+import uk.co.reecedunn.intellij.plugin.marklogic.api.Result;
 
 import java.io.IOException;
 import java.util.ArrayList;

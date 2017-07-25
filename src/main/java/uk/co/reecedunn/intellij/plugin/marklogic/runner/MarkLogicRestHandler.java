@@ -20,7 +20,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.rest.Request;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.rest.Response;
-import uk.co.reecedunn.intellij.plugin.marklogic.api.rest.Result;
+import uk.co.reecedunn.intellij.plugin.marklogic.api.Result;
 
 import java.io.IOException;
 import java.io.OutputStream;
