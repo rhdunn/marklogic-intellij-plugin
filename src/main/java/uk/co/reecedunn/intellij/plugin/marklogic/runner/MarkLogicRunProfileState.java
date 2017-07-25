@@ -22,10 +22,10 @@ import com.intellij.execution.process.ProcessHandler;
 import com.intellij.execution.runners.ExecutionEnvironment;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import uk.co.reecedunn.intellij.plugin.marklogic.api.Connection;
+import uk.co.reecedunn.intellij.plugin.marklogic.api.EvalRequestBuilder;
 import uk.co.reecedunn.intellij.plugin.marklogic.configuration.MarkLogicRunConfiguration;
 import uk.co.reecedunn.intellij.plugin.marklogic.configuration.script.ScriptFactory;
-import uk.co.reecedunn.intellij.plugin.marklogic.api.rest.RestConnection;
-import uk.co.reecedunn.intellij.plugin.marklogic.api.rest.RestEvalRequestBuilder;
 
 public class MarkLogicRunProfileState extends CommandLineState {
     public MarkLogicRunProfileState(@Nullable ExecutionEnvironment environment) {
@@ -40,28 +40,29 @@ public class MarkLogicRunProfileState extends CommandLineState {
     protected ProcessHandler startProcess() throws ExecutionException {
         MarkLogicRunConfiguration configuration = (MarkLogicRunConfiguration)getEnvironment().getRunProfile();
         ScriptFactory scriptFactory = configuration.getScriptFactory();
-        RestConnection connection = createConnection(configuration);
-        RestEvalRequestBuilder builder = connection.createEvalRequestBuilder();
+        Connection connection = createConnection(configuration);
+        EvalRequestBuilder builder = connection.createEvalRequestBuilder();
         builder.setContentDatabase(configuration.getContentDatabase());
         builder.setXQuery(scriptFactory.createScript(configuration));
         return new MarkLogicRequestHandler(builder.build(), configuration.getMainModulePath());
     }
 
     public boolean run(String query, MarkLogicResultsHandler handler, MarkLogicRunConfiguration configuration) {
-        RestConnection connection = createConnection(configuration);
-        RestEvalRequestBuilder builder = connection.createEvalRequestBuilder();
+        Connection connection = createConnection(configuration);
+        EvalRequestBuilder builder = connection.createEvalRequestBuilder();
         builder.setContentDatabase(configuration.getContentDatabase());
         builder.setXQuery(query);
         MarkLogicRequestHandler restHandler = new MarkLogicRequestHandler(builder.build(), "/eval");
         return restHandler.run(handler);
     }
 
-    private RestConnection createConnection(MarkLogicRunConfiguration configuration) {
-        return RestConnection.newConnection(
+    private Connection createConnection(MarkLogicRunConfiguration configuration) {
+        return Connection.newConnection(
             configuration.getServerHost(),
             configuration.getServerPort(),
             nullableValueOf(configuration.getUserName()),
-            nullableValueOf(configuration.getPassword()));
+            nullableValueOf(configuration.getPassword()),
+            8.0);
     }
 
     private String nullableValueOf(String value) {

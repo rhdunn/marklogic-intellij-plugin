@@ -40,6 +40,7 @@ public class RestConnection extends Connection {
         client.close();
     }
 
+    @Override
     public RestEvalRequestBuilder createEvalRequestBuilder() {
         return new RestEvalRequestBuilder(this);
     }

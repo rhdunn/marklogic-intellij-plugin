@@ -25,6 +25,8 @@ public abstract class Connection {
 
     public abstract void close() throws IOException;
 
+    public abstract EvalRequestBuilder createEvalRequestBuilder();
+
     public static Connection newConnection(String hostname, int port, String username, String password, double markLogicVersion) {
         if (markLogicVersion > 8.0) {
             return RestConnection.newConnection(hostname, port, username, password);
