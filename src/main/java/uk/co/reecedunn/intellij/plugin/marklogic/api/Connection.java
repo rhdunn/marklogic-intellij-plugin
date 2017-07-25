@@ -15,7 +15,9 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.api;
 
+import org.jetbrains.annotations.NotNull;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.rest.RestConnection;
+import uk.co.reecedunn.intellij.plugin.marklogic.api.xcc.XCCConnection;
 
 import java.io.IOException;
 
@@ -27,10 +29,11 @@ public abstract class Connection {
 
     public abstract EvalRequestBuilder createEvalRequestBuilder();
 
+    @NotNull
     public static Connection newConnection(String hostname, int port, String username, String password, double markLogicVersion) {
-        if (markLogicVersion > 8.0) {
+        if (markLogicVersion >= 8.0) {
             return RestConnection.newConnection(hostname, port, username, password);
         }
-        return null;
+        return XCCConnection.newConnection(hostname, port, username, password);
     }
 }

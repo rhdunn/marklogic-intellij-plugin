@@ -23,6 +23,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.jetbrains.annotations.NotNull;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Connection;
+import uk.co.reecedunn.intellij.plugin.marklogic.api.EvalRequestBuilder;
 
 import java.io.IOException;
 
@@ -41,7 +42,7 @@ public class RestConnection extends Connection {
     }
 
     @Override
-    public RestEvalRequestBuilder createEvalRequestBuilder() {
+    public EvalRequestBuilder createEvalRequestBuilder() {
         return new RestEvalRequestBuilder(this);
     }
 
@@ -53,7 +54,8 @@ public class RestConnection extends Connection {
         return client;
     }
 
-    public static RestConnection newConnection(String hostname, int port, String username, String password) {
+    @NotNull
+    public static Connection newConnection(String hostname, int port, String username, String password) {
         final String baseUri = "http://" + hostname + ":" + port;
         if (username == null || password == null) {
             return new RestConnection(baseUri, HttpClients.createDefault());
