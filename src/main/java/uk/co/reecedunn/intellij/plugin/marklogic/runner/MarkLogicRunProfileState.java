@@ -25,7 +25,7 @@ import org.jetbrains.annotations.Nullable;
 import uk.co.reecedunn.intellij.plugin.marklogic.configuration.MarkLogicRunConfiguration;
 import uk.co.reecedunn.intellij.plugin.marklogic.configuration.script.ScriptFactory;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.rest.RestConnection;
-import uk.co.reecedunn.intellij.plugin.marklogic.api.rest.EvalRequestBuilder;
+import uk.co.reecedunn.intellij.plugin.marklogic.api.rest.RestEvalRequestBuilder;
 
 public class MarkLogicRunProfileState extends CommandLineState {
     public MarkLogicRunProfileState(@Nullable ExecutionEnvironment environment) {
@@ -41,7 +41,7 @@ public class MarkLogicRunProfileState extends CommandLineState {
         MarkLogicRunConfiguration configuration = (MarkLogicRunConfiguration)getEnvironment().getRunProfile();
         ScriptFactory scriptFactory = configuration.getScriptFactory();
         RestConnection connection = createConnection(configuration);
-        EvalRequestBuilder builder = connection.createEvalRequestBuilder();
+        RestEvalRequestBuilder builder = connection.createEvalRequestBuilder();
         builder.setContentDatabase(configuration.getContentDatabase());
         builder.setXQuery(scriptFactory.createScript(configuration));
         return new MarkLogicRestHandler(builder.build(), configuration.getMainModulePath());
@@ -49,7 +49,7 @@ public class MarkLogicRunProfileState extends CommandLineState {
 
     public boolean run(String query, MarkLogicResultsHandler handler, MarkLogicRunConfiguration configuration) {
         RestConnection connection = createConnection(configuration);
-        EvalRequestBuilder builder = connection.createEvalRequestBuilder();
+        RestEvalRequestBuilder builder = connection.createEvalRequestBuilder();
         builder.setContentDatabase(configuration.getContentDatabase());
         builder.setXQuery(query);
         MarkLogicRestHandler restHandler = new MarkLogicRestHandler(builder.build(), "/eval");

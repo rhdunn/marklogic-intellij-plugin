@@ -13,21 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package uk.co.reecedunn.intellij.plugin.marklogic.api.rest;
+package uk.co.reecedunn.intellij.plugin.marklogic.api;
 
 import com.google.gson.JsonObject;
-import org.apache.http.client.methods.RequestBuilder;
 
-public class EvalRequestBuilder {
-    private final RestConnection connection;
+public abstract class EvalRequestBuilder {
     private String xquery = null;
     private String javascript = null;
     private JsonObject vars = null;
     private String database = null;
     private String txid = null;
 
-    EvalRequestBuilder(RestConnection connection) {
-        this.connection = connection;
+    protected EvalRequestBuilder() {
     }
 
     public void setXQuery(String xquery) {
@@ -35,9 +32,17 @@ public class EvalRequestBuilder {
         this.javascript = null; // There can only be one!
     }
 
+    public String getXQuery() {
+        return xquery;
+    }
+
     public void setJavaScript(String javascript) {
         this.xquery = null; // There can only be one!
         this.javascript = javascript;
+    }
+
+    public String getJavaScript() {
+        return javascript;
     }
 
     public void addVariable(String name, String value) {
@@ -47,31 +52,28 @@ public class EvalRequestBuilder {
         vars.addProperty(name, value);
     }
 
+    public String getVarsJson() {
+        if (vars == null) {
+            return null;
+        }
+        return vars.toString();
+    }
+
     public void setContentDatabase(String database) {
         this.database = database;
+    }
+
+    public String getContentDatabase() {
+        return database;
     }
 
     public void setTransactionID(String txid) {
         this.txid = txid;
     }
 
-    public RestRequest build() {
-        RequestBuilder builder = RequestBuilder.post(connection.getBaseUri() + "/v1/eval");
-        if (xquery != null) {
-            builder.addParameter("xquery", xquery);
-        }
-        if (javascript != null) {
-            builder.addParameter("javascript", javascript);
-        }
-        if (vars != null) {
-            builder.addParameter("vars", vars.toString());
-        }
-        if (database != null) {
-            builder.addParameter("database", database);
-        }
-        if (txid != null) {
-            builder.addParameter("txid", txid);
-        }
-        return new RestRequest(builder.build(), connection);
+    public String getTransactionID() {
+        return txid;
     }
+
+    public abstract Request build();
 }

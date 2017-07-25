@@ -18,18 +18,18 @@ package uk.co.reecedunn.intellij.plugin.marklogic.runner;
 import com.intellij.execution.process.ProcessHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import uk.co.reecedunn.intellij.plugin.marklogic.api.Request;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Response;
-import uk.co.reecedunn.intellij.plugin.marklogic.api.rest.RestRequest;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Result;
 
 import java.io.IOException;
 import java.io.OutputStream;
 
 public class MarkLogicRestHandler extends ProcessHandler implements MarkLogicResultsHandler {
-    private final RestRequest request;
+    private final Request request;
     private final String mainModulePath;
 
-    public MarkLogicRestHandler(@NotNull RestRequest request, @NotNull String mainModulePath) {
+    public MarkLogicRestHandler(@NotNull Request request, @NotNull String mainModulePath) {
         this.request = request;
         this.mainModulePath = mainModulePath;
     }
