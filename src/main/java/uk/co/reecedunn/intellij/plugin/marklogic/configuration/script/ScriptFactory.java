@@ -25,7 +25,7 @@ import java.io.*;
 
 public abstract class ScriptFactory {
     public String createScript(MarkLogicRunConfiguration configuration) {
-        final String script = readFileContent(configuration.getMainModulePath());
+        final String script = readFileContent(configuration.getMainModuleFile());
         StringBuilder query = new StringBuilder();
         query.append("try {");
         createEvalScript(query, script, configuration);
@@ -39,9 +39,7 @@ public abstract class ScriptFactory {
         return query.replaceAll("\"", "\"\"").replaceAll("&", "&amp;");
     }
 
-    private String readFileContent(String fileName) {
-        final String url = VfsUtil.pathToUrl(fileName.replace(File.separatorChar, '/'));
-        final VirtualFile file = VirtualFileManager.getInstance().findFileByUrl(url);
+    private String readFileContent(VirtualFile file) {
         if (file != null) {
             try {
                 return streamToString(file.getInputStream());

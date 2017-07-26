@@ -24,6 +24,9 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.DefaultJDOMExternalizer;
 import com.intellij.openapi.util.InvalidDataException;
 import com.intellij.openapi.util.WriteExternalException;
+import com.intellij.openapi.vfs.VfsUtil;
+import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.openapi.vfs.VirtualFileManager;
 import com.intellij.util.ArrayUtil;
 import com.intellij.util.PathUtil;
 import org.jdom.Element;
@@ -35,6 +38,8 @@ import uk.co.reecedunn.intellij.plugin.marklogic.configuration.script.EvalScript
 import uk.co.reecedunn.intellij.plugin.marklogic.api.RDFFormat;
 import uk.co.reecedunn.intellij.plugin.marklogic.runner.MarkLogicResultsHandler;
 import uk.co.reecedunn.intellij.plugin.marklogic.runner.MarkLogicRunProfileState;
+
+import java.io.File;
 
 public class MarkLogicRunConfiguration extends RunConfigurationBase {
     private static ScriptFactory JAVASCRIPT = new EvalScript("xdmp:javascript-eval");
@@ -74,6 +79,7 @@ public class MarkLogicRunConfiguration extends RunConfigurationBase {
     }
 
     private ConfigData data = new ConfigData();
+    private VirtualFile mainModuleFile = null;
 
     MarkLogicRunConfiguration(@NotNull Project project, @NotNull ConfigurationFactory factory, String name) {
         super(project, factory, name);
@@ -105,6 +111,7 @@ public class MarkLogicRunConfiguration extends RunConfigurationBase {
     public void readExternal(Element element) throws InvalidDataException {
         super.readExternal(element);
         DefaultJDOMExternalizer.readExternal(data, element);
+        setMainModulePath(data.mainModulePath); // Update the associated VirtualFile.
     }
 
     @SuppressWarnings("deprecation")
@@ -184,6 +191,18 @@ public class MarkLogicRunConfiguration extends RunConfigurationBase {
 
     public void setMainModulePath(String mainModulePath) {
         data.mainModulePath = mainModulePath;
+
+        final String url = VfsUtil.pathToUrl(mainModulePath.replace(File.separatorChar, '/'));
+        mainModuleFile = VirtualFileManager.getInstance().findFileByUrl(url);
+    }
+
+    public VirtualFile getMainModuleFile() {
+        return mainModuleFile;
+    }
+
+    public void setMainModuleFile(VirtualFile mainModuleFile) {
+        this.mainModuleFile = mainModuleFile;
+        data.mainModulePath = mainModuleFile.getCanonicalPath();
     }
 
     public RDFFormat getTripleFormat() {
