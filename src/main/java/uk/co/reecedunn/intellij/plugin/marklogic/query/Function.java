@@ -171,7 +171,7 @@ public enum Function {
     public void buildQuery(StringBuilder builder, MarkLogicRunConfiguration configuration) {
         final String query = readFileContent(configuration.getMainModuleFile());
         builder.append("let $query := \"");
-        builder.append(query);
+        builder.append(asXQueryStringContent(query));
         builder.append("\"\n");
         builder.append("let $vars := ()\n");
         builder.append("let $options := ()\n");
@@ -195,5 +195,9 @@ public enum Function {
         StringWriter writer = new StringWriter();
         IOUtil.copyCompletely(new InputStreamReader(stream), writer);
         return writer.toString();
+    }
+
+    private String asXQueryStringContent(String query) {
+        return query.replaceAll("\"", "\"\"");
     }
 }
