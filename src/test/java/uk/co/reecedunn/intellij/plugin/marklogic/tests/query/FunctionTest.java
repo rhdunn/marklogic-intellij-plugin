@@ -110,7 +110,7 @@ public class FunctionTest extends ConfigurationTestCase {
         assertThat(builder.toString(), is(expected));
     }
 
-    public void testSQL() {
+    public void testNoVarsAndOptionsBuilder() {
         final String query = "select * from authors";
         final MarkLogicRunConfiguration configuration = createConfiguration();
         configuration.setMainModuleFile(createVirtualFile("test.sql", query));
