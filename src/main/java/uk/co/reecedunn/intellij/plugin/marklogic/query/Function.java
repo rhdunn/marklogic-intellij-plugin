@@ -15,11 +15,19 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.query;
 
+import com.intellij.openapi.vfs.VirtualFile;
+import org.apache.xmlbeans.impl.common.IOUtil;
+import uk.co.reecedunn.intellij.plugin.marklogic.configuration.MarkLogicRunConfiguration;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.options.EvalOptionsBuilder;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.options.OptionsBuilder;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.vars.KeyValueVarsBuilder;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.vars.MapVarsBuilder;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.vars.VarsBuilder;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.StringWriter;
 
 public enum Function {
     DBG_EVAL_50(
@@ -160,19 +168,32 @@ public enum Function {
         this.parameters = parameters;
     }
 
-    public String getFunction() {
-        return function;
+    public void buildQuery(StringBuilder builder, MarkLogicRunConfiguration configuration) {
+        final String query = readFileContent(configuration.getMainModuleFile());
+        builder.append("let $query := \"");
+        builder.append(query);
+        builder.append("\"\n");
+        builder.append("let $vars := ()\n");
+        builder.append("let $options := ()\n");
+        builder.append("return ");
+        builder.append(function);
+        builder.append('\n');
     }
 
-    public VarsBuilder getVarsBuilder() {
-        return varsBuilder;
+    private String readFileContent(VirtualFile file) {
+        if (file != null) {
+            try {
+                return streamToString(file.getInputStream());
+            } catch (IOException e) {
+                //
+            }
+        }
+        return null;
     }
 
-    public OptionsBuilder getOptionsBuilder() {
-        return optionsBuilder;
-    }
-
-    public Parameters getParameters() {
-        return parameters;
+    private String streamToString(InputStream stream) throws IOException {
+        StringWriter writer = new StringWriter();
+        IOUtil.copyCompletely(new InputStreamReader(stream), writer);
+        return writer.toString();
     }
 }

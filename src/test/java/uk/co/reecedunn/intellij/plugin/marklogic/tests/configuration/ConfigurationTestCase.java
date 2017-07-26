@@ -15,10 +15,13 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.tests.configuration;
 
+import com.intellij.core.CoreFileTypeRegistry;
 import com.intellij.execution.configurations.ConfigurationType;
 import com.intellij.lang.Language;
 import com.intellij.mock.MockProjectEx;
 import com.intellij.openapi.extensions.Extensions;
+import com.intellij.openapi.fileTypes.FileTypeRegistry;
+import com.intellij.openapi.util.Getter;
 import com.intellij.openapi.vfs.CharsetToolkit;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.testFramework.LightVirtualFile;
@@ -35,6 +38,7 @@ public abstract class ConfigurationTestCase extends PlatformLiteFixture {
         super.setUp();
         Extensions.registerAreaClass("IDEA_PROJECT", null);
         myProject = new MockProjectEx(getTestRootDisposable());
+        FileTypeRegistry.ourInstanceGetter = CoreFileTypeRegistry::new;
 
         ConfigurationType configurationType = new MarkLogicConfigurationType();
         mFactory = (MarkLogicConfigurationFactory)configurationType.getConfigurationFactories()[0];
