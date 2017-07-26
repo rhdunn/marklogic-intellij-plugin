@@ -198,6 +198,6 @@ public enum Function {
     }
 
     private String asXQueryStringContent(String query) {
-        return query.replaceAll("\"", "\"\"");
+        return query.replaceAll("\"", "\"\"").replaceAll("&", "&amp;");
     }
 }

@@ -63,4 +63,23 @@ public class FunctionTest extends ConfigurationTestCase {
             "return xdmp:eval($query, $vars, $options)\n";
         assertThat(builder.toString(), is(expected));
     }
+
+    public void testQueryWithXmlEntities() {
+        final String query = "<a>&amp;</a>";
+        final MarkLogicRunConfiguration configuration = createConfiguration();
+        configuration.setMainModuleFile(createVirtualFile("test.xqy", query));
+
+        QueryBuilder queryBuilder = QueryBuilderFactory.createQueryBuilderForFile(configuration.getMainModulePath());
+        Function function = queryBuilder.createEvalBuilder(QueryBuilder.ExecMode.Run, 5.0);
+
+        StringBuilder builder = new StringBuilder();
+        function.buildQuery(builder, configuration);
+
+        final String expected =
+            "let $query := \"<a>&amp;amp;</a>\"\n" +
+            "let $vars := ()\n" +
+            "let $options := ()\n" +
+            "return xdmp:eval($query, $vars, $options)\n";
+        assertThat(builder.toString(), is(expected));
+    }
 }
