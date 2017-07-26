@@ -40,7 +40,7 @@ public class FunctionTest extends ConfigurationTestCase {
         final String expected =
             "let $query := \"(1, 2, 3)\"\n" +
             "let $vars := ()\n" +
-            "let $options := ()\n" +
+            "let $options := <options xmlns=\"xdmp:eval\"><root>/</root></options>\n" +
             "return xdmp:eval($query, $vars, $options)\n";
         assertThat(builder.toString(), is(expected));
     }
@@ -59,7 +59,7 @@ public class FunctionTest extends ConfigurationTestCase {
         final String expected =
             "let $query := \"1 || \"\"st\"\"\"\n" +
             "let $vars := ()\n" +
-            "let $options := ()\n" +
+            "let $options := <options xmlns=\"xdmp:eval\"><root>/</root></options>\n" +
             "return xdmp:eval($query, $vars, $options)\n";
         assertThat(builder.toString(), is(expected));
     }
@@ -78,7 +78,34 @@ public class FunctionTest extends ConfigurationTestCase {
         final String expected =
             "let $query := \"<a>&amp;amp;</a>\"\n" +
             "let $vars := ()\n" +
-            "let $options := ()\n" +
+            "let $options := <options xmlns=\"xdmp:eval\"><root>/</root></options>\n" +
+            "return xdmp:eval($query, $vars, $options)\n";
+        assertThat(builder.toString(), is(expected));
+    }
+
+    public void testQueryWithOptions() {
+        final String query = "(1, 2)";
+        final MarkLogicRunConfiguration configuration = createConfiguration();
+        configuration.setMainModuleFile(createVirtualFile("test.xqy", query));
+        configuration.setContentDatabase("lorem");
+        configuration.setModuleDatabase("ipsum");
+        configuration.setModuleRoot("dolor");
+
+        QueryBuilder queryBuilder = QueryBuilderFactory.createQueryBuilderForFile(configuration.getMainModulePath());
+        Function function = queryBuilder.createEvalBuilder(QueryBuilder.ExecMode.Run, 5.0);
+
+        StringBuilder builder = new StringBuilder();
+        function.buildQuery(builder, configuration);
+
+        final String expected =
+            "let $query := \"(1, 2)\"\n" +
+            "let $vars := ()\n" +
+            "let $options := " +
+                "<options xmlns=\"xdmp:eval\">" +
+                    "<database>{xdmp:database(\"lorem\")}</database>" +
+                    "<modules>{xdmp:database(\"ipsum\")}</modules>" +
+                    "<root>dolor</root>" +
+                "</options>\n" +
             "return xdmp:eval($query, $vars, $options)\n";
         assertThat(builder.toString(), is(expected));
     }

@@ -173,8 +173,21 @@ public enum Function {
         builder.append("let $query := \"");
         builder.append(asXQueryStringContent(query));
         builder.append("\"\n");
+
         builder.append("let $vars := ()\n");
-        builder.append("let $options := ()\n");
+
+        builder.append("let $options := ");
+        if (optionsBuilder != null) {
+            optionsBuilder.reset();
+            optionsBuilder.setContentDatabase(configuration.getContentDatabase());
+            optionsBuilder.setModulesDatabase(configuration.getModuleDatabase());
+            optionsBuilder.setModulesRoot(configuration.getModuleRoot());
+            optionsBuilder.build(builder);
+        } else {
+            builder.append("()");
+        }
+        builder.append('\n');
+
         builder.append("return ");
         builder.append(function);
         builder.append('\n');
