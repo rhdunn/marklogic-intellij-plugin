@@ -41,7 +41,7 @@ public class FunctionTest extends ConfigurationTestCase {
             "let $query := \"(1, 2, 3)\"\n" +
             "let $vars := ()\n" +
             "let $options := <options xmlns=\"xdmp:eval\"><root>/</root></options>\n" +
-            "return xdmp:eval($query, $vars, $options)\n";
+            "return try { xdmp:eval($query, $vars, $options) } catch ($e) { $e }\n";
         assertThat(builder.toString(), is(expected));
     }
 
@@ -60,7 +60,7 @@ public class FunctionTest extends ConfigurationTestCase {
             "let $query := \"1 || \"\"st\"\"\"\n" +
             "let $vars := ()\n" +
             "let $options := <options xmlns=\"xdmp:eval\"><root>/</root></options>\n" +
-            "return xdmp:eval($query, $vars, $options)\n";
+            "return try { xdmp:eval($query, $vars, $options) } catch ($e) { $e }\n";
         assertThat(builder.toString(), is(expected));
     }
 
@@ -79,7 +79,7 @@ public class FunctionTest extends ConfigurationTestCase {
             "let $query := \"<a>&amp;amp;</a>\"\n" +
             "let $vars := ()\n" +
             "let $options := <options xmlns=\"xdmp:eval\"><root>/</root></options>\n" +
-            "return xdmp:eval($query, $vars, $options)\n";
+            "return try { xdmp:eval($query, $vars, $options) } catch ($e) { $e }\n";
         assertThat(builder.toString(), is(expected));
     }
 
@@ -106,7 +106,7 @@ public class FunctionTest extends ConfigurationTestCase {
                     "<modules>{xdmp:database(\"ipsum\")}</modules>" +
                     "<root>dolor</root>" +
                 "</options>\n" +
-            "return xdmp:eval($query, $vars, $options)\n";
+            "return try { xdmp:eval($query, $vars, $options) } catch ($e) { $e }\n";
         assertThat(builder.toString(), is(expected));
     }
 }

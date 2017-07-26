@@ -188,9 +188,9 @@ public enum Function {
         }
         builder.append('\n');
 
-        builder.append("return ");
+        builder.append("return try { ");
         builder.append(function);
-        builder.append('\n');
+        builder.append(" } catch ($e) { $e }\n");
     }
 
     private String readFileContent(VirtualFile file) {
