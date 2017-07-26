@@ -109,4 +109,23 @@ public class FunctionTest extends ConfigurationTestCase {
             "return try { xdmp:eval($query, $vars, $options) } catch ($e) { $e }\n";
         assertThat(builder.toString(), is(expected));
     }
+
+    public void testSQL() {
+        final String query = "select * from authors";
+        final MarkLogicRunConfiguration configuration = createConfiguration();
+        configuration.setMainModuleFile(createVirtualFile("test.sql", query));
+
+        QueryBuilder queryBuilder = QueryBuilderFactory.createQueryBuilderForFile(configuration.getMainModulePath());
+        Function function = queryBuilder.createEvalBuilder(QueryBuilder.ExecMode.Run, 8.0);
+
+        StringBuilder builder = new StringBuilder();
+        function.buildQuery(builder, configuration);
+
+        final String expected =
+            "let $query := \"select * from authors\"\n" +
+            "let $vars := ()\n" +
+            "let $options := ()\n" +
+            "return try { xdmp:sql($query) } catch ($e) { $e }\n";
+        assertThat(builder.toString(), is(expected));
+    }
 }
