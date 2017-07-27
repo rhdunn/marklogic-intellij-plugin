@@ -100,6 +100,7 @@ public class RestResponse implements Response {
                 results.add(new Result(headersContent[1], resultContentType, resultPrimitive));
             } else {
                 results.add(new Result(headersContent[1], internalContentType, resultPrimitive));
+                internalContentType = null; // Only use this for the first result.
             }
         }
     }
