@@ -211,8 +211,9 @@ public enum Function {
             builder.append("    return if (count($triples) > 0) then\n");
             // NOTE: Using xdmp:set-response-content-type overrides the multipart Content-Type for the response, but
             // still writes out the multipart data.
+            builder.append("        let $fmt := sem:rdf-serialize($triples, \"").append(tripleFormat.getMarkLogicName()).append("\")\n");
             builder.append("        let $_ := xdmp:add-response-header(\"X-Content-Type\", \"").append(tripleFormat.getContentType()).append("\")\n");
-            builder.append("        return (sem:rdf-serialize($triples, \"").append(tripleFormat.getMarkLogicName()).append("\"), $other)\n");
+            builder.append("        return ($fmt, $other)\n");
             builder.append("    else\n");
             builder.append("        $ret\n");
         }

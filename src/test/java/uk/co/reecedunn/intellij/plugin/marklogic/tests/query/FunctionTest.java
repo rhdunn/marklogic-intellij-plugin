@@ -174,8 +174,9 @@ public class FunctionTest extends ConfigurationTestCase {
             "    let $triples := for $item in $ret where $item instance of sem:triple return $item\n" +
             "    let $other   := for $item in $ret where not($item instance of sem:triple) return $item\n" +
             "    return if (count($triples) > 0) then\n" +
+            "        let $fmt := sem:rdf-serialize($triples, \"turtle\")\n" +
             "        let $_ := xdmp:add-response-header(\"X-Content-Type\", \"text/turtle\")\n" +
-            "        return (sem:rdf-serialize($triples, \"turtle\"), $other)\n" +
+            "        return ($fmt, $other)\n" +
             "    else\n" +
             "        $ret\n" +
             "} catch ($e) { $e }\n";
