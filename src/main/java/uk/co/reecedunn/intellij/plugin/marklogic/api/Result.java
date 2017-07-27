@@ -26,6 +26,10 @@ public class Result {
         this.primitive = primitive;
     }
 
+    public Result(String content, String itemType) {
+        this(content, null, itemType);
+    }
+
     public String getContent() {
         return this.content;
     }

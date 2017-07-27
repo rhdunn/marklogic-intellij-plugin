@@ -47,10 +47,7 @@ public class XCCResponse implements Response {
         List<Result> results = new ArrayList<>();
         while (resultSequence.hasNext()) {
             ResultItem result = resultSequence.next();
-            String content = result.asString();
-            String primitive = result.getItemType().toString();
-            String contentType = "text/plain";
-            results.add(new Result(content, contentType, primitive));
+            results.add(new Result(result.asString(), result.getItemType().toString()));
         }
         return results.toArray(new Result[results.size()]);
     }
