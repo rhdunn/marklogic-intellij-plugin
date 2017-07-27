@@ -17,6 +17,7 @@ package uk.co.reecedunn.intellij.plugin.marklogic.query;
 
 import com.intellij.openapi.vfs.VirtualFile;
 import org.apache.xmlbeans.impl.common.IOUtil;
+import uk.co.reecedunn.intellij.plugin.marklogic.api.RDFFormat;
 import uk.co.reecedunn.intellij.plugin.marklogic.configuration.MarkLogicRunConfiguration;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.options.EvalOptionsBuilder;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.options.OptionsBuilder;
@@ -169,6 +170,13 @@ public enum Function {
     }
 
     public void buildQuery(StringBuilder builder, MarkLogicRunConfiguration configuration) {
+        RDFFormat tripleFormat = configuration.getTripleFormat();
+        double markLogicVersion = configuration.getMarkLogicVersion();
+
+        if (tripleFormat != RDFFormat.SEM_TRIPLE && markLogicVersion >= 7.0) {
+            builder.append("import module namespace sem = \"http://marklogic.com/semantics\" at \"/MarkLogic/semantics.xqy\";\n");
+        }
+
         final String query = readFileContent(configuration.getMainModuleFile());
         builder.append("let $query := \"");
         builder.append(asXQueryStringContent(query));
@@ -188,9 +196,27 @@ public enum Function {
         }
         builder.append('\n');
 
-        builder.append("return try { ");
-        builder.append(function);
-        builder.append(" } catch ($e) { $e }\n");
+        builder.append("return try {");
+        if (tripleFormat == RDFFormat.SEM_TRIPLE || markLogicVersion < 7.0) {
+            builder.append(' ');
+            builder.append(function);
+            builder.append(' ');
+        } else {
+            builder.append('\n');
+            builder.append("    let $ret     := ");
+            builder.append(function);
+            builder.append('\n');
+            builder.append("    let $triples := for $item in $ret where $item instance of sem:triple return $item\n");
+            builder.append("    let $other   := for $item in $ret where not($item instance of sem:triple) return $item\n");
+            builder.append("    return if (count($triples) > 0) then\n");
+            // NOTE: Using xdmp:set-response-content-type overrides the multipart Content-Type for the response, but
+            // still writes out the multipart data.
+            builder.append("        let $_ := xdmp:add-response-header(\"X-Content-Type\", \"").append(tripleFormat.getContentType()).append("\")\n");
+            builder.append("        return (sem:rdf-serialize($triples, \"").append(tripleFormat.getMarkLogicName()).append("\"), $other)\n");
+            builder.append("    else\n");
+            builder.append("        $ret\n");
+        }
+        builder.append("} catch ($e) { $e }\n");
     }
 
     private String readFileContent(VirtualFile file) {
