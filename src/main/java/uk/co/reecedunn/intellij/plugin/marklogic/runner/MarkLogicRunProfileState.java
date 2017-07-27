@@ -25,7 +25,9 @@ import org.jetbrains.annotations.Nullable;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Connection;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.EvalRequestBuilder;
 import uk.co.reecedunn.intellij.plugin.marklogic.configuration.MarkLogicRunConfiguration;
-import uk.co.reecedunn.intellij.plugin.marklogic.configuration.script.ScriptFactory;
+import uk.co.reecedunn.intellij.plugin.marklogic.query.Function;
+import uk.co.reecedunn.intellij.plugin.marklogic.query.QueryBuilder;
+import uk.co.reecedunn.intellij.plugin.marklogic.query.QueryBuilderFactory;
 
 public class MarkLogicRunProfileState extends CommandLineState {
     public MarkLogicRunProfileState(@Nullable ExecutionEnvironment environment) {
@@ -39,11 +41,17 @@ public class MarkLogicRunProfileState extends CommandLineState {
     @Override
     protected ProcessHandler startProcess() throws ExecutionException {
         MarkLogicRunConfiguration configuration = (MarkLogicRunConfiguration)getEnvironment().getRunProfile();
-        ScriptFactory scriptFactory = configuration.getScriptFactory();
+
+        QueryBuilder queryBuilder = QueryBuilderFactory.createQueryBuilderForFile(configuration.getMainModulePath());
+        Function function = queryBuilder.createEvalBuilder(QueryBuilder.ExecMode.Run, configuration.getMarkLogicVersion());
+
+        StringBuilder xquery = new StringBuilder();
+        function.buildQuery(xquery, configuration);
+
         Connection connection = createConnection(configuration);
         EvalRequestBuilder builder = connection.createEvalRequestBuilder();
         builder.setContentDatabase(configuration.getContentDatabase());
-        builder.setXQuery(scriptFactory.createScript(configuration));
+        builder.setXQuery(xquery.toString());
         return new MarkLogicRequestHandler(builder.build(), configuration.getMainModulePath());
     }
 

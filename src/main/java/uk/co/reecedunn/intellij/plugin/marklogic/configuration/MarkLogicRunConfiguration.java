@@ -32,9 +32,6 @@ import com.intellij.util.PathUtil;
 import org.jdom.Element;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import uk.co.reecedunn.intellij.plugin.marklogic.configuration.script.QueryScript;
-import uk.co.reecedunn.intellij.plugin.marklogic.configuration.script.ScriptFactory;
-import uk.co.reecedunn.intellij.plugin.marklogic.configuration.script.EvalScript;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.RDFFormat;
 import uk.co.reecedunn.intellij.plugin.marklogic.runner.MarkLogicResultsHandler;
 import uk.co.reecedunn.intellij.plugin.marklogic.runner.MarkLogicRunProfileState;
@@ -42,26 +39,12 @@ import uk.co.reecedunn.intellij.plugin.marklogic.runner.MarkLogicRunProfileState
 import java.io.File;
 
 public class MarkLogicRunConfiguration extends RunConfigurationBase {
-    private static ScriptFactory JAVASCRIPT = new EvalScript("xdmp:javascript-eval");
-    private static ScriptFactory SPARQL_QUERY = new QueryScript("sem:sparql");
-    private static ScriptFactory SPARQL_UPDATE = new QueryScript("sem:sparql-update");
-    private static ScriptFactory SQL = new QueryScript("xdmp:sql");
-    private static ScriptFactory XQUERY = new EvalScript("xdmp:eval");
-
     public static final String[] EXTENSIONS = new String[]{
         "xq", "xqy", "xquery", "xql", "xqu",
         "js", "sjs",
         "sql",
         "sparql", "rq",
         "ru",
-    };
-
-    public static final ScriptFactory[] SCRIPT_FACTORIES = new ScriptFactory[] {
-        XQUERY, XQUERY, XQUERY, XQUERY, XQUERY,
-        JAVASCRIPT, JAVASCRIPT,
-        SQL,
-        SPARQL_QUERY, SPARQL_QUERY,
-        SPARQL_UPDATE,
     };
 
     @SuppressWarnings("WeakerAccess") // DefaultJDOMExternalizer requires public access to the fields.
@@ -211,15 +194,5 @@ public class MarkLogicRunConfiguration extends RunConfigurationBase {
 
     public void setTripleFormat(RDFFormat tripleFormat) {
         data.tripleFormat = tripleFormat.getMarkLogicName();
-    }
-
-    public ScriptFactory getScriptFactory() {
-        final String ext = PathUtil.getFileExtension(getMainModulePath());
-        final int index = ArrayUtil.indexOf(EXTENSIONS, ext);
-        if (index < 0) {
-            return null;
-        }
-
-        return SCRIPT_FACTORIES[index];
     }
 }
