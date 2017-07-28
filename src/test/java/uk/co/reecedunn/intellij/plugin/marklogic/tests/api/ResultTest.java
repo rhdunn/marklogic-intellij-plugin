@@ -35,6 +35,19 @@ public class ResultTest extends TestCase {
 
     // region Lexical Types
 
+    @Query("()")
+    public void testEmptySequence() {
+        Result xcc = new Result("()", "empty-sequence()");
+        assertThat(xcc.getContent(), is("()"));
+        assertThat(xcc.getContentType(), is("text/plain"));
+        assertThat(xcc.getPrimitive(), is("empty-sequence()"));
+
+        Result rest = new Result("()", "text/plain", "empty-sequence()");
+        assertThat(rest.getContent(), is("()"));
+        assertThat(rest.getContentType(), is("text/plain"));
+        assertThat(rest.getPrimitive(), is("empty-sequence()"));
+    }
+
     @Query("1.5")
     public void testXsDecimal() {
         Result xcc = new Result("1.5", "xs:decimal");
