@@ -19,8 +19,8 @@ import com.marklogic.xcc.ResultItem;
 import com.marklogic.xcc.ResultSequence;
 import com.marklogic.xcc.Session;
 import org.jetbrains.annotations.NotNull;
+import uk.co.reecedunn.intellij.plugin.marklogic.api.Item;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Response;
-import uk.co.reecedunn.intellij.plugin.marklogic.api.Result;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -43,15 +43,15 @@ public class XCCResponse implements Response {
 
     @NotNull
     @Override
-    public Result[] getResults() throws IOException {
-        List<Result> results = new ArrayList<>();
+    public Item[] getResults() throws IOException {
+        List<Item> results = new ArrayList<>();
         while (resultSequence.hasNext()) {
             ResultItem result = resultSequence.next();
-            results.add(new Result(result.asString(), result.getItemType().toString()));
+            results.add(new Item(result.asString(), result.getItemType().toString()));
         }
         if (results.isEmpty()) {
-            results.add(new Result("()", "text/plain", "empty-sequence()"));
+            results.add(new Item("()", "text/plain", "empty-sequence()"));
         }
-        return results.toArray(new Result[results.size()]);
+        return results.toArray(new Item[results.size()]);
     }
 }

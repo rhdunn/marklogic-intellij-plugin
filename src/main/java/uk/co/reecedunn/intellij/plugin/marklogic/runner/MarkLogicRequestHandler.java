@@ -18,9 +18,9 @@ package uk.co.reecedunn.intellij.plugin.marklogic.runner;
 import com.intellij.execution.process.ProcessHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import uk.co.reecedunn.intellij.plugin.marklogic.api.Item;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Request;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Response;
-import uk.co.reecedunn.intellij.plugin.marklogic.api.Result;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -61,7 +61,7 @@ public class MarkLogicRequestHandler extends ProcessHandler implements MarkLogic
     }
 
     public boolean run(MarkLogicResultsHandler handler) {
-        Result[] results;
+        Item[] results;
         try {
             Response response = request.run();
             results = response.getResults();
@@ -72,8 +72,8 @@ public class MarkLogicRequestHandler extends ProcessHandler implements MarkLogic
         }
 
         handler.onStart();
-        for (Result result : results) {
-            handler.onResult(result.getContent(), result.getPrimitive(), result.getContentType());
+        for (Item item : results) {
+            handler.onResult(item.getContent(), item.getPrimitive(), item.getContentType());
         }
         handler.onCompleted();
         return true;

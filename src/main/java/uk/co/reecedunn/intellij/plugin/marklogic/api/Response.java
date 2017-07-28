@@ -23,5 +23,5 @@ public interface Response {
     void close() throws IOException;
 
     @NotNull
-    Result[] getResults() throws IOException;
+    Item[] getResults() throws IOException;
 }

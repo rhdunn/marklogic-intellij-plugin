@@ -19,8 +19,8 @@ import org.apache.http.Header;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.util.EntityUtils;
 import org.jetbrains.annotations.NotNull;
+import uk.co.reecedunn.intellij.plugin.marklogic.api.Item;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Response;
-import uk.co.reecedunn.intellij.plugin.marklogic.api.Result;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -40,24 +40,24 @@ public class RestResponse implements Response {
 
     @NotNull
     @Override
-    public Result[] getResults() throws IOException {
+    public Item[] getResults() throws IOException {
         int statusCode = response.getStatusLine().getStatusCode();
         if (statusCode != 200) {
             throw new IOException(statusCode + " " + response.getStatusLine().getReasonPhrase() + "\n" + getResponse());
         }
 
-        List<Result> results = new ArrayList<>();
+        List<Item> results = new ArrayList<>();
         String contentType = getHeader("Content-Type", "application/octet-stream");
         if (contentType.startsWith("multipart/")) {
             String internalContentType = getHeader("X-Content-Type", null); // e.g. from the SPARQL queries.
             parseMultiPartResponse(results, getResponse(), contentType, internalContentType);
         } else {
-            results.add(new Result(getResponse(), contentType, getHeader("X-Primitive", null)));
+            results.add(new Item(getResponse(), contentType, getHeader("X-Primitive", null)));
         }
         if (results.isEmpty()) {
-            results.add(new Result("()", "text/plain", "empty-sequence()"));
+            results.add(new Item("()", "text/plain", "empty-sequence()"));
         }
-        return results.toArray(new Result[results.size()]);
+        return results.toArray(new Item[results.size()]);
     }
 
     private String getHeader(String name, String defaultValue) {
@@ -72,7 +72,7 @@ public class RestResponse implements Response {
         return EntityUtils.toString(response.getEntity());
     }
 
-    private void parseMultiPartResponse(List<Result> results, String multipart, String contentType, String internalContentType) throws IOException {
+    private void parseMultiPartResponse(List<Item> results, String multipart, String contentType, String internalContentType) throws IOException {
         String[] boundaryParts = contentType.split("boundary=");
         if (boundaryParts.length == 0) {
             throw new IOException("Unsupported content type: " + contentType);
@@ -100,9 +100,9 @@ public class RestResponse implements Response {
             }
 
             if (internalContentType == null) {
-                results.add(new Result(headersContent[1], resultContentType, resultPrimitive));
+                results.add(new Item(headersContent[1], resultContentType, resultPrimitive));
             } else {
-                results.add(new Result(headersContent[1], internalContentType, resultPrimitive));
+                results.add(new Item(headersContent[1], internalContentType, resultPrimitive));
                 internalContentType = null; // Only use this for the first result.
             }
         }
