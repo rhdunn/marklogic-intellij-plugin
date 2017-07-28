@@ -47,10 +47,10 @@ public class XCCResponse implements Response {
         List<Item> items = new ArrayList<>();
         while (resultSequence.hasNext()) {
             ResultItem result = resultSequence.next();
-            items.add(new Item(result.asString(), result.getItemType().toString()));
+            items.add(Item.create(result.asString(), result.getItemType().toString()));
         }
         if (items.isEmpty()) {
-            items.add(new Item("()", "text/plain", "empty-sequence()"));
+            items.add(Item.create("()", "text/plain", "empty-sequence()"));
         }
         return items.toArray(new Item[items.size()]);
     }

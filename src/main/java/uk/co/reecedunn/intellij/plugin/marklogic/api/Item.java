@@ -27,7 +27,15 @@ public class Item {
     private String contentType;
     private String itemType;
 
-    public Item(String content, String contentType, String itemType) {
+    public static Item create(String content, String contentType, String itemType) {
+        return new Item(content, contentType, itemType);
+    }
+
+    public static Item create(String content, String itemType) {
+        return new Item(content, getContentTypeForItemType(itemType), itemType);
+    }
+
+    private Item(String content, String contentType, String itemType) {
         this.content = content;
         if (UNKNOWN_CONTENT_TYPE.equals(contentType)) {
             this.contentType = "application/octet-stream";
@@ -35,10 +43,6 @@ public class Item {
             this.contentType = contentType;
         }
         this.itemType = itemType;
-    }
-
-    public Item(String content, String itemType) {
-        this(content, getContentTypeForItemType(itemType), itemType);
     }
 
     public String getContent() {

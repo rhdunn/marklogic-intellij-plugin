@@ -52,10 +52,10 @@ public class RestResponse implements Response {
             String internalContentType = getHeader("X-Content-Type", null); // e.g. from the SPARQL queries.
             parseMultiPartResponse(items, getResponse(), contentType, internalContentType);
         } else {
-            items.add(new Item(getResponse(), contentType, getHeader("X-Primitive", null)));
+            items.add(Item.create(getResponse(), contentType, getHeader("X-Primitive", null)));
         }
         if (items.isEmpty()) {
-            items.add(new Item("()", "text/plain", "empty-sequence()"));
+            items.add(Item.create("()", "text/plain", "empty-sequence()"));
         }
         return items.toArray(new Item[items.size()]);
     }
@@ -100,9 +100,9 @@ public class RestResponse implements Response {
             }
 
             if (internalContentType == null) {
-                items.add(new Item(headersContent[1], resultContentType, resultPrimitive));
+                items.add(Item.create(headersContent[1], resultContentType, resultPrimitive));
             } else {
-                items.add(new Item(headersContent[1], internalContentType, resultPrimitive));
+                items.add(Item.create(headersContent[1], internalContentType, resultPrimitive));
                 internalContentType = null; // Only use this for the first result.
             }
         }
