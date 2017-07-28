@@ -49,6 +49,9 @@ public class XCCResponse implements Response {
             ResultItem result = resultSequence.next();
             results.add(new Result(result.asString(), result.getItemType().toString()));
         }
+        if (results.isEmpty()) {
+            results.add(new Result("()", "text/plain", "empty-sequence()"));
+        }
         return results.toArray(new Result[results.size()]);
     }
 }

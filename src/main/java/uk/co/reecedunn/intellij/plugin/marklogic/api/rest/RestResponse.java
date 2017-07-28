@@ -54,6 +54,9 @@ public class RestResponse implements Response {
         } else {
             results.add(new Result(getResponse(), contentType, getHeader("X-Primitive", null)));
         }
+        if (results.isEmpty()) {
+            results.add(new Result("()", "text/plain", "empty-sequence()"));
+        }
         return results.toArray(new Result[results.size()]);
     }
 
