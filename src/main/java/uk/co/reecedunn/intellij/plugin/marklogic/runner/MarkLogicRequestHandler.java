@@ -73,7 +73,7 @@ public class MarkLogicRequestHandler extends ProcessHandler implements MarkLogic
 
         handler.onStart();
         for (Item item : results) {
-            handler.onResult(item.getContent(), item.getItemType(), item.getContentType());
+            handler.onItem(item);
         }
         handler.onCompleted();
         return true;
@@ -90,9 +90,9 @@ public class MarkLogicRequestHandler extends ProcessHandler implements MarkLogic
     }
 
     @Override
-    public void onResult(String value, String itemType, String contentType) {
-        notifyTextAvailable("----- " + itemType + " [" + contentType  + "]\n", null);
-        notifyTextAvailable(value, null);
+    public void onItem(Item item) {
+        notifyTextAvailable("----- " + item.getItemType() + " [" + item.getContentType() + "]\n", null);
+        notifyTextAvailable(item.getContent(), null);
         notifyTextAvailable("\n", null);
     }
 
