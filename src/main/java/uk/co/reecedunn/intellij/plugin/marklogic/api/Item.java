@@ -25,16 +25,16 @@ public class Item {
 
     private String content;
     private String contentType;
-    private String primitive;
+    private String itemType;
 
-    public Item(String content, String contentType, String primitive) {
+    public Item(String content, String contentType, String itemType) {
         this.content = content;
         if (UNKNOWN_CONTENT_TYPE.equals(contentType)) {
             this.contentType = "application/octet-stream";
         } else {
             this.contentType = contentType;
         }
-        this.primitive = primitive;
+        this.itemType = itemType;
     }
 
     public Item(String content, String itemType) {
@@ -49,8 +49,8 @@ public class Item {
         return this.contentType;
     }
 
-    public String getPrimitive() {
-        return this.primitive;
+    public String getItemType() {
+        return this.itemType;
     }
 
     private static String getContentTypeForItemType(String itemType) {

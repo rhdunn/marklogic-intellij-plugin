@@ -73,7 +73,7 @@ public class MarkLogicRequestHandler extends ProcessHandler implements MarkLogic
 
         handler.onStart();
         for (Item item : results) {
-            handler.onResult(item.getContent(), item.getPrimitive(), item.getContentType());
+            handler.onResult(item.getContent(), item.getItemType(), item.getContentType());
         }
         handler.onCompleted();
         return true;
