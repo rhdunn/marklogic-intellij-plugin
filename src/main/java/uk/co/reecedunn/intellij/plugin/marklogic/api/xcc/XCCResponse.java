@@ -43,15 +43,15 @@ public class XCCResponse implements Response {
 
     @NotNull
     @Override
-    public Item[] getResults() throws IOException {
-        List<Item> results = new ArrayList<>();
+    public Item[] getItems() throws IOException {
+        List<Item> items = new ArrayList<>();
         while (resultSequence.hasNext()) {
             ResultItem result = resultSequence.next();
-            results.add(new Item(result.asString(), result.getItemType().toString()));
+            items.add(new Item(result.asString(), result.getItemType().toString()));
         }
-        if (results.isEmpty()) {
-            results.add(new Item("()", "text/plain", "empty-sequence()"));
+        if (items.isEmpty()) {
+            items.add(new Item("()", "text/plain", "empty-sequence()"));
         }
-        return results.toArray(new Item[results.size()]);
+        return items.toArray(new Item[items.size()]);
     }
 }

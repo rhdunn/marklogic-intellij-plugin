@@ -40,24 +40,24 @@ public class RestResponse implements Response {
 
     @NotNull
     @Override
-    public Item[] getResults() throws IOException {
+    public Item[] getItems() throws IOException {
         int statusCode = response.getStatusLine().getStatusCode();
         if (statusCode != 200) {
             throw new IOException(statusCode + " " + response.getStatusLine().getReasonPhrase() + "\n" + getResponse());
         }
 
-        List<Item> results = new ArrayList<>();
+        List<Item> items = new ArrayList<>();
         String contentType = getHeader("Content-Type", "application/octet-stream");
         if (contentType.startsWith("multipart/")) {
             String internalContentType = getHeader("X-Content-Type", null); // e.g. from the SPARQL queries.
-            parseMultiPartResponse(results, getResponse(), contentType, internalContentType);
+            parseMultiPartResponse(items, getResponse(), contentType, internalContentType);
         } else {
-            results.add(new Item(getResponse(), contentType, getHeader("X-Primitive", null)));
+            items.add(new Item(getResponse(), contentType, getHeader("X-Primitive", null)));
         }
-        if (results.isEmpty()) {
-            results.add(new Item("()", "text/plain", "empty-sequence()"));
+        if (items.isEmpty()) {
+            items.add(new Item("()", "text/plain", "empty-sequence()"));
         }
-        return results.toArray(new Item[results.size()]);
+        return items.toArray(new Item[items.size()]);
     }
 
     private String getHeader(String name, String defaultValue) {
@@ -72,7 +72,7 @@ public class RestResponse implements Response {
         return EntityUtils.toString(response.getEntity());
     }
 
-    private void parseMultiPartResponse(List<Item> results, String multipart, String contentType, String internalContentType) throws IOException {
+    private void parseMultiPartResponse(List<Item> items, String multipart, String contentType, String internalContentType) throws IOException {
         String[] boundaryParts = contentType.split("boundary=");
         if (boundaryParts.length == 0) {
             throw new IOException("Unsupported content type: " + contentType);
@@ -100,9 +100,9 @@ public class RestResponse implements Response {
             }
 
             if (internalContentType == null) {
-                results.add(new Item(headersContent[1], resultContentType, resultPrimitive));
+                items.add(new Item(headersContent[1], resultContentType, resultPrimitive));
             } else {
-                results.add(new Item(headersContent[1], internalContentType, resultPrimitive));
+                items.add(new Item(headersContent[1], internalContentType, resultPrimitive));
                 internalContentType = null; // Only use this for the first result.
             }
         }

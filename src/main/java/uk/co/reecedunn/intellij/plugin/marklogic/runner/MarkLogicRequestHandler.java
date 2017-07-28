@@ -64,7 +64,7 @@ public class MarkLogicRequestHandler extends ProcessHandler implements MarkLogic
         Item[] results;
         try {
             Response response = request.run();
-            results = response.getResults();
+            results = response.getItems();
             response.close();
         } catch (IOException e) {
             handler.onException(e);
