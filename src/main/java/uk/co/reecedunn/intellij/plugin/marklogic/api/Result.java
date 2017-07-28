@@ -21,6 +21,7 @@ public class Result {
     private static String[] BINARY_ITEM_TYPES = new String[] { "binary()" };
     private static String[] JSON_ITEM_TYPES = new String[] { "array-node()", "boolean-node()", "null-node()", "number-node()", "object-node()" };
     private static String[] XML_ITEM_TYPES = new String[] { "document-node()", "element()" };
+    private static String UNKNOWN_CONTENT_TYPE = "application/x-unknown-content-type";
 
     private String content;
     private String contentType;
@@ -28,7 +29,11 @@ public class Result {
 
     public Result(String content, String contentType, String primitive) {
         this.content = content;
-        this.contentType = contentType;
+        if (UNKNOWN_CONTENT_TYPE.equals(contentType)) {
+            this.contentType = "application/octet-stream";
+        } else {
+            this.contentType = contentType;
+        }
         this.primitive = primitive;
     }
 

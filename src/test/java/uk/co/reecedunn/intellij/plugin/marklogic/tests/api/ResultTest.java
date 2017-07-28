@@ -120,12 +120,12 @@ public class ResultTest extends TestCase {
     public void testBinary() {
         Result xcc = new Result("«", "binary()");
         assertThat(xcc.getContent(), is("«"));
-        assertThat(xcc.getContentType(), is("application/x-unknown-content-type"));
+        assertThat(xcc.getContentType(), is("application/octet-stream"));
         assertThat(xcc.getPrimitive(), is("binary()"));
 
         Result rest = new Result("«", "application/x-unknown-content-type", "binary()");
         assertThat(rest.getContent(), is("«"));
-        assertThat(rest.getContentType(), is("application/x-unknown-content-type"));
+        assertThat(rest.getContentType(), is("application/octet-stream"));
         assertThat(rest.getPrimitive(), is("binary()"));
     }
 
