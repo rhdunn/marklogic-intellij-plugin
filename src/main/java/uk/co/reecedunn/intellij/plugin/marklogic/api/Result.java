@@ -15,7 +15,13 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.api;
 
+import com.intellij.util.ArrayUtil;
+
 public class Result {
+    private static String[] BINARY_ITEM_TYPES = new String[] { "binary()" };
+    private static String[] JSON_ITEM_TYPES = new String[] { "array-node()", "boolean-node()", "null-node()", "number-node()", "object-node()" };
+    private static String[] XML_ITEM_TYPES = new String[] { "document-node()", "element()" };
+
     private String content;
     private String contentType;
     private String primitive;
@@ -27,7 +33,7 @@ public class Result {
     }
 
     public Result(String content, String itemType) {
-        this(content, null, itemType);
+        this(content, getContentTypeForItemType(itemType), itemType);
     }
 
     public String getContent() {
@@ -40,5 +46,21 @@ public class Result {
 
     public String getPrimitive() {
         return this.primitive;
+    }
+
+    private static String getContentTypeForItemType(String itemType) {
+        if (itemType == null) {
+            return null;
+        }
+        if (ArrayUtil.contains(itemType, BINARY_ITEM_TYPES)) {
+            return "application/x-unknown-content-type";
+        }
+        if (ArrayUtil.contains(itemType, JSON_ITEM_TYPES)) {
+            return "application/json";
+        }
+        if (ArrayUtil.contains(itemType, XML_ITEM_TYPES)) {
+            return "application/xml";
+        }
+        return "text/plain";
     }
 }
