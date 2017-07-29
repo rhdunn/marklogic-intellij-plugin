@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HttpResponse implements Response {
-    HttpResponse(StatusLine status, Header[] headers, String body) {
+    public HttpResponse(StatusLine status, Header[] headers, String body) {
     }
 
     @Override

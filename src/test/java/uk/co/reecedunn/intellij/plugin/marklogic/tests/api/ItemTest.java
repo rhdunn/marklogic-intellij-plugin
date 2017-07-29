@@ -23,16 +23,6 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ItemTest extends TestCase {
-    @Query("<a/>/@*")
-    public void testNoResults() {
-        // NOTE: XCC does not return any results in this case.
-
-        Item rest = Item.create("", "application/octet-stream", null);
-        assertThat(rest.getContent(), is(""));
-        assertThat(rest.getContentType(), is("application/octet-stream"));
-        assertThat(rest.getItemType(), is(nullValue()));
-    }
-
     // region Lexical Types
 
     @Query("()")
