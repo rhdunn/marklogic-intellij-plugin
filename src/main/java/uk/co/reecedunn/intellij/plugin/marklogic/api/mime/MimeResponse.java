@@ -25,15 +25,15 @@ import java.util.List;
 
 public class MimeResponse {
     private final StatusLine status;
+    private final Message message;
     private final Message[] parts;
 
     public MimeResponse(@NotNull StatusLine status, @NotNull Header[] headers, @NotNull String body) {
         this.status = status;
-
-        final Message message = new Message(headers, body);
-        final String contentType = message.getHeader("Content-Type");
+        this.message = new Message(headers, body);
 
         List<Message> messages = new ArrayList<>();
+        final String contentType = message.getHeader("Content-Type");
         if (contentType != null && contentType.startsWith("multipart/mixed; boundary=")) {
             for (String part : body.split("\r\n--" + contentType.split("boundary=")[1])) {
                 if (part.isEmpty() || part.equals("--\r\n")) {
@@ -51,6 +51,10 @@ public class MimeResponse {
 
     public StatusLine getStatus() {
         return status;
+    }
+
+    public String getHeader(String header) {
+        return message.getHeader(header);
     }
 
     public Message[] getParts() {

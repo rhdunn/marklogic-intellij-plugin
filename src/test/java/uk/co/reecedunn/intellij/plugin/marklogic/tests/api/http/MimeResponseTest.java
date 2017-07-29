@@ -39,6 +39,8 @@ public class MimeResponseTest extends TestCase {
 
         assertThat(response.getStatus(), is(OK));
         assertThat(response.getParts().length, is(1));
+        assertThat(response.getHeader("Content-Length"), is("0"));
+        assertThat(response.getHeader("Content-Type"), is(nullValue()));
 
         assertThat(response.getParts()[0].getHeader("Content-Length"), is("0"));
         assertThat(response.getParts()[0].getHeader("Content-Type"), is(nullValue()));
@@ -57,6 +59,8 @@ public class MimeResponseTest extends TestCase {
 
         assertThat(response.getStatus(), is(OK));
         assertThat(response.getParts().length, is(1));
+        assertThat(response.getHeader("Content-Length"), is("5"));
+        assertThat(response.getHeader("Content-Type"), is("text/plain"));
 
         assertThat(response.getParts()[0].getHeader("Content-Length"), is("5"));
         assertThat(response.getParts()[0].getHeader("Content-Type"), is("text/plain"));
@@ -82,6 +86,8 @@ public class MimeResponseTest extends TestCase {
 
         assertThat(response.getStatus(), is(OK));
         assertThat(response.getParts().length, is(1));
+        assertThat(response.getHeader("Content-Length"), is("98"));
+        assertThat(response.getHeader("Content-Type"), is("multipart/mixed; boundary=212ab95a34643c9d"));
 
         assertThat(response.getParts()[0].getHeader("Content-Type"), is("text/plain"));
         assertThat(response.getParts()[0].getHeader("X-Primitive"), is("integer"));
@@ -112,6 +118,8 @@ public class MimeResponseTest extends TestCase {
 
         assertThat(response.getStatus(), is(OK));
         assertThat(response.getParts().length, is(2));
+        assertThat(response.getHeader("Content-Length"), is("205"));
+        assertThat(response.getHeader("Content-Type"), is("multipart/mixed; boundary=47c813e0bbfa09d4"));
 
         assertThat(response.getParts()[0].getHeader("Content-Type"), is("text/plain"));
         assertThat(response.getParts()[0].getHeader("X-Primitive"), is("integer"));
