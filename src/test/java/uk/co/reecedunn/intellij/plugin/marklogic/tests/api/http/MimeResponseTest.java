@@ -131,4 +131,40 @@ public class MimeResponseTest extends TestCase {
         assertThat(response.getParts()[1].getHeader("X-Path"), is("number-node()"));
         assertThat(response.getParts()[1].getBody(), is("5"));
     }
+
+    public void testMultipartWithBlankLineInBody() {
+        String body =
+            "\r\n" +
+            "--31c406fa29f12029\r\n" +
+            "Content-Type: text/plain\r\n" +
+            "X-Primitive: string\r\n" +
+            "\r\n" +
+            "@prefix p0: <http://example.co.uk/test> .\r\n" +
+            "@prefix skos: <http://www.w3.org/2004/02/skos/core#> .\r\n" +
+            "\r\n" +
+            "p0:case a skos:Concept .\r\n" +
+            "\r\n" +
+            "--31c406fa29f12029--\r\n";
+        Header[] headers = new Header[] {
+            new BasicHeader("Content-Length", Integer.toString(body.length())),
+            new BasicHeader("Content-Type", "multipart/mixed; boundary=31c406fa29f12029"),
+            new BasicHeader("X-Content-Type", "text/turtle")
+        };
+        MimeResponse response = new MimeResponse(OK, headers, body);
+
+        assertThat(response.getStatus(), is(OK));
+        assertThat(response.getParts().length, is(1));
+        assertThat(response.getHeader("Content-Length"), is("222"));
+        assertThat(response.getHeader("Content-Type"), is("multipart/mixed; boundary=31c406fa29f12029"));
+
+        final String part1 =
+            "@prefix p0: <http://example.co.uk/test> .\r\n" +
+            "@prefix skos: <http://www.w3.org/2004/02/skos/core#> .\r\n" +
+            "\r\n" +
+            "p0:case a skos:Concept .\r\n";
+        assertThat(response.getParts()[0].getHeader("Content-Type"), is("text/plain"));
+        assertThat(response.getParts()[0].getHeader("X-Primitive"), is("string"));
+        assertThat(response.getParts()[0].getHeader("X-Path"), is(nullValue()));
+        assertThat(response.getParts()[0].getBody(), is(part1));
+    }
 }

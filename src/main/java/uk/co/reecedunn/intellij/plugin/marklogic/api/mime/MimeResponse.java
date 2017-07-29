@@ -40,7 +40,7 @@ public class MimeResponse {
                     continue;
                 }
 
-                String[] headersContent = part.split("\r\n\r\n");
+                String[] headersContent = part.split("\r\n\r\n", 2);
                 messages.add(new Message(parseHeaders(headersContent[0]), headersContent[1]));
             }
         } else {
