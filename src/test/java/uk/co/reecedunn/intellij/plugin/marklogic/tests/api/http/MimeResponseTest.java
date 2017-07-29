@@ -23,8 +23,6 @@ import org.apache.http.message.BasicHeader;
 import org.apache.http.message.BasicStatusLine;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.mime.MimeResponse;
 
-import java.io.IOException;
-
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -32,7 +30,7 @@ public class MimeResponseTest extends TestCase {
     private static ProtocolVersion HTTP1 = new ProtocolVersion("HTTP", 1, 0);
     private static StatusLine OK = new BasicStatusLine(HTTP1, 200, "OK");
 
-    public void testEmptyResponse() throws IOException {
+    public void testEmptyResponse() {
         Header[] headers = new Header[] {
             new BasicHeader("Content-Length", "0")
         };
@@ -44,10 +42,12 @@ public class MimeResponseTest extends TestCase {
 
         assertThat(response.getMessages()[0].getHeader("Content-Length"), is("0"));
         assertThat(response.getMessages()[0].getHeader("Content-Type"), is(nullValue()));
+        assertThat(response.getMessages()[0].getHeader("X-Primitive"), is(nullValue()));
+        assertThat(response.getMessages()[0].getHeader("X-Path"), is(nullValue()));
         assertThat(response.getMessages()[0].getBody(), is(""));
     }
 
-    public void testSimpleMessage() throws IOException {
+    public void testSimpleMessage() {
         Header[] headers = new Header[] {
             new BasicHeader("Content-Length", "5"),
             new BasicHeader("Content-Type", "text/plain")
@@ -60,6 +60,67 @@ public class MimeResponseTest extends TestCase {
 
         assertThat(response.getMessages()[0].getHeader("Content-Length"), is("5"));
         assertThat(response.getMessages()[0].getHeader("Content-Type"), is("text/plain"));
+        assertThat(response.getMessages()[0].getHeader("X-Primitive"), is(nullValue()));
+        assertThat(response.getMessages()[0].getHeader("X-Path"), is(nullValue()));
         assertThat(response.getMessages()[0].getBody(), is(body));
+    }
+
+    public void testMultipartSinglePart() {
+        Header[] headers = new Header[] {
+            new BasicHeader("Content-Length", "98"),
+            new BasicHeader("Content-Type", "multipart/mixed; boundary=212ab95a34643c9d")
+        };
+        String body =
+            "\r\n" +
+            "--212ab95a34643c9d\r\n" +
+            "Content-Type: text/plain\r\n" +
+            "X-Primitive: integer\r\n" +
+            "\r\n" +
+            "15\r\n" +
+            "--212ab95a34643c9d--\r\n";
+        MimeResponse response = new MimeResponse(OK, headers, body);
+
+        assertThat(response.getStatus(), is(OK));
+        assertThat(response.getMessages().length, is(1));
+
+        assertThat(response.getMessages()[0].getHeader("Content-Type"), is("text/plain"));
+        assertThat(response.getMessages()[0].getHeader("X-Primitive"), is("integer"));
+        assertThat(response.getMessages()[0].getHeader("X-Path"), is(nullValue()));
+        assertThat(response.getMessages()[0].getBody(), is("15"));
+    }
+
+    public void testMultipartMultipleParts() {
+        Header[] headers = new Header[] {
+            new BasicHeader("Content-Length", "205"),
+            new BasicHeader("Content-Type", "multipart/mixed; boundary=47c813e0bbfa09d4")
+        };
+        String body =
+            "\r\n" +
+            "--47c813e0bbfa09d4\r\n" +
+            "Content-Type: text/plain\r\n" +
+            "X-Primitive: integer\r\n" +
+            "\r\n" +
+            "1\r\n" +
+            "--47c813e0bbfa09d4\r\n" +
+            "Content-Type: application/json\r\n" +
+            "X-Primitive: number-node()\r\n" +
+            "X-Path: number-node()\r\n" +
+            "\r\n" +
+            "5\r\n" +
+            "--47c813e0bbfa09d4--\r\n";
+        MimeResponse response = new MimeResponse(OK, headers, body);
+
+        assertThat(response.getStatus(), is(OK));
+        assertThat(response.getMessages().length, is(2));
+
+        assertThat(response.getMessages()[0].getHeader("Content-Type"), is("text/plain"));
+        assertThat(response.getMessages()[0].getHeader("X-Primitive"), is("integer"));
+        assertThat(response.getMessages()[0].getHeader("X-Path"), is(nullValue()));
+        assertThat(response.getMessages()[0].getBody(), is("1"));
+
+        assertThat(response.getMessages()[1].getHeader("Content-Type"), is("application/json"));
+        assertThat(response.getMessages()[1].getHeader("X-Primitive"), is("number-node()"));
+        assertThat(response.getMessages()[1].getHeader("X-Path"), is("number-node()"));
+        assertThat(response.getMessages()[1].getBody(), is("5"));
     }
 }

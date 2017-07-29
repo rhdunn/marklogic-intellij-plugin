@@ -17,6 +17,7 @@ package uk.co.reecedunn.intellij.plugin.marklogic.api.mime;
 
 import org.apache.http.Header;
 import org.apache.http.StatusLine;
+import org.apache.http.message.BasicHeader;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -29,8 +30,22 @@ public class MimeResponse {
     public MimeResponse(@NotNull StatusLine status, @NotNull Header[] headers, @NotNull String body) {
         this.status = status;
 
+        final Message message = new Message(headers, body);
+        final String contentType = message.getHeader("Content-Type");
+
         List<Message> messages = new ArrayList<>();
-        messages.add(new Message(headers, body));
+        if (contentType != null && contentType.startsWith("multipart/mixed; boundary=")) {
+            for (String part : body.split("\r\n--" + contentType.split("boundary=")[1])) {
+                if (part.isEmpty() || part.equals("--\r\n")) {
+                    continue;
+                }
+
+                String[] headersContent = part.split("\r\n\r\n");
+                messages.add(new Message(parseHeaders(headersContent[0]), headersContent[1]));
+            }
+        } else {
+            messages.add(message);
+        }
         this.messages = messages.toArray(new Message[messages.size()]);
     }
 
@@ -40,5 +55,18 @@ public class MimeResponse {
 
     public Message[] getMessages() {
         return messages;
+    }
+
+    private Header[] parseHeaders(String content) {
+        List<Header> headers = new ArrayList<>();
+        for (String header : content.split("\r\n")) {
+            if (header.isEmpty()) {
+                continue;
+            }
+
+            String[] nameValue = header.split(":\\s+");
+            headers.add(new BasicHeader(nameValue[0], nameValue[1]));
+        }
+        return headers.toArray(new Header[headers.size()]);
     }
 }
