@@ -28,7 +28,7 @@ import java.util.List;
 public class RestResponse implements Response {
     private final MimeResponse response;
 
-    RestResponse(MimeResponse response) {
+    public RestResponse(MimeResponse response) {
         this.response = response;
     }
 
