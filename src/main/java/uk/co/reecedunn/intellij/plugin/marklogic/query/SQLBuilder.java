@@ -15,6 +15,8 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.query;
 
+import com.intellij.execution.executors.DefaultRunExecutor;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class SQLBuilder implements QueryBuilder {
@@ -24,15 +26,15 @@ public class SQLBuilder implements QueryBuilder {
     }
 
     @Nullable
-    public Function createEvalBuilder(ExecMode mode, double markLogicVersion) {
-        if (mode == ExecMode.Run && markLogicVersion >= 8.0) {
+    public Function createEvalBuilder(@NotNull String executorId, double markLogicVersion) {
+        if (DefaultRunExecutor.EXECUTOR_ID.equals(executorId) && markLogicVersion >= 8.0) {
             return markLogicVersion >= 9.0 ? Function.XDMP_SQL_90 : Function.XDMP_SQL_80;
         }
         return null;
     }
 
     @Nullable
-    public Function createInvokeBuilder(ExecMode mode, double markLogicVersion) {
+    public Function createInvokeBuilder(@NotNull String executorId, double markLogicVersion) {
         return null;
     }
 }

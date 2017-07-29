@@ -15,7 +15,10 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.query;
 
+import com.intellij.execution.executors.DefaultRunExecutor;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import uk.co.reecedunn.intellij.plugin.marklogic.executors.ProfileExecutor;
 
 public class XSLTBuilder implements QueryBuilder {
     public static QueryBuilder INSTANCE = new XSLTBuilder();
@@ -24,26 +27,24 @@ public class XSLTBuilder implements QueryBuilder {
     }
 
     @Nullable
-    public Function createEvalBuilder(ExecMode mode, double markLogicVersion) {
-        switch (mode) {
-            case Run:
-                return Function.XDMP_XSLT_EVAL_50;
-            case Profile:
-                return Function.PROF_XSLT_EVAL_50;
-            default:
-                return null;
+    public Function createEvalBuilder(@NotNull String executorId, double markLogicVersion) {
+        if (DefaultRunExecutor.EXECUTOR_ID.equals(executorId)) {
+            return Function.XDMP_XSLT_EVAL_50;
+        } else if (ProfileExecutor.EXECUTOR_ID.equals(executorId)) {
+            return Function.PROF_XSLT_EVAL_50;
+        } else {
+            return null;
         }
     }
 
     @Nullable
-    public Function createInvokeBuilder(ExecMode mode, double markLogicVersion) {
-        switch (mode) {
-            case Run:
-                return Function.XDMP_XSLT_INVOKE_50;
-            case Profile:
-                return Function.PROF_XSLT_INVOKE_50;
-            default:
-                return null;
+    public Function createInvokeBuilder(@NotNull String executorId, double markLogicVersion) {
+        if (DefaultRunExecutor.EXECUTOR_ID.equals(executorId)) {
+            return Function.XDMP_XSLT_INVOKE_50;
+        } else if (ProfileExecutor.EXECUTOR_ID.equals(executorId)) {
+            return Function.PROF_XSLT_INVOKE_50;
+        } else {
+            return null;
         }
     }
 }

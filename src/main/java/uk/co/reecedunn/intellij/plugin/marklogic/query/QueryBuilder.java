@@ -15,18 +15,13 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.query;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public interface QueryBuilder {
-    enum ExecMode {
-        Run,
-        Profile,
-        Debug,
-    }
+    @Nullable
+    Function createEvalBuilder(@NotNull String executorId, double markLogicVersion);
 
     @Nullable
-    Function createEvalBuilder(ExecMode mode, double markLogicVersion);
-
-    @Nullable
-    Function createInvokeBuilder(ExecMode mode, double markLogicVersion);
+    Function createInvokeBuilder(@NotNull String executorId, double markLogicVersion);
 }

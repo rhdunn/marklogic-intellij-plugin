@@ -15,6 +15,7 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.tests.query;
 
+import com.intellij.execution.executors.DefaultRunExecutor;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.RDFFormat;
 import uk.co.reecedunn.intellij.plugin.marklogic.configuration.MarkLogicRunConfiguration;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.Function;
@@ -33,7 +34,7 @@ public class FunctionTest extends ConfigurationTestCase {
         configuration.setMainModuleFile(createVirtualFile("test.xqy", query));
 
         QueryBuilder queryBuilder = QueryBuilderFactory.createQueryBuilderForFile(configuration.getMainModulePath());
-        Function function = queryBuilder.createEvalBuilder(QueryBuilder.ExecMode.Run, 5.0);
+        Function function = queryBuilder.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, 5.0);
 
         StringBuilder builder = new StringBuilder();
         function.buildQuery(builder, configuration);
@@ -52,7 +53,7 @@ public class FunctionTest extends ConfigurationTestCase {
         configuration.setMainModuleFile(createVirtualFile("test.xqy", query));
 
         QueryBuilder queryBuilder = QueryBuilderFactory.createQueryBuilderForFile(configuration.getMainModulePath());
-        Function function = queryBuilder.createEvalBuilder(QueryBuilder.ExecMode.Run, 5.0);
+        Function function = queryBuilder.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, 5.0);
 
         StringBuilder builder = new StringBuilder();
         function.buildQuery(builder, configuration);
@@ -71,7 +72,7 @@ public class FunctionTest extends ConfigurationTestCase {
         configuration.setMainModuleFile(createVirtualFile("test.xqy", query));
 
         QueryBuilder queryBuilder = QueryBuilderFactory.createQueryBuilderForFile(configuration.getMainModulePath());
-        Function function = queryBuilder.createEvalBuilder(QueryBuilder.ExecMode.Run, 5.0);
+        Function function = queryBuilder.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, 5.0);
 
         StringBuilder builder = new StringBuilder();
         function.buildQuery(builder, configuration);
@@ -93,7 +94,7 @@ public class FunctionTest extends ConfigurationTestCase {
         configuration.setModuleRoot("dolor");
 
         QueryBuilder queryBuilder = QueryBuilderFactory.createQueryBuilderForFile(configuration.getMainModulePath());
-        Function function = queryBuilder.createEvalBuilder(QueryBuilder.ExecMode.Run, 5.0);
+        Function function = queryBuilder.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, 5.0);
 
         StringBuilder builder = new StringBuilder();
         function.buildQuery(builder, configuration);
@@ -117,7 +118,7 @@ public class FunctionTest extends ConfigurationTestCase {
         configuration.setMainModuleFile(createVirtualFile("test.sql", query));
 
         QueryBuilder queryBuilder = QueryBuilderFactory.createQueryBuilderForFile(configuration.getMainModulePath());
-        Function function = queryBuilder.createEvalBuilder(QueryBuilder.ExecMode.Run, 8.0);
+        Function function = queryBuilder.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, 8.0);
 
         StringBuilder builder = new StringBuilder();
         function.buildQuery(builder, configuration);
@@ -138,7 +139,7 @@ public class FunctionTest extends ConfigurationTestCase {
         configuration.setTripleFormat(RDFFormat.TURTLE);
 
         QueryBuilder queryBuilder = QueryBuilderFactory.createQueryBuilderForFile(configuration.getMainModulePath());
-        Function function = queryBuilder.createEvalBuilder(QueryBuilder.ExecMode.Run, 8.0);
+        Function function = queryBuilder.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, 8.0);
 
         StringBuilder builder = new StringBuilder();
         function.buildQuery(builder, configuration);
@@ -159,7 +160,7 @@ public class FunctionTest extends ConfigurationTestCase {
         configuration.setTripleFormat(RDFFormat.TURTLE);
 
         QueryBuilder queryBuilder = QueryBuilderFactory.createQueryBuilderForFile(configuration.getMainModulePath());
-        Function function = queryBuilder.createEvalBuilder(QueryBuilder.ExecMode.Run, 8.0);
+        Function function = queryBuilder.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, 8.0);
 
         StringBuilder builder = new StringBuilder();
         function.buildQuery(builder, configuration);

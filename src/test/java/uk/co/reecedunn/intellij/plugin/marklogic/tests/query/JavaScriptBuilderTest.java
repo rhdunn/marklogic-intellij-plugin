@@ -15,7 +15,10 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.tests.query;
 
+import com.intellij.execution.executors.DefaultDebugExecutor;
+import com.intellij.execution.executors.DefaultRunExecutor;
 import junit.framework.TestCase;
+import uk.co.reecedunn.intellij.plugin.marklogic.executors.ProfileExecutor;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.Function;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.JavaScriptBuilder;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.QueryBuilder;
@@ -28,60 +31,60 @@ public class JavaScriptBuilderTest extends TestCase {
     public void testEvalRun() {
         QueryBuilder js = JavaScriptBuilder.INSTANCE;
 
-        assertThat(js.createEvalBuilder(QueryBuilder.ExecMode.Run, 5.0), is(nullValue()));
-        assertThat(js.createEvalBuilder(QueryBuilder.ExecMode.Run, 6.0), is(nullValue()));
-        assertThat(js.createEvalBuilder(QueryBuilder.ExecMode.Run, 7.0), is(nullValue()));
-        assertThat(js.createEvalBuilder(QueryBuilder.ExecMode.Run, 8.0), is(Function.XDMP_JAVASCRIPT_EVAL_80));
-        assertThat(js.createEvalBuilder(QueryBuilder.ExecMode.Run, 9.0), is(Function.XDMP_JAVASCRIPT_EVAL_80));
+        assertThat(js.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, 5.0), is(nullValue()));
+        assertThat(js.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, 6.0), is(nullValue()));
+        assertThat(js.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, 7.0), is(nullValue()));
+        assertThat(js.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, 8.0), is(Function.XDMP_JAVASCRIPT_EVAL_80));
+        assertThat(js.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, 9.0), is(Function.XDMP_JAVASCRIPT_EVAL_80));
     }
 
     public void testEvalProfile() {
         QueryBuilder js = JavaScriptBuilder.INSTANCE;
 
-        assertThat(js.createEvalBuilder(QueryBuilder.ExecMode.Profile, 5.0), is(nullValue()));
-        assertThat(js.createEvalBuilder(QueryBuilder.ExecMode.Profile, 6.0), is(nullValue()));
-        assertThat(js.createEvalBuilder(QueryBuilder.ExecMode.Profile, 7.0), is(nullValue()));
-        assertThat(js.createEvalBuilder(QueryBuilder.ExecMode.Profile, 8.0), is(nullValue()));
-        assertThat(js.createEvalBuilder(QueryBuilder.ExecMode.Profile, 9.0), is(nullValue()));
+        assertThat(js.createEvalBuilder(ProfileExecutor.EXECUTOR_ID, 5.0), is(nullValue()));
+        assertThat(js.createEvalBuilder(ProfileExecutor.EXECUTOR_ID, 6.0), is(nullValue()));
+        assertThat(js.createEvalBuilder(ProfileExecutor.EXECUTOR_ID, 7.0), is(nullValue()));
+        assertThat(js.createEvalBuilder(ProfileExecutor.EXECUTOR_ID, 8.0), is(nullValue()));
+        assertThat(js.createEvalBuilder(ProfileExecutor.EXECUTOR_ID, 9.0), is(nullValue()));
     }
 
     public void testEvalDebug() {
         QueryBuilder js = JavaScriptBuilder.INSTANCE;
 
-        assertThat(js.createEvalBuilder(QueryBuilder.ExecMode.Debug, 5.0), is(nullValue()));
-        assertThat(js.createEvalBuilder(QueryBuilder.ExecMode.Debug, 6.0), is(nullValue()));
-        assertThat(js.createEvalBuilder(QueryBuilder.ExecMode.Debug, 7.0), is(nullValue()));
-        assertThat(js.createEvalBuilder(QueryBuilder.ExecMode.Debug, 8.0), is(nullValue()));
-        assertThat(js.createEvalBuilder(QueryBuilder.ExecMode.Debug, 9.0), is(nullValue()));
+        assertThat(js.createEvalBuilder(DefaultDebugExecutor.EXECUTOR_ID, 5.0), is(nullValue()));
+        assertThat(js.createEvalBuilder(DefaultDebugExecutor.EXECUTOR_ID, 6.0), is(nullValue()));
+        assertThat(js.createEvalBuilder(DefaultDebugExecutor.EXECUTOR_ID, 7.0), is(nullValue()));
+        assertThat(js.createEvalBuilder(DefaultDebugExecutor.EXECUTOR_ID, 8.0), is(nullValue()));
+        assertThat(js.createEvalBuilder(DefaultDebugExecutor.EXECUTOR_ID, 9.0), is(nullValue()));
     }
 
     public void testInvokeRun() {
         QueryBuilder js = JavaScriptBuilder.INSTANCE;
 
-        assertThat(js.createInvokeBuilder(QueryBuilder.ExecMode.Run, 5.0), is(nullValue()));
-        assertThat(js.createInvokeBuilder(QueryBuilder.ExecMode.Run, 6.0), is(nullValue()));
-        assertThat(js.createInvokeBuilder(QueryBuilder.ExecMode.Run, 7.0), is(nullValue()));
-        assertThat(js.createInvokeBuilder(QueryBuilder.ExecMode.Run, 8.0), is(Function.XDMP_INVOKE_70));
-        assertThat(js.createInvokeBuilder(QueryBuilder.ExecMode.Run, 9.0), is(Function.XDMP_INVOKE_70));
+        assertThat(js.createInvokeBuilder(DefaultRunExecutor.EXECUTOR_ID, 5.0), is(nullValue()));
+        assertThat(js.createInvokeBuilder(DefaultRunExecutor.EXECUTOR_ID, 6.0), is(nullValue()));
+        assertThat(js.createInvokeBuilder(DefaultRunExecutor.EXECUTOR_ID, 7.0), is(nullValue()));
+        assertThat(js.createInvokeBuilder(DefaultRunExecutor.EXECUTOR_ID, 8.0), is(Function.XDMP_INVOKE_70));
+        assertThat(js.createInvokeBuilder(DefaultRunExecutor.EXECUTOR_ID, 9.0), is(Function.XDMP_INVOKE_70));
     }
 
     public void testInvokeProfile() {
         QueryBuilder js = JavaScriptBuilder.INSTANCE;
 
-        assertThat(js.createInvokeBuilder(QueryBuilder.ExecMode.Profile, 5.0), is(nullValue()));
-        assertThat(js.createInvokeBuilder(QueryBuilder.ExecMode.Profile, 6.0), is(nullValue()));
-        assertThat(js.createInvokeBuilder(QueryBuilder.ExecMode.Profile, 7.0), is(nullValue()));
-        assertThat(js.createInvokeBuilder(QueryBuilder.ExecMode.Profile, 8.0), is(nullValue()));
-        assertThat(js.createInvokeBuilder(QueryBuilder.ExecMode.Profile, 9.0), is(nullValue()));
+        assertThat(js.createInvokeBuilder(ProfileExecutor.EXECUTOR_ID, 5.0), is(nullValue()));
+        assertThat(js.createInvokeBuilder(ProfileExecutor.EXECUTOR_ID, 6.0), is(nullValue()));
+        assertThat(js.createInvokeBuilder(ProfileExecutor.EXECUTOR_ID, 7.0), is(nullValue()));
+        assertThat(js.createInvokeBuilder(ProfileExecutor.EXECUTOR_ID, 8.0), is(nullValue()));
+        assertThat(js.createInvokeBuilder(ProfileExecutor.EXECUTOR_ID, 9.0), is(nullValue()));
     }
 
     public void testInvokeDebug() {
         QueryBuilder js = JavaScriptBuilder.INSTANCE;
 
-        assertThat(js.createInvokeBuilder(QueryBuilder.ExecMode.Debug, 5.0), is(nullValue()));
-        assertThat(js.createInvokeBuilder(QueryBuilder.ExecMode.Debug, 6.0), is(nullValue()));
-        assertThat(js.createInvokeBuilder(QueryBuilder.ExecMode.Debug, 7.0), is(nullValue()));
-        assertThat(js.createInvokeBuilder(QueryBuilder.ExecMode.Debug, 8.0), is(nullValue()));
-        assertThat(js.createInvokeBuilder(QueryBuilder.ExecMode.Debug, 9.0), is(nullValue()));
+        assertThat(js.createInvokeBuilder(DefaultDebugExecutor.EXECUTOR_ID, 5.0), is(nullValue()));
+        assertThat(js.createInvokeBuilder(DefaultDebugExecutor.EXECUTOR_ID, 6.0), is(nullValue()));
+        assertThat(js.createInvokeBuilder(DefaultDebugExecutor.EXECUTOR_ID, 7.0), is(nullValue()));
+        assertThat(js.createInvokeBuilder(DefaultDebugExecutor.EXECUTOR_ID, 8.0), is(nullValue()));
+        assertThat(js.createInvokeBuilder(DefaultDebugExecutor.EXECUTOR_ID, 9.0), is(nullValue()));
     }
 }

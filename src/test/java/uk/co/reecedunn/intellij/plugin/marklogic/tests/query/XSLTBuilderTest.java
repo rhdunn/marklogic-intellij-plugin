@@ -15,13 +15,15 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.tests.query;
 
+import com.intellij.execution.executors.DefaultDebugExecutor;
+import com.intellij.execution.executors.DefaultRunExecutor;
 import junit.framework.TestCase;
+import uk.co.reecedunn.intellij.plugin.marklogic.executors.ProfileExecutor;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.Function;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.QueryBuilder;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.XSLTBuilder;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 @SuppressWarnings("ConstantConditions")
@@ -29,60 +31,60 @@ public class XSLTBuilderTest extends TestCase {
     public void testEvalRun() {
         QueryBuilder xslt = XSLTBuilder.INSTANCE;
 
-        assertThat(xslt.createEvalBuilder(QueryBuilder.ExecMode.Run, 5.0), is(Function.XDMP_XSLT_EVAL_50));
-        assertThat(xslt.createEvalBuilder(QueryBuilder.ExecMode.Run, 6.0), is(Function.XDMP_XSLT_EVAL_50));
-        assertThat(xslt.createEvalBuilder(QueryBuilder.ExecMode.Run, 7.0), is(Function.XDMP_XSLT_EVAL_50));
-        assertThat(xslt.createEvalBuilder(QueryBuilder.ExecMode.Run, 8.0), is(Function.XDMP_XSLT_EVAL_50));
-        assertThat(xslt.createEvalBuilder(QueryBuilder.ExecMode.Run, 9.0), is(Function.XDMP_XSLT_EVAL_50));
+        assertThat(xslt.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, 5.0), is(Function.XDMP_XSLT_EVAL_50));
+        assertThat(xslt.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, 6.0), is(Function.XDMP_XSLT_EVAL_50));
+        assertThat(xslt.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, 7.0), is(Function.XDMP_XSLT_EVAL_50));
+        assertThat(xslt.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, 8.0), is(Function.XDMP_XSLT_EVAL_50));
+        assertThat(xslt.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, 9.0), is(Function.XDMP_XSLT_EVAL_50));
     }
 
     public void testEvalProfile() {
         QueryBuilder xslt = XSLTBuilder.INSTANCE;
 
-        assertThat(xslt.createEvalBuilder(QueryBuilder.ExecMode.Profile, 5.0), is(Function.PROF_XSLT_EVAL_50));
-        assertThat(xslt.createEvalBuilder(QueryBuilder.ExecMode.Profile, 6.0), is(Function.PROF_XSLT_EVAL_50));
-        assertThat(xslt.createEvalBuilder(QueryBuilder.ExecMode.Profile, 7.0), is(Function.PROF_XSLT_EVAL_50));
-        assertThat(xslt.createEvalBuilder(QueryBuilder.ExecMode.Profile, 8.0), is(Function.PROF_XSLT_EVAL_50));
-        assertThat(xslt.createEvalBuilder(QueryBuilder.ExecMode.Profile, 9.0), is(Function.PROF_XSLT_EVAL_50));
+        assertThat(xslt.createEvalBuilder(ProfileExecutor.EXECUTOR_ID, 5.0), is(Function.PROF_XSLT_EVAL_50));
+        assertThat(xslt.createEvalBuilder(ProfileExecutor.EXECUTOR_ID, 6.0), is(Function.PROF_XSLT_EVAL_50));
+        assertThat(xslt.createEvalBuilder(ProfileExecutor.EXECUTOR_ID, 7.0), is(Function.PROF_XSLT_EVAL_50));
+        assertThat(xslt.createEvalBuilder(ProfileExecutor.EXECUTOR_ID, 8.0), is(Function.PROF_XSLT_EVAL_50));
+        assertThat(xslt.createEvalBuilder(ProfileExecutor.EXECUTOR_ID, 9.0), is(Function.PROF_XSLT_EVAL_50));
     }
 
     public void testEvalDebug() {
         QueryBuilder xslt = XSLTBuilder.INSTANCE;
 
-        assertThat(xslt.createEvalBuilder(QueryBuilder.ExecMode.Debug, 5.0), is(nullValue()));
-        assertThat(xslt.createEvalBuilder(QueryBuilder.ExecMode.Debug, 6.0), is(nullValue()));
-        assertThat(xslt.createEvalBuilder(QueryBuilder.ExecMode.Debug, 7.0), is(nullValue()));
-        assertThat(xslt.createEvalBuilder(QueryBuilder.ExecMode.Debug, 8.0), is(nullValue()));
-        assertThat(xslt.createEvalBuilder(QueryBuilder.ExecMode.Debug, 9.0), is(nullValue()));
+        assertThat(xslt.createEvalBuilder(DefaultDebugExecutor.EXECUTOR_ID, 5.0), is(nullValue()));
+        assertThat(xslt.createEvalBuilder(DefaultDebugExecutor.EXECUTOR_ID, 6.0), is(nullValue()));
+        assertThat(xslt.createEvalBuilder(DefaultDebugExecutor.EXECUTOR_ID, 7.0), is(nullValue()));
+        assertThat(xslt.createEvalBuilder(DefaultDebugExecutor.EXECUTOR_ID, 8.0), is(nullValue()));
+        assertThat(xslt.createEvalBuilder(DefaultDebugExecutor.EXECUTOR_ID, 9.0), is(nullValue()));
     }
 
     public void testInvokeRun() {
         QueryBuilder xslt = XSLTBuilder.INSTANCE;
 
-        assertThat(xslt.createInvokeBuilder(QueryBuilder.ExecMode.Run, 5.0), is(Function.XDMP_XSLT_INVOKE_50));
-        assertThat(xslt.createInvokeBuilder(QueryBuilder.ExecMode.Run, 6.0), is(Function.XDMP_XSLT_INVOKE_50));
-        assertThat(xslt.createInvokeBuilder(QueryBuilder.ExecMode.Run, 7.0), is(Function.XDMP_XSLT_INVOKE_50));
-        assertThat(xslt.createInvokeBuilder(QueryBuilder.ExecMode.Run, 8.0), is(Function.XDMP_XSLT_INVOKE_50));
-        assertThat(xslt.createInvokeBuilder(QueryBuilder.ExecMode.Run, 9.0), is(Function.XDMP_XSLT_INVOKE_50));
+        assertThat(xslt.createInvokeBuilder(DefaultRunExecutor.EXECUTOR_ID, 5.0), is(Function.XDMP_XSLT_INVOKE_50));
+        assertThat(xslt.createInvokeBuilder(DefaultRunExecutor.EXECUTOR_ID, 6.0), is(Function.XDMP_XSLT_INVOKE_50));
+        assertThat(xslt.createInvokeBuilder(DefaultRunExecutor.EXECUTOR_ID, 7.0), is(Function.XDMP_XSLT_INVOKE_50));
+        assertThat(xslt.createInvokeBuilder(DefaultRunExecutor.EXECUTOR_ID, 8.0), is(Function.XDMP_XSLT_INVOKE_50));
+        assertThat(xslt.createInvokeBuilder(DefaultRunExecutor.EXECUTOR_ID, 9.0), is(Function.XDMP_XSLT_INVOKE_50));
     }
 
     public void testInvokeProfile() {
         QueryBuilder xslt = XSLTBuilder.INSTANCE;
 
-        assertThat(xslt.createInvokeBuilder(QueryBuilder.ExecMode.Profile, 5.0), is(Function.PROF_XSLT_INVOKE_50));
-        assertThat(xslt.createInvokeBuilder(QueryBuilder.ExecMode.Profile, 6.0), is(Function.PROF_XSLT_INVOKE_50));
-        assertThat(xslt.createInvokeBuilder(QueryBuilder.ExecMode.Profile, 7.0), is(Function.PROF_XSLT_INVOKE_50));
-        assertThat(xslt.createInvokeBuilder(QueryBuilder.ExecMode.Profile, 8.0), is(Function.PROF_XSLT_INVOKE_50));
-        assertThat(xslt.createInvokeBuilder(QueryBuilder.ExecMode.Profile, 9.0), is(Function.PROF_XSLT_INVOKE_50));
+        assertThat(xslt.createInvokeBuilder(ProfileExecutor.EXECUTOR_ID, 5.0), is(Function.PROF_XSLT_INVOKE_50));
+        assertThat(xslt.createInvokeBuilder(ProfileExecutor.EXECUTOR_ID, 6.0), is(Function.PROF_XSLT_INVOKE_50));
+        assertThat(xslt.createInvokeBuilder(ProfileExecutor.EXECUTOR_ID, 7.0), is(Function.PROF_XSLT_INVOKE_50));
+        assertThat(xslt.createInvokeBuilder(ProfileExecutor.EXECUTOR_ID, 8.0), is(Function.PROF_XSLT_INVOKE_50));
+        assertThat(xslt.createInvokeBuilder(ProfileExecutor.EXECUTOR_ID, 9.0), is(Function.PROF_XSLT_INVOKE_50));
     }
 
     public void testInvokeDebug() {
         QueryBuilder xslt = XSLTBuilder.INSTANCE;
 
-        assertThat(xslt.createInvokeBuilder(QueryBuilder.ExecMode.Debug, 5.0), is(nullValue()));
-        assertThat(xslt.createInvokeBuilder(QueryBuilder.ExecMode.Debug, 6.0), is(nullValue()));
-        assertThat(xslt.createInvokeBuilder(QueryBuilder.ExecMode.Debug, 7.0), is(nullValue()));
-        assertThat(xslt.createInvokeBuilder(QueryBuilder.ExecMode.Debug, 8.0), is(nullValue()));
-        assertThat(xslt.createInvokeBuilder(QueryBuilder.ExecMode.Debug, 9.0), is(nullValue()));
+        assertThat(xslt.createInvokeBuilder(DefaultDebugExecutor.EXECUTOR_ID, 5.0), is(nullValue()));
+        assertThat(xslt.createInvokeBuilder(DefaultDebugExecutor.EXECUTOR_ID, 6.0), is(nullValue()));
+        assertThat(xslt.createInvokeBuilder(DefaultDebugExecutor.EXECUTOR_ID, 7.0), is(nullValue()));
+        assertThat(xslt.createInvokeBuilder(DefaultDebugExecutor.EXECUTOR_ID, 8.0), is(nullValue()));
+        assertThat(xslt.createInvokeBuilder(DefaultDebugExecutor.EXECUTOR_ID, 9.0), is(nullValue()));
     }
 }

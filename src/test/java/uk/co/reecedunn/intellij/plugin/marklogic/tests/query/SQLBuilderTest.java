@@ -15,7 +15,10 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.tests.query;
 
+import com.intellij.execution.executors.DefaultDebugExecutor;
+import com.intellij.execution.executors.DefaultRunExecutor;
 import junit.framework.TestCase;
+import uk.co.reecedunn.intellij.plugin.marklogic.executors.ProfileExecutor;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.Function;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.SQLBuilder;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.QueryBuilder;
@@ -28,60 +31,60 @@ public class SQLBuilderTest extends TestCase {
     public void testEvalRun() {
         QueryBuilder sql = SQLBuilder.INSTANCE;
 
-        assertThat(sql.createEvalBuilder(QueryBuilder.ExecMode.Run, 5.0), is(nullValue()));
-        assertThat(sql.createEvalBuilder(QueryBuilder.ExecMode.Run, 6.0), is(nullValue()));
-        assertThat(sql.createEvalBuilder(QueryBuilder.ExecMode.Run, 7.0), is(nullValue()));
-        assertThat(sql.createEvalBuilder(QueryBuilder.ExecMode.Run, 8.0), is(Function.XDMP_SQL_80));
-        assertThat(sql.createEvalBuilder(QueryBuilder.ExecMode.Run, 9.0), is(Function.XDMP_SQL_90));
+        assertThat(sql.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, 5.0), is(nullValue()));
+        assertThat(sql.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, 6.0), is(nullValue()));
+        assertThat(sql.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, 7.0), is(nullValue()));
+        assertThat(sql.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, 8.0), is(Function.XDMP_SQL_80));
+        assertThat(sql.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, 9.0), is(Function.XDMP_SQL_90));
     }
 
     public void testEvalProfile() {
         QueryBuilder sql = SQLBuilder.INSTANCE;
 
-        assertThat(sql.createEvalBuilder(QueryBuilder.ExecMode.Profile, 5.0), is(nullValue()));
-        assertThat(sql.createEvalBuilder(QueryBuilder.ExecMode.Profile, 6.0), is(nullValue()));
-        assertThat(sql.createEvalBuilder(QueryBuilder.ExecMode.Profile, 7.0), is(nullValue()));
-        assertThat(sql.createEvalBuilder(QueryBuilder.ExecMode.Profile, 8.0), is(nullValue()));
-        assertThat(sql.createEvalBuilder(QueryBuilder.ExecMode.Profile, 9.0), is(nullValue()));
+        assertThat(sql.createEvalBuilder(ProfileExecutor.EXECUTOR_ID, 5.0), is(nullValue()));
+        assertThat(sql.createEvalBuilder(ProfileExecutor.EXECUTOR_ID, 6.0), is(nullValue()));
+        assertThat(sql.createEvalBuilder(ProfileExecutor.EXECUTOR_ID, 7.0), is(nullValue()));
+        assertThat(sql.createEvalBuilder(ProfileExecutor.EXECUTOR_ID, 8.0), is(nullValue()));
+        assertThat(sql.createEvalBuilder(ProfileExecutor.EXECUTOR_ID, 9.0), is(nullValue()));
     }
 
     public void testEvalDebug() {
         QueryBuilder sql = SQLBuilder.INSTANCE;
 
-        assertThat(sql.createEvalBuilder(QueryBuilder.ExecMode.Debug, 5.0), is(nullValue()));
-        assertThat(sql.createEvalBuilder(QueryBuilder.ExecMode.Debug, 6.0), is(nullValue()));
-        assertThat(sql.createEvalBuilder(QueryBuilder.ExecMode.Debug, 7.0), is(nullValue()));
-        assertThat(sql.createEvalBuilder(QueryBuilder.ExecMode.Debug, 8.0), is(nullValue()));
-        assertThat(sql.createEvalBuilder(QueryBuilder.ExecMode.Debug, 9.0), is(nullValue()));
+        assertThat(sql.createEvalBuilder(DefaultDebugExecutor.EXECUTOR_ID, 5.0), is(nullValue()));
+        assertThat(sql.createEvalBuilder(DefaultDebugExecutor.EXECUTOR_ID, 6.0), is(nullValue()));
+        assertThat(sql.createEvalBuilder(DefaultDebugExecutor.EXECUTOR_ID, 7.0), is(nullValue()));
+        assertThat(sql.createEvalBuilder(DefaultDebugExecutor.EXECUTOR_ID, 8.0), is(nullValue()));
+        assertThat(sql.createEvalBuilder(DefaultDebugExecutor.EXECUTOR_ID, 9.0), is(nullValue()));
     }
 
     public void testInvokeRun() {
         QueryBuilder sql = SQLBuilder.INSTANCE;
 
-        assertThat(sql.createInvokeBuilder(QueryBuilder.ExecMode.Run, 5.0), is(nullValue()));
-        assertThat(sql.createInvokeBuilder(QueryBuilder.ExecMode.Run, 6.0), is(nullValue()));
-        assertThat(sql.createInvokeBuilder(QueryBuilder.ExecMode.Run, 7.0), is(nullValue()));
-        assertThat(sql.createInvokeBuilder(QueryBuilder.ExecMode.Run, 8.0), is(nullValue()));
-        assertThat(sql.createInvokeBuilder(QueryBuilder.ExecMode.Run, 9.0), is(nullValue()));
+        assertThat(sql.createInvokeBuilder(DefaultRunExecutor.EXECUTOR_ID, 5.0), is(nullValue()));
+        assertThat(sql.createInvokeBuilder(DefaultRunExecutor.EXECUTOR_ID, 6.0), is(nullValue()));
+        assertThat(sql.createInvokeBuilder(DefaultRunExecutor.EXECUTOR_ID, 7.0), is(nullValue()));
+        assertThat(sql.createInvokeBuilder(DefaultRunExecutor.EXECUTOR_ID, 8.0), is(nullValue()));
+        assertThat(sql.createInvokeBuilder(DefaultRunExecutor.EXECUTOR_ID, 9.0), is(nullValue()));
     }
 
     public void testInvokeProfile() {
         QueryBuilder sql = SQLBuilder.INSTANCE;
 
-        assertThat(sql.createInvokeBuilder(QueryBuilder.ExecMode.Profile, 5.0), is(nullValue()));
-        assertThat(sql.createInvokeBuilder(QueryBuilder.ExecMode.Profile, 6.0), is(nullValue()));
-        assertThat(sql.createInvokeBuilder(QueryBuilder.ExecMode.Profile, 7.0), is(nullValue()));
-        assertThat(sql.createInvokeBuilder(QueryBuilder.ExecMode.Profile, 8.0), is(nullValue()));
-        assertThat(sql.createInvokeBuilder(QueryBuilder.ExecMode.Profile, 9.0), is(nullValue()));
+        assertThat(sql.createInvokeBuilder(ProfileExecutor.EXECUTOR_ID, 5.0), is(nullValue()));
+        assertThat(sql.createInvokeBuilder(ProfileExecutor.EXECUTOR_ID, 6.0), is(nullValue()));
+        assertThat(sql.createInvokeBuilder(ProfileExecutor.EXECUTOR_ID, 7.0), is(nullValue()));
+        assertThat(sql.createInvokeBuilder(ProfileExecutor.EXECUTOR_ID, 8.0), is(nullValue()));
+        assertThat(sql.createInvokeBuilder(ProfileExecutor.EXECUTOR_ID, 9.0), is(nullValue()));
     }
 
     public void testInvokeDebug() {
         QueryBuilder sql = SQLBuilder.INSTANCE;
 
-        assertThat(sql.createInvokeBuilder(QueryBuilder.ExecMode.Debug, 5.0), is(nullValue()));
-        assertThat(sql.createInvokeBuilder(QueryBuilder.ExecMode.Debug, 6.0), is(nullValue()));
-        assertThat(sql.createInvokeBuilder(QueryBuilder.ExecMode.Debug, 7.0), is(nullValue()));
-        assertThat(sql.createInvokeBuilder(QueryBuilder.ExecMode.Debug, 8.0), is(nullValue()));
-        assertThat(sql.createInvokeBuilder(QueryBuilder.ExecMode.Debug, 9.0), is(nullValue()));
+        assertThat(sql.createInvokeBuilder(DefaultDebugExecutor.EXECUTOR_ID, 5.0), is(nullValue()));
+        assertThat(sql.createInvokeBuilder(DefaultDebugExecutor.EXECUTOR_ID, 6.0), is(nullValue()));
+        assertThat(sql.createInvokeBuilder(DefaultDebugExecutor.EXECUTOR_ID, 7.0), is(nullValue()));
+        assertThat(sql.createInvokeBuilder(DefaultDebugExecutor.EXECUTOR_ID, 8.0), is(nullValue()));
+        assertThat(sql.createInvokeBuilder(DefaultDebugExecutor.EXECUTOR_ID, 9.0), is(nullValue()));
     }
 }
