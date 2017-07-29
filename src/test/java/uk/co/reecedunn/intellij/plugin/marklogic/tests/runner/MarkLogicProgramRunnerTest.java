@@ -27,6 +27,7 @@ import com.intellij.execution.runners.ProgramRunner;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import uk.co.reecedunn.intellij.plugin.marklogic.configuration.MarkLogicRunConfiguration;
+import uk.co.reecedunn.intellij.plugin.marklogic.executors.ProfileExecutor;
 import uk.co.reecedunn.intellij.plugin.marklogic.runner.MarkLogicProgramRunner;
 import uk.co.reecedunn.intellij.plugin.marklogic.tests.configuration.ConfigurationTestCase;
 
@@ -60,14 +61,65 @@ public class MarkLogicProgramRunnerTest extends ConfigurationTestCase {
         assertThat(runner.canRun(DefaultRunExecutor.EXECUTOR_ID, profile), is(false));
         assertThat(runner.canRun(DefaultDebugExecutor.EXECUTOR_ID, profile), is(false));
         assertThat(runner.canRun(CoverageExecutor.EXECUTOR_ID, profile), is(false));
+        assertThat(runner.canRun(ProfileExecutor.EXECUTOR_ID, profile), is(false));
     }
 
     public void testDefaultRunConfiguration() {
         RunProfile profile = createConfiguration();
 
         ProgramRunner runner = new MarkLogicProgramRunner();
+        assertThat(runner.canRun(DefaultRunExecutor.EXECUTOR_ID, profile), is(false));
+        assertThat(runner.canRun(DefaultDebugExecutor.EXECUTOR_ID, profile), is(false));
+        assertThat(runner.canRun(CoverageExecutor.EXECUTOR_ID, profile), is(false));
+        assertThat(runner.canRun(ProfileExecutor.EXECUTOR_ID, profile), is(false));
+    }
+
+    public void testNoActionsAvailable() {
+        MarkLogicRunConfiguration profile = createConfiguration();
+        profile.setMainModuleFile(createVirtualFile("test.sjs", "2"));
+        profile.setMarkLogicVersion(7.0);
+
+        ProgramRunner runner = new MarkLogicProgramRunner();
+        assertThat(runner.canRun(DefaultRunExecutor.EXECUTOR_ID, profile), is(false));
+        assertThat(runner.canRun(DefaultDebugExecutor.EXECUTOR_ID, profile), is(false));
+        assertThat(runner.canRun(CoverageExecutor.EXECUTOR_ID, profile), is(false));
+        assertThat(runner.canRun(ProfileExecutor.EXECUTOR_ID, profile), is(false));
+    }
+
+    public void testRunOnly() {
+        MarkLogicRunConfiguration profile = createConfiguration();
+        profile.setMainModuleFile(createVirtualFile("test.sjs", "2"));
+        profile.setMarkLogicVersion(8.0);
+
+        ProgramRunner runner = new MarkLogicProgramRunner();
         assertThat(runner.canRun(DefaultRunExecutor.EXECUTOR_ID, profile), is(true));
         assertThat(runner.canRun(DefaultDebugExecutor.EXECUTOR_ID, profile), is(false));
         assertThat(runner.canRun(CoverageExecutor.EXECUTOR_ID, profile), is(false));
+        assertThat(runner.canRun(ProfileExecutor.EXECUTOR_ID, profile), is(false));
+    }
+
+    public void testRunAndProfile() {
+        MarkLogicRunConfiguration profile = createConfiguration();
+        profile.setMainModuleFile(createVirtualFile("test.xsl", ""));
+        profile.setMarkLogicVersion(8.0);
+
+        ProgramRunner runner = new MarkLogicProgramRunner();
+        assertThat(runner.canRun(DefaultRunExecutor.EXECUTOR_ID, profile), is(true));
+        assertThat(runner.canRun(DefaultDebugExecutor.EXECUTOR_ID, profile), is(false));
+        assertThat(runner.canRun(CoverageExecutor.EXECUTOR_ID, profile), is(false));
+        assertThat(runner.canRun(ProfileExecutor.EXECUTOR_ID, profile), is(true));
+    }
+
+    public void testRunProfileAndDebug() {
+        // NOTE: Debugging support is not currently enabled.
+        MarkLogicRunConfiguration profile = createConfiguration();
+        profile.setMainModuleFile(createVirtualFile("test.xqy", "2"));
+        profile.setMarkLogicVersion(8.0);
+
+        ProgramRunner runner = new MarkLogicProgramRunner();
+        assertThat(runner.canRun(DefaultRunExecutor.EXECUTOR_ID, profile), is(true));
+        assertThat(runner.canRun(DefaultDebugExecutor.EXECUTOR_ID, profile), is(false));
+        assertThat(runner.canRun(CoverageExecutor.EXECUTOR_ID, profile), is(false));
+        assertThat(runner.canRun(ProfileExecutor.EXECUTOR_ID, profile), is(true));
     }
 }

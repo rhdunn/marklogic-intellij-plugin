@@ -44,7 +44,7 @@ public class MarkLogicRunProfileState extends CommandLineState {
         MarkLogicRunConfiguration configuration = (MarkLogicRunConfiguration)getEnvironment().getRunProfile();
 
         QueryBuilder queryBuilder = QueryBuilderFactory.createQueryBuilderForFile(configuration.getMainModulePath());
-        Function function = queryBuilder.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, configuration.getMarkLogicVersion());
+        Function function = queryBuilder.createEvalBuilder(getEnvironment().getExecutor().getId(), configuration.getMarkLogicVersion());
 
         StringBuilder xquery = new StringBuilder();
         function.buildQuery(xquery, configuration);

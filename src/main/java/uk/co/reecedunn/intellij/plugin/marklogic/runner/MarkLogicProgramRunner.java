@@ -16,10 +16,12 @@
 package uk.co.reecedunn.intellij.plugin.marklogic.runner;
 
 import com.intellij.execution.configurations.RunProfile;
-import com.intellij.execution.executors.DefaultRunExecutor;
+import com.intellij.execution.executors.DefaultDebugExecutor;
 import com.intellij.execution.runners.DefaultProgramRunner;
 import org.jetbrains.annotations.NotNull;
 import uk.co.reecedunn.intellij.plugin.marklogic.configuration.MarkLogicRunConfiguration;
+import uk.co.reecedunn.intellij.plugin.marklogic.query.QueryBuilder;
+import uk.co.reecedunn.intellij.plugin.marklogic.query.QueryBuilderFactory;
 
 public class MarkLogicProgramRunner extends DefaultProgramRunner {
     @NotNull
@@ -30,6 +32,13 @@ public class MarkLogicProgramRunner extends DefaultProgramRunner {
 
     @Override
     public boolean canRun(@NotNull String executorId, @NotNull RunProfile profile) {
-        return DefaultRunExecutor.EXECUTOR_ID.equals(executorId) && profile instanceof MarkLogicRunConfiguration;
+        if (!(profile instanceof MarkLogicRunConfiguration) || DefaultDebugExecutor.EXECUTOR_ID.equals(executorId)) {
+            return false;
+        }
+
+        final MarkLogicRunConfiguration configuration = (MarkLogicRunConfiguration) profile;
+        final QueryBuilder queryBuilder = QueryBuilderFactory.createQueryBuilderForFile(configuration.getMainModulePath());
+        return queryBuilder != null &&
+               queryBuilder.createEvalBuilder(executorId, configuration.getMarkLogicVersion()) != null;
     }
 }
