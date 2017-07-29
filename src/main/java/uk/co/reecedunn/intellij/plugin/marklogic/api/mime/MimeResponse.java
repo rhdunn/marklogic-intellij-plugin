@@ -25,7 +25,7 @@ import java.util.List;
 
 public class MimeResponse {
     private final StatusLine status;
-    private final Message[] messages;
+    private final Message[] parts;
 
     public MimeResponse(@NotNull StatusLine status, @NotNull Header[] headers, @NotNull String body) {
         this.status = status;
@@ -46,15 +46,15 @@ public class MimeResponse {
         } else {
             messages.add(message);
         }
-        this.messages = messages.toArray(new Message[messages.size()]);
+        this.parts = messages.toArray(new Message[messages.size()]);
     }
 
     public StatusLine getStatus() {
         return status;
     }
 
-    public Message[] getMessages() {
-        return messages;
+    public Message[] getParts() {
+        return parts;
     }
 
     private Header[] parseHeaders(String content) {

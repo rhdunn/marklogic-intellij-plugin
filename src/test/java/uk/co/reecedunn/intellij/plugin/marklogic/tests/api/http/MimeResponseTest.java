@@ -38,13 +38,13 @@ public class MimeResponseTest extends TestCase {
         MimeResponse response = new MimeResponse(OK, headers, body);
 
         assertThat(response.getStatus(), is(OK));
-        assertThat(response.getMessages().length, is(1));
+        assertThat(response.getParts().length, is(1));
 
-        assertThat(response.getMessages()[0].getHeader("Content-Length"), is("0"));
-        assertThat(response.getMessages()[0].getHeader("Content-Type"), is(nullValue()));
-        assertThat(response.getMessages()[0].getHeader("X-Primitive"), is(nullValue()));
-        assertThat(response.getMessages()[0].getHeader("X-Path"), is(nullValue()));
-        assertThat(response.getMessages()[0].getBody(), is(""));
+        assertThat(response.getParts()[0].getHeader("Content-Length"), is("0"));
+        assertThat(response.getParts()[0].getHeader("Content-Type"), is(nullValue()));
+        assertThat(response.getParts()[0].getHeader("X-Primitive"), is(nullValue()));
+        assertThat(response.getParts()[0].getHeader("X-Path"), is(nullValue()));
+        assertThat(response.getParts()[0].getBody(), is(""));
     }
 
     public void testSimpleMessage() {
@@ -56,13 +56,13 @@ public class MimeResponseTest extends TestCase {
         MimeResponse response = new MimeResponse(OK, headers, body);
 
         assertThat(response.getStatus(), is(OK));
-        assertThat(response.getMessages().length, is(1));
+        assertThat(response.getParts().length, is(1));
 
-        assertThat(response.getMessages()[0].getHeader("Content-Length"), is("5"));
-        assertThat(response.getMessages()[0].getHeader("Content-Type"), is("text/plain"));
-        assertThat(response.getMessages()[0].getHeader("X-Primitive"), is(nullValue()));
-        assertThat(response.getMessages()[0].getHeader("X-Path"), is(nullValue()));
-        assertThat(response.getMessages()[0].getBody(), is(body));
+        assertThat(response.getParts()[0].getHeader("Content-Length"), is("5"));
+        assertThat(response.getParts()[0].getHeader("Content-Type"), is("text/plain"));
+        assertThat(response.getParts()[0].getHeader("X-Primitive"), is(nullValue()));
+        assertThat(response.getParts()[0].getHeader("X-Path"), is(nullValue()));
+        assertThat(response.getParts()[0].getBody(), is(body));
     }
 
     public void testMultipartSinglePart() {
@@ -81,12 +81,12 @@ public class MimeResponseTest extends TestCase {
         MimeResponse response = new MimeResponse(OK, headers, body);
 
         assertThat(response.getStatus(), is(OK));
-        assertThat(response.getMessages().length, is(1));
+        assertThat(response.getParts().length, is(1));
 
-        assertThat(response.getMessages()[0].getHeader("Content-Type"), is("text/plain"));
-        assertThat(response.getMessages()[0].getHeader("X-Primitive"), is("integer"));
-        assertThat(response.getMessages()[0].getHeader("X-Path"), is(nullValue()));
-        assertThat(response.getMessages()[0].getBody(), is("15"));
+        assertThat(response.getParts()[0].getHeader("Content-Type"), is("text/plain"));
+        assertThat(response.getParts()[0].getHeader("X-Primitive"), is("integer"));
+        assertThat(response.getParts()[0].getHeader("X-Path"), is(nullValue()));
+        assertThat(response.getParts()[0].getBody(), is("15"));
     }
 
     public void testMultipartMultipleParts() {
@@ -111,16 +111,16 @@ public class MimeResponseTest extends TestCase {
         MimeResponse response = new MimeResponse(OK, headers, body);
 
         assertThat(response.getStatus(), is(OK));
-        assertThat(response.getMessages().length, is(2));
+        assertThat(response.getParts().length, is(2));
 
-        assertThat(response.getMessages()[0].getHeader("Content-Type"), is("text/plain"));
-        assertThat(response.getMessages()[0].getHeader("X-Primitive"), is("integer"));
-        assertThat(response.getMessages()[0].getHeader("X-Path"), is(nullValue()));
-        assertThat(response.getMessages()[0].getBody(), is("1"));
+        assertThat(response.getParts()[0].getHeader("Content-Type"), is("text/plain"));
+        assertThat(response.getParts()[0].getHeader("X-Primitive"), is("integer"));
+        assertThat(response.getParts()[0].getHeader("X-Path"), is(nullValue()));
+        assertThat(response.getParts()[0].getBody(), is("1"));
 
-        assertThat(response.getMessages()[1].getHeader("Content-Type"), is("application/json"));
-        assertThat(response.getMessages()[1].getHeader("X-Primitive"), is("number-node()"));
-        assertThat(response.getMessages()[1].getHeader("X-Path"), is("number-node()"));
-        assertThat(response.getMessages()[1].getBody(), is("5"));
+        assertThat(response.getParts()[1].getHeader("Content-Type"), is("application/json"));
+        assertThat(response.getParts()[1].getHeader("X-Primitive"), is("number-node()"));
+        assertThat(response.getParts()[1].getHeader("X-Path"), is("number-node()"));
+        assertThat(response.getParts()[1].getBody(), is("5"));
     }
 }
