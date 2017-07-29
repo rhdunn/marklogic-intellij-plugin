@@ -15,30 +15,27 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.api.mime;
 
+import com.intellij.util.ArrayUtil;
 import org.apache.http.Header;
-import org.apache.http.StatusLine;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
+public class Message {
+    private Header[] headers;
+    private String body;
 
-public class MimeResponse {
-    private final StatusLine status;
-    private final Message[] messages;
-
-    public MimeResponse(@NotNull StatusLine status, @NotNull Header[] headers, @NotNull String body) {
-        this.status = status;
-
-        List<Message> messages = new ArrayList<>();
-        messages.add(new Message(headers, body));
-        this.messages = messages.toArray(new Message[messages.size()]);
+    Message(@NotNull Header[] headers, @NotNull String body) {
+        this.headers = headers;
+        this.body = body;
     }
 
-    public StatusLine getStatus() {
-        return status;
+    @Nullable
+    public String getHeader(@NotNull String header) {
+        int index = ArrayUtil.indexOf(this.headers, header, (a, b) -> ((Header)a).getName().equals(b));
+        return (index >= 0) ? this.headers[index].getValue() : null;
     }
 
-    public Message[] getMessages() {
-        return messages;
+    public String getBody() {
+        return this.body;
     }
 }

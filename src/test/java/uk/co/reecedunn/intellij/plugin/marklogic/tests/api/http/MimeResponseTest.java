@@ -21,33 +21,45 @@ import org.apache.http.ProtocolVersion;
 import org.apache.http.StatusLine;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.message.BasicStatusLine;
-import uk.co.reecedunn.intellij.plugin.marklogic.api.Item;
-import uk.co.reecedunn.intellij.plugin.marklogic.api.http.HttpResponse;
-import uk.co.reecedunn.intellij.plugin.marklogic.tests.Query;
+import uk.co.reecedunn.intellij.plugin.marklogic.api.mime.MimeResponse;
 
 import java.io.IOException;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class HttpResponseTest extends TestCase {
+public class MimeResponseTest extends TestCase {
     private static ProtocolVersion HTTP1 = new ProtocolVersion("HTTP", 1, 0);
     private static StatusLine OK = new BasicStatusLine(HTTP1, 200, "OK");
 
-    @Query("<a/>/@*")
-    public void testNoResults() throws IOException {
+    public void testEmptyResponse() throws IOException {
         Header[] headers = new Header[] {
             new BasicHeader("Content-Length", "0")
         };
         String body = "";
-        HttpResponse response = new HttpResponse(OK, headers, body);
+        MimeResponse response = new MimeResponse(OK, headers, body);
 
-        Item[] items = response.getItems();
-        response.close();
+        assertThat(response.getStatus(), is(OK));
+        assertThat(response.getMessages().length, is(1));
 
-        assertThat(items.length, is(1));
-        assertThat(items[0].getContent(), is("()"));
-        assertThat(items[0].getContentType(), is("text/plain"));
-        assertThat(items[0].getItemType(), is("empty-sequence()"));
+        assertThat(response.getMessages()[0].getHeader("Content-Length"), is("0"));
+        assertThat(response.getMessages()[0].getHeader("Content-Type"), is(nullValue()));
+        assertThat(response.getMessages()[0].getBody(), is(""));
+    }
+
+    public void testSimpleMessage() throws IOException {
+        Header[] headers = new Header[] {
+            new BasicHeader("Content-Length", "5"),
+            new BasicHeader("Content-Type", "text/plain")
+        };
+        String body = "Hello";
+        MimeResponse response = new MimeResponse(OK, headers, body);
+
+        assertThat(response.getStatus(), is(OK));
+        assertThat(response.getMessages().length, is(1));
+
+        assertThat(response.getMessages()[0].getHeader("Content-Length"), is("5"));
+        assertThat(response.getMessages()[0].getHeader("Content-Type"), is("text/plain"));
+        assertThat(response.getMessages()[0].getBody(), is(body));
     }
 }
