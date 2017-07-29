@@ -17,7 +17,6 @@ package uk.co.reecedunn.intellij.plugin.marklogic.runner;
 
 import com.intellij.execution.ExecutionException;
 import com.intellij.execution.configurations.CommandLineState;
-import com.intellij.execution.executors.DefaultRunExecutor;
 import com.intellij.execution.filters.RegexpFilter;
 import com.intellij.execution.process.ProcessHandler;
 import com.intellij.execution.runners.ExecutionEnvironment;
@@ -44,7 +43,14 @@ public class MarkLogicRunProfileState extends CommandLineState {
         MarkLogicRunConfiguration configuration = (MarkLogicRunConfiguration)getEnvironment().getRunProfile();
 
         QueryBuilder queryBuilder = QueryBuilderFactory.createQueryBuilderForFile(configuration.getMainModulePath());
+        if (queryBuilder == null) {
+            throw new ExecutionException("Unsupported query file: " + configuration.getMainModulePath());
+        }
+
         Function function = queryBuilder.createEvalBuilder(getEnvironment().getExecutor().getId(), configuration.getMarkLogicVersion());
+        if (function == null) {
+            throw new ExecutionException("Cannot run the query file with MarkLogic " + configuration.getMarkLogicVersion());
+        }
 
         StringBuilder xquery = new StringBuilder();
         function.buildQuery(xquery, configuration);
