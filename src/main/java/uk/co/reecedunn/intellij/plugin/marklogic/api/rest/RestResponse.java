@@ -15,96 +15,54 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.api.rest;
 
-import org.apache.http.Header;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.util.EntityUtils;
 import org.jetbrains.annotations.NotNull;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Item;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Response;
+import uk.co.reecedunn.intellij.plugin.marklogic.api.mime.Message;
+import uk.co.reecedunn.intellij.plugin.marklogic.api.mime.MimeResponse;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class RestResponse implements Response {
-    private final CloseableHttpResponse response;
+    private final MimeResponse response;
 
-    RestResponse(CloseableHttpResponse response) {
+    RestResponse(MimeResponse response) {
         this.response = response;
     }
 
     @Override
     public void close() throws IOException {
-        response.close();
     }
 
     @NotNull
     @Override
     public Item[] getItems() throws IOException {
-        int statusCode = response.getStatusLine().getStatusCode();
+        int statusCode = response.getStatus().getStatusCode();
         if (statusCode != 200) {
-            throw new IOException(statusCode + " " + response.getStatusLine().getReasonPhrase() + "\n" + getResponse());
+            final String message = response.getParts()[0].getBody();
+            throw new IOException(statusCode + " " + response.getStatus().getReasonPhrase() + "\n" + message);
         }
 
         List<Item> items = new ArrayList<>();
-        String contentType = getHeader("Content-Type", "application/octet-stream");
-        if (contentType.startsWith("multipart/")) {
-            String internalContentType = getHeader("X-Content-Type", null); // e.g. from the SPARQL queries.
-            parseMultiPartResponse(items, getResponse(), contentType, internalContentType);
-        } else {
-            items.add(Item.create(getResponse(), contentType, getHeader("X-Primitive", null)));
+        final String internalContentType = response.getHeader("X-Content-Type");
+        for (Message part : response.getParts()) {
+            final String contentType = part.getHeader("Content-Type");
+            if (contentType == null) {
+                continue;
+            }
+
+            final String primitive = part.getHeader("X-Primitive");
+            if (internalContentType == null) {
+                items.add(Item.create(part.getBody(), contentType, primitive));
+            } else {
+                items.add(Item.create(part.getBody(), internalContentType, primitive));
+            }
         }
         if (items.isEmpty()) {
             items.add(Item.create("()", "text/plain", "empty-sequence()"));
         }
         return items.toArray(new Item[items.size()]);
-    }
-
-    private String getHeader(String name, String defaultValue) {
-        Header[] headers = response.getHeaders(name);
-        if (headers.length == 0) {
-            return defaultValue;
-        }
-        return headers[0].getValue();
-    }
-
-    private String getResponse() throws IOException {
-        return EntityUtils.toString(response.getEntity());
-    }
-
-    private void parseMultiPartResponse(List<Item> items, String multipart, String contentType, String internalContentType) throws IOException {
-        String[] boundaryParts = contentType.split("boundary=");
-        if (boundaryParts.length == 0) {
-            throw new IOException("Unsupported content type: " + contentType);
-        }
-
-        String boundary = "\r\n--" + boundaryParts[1];
-        for (String part : multipart.split(boundary)) {
-            if (part.isEmpty() || part.startsWith("--")) {
-                continue;
-            }
-
-            String[] headersContent = part.split("\r\n\r\n");
-            if (headersContent.length != 2) {
-                throw new IOException("Incorrect part format: no MIME headers found");
-            }
-
-            String resultContentType = "application/octet-stream";
-            String resultPrimitive = null;
-            for (String header : headersContent[0].split("\r\n")) {
-                if (header.startsWith("Content-Type:")) {
-                    resultContentType = header.replaceAll("Content-Type:\\s+", "");
-                } else if (header.startsWith("X-Primitive:")) {
-                    resultPrimitive = header.replaceAll("X-Primitive:\\s+", "");
-                }
-            }
-
-            if (internalContentType == null) {
-                items.add(Item.create(headersContent[1], resultContentType, resultPrimitive));
-            } else {
-                items.add(Item.create(headersContent[1], internalContentType, resultPrimitive));
-                internalContentType = null; // Only use this for the first result.
-            }
-        }
     }
 }

@@ -15,10 +15,15 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.api.rest;
 
+import org.apache.http.Header;
+import org.apache.http.StatusLine;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.util.EntityUtils;
 import org.jetbrains.annotations.NotNull;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Request;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Response;
+import uk.co.reecedunn.intellij.plugin.marklogic.api.mime.MimeResponse;
 
 import java.io.IOException;
 
@@ -34,6 +39,12 @@ public class RestRequest implements Request {
     @NotNull
     @Override
     public Response run() throws IOException {
-        return new RestResponse(connection.getClient().execute(request));
+        final CloseableHttpResponse response = connection.getClient().execute(request);
+        final StatusLine status = response.getStatusLine();
+        final Header[] headers = response.getAllHeaders();
+        final String body = EntityUtils.toString(response.getEntity());
+        response.close();
+
+        return new RestResponse(new MimeResponse(status, headers, body));
     }
 }
