@@ -17,7 +17,7 @@
   ]]></description>
 
   <change-notes><![CDATA[
-    <h3>Release 0.1-dev:</h3>
+    <h3>Release 0.1:</h3>
     <ol>
       <li>Support for running and profiling XQuery, JavaScript, SQL and SPARQL queries.</li>
     </ol>
