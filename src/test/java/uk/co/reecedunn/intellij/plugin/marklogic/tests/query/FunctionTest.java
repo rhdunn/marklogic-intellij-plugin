@@ -42,7 +42,7 @@ public class FunctionTest extends ConfigurationTestCase {
         final String expected =
             "let $query := \"(1, 2, 3)\"\n" +
             "let $vars := ()\n" +
-            "let $options := <options xmlns=\"xdmp:eval\"><root>/</root></options>\n" +
+            "let $options := <options xmlns=\"xdmp:eval\"><modules>0</modules><root>/</root></options>\n" +
             "return try { xdmp:eval($query, $vars, $options) } catch ($e) { $e }\n";
         assertThat(builder.toString(), is(expected));
     }
@@ -61,7 +61,7 @@ public class FunctionTest extends ConfigurationTestCase {
         final String expected =
             "let $query := \"1 || \"\"st\"\"\"\n" +
             "let $vars := ()\n" +
-            "let $options := <options xmlns=\"xdmp:eval\"><root>/</root></options>\n" +
+            "let $options := <options xmlns=\"xdmp:eval\"><modules>0</modules><root>/</root></options>\n" +
             "return try { xdmp:eval($query, $vars, $options) } catch ($e) { $e }\n";
         assertThat(builder.toString(), is(expected));
     }
@@ -80,7 +80,7 @@ public class FunctionTest extends ConfigurationTestCase {
         final String expected =
             "let $query := \"<a>&amp;amp;</a>\"\n" +
             "let $vars := ()\n" +
-            "let $options := <options xmlns=\"xdmp:eval\"><root>/</root></options>\n" +
+            "let $options := <options xmlns=\"xdmp:eval\"><modules>0</modules><root>/</root></options>\n" +
             "return try { xdmp:eval($query, $vars, $options) } catch ($e) { $e }\n";
         assertThat(builder.toString(), is(expected));
     }
@@ -147,7 +147,7 @@ public class FunctionTest extends ConfigurationTestCase {
         final String expected =
             "let $query := \"34\"\n" +
             "let $vars := ()\n" +
-            "let $options := <options xmlns=\"xdmp:eval\"><root>/</root></options>\n" +
+            "let $options := <options xmlns=\"xdmp:eval\"><modules>0</modules><root>/</root></options>\n" +
             "return try { xdmp:eval($query, $vars, $options) } catch ($e) { $e }\n";
         assertThat(builder.toString(), is(expected));
     }
@@ -169,7 +169,7 @@ public class FunctionTest extends ConfigurationTestCase {
             "import module namespace sem = \"http://marklogic.com/semantics\" at \"/MarkLogic/semantics.xqy\";\n" +
             "let $query := \"34\"\n" +
             "let $vars := ()\n" +
-            "let $options := <options xmlns=\"xdmp:eval\"><root>/</root></options>\n" +
+            "let $options := <options xmlns=\"xdmp:eval\"><modules>0</modules><root>/</root></options>\n" +
             "return try {\n" +
             "    let $ret     := xdmp:eval($query, $vars, $options)\n" +
             "    let $triples := for $item in $ret where $item instance of sem:triple return $item\n" +

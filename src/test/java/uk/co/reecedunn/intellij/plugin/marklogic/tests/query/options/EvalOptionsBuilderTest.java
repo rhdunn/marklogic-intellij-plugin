@@ -33,6 +33,7 @@ public class EvalOptionsBuilderTest extends TestCase {
 
         final String expected =
             "<options xmlns=\"xdmp:eval\">" +
+            "<modules>0</modules>" +
             "</options>";
         assertThat(vars.toString(), is(expected));
     }
@@ -48,6 +49,7 @@ public class EvalOptionsBuilderTest extends TestCase {
         final String expected =
             "<options xmlns=\"xdmp:eval\">" +
             "<database>{xdmp:database(\"lorem\")}</database>" +
+            "<modules>0</modules>" +
             "</options>";
         assertThat(vars.toString(), is(expected));
     }
@@ -77,6 +79,7 @@ public class EvalOptionsBuilderTest extends TestCase {
 
         final String expected =
             "<options xmlns=\"xdmp:eval\">" +
+            "<modules>0</modules>" +
             "<root>lorem</root>" +
             "</options>";
         assertThat(vars.toString(), is(expected));
@@ -96,6 +99,7 @@ public class EvalOptionsBuilderTest extends TestCase {
 
         final String expected =
             "<options xmlns=\"xdmp:eval\">" +
+            "<modules>0</modules>" +
             "</options>";
         assertThat(vars.toString(), is(expected));
     }

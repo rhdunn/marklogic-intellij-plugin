@@ -18,6 +18,8 @@ package uk.co.reecedunn.intellij.plugin.marklogic.query.options;
 import org.jetbrains.annotations.NotNull;
 
 public class EvalOptionsBuilder implements OptionsBuilder {
+    private static String FILESYSTEM_MODULES_DB = "0";
+
     public static OptionsBuilder INSTANCE = new EvalOptionsBuilder();
 
     private String contentDatabase = null;
@@ -52,14 +54,17 @@ public class EvalOptionsBuilder implements OptionsBuilder {
     @Override
     public void build(@NotNull StringBuilder builder) {
         builder.append("<options xmlns=\"xdmp:eval\">");
-        buildDatabaseOption(builder, "database", contentDatabase);
-        buildDatabaseOption(builder, "modules", modulesDatabase);
+        buildDatabaseOption(builder, "database", contentDatabase, null);
+        buildDatabaseOption(builder, "modules", modulesDatabase, FILESYSTEM_MODULES_DB);
         buildOption(builder, "root", modulesRoot);
         builder.append("</options>");
     }
 
-    private void buildDatabaseOption(StringBuilder options, String option, String database) {
+    private void buildDatabaseOption(StringBuilder options, String option, String database, String defaultDatabaseId) {
         if (database == null || database.isEmpty()) {
+            if (defaultDatabaseId != null) {
+                buildOption(options, option, defaultDatabaseId);
+            }
             return;
         }
 
