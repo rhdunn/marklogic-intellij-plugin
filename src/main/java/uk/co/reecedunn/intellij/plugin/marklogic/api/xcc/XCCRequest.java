@@ -37,7 +37,8 @@ public class XCCRequest implements Request {
     public Response run() throws IOException {
         try {
             return new XCCResponse(session.submitRequest(request), session);
-        } catch (RequestException e) {
+        } catch (RequestException | IllegalStateException e) {
+            // IllegalStateException is thrown for invalid credentials.
             throw new IOException(e);
         }
     }
