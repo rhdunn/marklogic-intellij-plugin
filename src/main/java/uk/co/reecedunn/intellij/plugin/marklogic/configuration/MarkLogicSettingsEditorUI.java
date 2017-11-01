@@ -26,7 +26,7 @@ import uk.co.reecedunn.intellij.plugin.marklogic.api.Connection;
 import uk.co.reecedunn.intellij.plugin.marklogic.resources.MarkLogicBundle;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.RDFFormat;
 import uk.co.reecedunn.intellij.plugin.marklogic.runner.MarkLogicResultsHandler;
-import uk.co.reecedunn.intellij.plugin.marklogic.ui.DocumentChangedListener;
+import uk.co.reecedunn.intellij.plugin.core.ui.DocumentChangedListener;
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.MarkLogicQueryComboBox;
 
 import javax.swing.*;

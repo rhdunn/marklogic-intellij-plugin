@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package uk.co.reecedunn.intellij.plugin.marklogic.ui;
+package uk.co.reecedunn.intellij.plugin.core.ui;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
