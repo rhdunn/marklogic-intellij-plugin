@@ -1,5 +1,5 @@
 buildscript {
-    ext.junit_milestone = '-M4' // IntelliJ 2017.1.2
+    ext.junit_milestone = ''
     repositories {
         maven { url 'http://dl.bintray.com/jetbrains/intellij-plugin-service' }
     }
