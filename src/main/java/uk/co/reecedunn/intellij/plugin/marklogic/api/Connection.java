@@ -33,6 +33,8 @@ public abstract class Connection {
 
     public abstract EvalRequestBuilder createEvalRequestBuilder();
 
+    public abstract LogRequestBuilder createLogRequestBuilder();
+
     @NotNull
     public static Connection newConnection(String hostname, int port, String username, String password, double markLogicVersion) {
         if (markLogicVersion >= 8.0) {

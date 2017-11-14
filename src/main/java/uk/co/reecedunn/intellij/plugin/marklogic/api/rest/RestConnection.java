@@ -24,6 +24,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.jetbrains.annotations.NotNull;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Connection;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.EvalRequestBuilder;
+import uk.co.reecedunn.intellij.plugin.marklogic.api.LogRequestBuilder;
 
 import java.io.IOException;
 
@@ -44,6 +45,11 @@ public class RestConnection extends Connection {
     @Override
     public EvalRequestBuilder createEvalRequestBuilder() {
         return new RestEvalRequestBuilder(this);
+    }
+
+    @Override
+    public LogRequestBuilder createLogRequestBuilder() {
+        return new RestLogRequestBuilder(this);
     }
 
     String getBaseUri() {

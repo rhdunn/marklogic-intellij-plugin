@@ -20,6 +20,7 @@ import com.marklogic.xcc.ContentSourceFactory;
 import org.jetbrains.annotations.NotNull;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Connection;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.EvalRequestBuilder;
+import uk.co.reecedunn.intellij.plugin.marklogic.api.LogRequestBuilder;
 
 import java.io.IOException;
 
@@ -37,6 +38,11 @@ public class XCCConnection extends Connection {
     @Override
     public EvalRequestBuilder createEvalRequestBuilder() {
         return new XCCEvalRequestBuilder(this);
+    }
+
+    @Override
+    public LogRequestBuilder createLogRequestBuilder() {
+        throw new UnsupportedOperationException("The XCC API does not support error logs.");
     }
 
     ContentSource getContentSource() {
