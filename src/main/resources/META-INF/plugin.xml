@@ -33,5 +33,9 @@
     <programRunner implementation="uk.co.reecedunn.intellij.plugin.marklogic.runner.MarkLogicProgramRunner"/>
 
     <toolWindow id="MarkLogic Log View" anchor="bottom" secondary="true" icon="/icons/marklogic.png" factoryClass="uk.co.reecedunn.intellij.plugin.marklogic.logview.MarkLogicLogViewFactory"/>
+
+    <projectService serviceInterface="uk.co.reecedunn.intellij.plugin.marklogic.settings.MarkLogicProjectSettings"
+                    serviceImplementation="uk.co.reecedunn.intellij.plugin.marklogic.settings.MarkLogicProjectSettings"/>
+    <projectConfigurable groupId="tools" displayName="MarkLogic" instance="uk.co.reecedunn.intellij.plugin.marklogic.settings.MarkLogicProjectSettingsConfigurable"/>
   </extensions>
 </idea-plugin>
