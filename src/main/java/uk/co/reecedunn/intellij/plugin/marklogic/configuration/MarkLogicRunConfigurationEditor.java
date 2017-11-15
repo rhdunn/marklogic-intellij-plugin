@@ -22,13 +22,13 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 
-public class MarkLogicSettingsEditor extends SettingsEditor<MarkLogicRunConfiguration> {
+public class MarkLogicRunConfigurationEditor extends SettingsEditor<MarkLogicRunConfiguration> {
     private final MarkLogicConfigurationFactory mFactory;
     private final Project mProject;
 
-    private MarkLogicSettingsEditorUI mSettings;
+    private MarkLogicRunConfigurationEditorUI mSettings;
 
-    public MarkLogicSettingsEditor(@NotNull MarkLogicConfigurationFactory factory, @NotNull Project project) {
+    public MarkLogicRunConfigurationEditor(@NotNull MarkLogicConfigurationFactory factory, @NotNull Project project) {
         mFactory = factory;
         mProject = project;
     }
@@ -46,7 +46,7 @@ public class MarkLogicSettingsEditor extends SettingsEditor<MarkLogicRunConfigur
     @NotNull
     @Override
     protected JComponent createEditor() {
-        mSettings = new MarkLogicSettingsEditorUI(mFactory, mProject);
+        mSettings = new MarkLogicRunConfigurationEditorUI(mFactory, mProject);
         return mSettings.getPanel();
     }
 }

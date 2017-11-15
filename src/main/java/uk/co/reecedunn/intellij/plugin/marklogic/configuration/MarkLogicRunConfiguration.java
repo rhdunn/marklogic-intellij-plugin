@@ -27,8 +27,6 @@ import com.intellij.openapi.util.WriteExternalException;
 import com.intellij.openapi.vfs.VfsUtil;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.VirtualFileManager;
-import com.intellij.util.ArrayUtil;
-import com.intellij.util.PathUtil;
 import org.jdom.Element;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -75,7 +73,7 @@ public class MarkLogicRunConfiguration extends RunConfigurationBase {
     @NotNull
     @Override
     public SettingsEditor<? extends RunConfiguration> getConfigurationEditor() {
-        return new MarkLogicSettingsEditor((MarkLogicConfigurationFactory)getFactory(), getProject());
+        return new MarkLogicRunConfigurationEditor((MarkLogicConfigurationFactory)getFactory(), getProject());
     }
 
     @Nullable

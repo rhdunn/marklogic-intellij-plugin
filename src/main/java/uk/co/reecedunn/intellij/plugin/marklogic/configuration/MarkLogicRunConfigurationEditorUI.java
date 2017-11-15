@@ -32,7 +32,7 @@ import uk.co.reecedunn.intellij.plugin.marklogic.ui.MarkLogicQueryComboBox;
 import javax.swing.*;
 import javax.swing.event.DocumentListener;
 
-public class MarkLogicSettingsEditorUI {
+public class MarkLogicRunConfigurationEditorUI {
     private final MarkLogicConfigurationFactory mFactory;
     private final Project mProject;
 
@@ -48,7 +48,7 @@ public class MarkLogicSettingsEditorUI {
     private ComponentWithBrowseButton<JTextField> mMainModulePath;
     private JComboBox<RDFFormat> mTripleFormat;
 
-    public MarkLogicSettingsEditorUI(@NotNull MarkLogicConfigurationFactory factory, @NotNull Project project) {
+    public MarkLogicRunConfigurationEditorUI(@NotNull MarkLogicConfigurationFactory factory, @NotNull Project project) {
         mFactory = factory;
         mProject = project;
     }
