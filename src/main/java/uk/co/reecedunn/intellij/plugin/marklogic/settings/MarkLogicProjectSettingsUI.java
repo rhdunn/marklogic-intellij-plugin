@@ -17,21 +17,10 @@ package uk.co.reecedunn.intellij.plugin.marklogic.settings;
 
 import com.intellij.ui.table.JBTable;
 import uk.co.reecedunn.intellij.plugin.core.ui.SettingsUI;
-import uk.co.reecedunn.intellij.plugin.marklogic.resources.MarkLogicBundle;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 
 public class MarkLogicProjectSettingsUI implements SettingsUI<MarkLogicProjectSettings > {
-    private static final String COLUMN_NAMES[] = new String[] {
-        MarkLogicBundle.message("marklogic.settings.server.name"),
-        MarkLogicBundle.message("marklogic.settings.server.hostname"),
-        MarkLogicBundle.message("marklogic.settings.server.appserver-port"),
-        MarkLogicBundle.message("marklogic.settings.server.admin-port"),
-        MarkLogicBundle.message("marklogic.settings.server.username"),
-        MarkLogicBundle.message("marklogic.settings.server.password"),
-    };
-
     private JPanel mPanel;
     private JTable mTable;
 
@@ -55,6 +44,6 @@ public class MarkLogicProjectSettingsUI implements SettingsUI<MarkLogicProjectSe
 
     private void createUIComponents() {
         mTable = new JBTable();
-        mTable.setModel(new DefaultTableModel(COLUMN_NAMES, 0));
+        mTable.setModel(new MarkLogicServerTableModel());
     }
 }
