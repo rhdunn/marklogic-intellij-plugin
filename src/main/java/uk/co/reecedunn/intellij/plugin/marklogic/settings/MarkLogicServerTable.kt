@@ -53,7 +53,13 @@ private object ServerEditor: TableModelEditor.DialogItemEditor<MarkLogicServer> 
         MarkLogicServer::class.java
 
     override fun clone(item: MarkLogicServer, forInPlaceEditing: Boolean): MarkLogicServer {
-        return item
+        return MarkLogicServer(
+            item.displayName,
+            item.hostname,
+            item.appServerPort,
+            item.adminPort,
+            item.username,
+            item.password)
     }
 
     override fun applyEdited(oldItem: MarkLogicServer, newItem: MarkLogicServer) {
