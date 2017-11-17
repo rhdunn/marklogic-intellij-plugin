@@ -15,14 +15,14 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.settings;
 
-import com.intellij.ui.table.JBTable;
 import uk.co.reecedunn.intellij.plugin.core.ui.SettingsUI;
 
 import javax.swing.*;
 
 public class MarkLogicProjectSettingsUI implements SettingsUI<MarkLogicProjectSettings > {
     private JPanel mPanel;
-    private JTable mTable;
+    private MarkLogicServerTable mTableEditor;
+    private JComponent mTable;
 
     @Override
     public JPanel getPanel() {
@@ -43,7 +43,7 @@ public class MarkLogicProjectSettingsUI implements SettingsUI<MarkLogicProjectSe
     }
 
     private void createUIComponents() {
-        mTable = new JBTable();
-        mTable.setModel(new MarkLogicServerTableModel());
+        mTableEditor = new MarkLogicServerTable();
+        mTable = mTableEditor.createComponent();
     }
 }
