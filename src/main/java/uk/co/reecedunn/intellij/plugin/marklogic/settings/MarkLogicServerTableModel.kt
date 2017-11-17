@@ -15,40 +15,47 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.settings
 
-import uk.co.reecedunn.intellij.plugin.marklogic.resources.MarkLogicBundle
+import com.intellij.util.ui.ColumnInfo
+import com.intellij.util.ui.SortableColumnModel
+import javax.swing.RowSorter
 import javax.swing.table.AbstractTableModel
 
-private val COLUMN_NAMES = arrayOf(
-    MarkLogicBundle.message("marklogic.settings.server.name"),
-    MarkLogicBundle.message("marklogic.settings.server.hostname"),
-    MarkLogicBundle.message("marklogic.settings.server.appserver-port"),
-    MarkLogicBundle.message("marklogic.settings.server.admin-port"),
-    MarkLogicBundle.message("marklogic.settings.server.username"),
-    MarkLogicBundle.message("marklogic.settings.server.password"))
+private val COLUMN_INFOS: Array<ColumnInfo<*, *>> = arrayOf(
+    DISPLAY_NAME_COLUMN_INFO,
+    HOSTNAME_COLUMN_INFO,
+    APPSERVER_PORT_COLUMN_INFO,
+    ADMIN_PORT_COLUMN_INFO)
 
-class MarkLogicServerTableModel : AbstractTableModel() {
+class MarkLogicServerTableModel : AbstractTableModel(), SortableColumnModel {
+    override fun isSortable(): Boolean =
+        false
+
+    @Suppress("UNCHECKED_CAST")
+    override fun getColumnInfos(): Array<ColumnInfo<Any, Any>> =
+        COLUMN_INFOS as Array<ColumnInfo<Any, Any>>
+
+    override fun setSortable(aBoolean: Boolean) {
+    }
+
+    override fun getDefaultSortKey(): RowSorter.SortKey? =
+        null
+
+    override fun getRowValue(row: Int): Any =
+        servers[row]
+
     var servers: Array<MarkLogicServer> = arrayOf()
+
+    // AbstractTableModel
 
     override fun getRowCount(): Int =
         servers.size
 
     override fun getColumnCount(): Int =
-        COLUMN_NAMES.size
+        columnInfos.size
 
     override fun getColumnName(column: Int): String =
-        COLUMN_NAMES[column]
+        columnInfos[column].name
 
-    override fun getValueAt(rowIndex: Int, columnIndex: Int): Any {
-        if (rowIndex < 0 || rowIndex >= servers.size)
-            return Any()
-        return when (columnIndex) {
-            0 -> servers[rowIndex].displayName ?: ""
-            1 -> servers[rowIndex].hostname
-            2 -> servers[rowIndex].appServerPort
-            3 -> servers[rowIndex].adminPort
-            4 -> servers[rowIndex].username ?: ""
-            5 -> servers[rowIndex].password ?: ""
-            else -> Any()
-        }
-    }
+    override fun getValueAt(rowIndex: Int, columnIndex: Int): Any =
+        columnInfos[columnIndex].valueOf(getRowValue(rowIndex))!!
 }
