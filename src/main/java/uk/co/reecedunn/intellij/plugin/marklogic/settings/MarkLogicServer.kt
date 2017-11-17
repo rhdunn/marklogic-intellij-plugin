@@ -18,34 +18,31 @@ package uk.co.reecedunn.intellij.plugin.marklogic.settings
 /**
  * Connection details for a MarkLogic server.
  */
-class MarkLogicServer {
-    /**
-     * A user-friendly server name; will use `hostname` if this is `null`.
-     */
-    var displayName: String? = null
-
-    /**
-     * The server name.
-     */
-    var hostname: String = "localhost"
-
-    /**
-     * `App-Server` port, used for running `eval` and `invoke` queries.
-     */
-    var appServerPort: Int = 8000
-
-    /**
-     * `Admin` port, used for displaying error log files.
-     */
-    var adminPort: Int = 8001
-
-    /**
-     * The username to connect to the MarkLogic server.
-     */
-    var username: String? = null
-
-    /**
-     * The password to connect to the MarkLogic server.
-     */
-    var password: String? = null
+data class MarkLogicServer(
+        /**
+          * A user-friendly server name; will use `hostname` if this is `null`.
+          */
+        var displayName: String?,
+        /**
+         * The server name.
+         */
+        var hostname: String,
+        /**
+         * `App-Server` port, used for running `eval` and `invoke` queries.
+         */
+        var appServerPort: Int,
+        /**
+         * `Admin` port, used for displaying error log files.
+         */
+        var adminPort: Int,
+        /**
+         * The username to connect to the MarkLogic server.
+         */
+        var username: String?,
+        /**
+         * The password to connect to the MarkLogic server.
+         */
+        var password: String?) {
+    constructor() : this(null, "localhost", 8000, 8001, null, null) {
+    }
 }
