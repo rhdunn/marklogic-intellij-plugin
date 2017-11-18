@@ -15,8 +15,12 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.settings
 
+import com.intellij.openapi.ui.DialogBuilder
+import com.intellij.ui.components.JBPasswordField
+import com.intellij.ui.components.JBTextField
 import com.intellij.util.Function
 import com.intellij.util.ui.ColumnInfo
+import com.intellij.util.ui.FormBuilder
 import com.intellij.util.ui.table.TableModelEditor
 import com.intellij.util.ui.table.TableModelEditor.EditableColumnInfo
 import uk.co.reecedunn.intellij.plugin.marklogic.resources.MarkLogicBundle
@@ -47,6 +51,21 @@ private object ADMIN_PORT_COLUMN_INFO: EditableColumnInfo<MarkLogicServer, Int>(
 
 private object ServerEditor: TableModelEditor.DialogItemEditor<MarkLogicServer> {
     override fun edit(item: MarkLogicServer, mutator: Function<MarkLogicServer, MarkLogicServer>, isAdd: Boolean) {
+        val username = JBTextField(20)
+        val password = JBPasswordField()
+        val dialog = DialogBuilder()
+        dialog.title(MarkLogicBundle.message("marklogic.settings.server.dialog.title"))
+            .resizable(false)
+            .centerPanel(FormBuilder
+                .createFormBuilder()
+                .addLabeledComponent(MarkLogicBundle.message("marklogic.settings.server.dialog.username"), username)
+                .addLabeledComponent(MarkLogicBundle.message("marklogic.settings.server.dialog.password"), password)
+                .panel)
+            .setPreferredFocusComponent(username)
+        if (dialog.showAndGet()) {
+            mutator.`fun`(item).username = username.text
+            mutator.`fun`(item).password = String(password.password)
+        }
     }
 
     override fun getItemClass(): Class<out MarkLogicServer> =
@@ -63,6 +82,8 @@ private object ServerEditor: TableModelEditor.DialogItemEditor<MarkLogicServer> 
     }
 
     override fun applyEdited(oldItem: MarkLogicServer, newItem: MarkLogicServer) {
+        newItem.username = oldItem.username
+        newItem.password = oldItem.password
     }
 }
 
