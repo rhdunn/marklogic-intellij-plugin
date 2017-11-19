@@ -43,6 +43,9 @@ data class MarkLogicServer(
          * The password to connect to the MarkLogic server.
          */
         var password: String?) {
-    constructor() : this(null, "localhost", 8000, 8001, null, null) {
-    }
+
+    constructor() : this(null, "localhost", 8000, 8001, null, null)
+
+    override fun toString(): String =
+        displayName ?: hostname
 }

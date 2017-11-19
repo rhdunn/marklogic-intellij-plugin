@@ -29,7 +29,7 @@ public class MarkLogicLogViewFactory implements ToolWindowFactory {
     @Override
     public void createToolWindowContent(@NotNull Project project, @NotNull ToolWindow toolWindow) {
         if (mLogView == null) {
-            mLogView = new MarkLogicLogViewUI();
+            mLogView = new MarkLogicLogViewUI(project);
         }
 
         Content content = ContentFactory.SERVICE.getInstance().createContent(mLogView.getPanel(), null, false);

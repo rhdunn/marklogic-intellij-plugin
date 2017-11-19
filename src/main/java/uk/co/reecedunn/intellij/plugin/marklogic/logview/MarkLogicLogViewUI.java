@@ -15,13 +15,34 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.logview;
 
+import com.intellij.openapi.project.Project;
+import com.intellij.openapi.ui.ComboBox;
+import org.jetbrains.annotations.NotNull;
+import uk.co.reecedunn.intellij.plugin.marklogic.settings.MarkLogicProjectSettings;
+import uk.co.reecedunn.intellij.plugin.marklogic.settings.MarkLogicServer;
+
 import javax.swing.*;
 
 public class MarkLogicLogViewUI {
+    private Project mProject;
     private JPanel mPanel;
     private JTextArea mLogText;
+    private JComboBox<MarkLogicServer> mServer;
+
+    public MarkLogicLogViewUI(@NotNull Project project) {
+        mProject = project;
+    }
 
     public JComponent getPanel() {
         return mPanel;
+    }
+
+    private void createUIComponents() {
+        mServer = new ComboBox<>();
+
+        MarkLogicProjectSettings settings = MarkLogicProjectSettings.Companion.getInstance(mProject);
+        for (MarkLogicServer server : settings.getServers()) {
+            mServer.addItem(server);
+        }
     }
 }
