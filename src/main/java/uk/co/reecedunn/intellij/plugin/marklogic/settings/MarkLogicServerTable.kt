@@ -37,16 +37,24 @@ private object HOSTNAME_COLUMN_INFO: EditableColumnInfo<MarkLogicServer, String>
         item?.hostname
 }
 
-private object APPSERVER_PORT_COLUMN_INFO: EditableColumnInfo<MarkLogicServer, Int>(
+@Suppress("PLATFORM_CLASS_MAPPED_TO_KOTLIN")
+private object APPSERVER_PORT_COLUMN_INFO: EditableColumnInfo<MarkLogicServer, Integer>(
         MarkLogicBundle.message("marklogic.settings.server.appserver-port")) {
-    override fun valueOf(item: MarkLogicServer?): Int? =
-        item?.appServerPort
+    override fun getColumnClass(): Class<*> =
+        Integer::class.java
+
+    override fun valueOf(item: MarkLogicServer?): Integer? =
+        item?.let { Integer(it.appServerPort) }
 }
 
-private object ADMIN_PORT_COLUMN_INFO: EditableColumnInfo<MarkLogicServer, Int>(
+@Suppress("PLATFORM_CLASS_MAPPED_TO_KOTLIN")
+private object ADMIN_PORT_COLUMN_INFO: EditableColumnInfo<MarkLogicServer, Integer>(
         MarkLogicBundle.message("marklogic.settings.server.admin-port")) {
-    override fun valueOf(item: MarkLogicServer?): Int? =
-        item?.adminPort
+    override fun getColumnClass(): Class<*> =
+        Integer::class.java
+
+    override fun valueOf(item: MarkLogicServer?): Integer? =
+        item?.let { Integer(it.adminPort) }
 }
 
 private object ServerEditor: TableModelEditor.DialogItemEditor<MarkLogicServer> {
