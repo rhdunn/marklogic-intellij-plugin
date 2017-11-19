@@ -30,16 +30,18 @@ public class MarkLogicProjectSettingsUI implements SettingsUI<MarkLogicProjectSe
     }
 
     @Override
-    public boolean isModified(MarkLogicProjectSettings markLogicProjectSettings) {
-        return false;
+    public boolean isModified(MarkLogicProjectSettings settings) {
+        return mTableEditor.isModified();
     }
 
     @Override
-    public void reset(MarkLogicProjectSettings markLogicProjectSettings) {
+    public void reset(MarkLogicProjectSettings settings) {
+        mTableEditor.reset(settings.getServers());
     }
 
     @Override
-    public void apply(MarkLogicProjectSettings markLogicProjectSettings) {
+    public void apply(MarkLogicProjectSettings settings) {
+        settings.setServers(mTableEditor.apply());
     }
 
     private void createUIComponents() {
