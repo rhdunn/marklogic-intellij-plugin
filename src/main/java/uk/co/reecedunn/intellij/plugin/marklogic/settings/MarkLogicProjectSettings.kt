@@ -24,7 +24,7 @@ import java.io.File
 
 @State(name = "MarkLogicProjectSettings", storages = arrayOf(Storage(StoragePathMacros.WORKSPACE_FILE), Storage("marklogic_config.xml")))
 class MarkLogicProjectSettings : PersistentStateComponent<MarkLogicProjectSettings>, ExportableComponent {
-    var servers: List<MarkLogicServer> = listOf()
+    var servers: List<MarkLogicServer> = ArrayList()
 
     // region PersistentStateComponent
 

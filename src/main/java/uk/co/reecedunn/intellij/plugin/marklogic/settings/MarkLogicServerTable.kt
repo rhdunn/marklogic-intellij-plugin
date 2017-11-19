@@ -29,12 +29,20 @@ private object DISPLAY_NAME_COLUMN_INFO: EditableColumnInfo<MarkLogicServer, Str
         MarkLogicBundle.message("marklogic.settings.server.name")) {
     override fun valueOf(item: MarkLogicServer?): String? =
         item?.displayName
+
+    override fun setValue(item: MarkLogicServer?, value: String?) {
+        value?.let { item?.displayName = it }
+    }
 }
 
 private object HOSTNAME_COLUMN_INFO: EditableColumnInfo<MarkLogicServer, String>(
         MarkLogicBundle.message("marklogic.settings.server.hostname")) {
     override fun valueOf(item: MarkLogicServer?): String? =
         item?.hostname
+
+    override fun setValue(item: MarkLogicServer?, value: String?) {
+        value?.let { item?.hostname = it }
+    }
 }
 
 @Suppress("PLATFORM_CLASS_MAPPED_TO_KOTLIN")
@@ -45,6 +53,10 @@ private object APPSERVER_PORT_COLUMN_INFO: EditableColumnInfo<MarkLogicServer, I
 
     override fun valueOf(item: MarkLogicServer?): Integer? =
         item?.let { Integer(it.appServerPort) }
+
+    override fun setValue(item: MarkLogicServer?, value: Integer?) {
+        value?.let { item?.appServerPort = it.toInt() }
+    }
 }
 
 @Suppress("PLATFORM_CLASS_MAPPED_TO_KOTLIN")
@@ -55,6 +67,10 @@ private object ADMIN_PORT_COLUMN_INFO: EditableColumnInfo<MarkLogicServer, Integ
 
     override fun valueOf(item: MarkLogicServer?): Integer? =
         item?.let { Integer(it.adminPort) }
+
+    override fun setValue(item: MarkLogicServer?, value: Integer?) {
+        value?.let { item?.adminPort = it.toInt() }
+    }
 }
 
 private object ServerEditor: TableModelEditor.DialogItemEditor<MarkLogicServer> {
@@ -70,6 +86,9 @@ private object ServerEditor: TableModelEditor.DialogItemEditor<MarkLogicServer> 
                 .addLabeledComponent(MarkLogicBundle.message("marklogic.settings.server.dialog.password"), password)
                 .panel)
             .setPreferredFocusComponent(username)
+
+        item.username?.let { username.text = it }
+        item.password?.let { password.text = it }
         if (dialog.showAndGet()) {
             mutator.`fun`(item).username = username.text
             mutator.`fun`(item).password = String(password.password)
@@ -90,8 +109,8 @@ private object ServerEditor: TableModelEditor.DialogItemEditor<MarkLogicServer> 
     }
 
     override fun applyEdited(oldItem: MarkLogicServer, newItem: MarkLogicServer) {
-        newItem.username = oldItem.username
-        newItem.password = oldItem.password
+        oldItem.username = newItem.username
+        oldItem.password = newItem.password
     }
 }
 
