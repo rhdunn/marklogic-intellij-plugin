@@ -83,6 +83,7 @@ public class MarkLogicLogViewUI {
             try {
                 Item[] items = mLogBuilder.build().run().getItems();
                 mLogText.setText(items[0].getContent());
+                mLogText.setCaretPosition(mLogText.getDocument().getLength());
             } catch (IOException e) {
                 mLogText.setText(e.getMessage());
             }
