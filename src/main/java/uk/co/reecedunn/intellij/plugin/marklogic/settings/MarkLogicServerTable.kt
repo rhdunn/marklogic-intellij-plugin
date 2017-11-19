@@ -90,8 +90,8 @@ private object ServerEditor: TableModelEditor.DialogItemEditor<MarkLogicServer> 
         item.username?.let { username.text = it }
         item.password?.let { password.text = it }
         if (dialog.showAndGet()) {
-            mutator.`fun`(item).username = username.text
-            mutator.`fun`(item).password = String(password.password)
+            mutator.`fun`(item).username = if (username.text.isEmpty()) null else username.text
+            mutator.`fun`(item).password = if (password.password.isEmpty()) null else String(password.password)
         }
     }
 
