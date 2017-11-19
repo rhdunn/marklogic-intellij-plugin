@@ -15,6 +15,7 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.logview;
 
+import com.intellij.icons.AllIcons;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.ComboBox;
@@ -36,6 +37,7 @@ public class MarkLogicLogViewUI {
     private JPanel mPanel;
     private JTextArea mLogText;
     private JComboBox<MarkLogicServer> mServer;
+    private JButton mRefresh;
 
     public MarkLogicLogViewUI(@NotNull Project project) {
         mProject = project;
@@ -48,6 +50,10 @@ public class MarkLogicLogViewUI {
     private void createUIComponents() {
         mLogText = new JTextArea();
         mLogText.setEditable(false);
+
+        mRefresh = new JButton();
+        mRefresh.setIcon(AllIcons.Actions.Refresh);
+        mRefresh.addActionListener((e) -> refreshLog());
 
         mServer = new ComboBox<>();
         mServer.addActionListener(e -> serverSelectionChanged());
