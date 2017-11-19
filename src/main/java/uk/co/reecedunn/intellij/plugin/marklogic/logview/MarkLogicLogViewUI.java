@@ -15,6 +15,7 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.logview;
 
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.ComboBox;
 import org.jetbrains.annotations.NotNull;
@@ -78,11 +79,13 @@ public class MarkLogicLogViewUI {
     }
 
     private void refreshLog() {
-        try {
-            Item[] items = mLogBuilder.build().run().getItems();
-            mLogText.setText(items[0].getContent());
-        } catch (IOException e) {
-            mLogText.setText(e.getMessage());
-        }
+        ApplicationManager.getApplication().executeOnPooledThread(() -> {
+            try {
+                Item[] items = mLogBuilder.build().run().getItems();
+                mLogText.setText(items[0].getContent());
+            } catch (IOException e) {
+                mLogText.setText(e.getMessage());
+            }
+        });
     }
 }
