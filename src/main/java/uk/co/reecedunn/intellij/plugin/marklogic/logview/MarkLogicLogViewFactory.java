@@ -18,10 +18,25 @@ package uk.co.reecedunn.intellij.plugin.marklogic.logview;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowFactory;
+import com.intellij.ui.content.Content;
+import com.intellij.ui.content.ContentFactory;
+import com.intellij.ui.content.ContentManager;
 import org.jetbrains.annotations.NotNull;
 
 public class MarkLogicLogViewFactory implements ToolWindowFactory {
+    private MarkLogicLogViewUI mLogView;
+
     @Override
     public void createToolWindowContent(@NotNull Project project, @NotNull ToolWindow toolWindow) {
+        if (mLogView == null) {
+            mLogView = new MarkLogicLogViewUI();
+        }
+
+        Content content = ContentFactory.SERVICE.getInstance().createContent(mLogView.getPanel(), null, false);
+        ContentManager contentManager = toolWindow.getContentManager();
+        contentManager.removeAllContents(true);
+        contentManager.addContent(content);
+        contentManager.setSelectedContent(content);
+        toolWindow.show(null);
     }
 }
