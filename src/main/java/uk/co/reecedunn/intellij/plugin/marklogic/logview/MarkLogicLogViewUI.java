@@ -46,6 +46,7 @@ public class MarkLogicLogViewUI {
 
     private void createUIComponents() {
         mLogText = new JTextArea();
+        mLogText.setEditable(false);
 
         mServer = new ComboBox<>();
         mServer.addActionListener(e -> serverSelectionChanged());
