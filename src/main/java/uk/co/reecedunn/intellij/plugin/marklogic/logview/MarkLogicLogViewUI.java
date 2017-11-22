@@ -23,6 +23,7 @@ import org.jetbrains.annotations.NotNull;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Connection;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Item;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.LogRequestBuilder;
+import uk.co.reecedunn.intellij.plugin.marklogic.settings.MarkLogicAppServer;
 import uk.co.reecedunn.intellij.plugin.marklogic.settings.MarkLogicProjectSettings;
 import uk.co.reecedunn.intellij.plugin.marklogic.settings.MarkLogicServer;
 import uk.co.reecedunn.intellij.plugin.marklogic.settings.MarkLogicServerCellRenderer;
@@ -57,6 +58,7 @@ public class MarkLogicLogViewUI implements LogViewActions {
     private JPanel mPanel;
     private JTextArea mLogText;
     private JComboBox<MarkLogicServer> mServer;
+    private JComboBox<MarkLogicAppServer> mAppServer;
 
     public MarkLogicLogViewUI(@NotNull Project project) {
         mProject = project;
@@ -77,6 +79,8 @@ public class MarkLogicLogViewUI implements LogViewActions {
         mServer.setRenderer(new MarkLogicServerCellRenderer());
         mServer.addActionListener(e -> serverSelectionChanged());
 
+        mAppServer = new ComboBox<>();
+
         MarkLogicProjectSettings settings = MarkLogicProjectSettings.Companion.getInstance(mProject);
         SettingsListener listener = new SettingsListener();
         settings.addListener(listener, listener);
@@ -89,6 +93,13 @@ public class MarkLogicLogViewUI implements LogViewActions {
             mLogText.setText("");
             return;
         }
+
+        ApplicationManager.getApplication().executeOnPooledThread(() -> {
+            mAppServer.removeAllItems();
+            for (MarkLogicAppServer appserver : server.getAppservers()) {
+                mAppServer.addItem(appserver);
+            }
+        });
 
         mConnection = Connection.newConnection(
             server.getHostname(),

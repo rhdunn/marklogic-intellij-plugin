@@ -17,6 +17,18 @@ package uk.co.reecedunn.intellij.plugin.marklogic.settings
 
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Connection
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Item
+import uk.co.reecedunn.intellij.plugin.marklogic.resources.MarkLogicBundle
+
+private val LIST_APPSERVERS_XQUERY =
+    "import module namespace admin = \"http://marklogic.com/xdmp/admin\" at \"/MarkLogic/admin.xqy\";\n" +
+    "let \$config := admin:get-configuration()\n" +
+    "for \$groupId in admin:get-group-ids(\$config)\n" +
+    "let \$groupName := admin:group-get-name(\$config, \$groupId)\n" +
+    "for \$appServerId in admin:group-get-appserver-ids(\$config, \$groupId)" +
+    "let \$appServerName := admin:appserver-get-name(\$config, \$appServerId)" +
+    "let \$port := admin:appserver-get-port(\$config, \$appServerId)" +
+    "let \$type := admin:appserver-get-type(\$config, \$appServerId)" +
+    "return (\$groupName, \$appServerName, \$type, \$port)"
 
 /**
  * Connection details for a MarkLogic server.
@@ -75,5 +87,20 @@ class MarkLogicServer {
 
     val version get(): String =
         xquery("xdmp:version()")[0].content
+
+    val appservers get(): List<MarkLogicAppServer> {
+        val items = xquery(LIST_APPSERVERS_XQUERY)
+        val servers = ArrayList<MarkLogicAppServer>((items.size / 4) + 1)
+        servers.add(MarkLogicAppServer(null, MarkLogicBundle.message("logviewer.app-server.none"), null, null))
+        for (i in 0..(items.size - 1) step 4) {
+            val server = MarkLogicAppServer(
+                items[i].content,
+                items[i+1].content,
+                items[i+2].content.toUpperCase(),
+                items[i+3].content.toInt())
+            servers.add(server)
+        }
+        return servers
+    }
 
 }
