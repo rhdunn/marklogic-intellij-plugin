@@ -81,7 +81,7 @@ public class MarkLogicRequestHandler extends ProcessHandler implements MarkLogic
 
     @Override
     public void onException(Exception e) {
-        notifyTextAvailable(e.toString(), null);
+        notifyTextAvailable(e.getMessage(), null);
         notifyTextAvailable("\n", null);
     }
 
