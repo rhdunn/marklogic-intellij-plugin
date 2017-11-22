@@ -15,17 +15,42 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.settings
 
+import com.intellij.openapi.Disposable
 import com.intellij.openapi.application.PathManager
 import com.intellij.openapi.components.*
 import com.intellij.openapi.project.Project
+import com.intellij.util.EventDispatcher
 import com.intellij.util.xmlb.XmlSerializerUtil
 import uk.co.reecedunn.intellij.plugin.marklogic.resources.MarkLogicBundle
 import java.io.File
+import java.util.*
 
 @State(name = "MarkLogicProjectSettings", storages = arrayOf(Storage(StoragePathMacros.WORKSPACE_FILE), Storage("marklogic_config.xml")))
 class MarkLogicProjectSettings : PersistentStateComponent<MarkLogicProjectSettings>, ExportableComponent {
-    var servers: List<MarkLogicServer> = ArrayList()
+    // region Event Handlers
 
+    interface Listener : EventListener {
+        fun serversChanged()
+    }
+
+    @Transient
+    private val eventDispatcher: EventDispatcher<Listener> = EventDispatcher.create(Listener::class.java)
+
+    fun addListener(listener: Listener, disposable: Disposable) {
+        eventDispatcher.addListener(listener, disposable)
+    }
+
+    // endregion
+    // region Settings Data
+
+    var servers: List<MarkLogicServer> = ArrayList()
+        get() = field
+        set(value) {
+            field = value
+            eventDispatcher.multicaster.serversChanged()
+        }
+
+    // endregion
     // region PersistentStateComponent
 
     override fun getState(): MarkLogicProjectSettings? = this
@@ -40,10 +65,13 @@ class MarkLogicProjectSettings : PersistentStateComponent<MarkLogicProjectSettin
     override fun getPresentableName(): String = MarkLogicBundle.message("marklogic.settings.project.title")
 
     // endregion
+    // region Instance
 
     companion object {
         fun getInstance(project: Project): MarkLogicProjectSettings {
             return ServiceManager.getService(project, MarkLogicProjectSettings::class.java)
         }
     }
+
+    // endregion
 }
