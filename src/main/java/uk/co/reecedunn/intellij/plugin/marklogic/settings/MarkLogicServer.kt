@@ -73,12 +73,7 @@ class MarkLogicServer {
         return queryBuilder.build().run().items
     }
 
-    val version get(): String? {
-        return try {
-            xquery("xdmp:version()")[0].content
-        } catch (e: Exception) {
-            null
-        }
-    }
+    val version get(): String =
+        xquery("xdmp:version()")[0].content
 
 }

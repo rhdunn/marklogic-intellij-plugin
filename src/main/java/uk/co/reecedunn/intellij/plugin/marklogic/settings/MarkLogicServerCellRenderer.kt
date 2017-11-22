@@ -15,16 +15,29 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.settings
 
+import com.intellij.openapi.application.ApplicationManager
 import com.intellij.ui.ColoredListCellRenderer
 import javax.swing.JList
 
 class MarkLogicServerCellRenderer: ColoredListCellRenderer<MarkLogicServer>() {
+    val cache: HashMap<MarkLogicServer, String> = HashMap()
+
+    private fun format(server: MarkLogicServer, version: String?) {
+        clear()
+        if (version?.isEmpty() != false) {
+            append(server.toString())
+        } else {
+            append("$server (MarkLogic $version)")
+        }
+    }
+
     override fun customizeCellRenderer(list: JList<out MarkLogicServer>, value: MarkLogicServer?, index: Int, selected: Boolean, hasFocus: Boolean) {
         value?.let {
-            append(it.toString())
-            it.version?.let {
-                append(" (MarkLogic $it)")
-            }
+            cache[value]?.let { format(value, it) } ?: ApplicationManager.getApplication().executeOnPooledThread({
+                val version = try { value.version } catch (e: Exception) { "" }
+                cache.put(value, version)
+                format(value, version)
+            })
         }
     }
 
