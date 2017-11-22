@@ -24,6 +24,7 @@ import uk.co.reecedunn.intellij.plugin.marklogic.api.Item;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.LogRequestBuilder;
 import uk.co.reecedunn.intellij.plugin.marklogic.settings.MarkLogicProjectSettings;
 import uk.co.reecedunn.intellij.plugin.marklogic.settings.MarkLogicServer;
+import uk.co.reecedunn.intellij.plugin.marklogic.settings.MarkLogicServerCellRenderer;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -56,6 +57,7 @@ public class MarkLogicLogViewUI implements LogViewActions {
         mLogText.setEditable(false);
 
         mServer = new ComboBox<>();
+        mServer.setRenderer(new MarkLogicServerCellRenderer());
         mServer.addActionListener(e -> serverSelectionChanged());
 
         MarkLogicProjectSettings settings = MarkLogicProjectSettings.Companion.getInstance(mProject);

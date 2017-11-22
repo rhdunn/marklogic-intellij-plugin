@@ -63,13 +63,8 @@ class MarkLogicServer {
         this.password = password
     }
 
-    override fun toString(): String {
-        val version = version
-        return if (version == null)
-            displayName ?: hostname
-        else
-            (displayName ?: hostname) + " (MarkLogic " + version + ")"
-    }
+    override fun toString(): String =
+        displayName ?: hostname
 
     fun xquery(query: String): Array<Item> {
         val connection = Connection.newConnection(hostname, appServerPort, username, password, Connection.XCC)
