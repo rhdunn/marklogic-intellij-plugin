@@ -42,7 +42,8 @@ public class RestResponse implements Response {
     public Item[] getItems() throws IOException {
         int statusCode = response.getStatus().getStatusCode();
         if (statusCode != 200) {
-            final String message = response.getParts()[0].getBody();
+            final Message part = response.getParts()[0];
+            final Item message = Item.create(part.getBody(), part.getHeader("Content-Type"), "xs:string");
             throw new ResponseException(statusCode, response.getStatus().getReasonPhrase(), message);
         }
 
