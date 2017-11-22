@@ -18,6 +18,7 @@ package uk.co.reecedunn.intellij.plugin.marklogic.api.rest;
 import org.jetbrains.annotations.NotNull;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Item;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Response;
+import uk.co.reecedunn.intellij.plugin.marklogic.api.ResponseException;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.mime.Message;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.mime.MimeResponse;
 
@@ -42,7 +43,7 @@ public class RestResponse implements Response {
         int statusCode = response.getStatus().getStatusCode();
         if (statusCode != 200) {
             final String message = response.getParts()[0].getBody();
-            throw new IOException(statusCode + " " + response.getStatus().getReasonPhrase() + "\n" + message);
+            throw new ResponseException(statusCode, response.getStatus().getReasonPhrase(), message);
         }
 
         List<Item> items = new ArrayList<>();
