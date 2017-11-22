@@ -15,7 +15,6 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.logview;
 
-import com.intellij.icons.AllIcons;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.ComboBox;
@@ -29,15 +28,17 @@ import uk.co.reecedunn.intellij.plugin.marklogic.settings.MarkLogicServer;
 import javax.swing.*;
 import java.io.IOException;
 
-public class MarkLogicLogViewUI {
+public class MarkLogicLogViewUI implements LogViewActions {
     private Project mProject;
     private Connection mConnection;
     private LogRequestBuilder mLogBuilder;
 
+    private MarkLogicLogViewToolbar mActions;
+    private JComponent mActionToolbar;
+
     private JPanel mPanel;
     private JTextArea mLogText;
     private JComboBox<MarkLogicServer> mServer;
-    private JButton mRefresh;
 
     public MarkLogicLogViewUI(@NotNull Project project) {
         mProject = project;
@@ -48,12 +49,11 @@ public class MarkLogicLogViewUI {
     }
 
     private void createUIComponents() {
+        mActions = new MarkLogicLogViewToolbar(this);
+        mActionToolbar = mActions.getComponent();
+
         mLogText = new JTextArea();
         mLogText.setEditable(false);
-
-        mRefresh = new JButton();
-        mRefresh.setIcon(AllIcons.Actions.Refresh);
-        mRefresh.addActionListener((e) -> refreshLog());
 
         mServer = new ComboBox<>();
         mServer.addActionListener(e -> serverSelectionChanged());
@@ -81,11 +81,13 @@ public class MarkLogicLogViewUI {
         mLogBuilder.setAppServerPort(0);
         mLogBuilder.setLogFile("ErrorLog.txt");
 
-        refreshLog();
+        ApplicationManager.getApplication().executeOnPooledThread(refreshAction());
     }
 
-    private void refreshLog() {
-        ApplicationManager.getApplication().executeOnPooledThread(() -> {
+    @NotNull
+    @Override
+    public Runnable refreshAction() {
+        return () -> {
             try {
                 Item[] items = mLogBuilder.build().run().getItems();
                 mLogText.setText(items[0].getContent());
@@ -93,6 +95,6 @@ public class MarkLogicLogViewUI {
             } catch (IOException e) {
                 mLogText.setText(e.getMessage());
             }
-        });
+        };
     }
 }
