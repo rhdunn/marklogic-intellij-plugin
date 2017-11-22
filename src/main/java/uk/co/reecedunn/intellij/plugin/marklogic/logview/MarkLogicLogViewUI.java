@@ -75,7 +75,7 @@ public class MarkLogicLogViewUI implements LogViewActions {
             server.getAdminPort(),
             server.getUsername(),
             server.getPassword(),
-            Connection.REST_API_MINIMUM_VERSION /* Always use the REST API for log requests. */);
+            Connection.REST);
 
         mLogBuilder = mConnection.createLogRequestBuilder();
         mLogBuilder.setAppServerPort(0);

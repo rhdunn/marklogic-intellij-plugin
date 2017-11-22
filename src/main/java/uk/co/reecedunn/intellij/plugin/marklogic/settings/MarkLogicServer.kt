@@ -15,6 +15,9 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.settings
 
+import uk.co.reecedunn.intellij.plugin.marklogic.api.Connection
+import uk.co.reecedunn.intellij.plugin.marklogic.api.Item
+
 /**
  * Connection details for a MarkLogic server.
  */
@@ -46,6 +49,27 @@ data class MarkLogicServer(
 
     constructor() : this(null, "localhost", 8000, 8001, null, null)
 
-    override fun toString(): String =
-        displayName ?: hostname
+    override fun toString(): String {
+        val version = xqueryVersion
+        return if (version == null)
+            displayName ?: hostname
+        else
+            (displayName ?: hostname) + " (MarkLogic " + version + ")"
+    }
+
+    fun xquery(query: String): Array<Item> {
+        val connection = Connection.newConnection(hostname, appServerPort, username, password, Connection.XCC)
+        val queryBuilder = connection.createEvalRequestBuilder()
+        queryBuilder.xQuery = query
+        return queryBuilder.build().run().items
+    }
+
+    val xqueryVersion get(): String? {
+        return try {
+            xquery("xdmp:version()")[0].content
+        } catch (e: Exception) {
+            null
+        }
+    }
+
 }
