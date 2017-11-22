@@ -40,8 +40,6 @@ public class MarkLogicLogViewUI implements LogViewActions {
             for (MarkLogicServer server : settings.getServers()) {
                 mServer.addItem(server);
             }
-
-            serverSelectionChanged();
         }
 
         @Override
