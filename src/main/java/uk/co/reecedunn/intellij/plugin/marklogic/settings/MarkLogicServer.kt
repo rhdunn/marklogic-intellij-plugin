@@ -21,33 +21,47 @@ import uk.co.reecedunn.intellij.plugin.marklogic.api.Item
 /**
  * Connection details for a MarkLogic server.
  */
-data class MarkLogicServer(
-        /**
-          * A user-friendly server name; will use `hostname` if this is `null`.
-          */
-        var displayName: String?,
-        /**
-         * The server name.
-         */
-        var hostname: String,
-        /**
-         * `App-Server` port, used for running `eval` and `invoke` queries.
-         */
-        var appServerPort: Int,
-        /**
-         * `Admin` port, used for displaying error log files.
-         */
-        var adminPort: Int,
-        /**
-         * The username to connect to the MarkLogic server.
-         */
-        var username: String?,
-        /**
-         * The password to connect to the MarkLogic server.
-         */
-        var password: String?) {
+class MarkLogicServer {
+    /**
+      * A user-friendly server name; will use `hostname` if this is `null`.
+      */
+    var displayName: String? = null
 
-    constructor() : this(null, "localhost", 8000, 8001, null, null)
+    /**
+     * The server name.
+     */
+    var hostname: String = "localhost"
+
+    /**
+     * `App-Server` port, used for running `eval` and `invoke` queries.
+     */
+    var appServerPort: Int = 8000
+
+    /**
+     * `Admin` port, used for displaying error log files.
+     */
+    var adminPort: Int = 8001
+
+    /**
+     * The username to connect to the MarkLogic server.
+     */
+    var username: String? = null
+
+    /**
+     * The password to connect to the MarkLogic server.
+     */
+    var password: String? = null
+
+    constructor()
+
+    constructor(displayName: String?, hostname: String, appServerPort: Int, adminPort: Int, username: String?, password: String?) {
+        this.displayName = displayName
+        this.hostname = hostname
+        this.appServerPort = appServerPort
+        this.adminPort = adminPort
+        this.username = username
+        this.password = password
+    }
 
     override fun toString(): String {
         val version = xqueryVersion
