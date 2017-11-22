@@ -15,6 +15,7 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.logview;
 
+import com.intellij.openapi.Disposable;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.ComboBox;
@@ -30,6 +31,24 @@ import javax.swing.*;
 import java.io.IOException;
 
 public class MarkLogicLogViewUI implements LogViewActions {
+    private class SettingsListener implements MarkLogicProjectSettings.Listener, Disposable {
+        @Override
+        public void serversChanged() {
+            MarkLogicProjectSettings settings = MarkLogicProjectSettings.Companion.getInstance(mProject);
+
+            mServer.removeAllItems();
+            for (MarkLogicServer server : settings.getServers()) {
+                mServer.addItem(server);
+            }
+
+            serverSelectionChanged();
+        }
+
+        @Override
+        public void dispose() {
+        }
+    }
+
     private Project mProject;
     private Connection mConnection;
     private LogRequestBuilder mLogBuilder;
@@ -61,16 +80,17 @@ public class MarkLogicLogViewUI implements LogViewActions {
         mServer.addActionListener(e -> serverSelectionChanged());
 
         MarkLogicProjectSettings settings = MarkLogicProjectSettings.Companion.getInstance(mProject);
-        for (MarkLogicServer server : settings.getServers()) {
-            mServer.addItem(server);
-        }
-
-        serverSelectionChanged();
+        SettingsListener listener = new SettingsListener();
+        settings.addListener(listener, listener);
+        listener.serversChanged();
     }
 
     private void serverSelectionChanged() {
         MarkLogicServer server = (MarkLogicServer)mServer.getSelectedItem();
-        if (server == null) return;
+        if (server == null) {
+            mLogText.setText("");
+            return;
+        }
 
         mConnection = Connection.newConnection(
             server.getHostname(),
