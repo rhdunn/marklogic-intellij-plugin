@@ -64,7 +64,7 @@ class MarkLogicServer {
     }
 
     override fun toString(): String {
-        val version = xqueryVersion
+        val version = version
         return if (version == null)
             displayName ?: hostname
         else
@@ -78,7 +78,7 @@ class MarkLogicServer {
         return queryBuilder.build().run().items
     }
 
-    val xqueryVersion get(): String? {
+    val version get(): String? {
         return try {
             xquery("xdmp:version()")[0].content
         } catch (e: Exception) {
