@@ -17,9 +17,11 @@ package uk.co.reecedunn.intellij.plugin.marklogic.api.xcc;
 
 import com.marklogic.xcc.Session;
 import com.marklogic.xcc.exceptions.RequestException;
+import com.marklogic.xcc.exceptions.ServerResponseException;
 import org.jetbrains.annotations.NotNull;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Request;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Response;
+import uk.co.reecedunn.intellij.plugin.marklogic.api.ResponseException;
 
 import java.io.IOException;
 
@@ -37,6 +39,8 @@ public class XCCRequest implements Request {
     public Response run() throws IOException {
         try {
             return new XCCResponse(session.submitRequest(request), session);
+        } catch (ServerResponseException e) {
+            throw new ResponseException(e.getResponseCode(), e.getResponseMessage(), null);
         } catch (RequestException | IllegalStateException e) {
             // IllegalStateException is thrown for invalid credentials.
             throw new IOException(e);

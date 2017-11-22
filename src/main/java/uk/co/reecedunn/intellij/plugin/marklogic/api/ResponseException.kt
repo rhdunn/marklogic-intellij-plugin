@@ -17,5 +17,5 @@ package uk.co.reecedunn.intellij.plugin.marklogic.api
 
 import java.io.IOException
 
-class ResponseException(val statusCode: Int, val statusText: String, val response: Item):
+class ResponseException(val statusCode: Int, val statusText: String, val response: Item?):
     IOException("$statusCode $statusText")
