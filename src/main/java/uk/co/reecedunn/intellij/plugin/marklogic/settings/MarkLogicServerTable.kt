@@ -31,7 +31,7 @@ private object DISPLAY_NAME_COLUMN_INFO: EditableColumnInfo<MarkLogicServer, Str
         item?.displayName
 
     override fun setValue(item: MarkLogicServer?, value: String?) {
-        value?.let { item?.displayName = it }
+        item?.displayName = if (value?.isEmpty() != false) null else value
     }
 }
 
