@@ -20,6 +20,9 @@ import uk.co.reecedunn.intellij.plugin.marklogic.api.Item
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.resources.MarkLogicBundle
 import java.io.IOException
 
+private val MARKLOGIC_VERSION_XQUERY =
+    "xdmp:version()"
+
 private val LIST_APPSERVERS_XQUERY =
     "import module namespace admin = \"http://marklogic.com/xdmp/admin\" at \"/MarkLogic/admin.xqy\";\n" +
     "let \$config := admin:get-configuration()\n" +
@@ -87,7 +90,7 @@ class MarkLogicServer {
     }
 
     val version get(): String =
-        xquery("xdmp:version()")[0].content
+        xquery(MARKLOGIC_VERSION_XQUERY)[0].content
 
     val appservers get(): List<MarkLogicAppServer> {
         val servers = ArrayList<MarkLogicAppServer>()
