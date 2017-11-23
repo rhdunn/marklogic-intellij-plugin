@@ -24,4 +24,8 @@ data class MarkLogicAppServer(
     override fun toString(): String =
         group?.let { "$group :: $appserver : $port [$type]" } ?: appserver
 
+    fun logfile(): String =
+        if (port == 0) "ErrorLog.txt"
+        else           "${port}_ErrorLog.txt"
+
 }
