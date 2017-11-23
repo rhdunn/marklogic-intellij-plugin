@@ -15,6 +15,8 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.server
 
+import uk.co.reecedunn.intellij.plugin.marklogic.ui.resources.MarkLogicBundle
+
 data class MarkLogicAppServer(
     val group: String?,
     val appserver: String,
@@ -25,8 +27,13 @@ data class MarkLogicAppServer(
         group?.let { "$group :: $appserver : $port [$type]" } ?: appserver
 
     fun logfile(): String =
-             if (appserver == "Task Server") "TaskServer_ErrorLog.txt"
-        else if (port == 0)                  "ErrorLog.txt"
-        else                                 "${port}_ErrorLog.txt"
+             if (this === TASKSERVER) "TaskServer_ErrorLog.txt"
+        else if (port == 0)           "ErrorLog.txt"
+        else                          "${port}_ErrorLog.txt"
+
+    companion object {
+        val SYSTEM     = MarkLogicAppServer(null, MarkLogicBundle.message("logviewer.app-server.none"), null, 0)
+        val TASKSERVER = MarkLogicAppServer(null, "Task Server", null, 0)
+    }
 
 }

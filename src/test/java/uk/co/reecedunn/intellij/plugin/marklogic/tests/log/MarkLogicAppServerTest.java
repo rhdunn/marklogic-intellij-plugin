@@ -23,7 +23,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class MarkLogicAppServerTest extends TestCase {
     public void testSystem() {
-        final MarkLogicAppServer appserver = new MarkLogicAppServer(null, "(none)", null, 0);
+        final MarkLogicAppServer appserver = MarkLogicAppServer.Companion.getSYSTEM();
         assertThat(appserver.toString(), is("(none)"));
 
         assertThat(appserver.logfile(), is("ErrorLog.txt"));
@@ -37,7 +37,7 @@ public class MarkLogicAppServerTest extends TestCase {
     }
 
     public void testTaskServer() {
-        final MarkLogicAppServer appserver = new MarkLogicAppServer(null, "Task Server", null, 0);
+        final MarkLogicAppServer appserver = MarkLogicAppServer.Companion.getTASKSERVER();
         assertThat(appserver.toString(), is("Task Server"));
 
         assertThat(appserver.logfile(), is("TaskServer_ErrorLog.txt"));

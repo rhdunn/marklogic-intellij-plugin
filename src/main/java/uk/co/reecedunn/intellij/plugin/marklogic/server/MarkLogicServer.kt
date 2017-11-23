@@ -17,7 +17,6 @@ package uk.co.reecedunn.intellij.plugin.marklogic.server
 
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Connection
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Item
-import uk.co.reecedunn.intellij.plugin.marklogic.ui.resources.MarkLogicBundle
 import java.io.IOException
 
 private val MARKLOGIC_VERSION_XQUERY =
@@ -97,8 +96,8 @@ class MarkLogicServer {
         try {
             val items = xquery(LIST_APPSERVERS_XQUERY)
             servers.ensureCapacity((items.size / 4) + 1)
-            servers.add(MarkLogicAppServer(null, MarkLogicBundle.message("logviewer.app-server.none"), null, 0))
-            servers.add(MarkLogicAppServer(null, "Task Server", null, 0))
+            servers.add(MarkLogicAppServer.SYSTEM)
+            servers.add(MarkLogicAppServer.TASKSERVER)
             for (i in 0..(items.size - 1) step 4) {
                 val server = MarkLogicAppServer(
                     items[i].content,
@@ -109,8 +108,8 @@ class MarkLogicServer {
             }
         } catch (e: IOException) {
             if (servers.isEmpty()) {
-                servers.add(MarkLogicAppServer(null, MarkLogicBundle.message("logviewer.app-server.none"), null, 0))
-                servers.add(MarkLogicAppServer(null, "Task Server", null, 0))
+                servers.add(MarkLogicAppServer.SYSTEM)
+                servers.add(MarkLogicAppServer.TASKSERVER)
             }
         }
         return servers
