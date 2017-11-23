@@ -18,20 +18,21 @@ package uk.co.reecedunn.intellij.plugin.marklogic.log
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Item
 
 data class MarkLogicLogEntry(
-    val timestamp: String,
+    val date: String,
+    val time: String,
     val level: String,
     val message: Item)
 
 class ParseException(message: String) : RuntimeException(message)
 
 object MarkLogicLogFile {
-    val logline: Regex = "^([0-9\\-]+ [0-9:.]+) ([A-Za-z]+): (.*)$".toRegex()
+    val logline: Regex = "^([0-9\\-]+) ([0-9:.]+) ([A-Za-z]+): (.*)$".toRegex()
 
     fun parse(logfile: String): Sequence<MarkLogicLogEntry> {
         return logfile.lineSequence().map { line ->
             logline.matchEntire(line)?.let {
                 val groups = it.groupValues
-                MarkLogicLogEntry(groups[1], groups[2], Item.create(groups[3], "text/plain", "xs:string"))
+                MarkLogicLogEntry(groups[1], groups[2], groups[3], Item.create(groups[4], "text/plain", "xs:string"))
             } ?: return@map if (line.isEmpty())
                 null
             else

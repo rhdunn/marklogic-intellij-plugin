@@ -43,7 +43,8 @@ public class MarkLogicLogFileTest extends TestCase {
 
         assertThat(entries.hasNext(), is(true));
         entry = entries.next();
-        assertThat(entry.getTimestamp(), is("2001-01-10 12:34:56.789"));
+        assertThat(entry.getDate(), is("2001-01-10"));
+        assertThat(entry.getTime(), is("12:34:56.789"));
         assertThat(entry.getLevel(), is("Info"));
         assertThat(entry.getMessage().getItemType(), is("xs:string"));
         assertThat(entry.getMessage().getContentType(), is("text/plain"));
@@ -51,7 +52,8 @@ public class MarkLogicLogFileTest extends TestCase {
 
         assertThat(entries.hasNext(), is(true));
         entry = entries.next();
-        assertThat(entry.getTimestamp(), is("2001-01-10 12:34:56.800"));
+        assertThat(entry.getDate(), is("2001-01-10"));
+        assertThat(entry.getTime(), is("12:34:56.800"));
         assertThat(entry.getLevel(), is("Notice"));
         assertThat(entry.getMessage().getItemType(), is("xs:string"));
         assertThat(entry.getMessage().getContentType(), is("text/plain"));
