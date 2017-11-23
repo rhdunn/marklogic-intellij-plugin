@@ -109,7 +109,7 @@ class MarkLogicLogViewUI(private val mProject: Project) : LogViewActions {
         val appserver = mAppServer?.selectedItem as? MarkLogicAppServer
         if (mLogBuilder == null || appserver == null) return
 
-        mLogBuilder!!.logFile = appserver.logfile(LogType.ERROR_LOG)
+        mLogBuilder!!.logFile = appserver.logfile(LogType.ERROR_LOG, 0)
         ApplicationManager.getApplication().executeOnPooledThread(refreshAction())
     }
 

@@ -33,10 +33,12 @@ data class MarkLogicAppServer(
     override fun toString(): String =
         group?.let { "$group :: $appserver : $port [$type]" } ?: appserver
 
-    fun logfile(logtype: LogType): String =
-             if (this === TASKSERVER) "TaskServer_${logtype.type}.txt"
-        else if (port == 0)           "${logtype.type}.txt"
-        else                          "${port}_${logtype.type}.txt"
+    fun logfile(logtype: LogType, generation: Int): String {
+        val suffix = if (generation == 0) "" else "_${generation}"
+        return if (this === TASKSERVER) "TaskServer_${logtype.type}${suffix}.txt"
+        else   if (port == 0)           "${logtype.type}${suffix}.txt"
+        else                            "${port}_${logtype.type}${suffix}.txt"
+    }
 
     companion object {
         val SYSTEM     = MarkLogicAppServer(null, MarkLogicBundle.message("logviewer.app-server.none"), null, 0)

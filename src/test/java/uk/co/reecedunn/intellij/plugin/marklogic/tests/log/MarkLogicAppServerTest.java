@@ -27,20 +27,23 @@ public class MarkLogicAppServerTest extends TestCase {
         final MarkLogicAppServer appserver = MarkLogicAppServer.Companion.getSYSTEM();
         assertThat(appserver.toString(), is("(none)"));
 
-        assertThat(appserver.logfile(LogType.ERROR_LOG), is("ErrorLog.txt"));
+        assertThat(appserver.logfile(LogType.ERROR_LOG, 0), is("ErrorLog.txt"));
+        assertThat(appserver.logfile(LogType.ERROR_LOG, 1), is("ErrorLog_1.txt"));
     }
 
     public void testAppServer() {
         final MarkLogicAppServer appserver = new MarkLogicAppServer("Default", "test", "HTTP", 8020);
         assertThat(appserver.toString(), is("Default :: test : 8020 [HTTP]"));
 
-        assertThat(appserver.logfile(LogType.ERROR_LOG), is("8020_ErrorLog.txt"));
+        assertThat(appserver.logfile(LogType.ERROR_LOG, 0), is("8020_ErrorLog.txt"));
+        assertThat(appserver.logfile(LogType.ERROR_LOG, 1), is("8020_ErrorLog_1.txt"));
     }
 
     public void testTaskServer() {
         final MarkLogicAppServer appserver = MarkLogicAppServer.Companion.getTASKSERVER();
         assertThat(appserver.toString(), is("Task Server"));
 
-        assertThat(appserver.logfile(LogType.ERROR_LOG), is("TaskServer_ErrorLog.txt"));
+        assertThat(appserver.logfile(LogType.ERROR_LOG, 0), is("TaskServer_ErrorLog.txt"));
+        assertThat(appserver.logfile(LogType.ERROR_LOG, 1), is("TaskServer_ErrorLog_1.txt"));
     }
 }
