@@ -105,11 +105,10 @@ class MarkLogicLogViewUI(private val mProject: Project) : LogViewActions {
     }
 
     private fun appserverSelectionChanged() {
-        if (mLogBuilder == null) return
+        val appserver = mAppServer?.selectedItem as? MarkLogicAppServer
+        if (mLogBuilder == null || appserver == null) return
 
-        val port = (mAppServer?.selectedItem as? MarkLogicAppServer)?.port ?: 0
-        mLogBuilder!!.logFile = if (port == 0) "ErrorLog.txt" else "${port}_ErrorLog.txt"
-
+        mLogBuilder!!.logFile = if (appserver.port == 0) "ErrorLog.txt" else "${appserver.port}_ErrorLog.txt"
         ApplicationManager.getApplication().executeOnPooledThread(refreshAction())
     }
 
