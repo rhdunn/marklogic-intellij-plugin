@@ -119,7 +119,8 @@ class MarkLogicLogViewUI(private val mProject: Project) : LogViewActions {
                 val items = mLogBuilder!!.build().run().items
                 mLogText!!.text = ""
                 MarkLogicLogFile.parse(items[0].content).forEach { entry ->
-                    mLogText!!.append("${entry.date} ${entry.time} ${entry.level}: ${entry.message.content}\n")
+                    val separator = if (entry.continuation) '+' else ' '
+                    mLogText!!.append("${entry.date} ${entry.time} ${entry.level}:${separator}${entry.message.content}\n")
                 }
                 mLogText!!.caretPosition = mLogText!!.document.length
             } catch (e: IOException) {

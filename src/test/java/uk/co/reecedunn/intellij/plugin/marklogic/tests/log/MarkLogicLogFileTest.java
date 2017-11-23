@@ -46,6 +46,7 @@ public class MarkLogicLogFileTest extends TestCase {
         assertThat(entry.getDate(), is("2001-01-10"));
         assertThat(entry.getTime(), is("12:34:56.789"));
         assertThat(entry.getLevel(), is("Info"));
+        assertThat(entry.getContinuation(), is(false));
         assertThat(entry.getMessage().getItemType(), is("xs:string"));
         assertThat(entry.getMessage().getContentType(), is("text/plain"));
         assertThat(entry.getMessage().getContent(), is("Lorem ipsum dolor"));
@@ -55,9 +56,40 @@ public class MarkLogicLogFileTest extends TestCase {
         assertThat(entry.getDate(), is("2001-01-10"));
         assertThat(entry.getTime(), is("12:34:56.800"));
         assertThat(entry.getLevel(), is("Notice"));
+        assertThat(entry.getContinuation(), is(false));
         assertThat(entry.getMessage().getItemType(), is("xs:string"));
         assertThat(entry.getMessage().getContentType(), is("text/plain"));
         assertThat(entry.getMessage().getContent(), is("Alpha beta gamma"));
+
+        assertThat(entries.hasNext(), is(false));
+    }
+
+    public void testMarkLogic9_MessageContinuation() {
+        MarkLogicLogEntry entry;
+        final String logfile =
+            "2001-01-10 12:34:56.789 Info: Alpha\n" +
+            "2001-01-10 12:34:56.789 Info:+Beta\n";
+        Iterator<MarkLogicLogEntry> entries = MarkLogicLogFile.INSTANCE.parse(logfile).iterator();
+
+        assertThat(entries.hasNext(), is(true));
+        entry = entries.next();
+        assertThat(entry.getDate(), is("2001-01-10"));
+        assertThat(entry.getTime(), is("12:34:56.789"));
+        assertThat(entry.getLevel(), is("Info"));
+        assertThat(entry.getContinuation(), is(false));
+        assertThat(entry.getMessage().getItemType(), is("xs:string"));
+        assertThat(entry.getMessage().getContentType(), is("text/plain"));
+        assertThat(entry.getMessage().getContent(), is("Alpha"));
+
+        assertThat(entries.hasNext(), is(true));
+        entry = entries.next();
+        assertThat(entry.getDate(), is("2001-01-10"));
+        assertThat(entry.getTime(), is("12:34:56.789"));
+        assertThat(entry.getLevel(), is("Info"));
+        assertThat(entry.getContinuation(), is(true));
+        assertThat(entry.getMessage().getItemType(), is("xs:string"));
+        assertThat(entry.getMessage().getContentType(), is("text/plain"));
+        assertThat(entry.getMessage().getContent(), is("Beta"));
 
         assertThat(entries.hasNext(), is(false));
     }
