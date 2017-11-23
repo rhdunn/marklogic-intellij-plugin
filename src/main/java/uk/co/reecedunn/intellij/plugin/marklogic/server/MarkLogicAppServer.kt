@@ -17,6 +17,13 @@ package uk.co.reecedunn.intellij.plugin.marklogic.server
 
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.resources.MarkLogicBundle
 
+enum class LogType(val type: String) {
+    ACCESS_LOG("AccessLog"), // appserver
+    AUDIT_LOG("AuditLog"),   // system
+    CRASH_LOG("CrashLog"),   // system
+    ERROR_LOG("ErrorLog")    // appserver, system, taskserver
+}
+
 data class MarkLogicAppServer(
     val group: String?,
     val appserver: String,
@@ -26,10 +33,10 @@ data class MarkLogicAppServer(
     override fun toString(): String =
         group?.let { "$group :: $appserver : $port [$type]" } ?: appserver
 
-    fun logfile(): String =
-             if (this === TASKSERVER) "TaskServer_ErrorLog.txt"
-        else if (port == 0)           "ErrorLog.txt"
-        else                          "${port}_ErrorLog.txt"
+    fun logfile(logtype: LogType): String =
+             if (this === TASKSERVER) "TaskServer_${logtype.type}.txt"
+        else if (port == 0)           "${logtype.type}.txt"
+        else                          "${port}_${logtype.type}.txt"
 
     companion object {
         val SYSTEM     = MarkLogicAppServer(null, MarkLogicBundle.message("logviewer.app-server.none"), null, 0)

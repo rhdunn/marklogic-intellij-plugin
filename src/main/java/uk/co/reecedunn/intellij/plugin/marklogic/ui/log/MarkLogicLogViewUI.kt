@@ -22,6 +22,7 @@ import com.intellij.openapi.ui.ComboBox
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Connection
 import uk.co.reecedunn.intellij.plugin.marklogic.api.LogRequestBuilder
 import uk.co.reecedunn.intellij.plugin.marklogic.log.MarkLogicLogFile
+import uk.co.reecedunn.intellij.plugin.marklogic.server.LogType
 import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicAppServer
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.settings.MarkLogicSettings
 import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicServer
@@ -108,7 +109,7 @@ class MarkLogicLogViewUI(private val mProject: Project) : LogViewActions {
         val appserver = mAppServer?.selectedItem as? MarkLogicAppServer
         if (mLogBuilder == null || appserver == null) return
 
-        mLogBuilder!!.logFile = appserver.logfile()
+        mLogBuilder!!.logFile = appserver.logfile(LogType.ERROR_LOG)
         ApplicationManager.getApplication().executeOnPooledThread(refreshAction())
     }
 
