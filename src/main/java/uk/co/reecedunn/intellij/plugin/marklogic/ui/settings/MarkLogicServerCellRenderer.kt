@@ -17,7 +17,7 @@ package uk.co.reecedunn.intellij.plugin.marklogic.ui.settings
 
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.ui.ColoredListCellRenderer
-import uk.co.reecedunn.intellij.plugin.marklogic.settings.MarkLogicServer
+import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicServer
 import javax.swing.JList
 
 class MarkLogicServerCellRenderer: ColoredListCellRenderer<MarkLogicServer>() {

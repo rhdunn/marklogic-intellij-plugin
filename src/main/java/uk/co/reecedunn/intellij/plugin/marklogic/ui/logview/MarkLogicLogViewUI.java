@@ -23,9 +23,9 @@ import org.jetbrains.annotations.NotNull;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Connection;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Item;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.LogRequestBuilder;
-import uk.co.reecedunn.intellij.plugin.marklogic.settings.MarkLogicAppServer;
+import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicAppServer;
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.settings.MarkLogicProjectSettings;
-import uk.co.reecedunn.intellij.plugin.marklogic.settings.MarkLogicServer;
+import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicServer;
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.settings.MarkLogicServerCellRenderer;
 
 import javax.swing.*;

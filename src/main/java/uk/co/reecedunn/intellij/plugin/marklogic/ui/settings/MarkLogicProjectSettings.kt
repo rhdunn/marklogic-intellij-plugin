@@ -21,7 +21,7 @@ import com.intellij.openapi.components.*
 import com.intellij.openapi.project.Project
 import com.intellij.util.EventDispatcher
 import com.intellij.util.xmlb.XmlSerializerUtil
-import uk.co.reecedunn.intellij.plugin.marklogic.settings.MarkLogicServer
+import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicServer
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.resources.MarkLogicBundle
 import java.io.File
 import java.util.*
