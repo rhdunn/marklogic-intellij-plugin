@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package uk.co.reecedunn.intellij.plugin.marklogic.ui.settings
+package uk.co.reecedunn.intellij.plugin.marklogic.ui.server
 
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.ui.ColoredListCellRenderer

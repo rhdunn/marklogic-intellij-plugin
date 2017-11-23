@@ -26,7 +26,7 @@ import uk.co.reecedunn.intellij.plugin.marklogic.api.LogRequestBuilder;
 import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicAppServer;
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.settings.MarkLogicProjectSettings;
 import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicServer;
-import uk.co.reecedunn.intellij.plugin.marklogic.ui.settings.MarkLogicServerCellRenderer;
+import uk.co.reecedunn.intellij.plugin.marklogic.ui.server.MarkLogicServerCellRenderer;
 
 import javax.swing.*;
 import java.io.IOException;

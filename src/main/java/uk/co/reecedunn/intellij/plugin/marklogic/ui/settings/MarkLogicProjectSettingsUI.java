@@ -16,6 +16,7 @@
 package uk.co.reecedunn.intellij.plugin.marklogic.ui.settings;
 
 import uk.co.reecedunn.intellij.plugin.core.ui.SettingsUI;
+import uk.co.reecedunn.intellij.plugin.marklogic.ui.server.MarkLogicServerTable;
 
 import javax.swing.*;
 

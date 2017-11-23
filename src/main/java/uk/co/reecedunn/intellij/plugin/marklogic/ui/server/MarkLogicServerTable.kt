@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package uk.co.reecedunn.intellij.plugin.marklogic.ui.settings
+package uk.co.reecedunn.intellij.plugin.marklogic.ui.server
 
 import com.intellij.openapi.ui.DialogBuilder
 import com.intellij.ui.components.JBPasswordField
@@ -116,12 +116,12 @@ private object ServerEditor: TableModelEditor.DialogItemEditor<MarkLogicServer> 
 }
 
 private val COLUMNS: Array<ColumnInfo<*, *>> = arrayOf(
-    DISPLAY_NAME_COLUMN_INFO,
-    HOSTNAME_COLUMN_INFO,
-    APPSERVER_PORT_COLUMN_INFO,
-    ADMIN_PORT_COLUMN_INFO)
+        DISPLAY_NAME_COLUMN_INFO,
+        HOSTNAME_COLUMN_INFO,
+        APPSERVER_PORT_COLUMN_INFO,
+        ADMIN_PORT_COLUMN_INFO)
 
 class MarkLogicServerTable: TableModelEditor<MarkLogicServer>(
-    COLUMNS,
-    ServerEditor,
+        COLUMNS,
+        ServerEditor,
     MarkLogicBundle.message("marklogic.settings.server.no-servers"))
