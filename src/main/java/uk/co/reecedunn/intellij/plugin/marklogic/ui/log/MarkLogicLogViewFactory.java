@@ -15,6 +15,7 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.ui.log;
 
+import com.intellij.openapi.project.DumbAware;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowFactory;
@@ -23,7 +24,7 @@ import com.intellij.ui.content.ContentFactory;
 import com.intellij.ui.content.ContentManager;
 import org.jetbrains.annotations.NotNull;
 
-public class MarkLogicLogViewFactory implements ToolWindowFactory {
+public class MarkLogicLogViewFactory implements ToolWindowFactory, DumbAware {
     private MarkLogicLogViewUI mLogView;
 
     @Override
