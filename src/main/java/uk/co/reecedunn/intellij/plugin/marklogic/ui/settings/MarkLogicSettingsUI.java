@@ -20,7 +20,7 @@ import uk.co.reecedunn.intellij.plugin.marklogic.ui.server.MarkLogicServerTable;
 
 import javax.swing.*;
 
-public class MarkLogicProjectSettingsUI implements SettingsUI<MarkLogicProjectSettings > {
+public class MarkLogicSettingsUI implements SettingsUI<MarkLogicSettings> {
     private JPanel mPanel;
     private MarkLogicServerTable mTableEditor;
     private JComponent mTable;
@@ -31,17 +31,17 @@ public class MarkLogicProjectSettingsUI implements SettingsUI<MarkLogicProjectSe
     }
 
     @Override
-    public boolean isModified(MarkLogicProjectSettings settings) {
+    public boolean isModified(MarkLogicSettings settings) {
         return mTableEditor.isModified();
     }
 
     @Override
-    public void reset(MarkLogicProjectSettings settings) {
+    public void reset(MarkLogicSettings settings) {
         mTableEditor.reset(settings.getServers());
     }
 
     @Override
-    public void apply(MarkLogicProjectSettings settings) {
+    public void apply(MarkLogicSettings settings) {
         settings.setServers(mTableEditor.apply());
     }
 

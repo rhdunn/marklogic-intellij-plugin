@@ -15,15 +15,14 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.ui.settings;
 
-import com.intellij.openapi.project.Project;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.Nullable;
 import uk.co.reecedunn.intellij.plugin.core.ui.ConfigurableImpl;
 import uk.co.reecedunn.intellij.plugin.core.ui.SettingsUI;
 
-public class MarkLogicProjectSettingsConfigurable extends ConfigurableImpl<MarkLogicProjectSettings> {
-    public MarkLogicProjectSettingsConfigurable(Project project) {
-        super(MarkLogicProjectSettings.Companion.getInstance(project));
+public class MarkLogicSettingsConfigurable extends ConfigurableImpl<MarkLogicSettings> {
+    public MarkLogicSettingsConfigurable() {
+        super(MarkLogicSettings.Companion.getInstance());
     }
 
     @Override
@@ -39,7 +38,7 @@ public class MarkLogicProjectSettingsConfigurable extends ConfigurableImpl<MarkL
     }
 
     @Override
-    public SettingsUI<MarkLogicProjectSettings> createSettingsUI() {
-        return new MarkLogicProjectSettingsUI();
+    public SettingsUI<MarkLogicSettings> createSettingsUI() {
+        return new MarkLogicSettingsUI();
     }
 }

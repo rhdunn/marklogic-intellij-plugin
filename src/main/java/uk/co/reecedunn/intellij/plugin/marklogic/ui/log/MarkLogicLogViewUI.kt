@@ -23,7 +23,7 @@ import uk.co.reecedunn.intellij.plugin.marklogic.api.Connection
 import uk.co.reecedunn.intellij.plugin.marklogic.api.LogRequestBuilder
 import uk.co.reecedunn.intellij.plugin.marklogic.log.MarkLogicLogFile
 import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicAppServer
-import uk.co.reecedunn.intellij.plugin.marklogic.ui.settings.MarkLogicProjectSettings
+import uk.co.reecedunn.intellij.plugin.marklogic.ui.settings.MarkLogicSettings
 import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicServer
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.server.MarkLogicServerCellRenderer
 
@@ -31,9 +31,9 @@ import javax.swing.*
 import java.io.IOException
 
 class MarkLogicLogViewUI(private val mProject: Project) : LogViewActions {
-    private inner class SettingsListener : MarkLogicProjectSettings.Listener, Disposable {
+    private inner class SettingsListener : MarkLogicSettings.Listener, Disposable {
         override fun serversChanged() {
-            val settings = MarkLogicProjectSettings.getInstance(mProject)
+            val settings = MarkLogicSettings.getInstance()
 
             mServer!!.removeAllItems()
             for (server in settings.servers) {
@@ -73,7 +73,7 @@ class MarkLogicLogViewUI(private val mProject: Project) : LogViewActions {
         mAppServer = ComboBox()
         mAppServer!!.addActionListener { e -> appserverSelectionChanged() }
 
-        val settings = MarkLogicProjectSettings.getInstance(mProject)
+        val settings = MarkLogicSettings.getInstance()
         val listener = SettingsListener()
         settings.addListener(listener, listener)
         listener.serversChanged()

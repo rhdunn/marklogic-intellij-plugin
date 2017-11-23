@@ -18,7 +18,6 @@ package uk.co.reecedunn.intellij.plugin.marklogic.ui.settings
 import com.intellij.openapi.Disposable
 import com.intellij.openapi.application.PathManager
 import com.intellij.openapi.components.*
-import com.intellij.openapi.project.Project
 import com.intellij.util.EventDispatcher
 import com.intellij.util.xmlb.XmlSerializerUtil
 import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicServer
@@ -26,8 +25,8 @@ import uk.co.reecedunn.intellij.plugin.marklogic.ui.resources.MarkLogicBundle
 import java.io.File
 import java.util.*
 
-@State(name = "MarkLogicProjectSettings", storages = arrayOf(Storage(StoragePathMacros.WORKSPACE_FILE), Storage("marklogic_config.xml")))
-class MarkLogicProjectSettings : PersistentStateComponent<MarkLogicProjectSettings>, ExportableComponent {
+@State(name = "MarkLogicSettings", storages = arrayOf(Storage("marklogic_config.xml")))
+class MarkLogicSettings : PersistentStateComponent<MarkLogicSettings>, ExportableComponent {
     // region Event Handlers
 
     interface Listener : EventListener {
@@ -54,9 +53,9 @@ class MarkLogicProjectSettings : PersistentStateComponent<MarkLogicProjectSettin
     // endregion
     // region PersistentStateComponent
 
-    override fun getState(): MarkLogicProjectSettings? = this
+    override fun getState(): MarkLogicSettings? = this
 
-    override fun loadState(state: MarkLogicProjectSettings) = XmlSerializerUtil.copyBean(state, this)
+    override fun loadState(state: MarkLogicSettings) = XmlSerializerUtil.copyBean(state, this)
 
     // endregion
     // region ExportableComponent
@@ -69,8 +68,8 @@ class MarkLogicProjectSettings : PersistentStateComponent<MarkLogicProjectSettin
     // region Instance
 
     companion object {
-        fun getInstance(project: Project): MarkLogicProjectSettings {
-            return ServiceManager.getService(project, MarkLogicProjectSettings::class.java)
+        fun getInstance(): MarkLogicSettings {
+            return ServiceManager.getService(MarkLogicSettings::class.java)
         }
     }
 
