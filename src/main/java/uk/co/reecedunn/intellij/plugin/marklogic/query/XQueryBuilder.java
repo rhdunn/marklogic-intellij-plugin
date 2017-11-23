@@ -19,7 +19,7 @@ import com.intellij.execution.executors.DefaultDebugExecutor;
 import com.intellij.execution.executors.DefaultRunExecutor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import uk.co.reecedunn.intellij.plugin.marklogic.ui.executors.ProfileExecutor;
+import uk.co.reecedunn.intellij.plugin.marklogic.ui.profile.ProfileExecutor;
 
 public class XQueryBuilder implements QueryBuilder {
     public static QueryBuilder INSTANCE = new XQueryBuilder();

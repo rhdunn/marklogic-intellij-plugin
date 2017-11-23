@@ -28,7 +28,7 @@
   <depends>com.intellij.modules.lang</depends>
 
   <extensions defaultExtensionNs="com.intellij">
-    <executor implementation="uk.co.reecedunn.intellij.plugin.marklogic.ui.executors.ProfileExecutor"/>
+    <executor implementation="uk.co.reecedunn.intellij.plugin.marklogic.ui.profile.ProfileExecutor"/>
     <configurationType implementation="uk.co.reecedunn.intellij.plugin.marklogic.ui.configuration.MarkLogicConfigurationType"/>
     <programRunner implementation="uk.co.reecedunn.intellij.plugin.marklogic.ui.runner.MarkLogicProgramRunner"/>
 

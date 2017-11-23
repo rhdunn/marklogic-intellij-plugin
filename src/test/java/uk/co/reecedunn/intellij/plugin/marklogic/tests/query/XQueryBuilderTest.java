@@ -18,7 +18,7 @@ package uk.co.reecedunn.intellij.plugin.marklogic.tests.query;
 import com.intellij.execution.executors.DefaultDebugExecutor;
 import com.intellij.execution.executors.DefaultRunExecutor;
 import junit.framework.TestCase;
-import uk.co.reecedunn.intellij.plugin.marklogic.ui.executors.ProfileExecutor;
+import uk.co.reecedunn.intellij.plugin.marklogic.ui.profile.ProfileExecutor;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.Function;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.XQueryBuilder;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.QueryBuilder;
