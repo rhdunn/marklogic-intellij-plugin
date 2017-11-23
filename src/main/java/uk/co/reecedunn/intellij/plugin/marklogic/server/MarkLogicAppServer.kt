@@ -19,7 +19,7 @@ data class MarkLogicAppServer(
     val group: String?,
     val appserver: String,
     val type: String?,
-    val port: Int?) {
+    val port: Int) {
 
     override fun toString(): String =
         group?.let { "$group :: $appserver : $port [$type]" } ?: appserver

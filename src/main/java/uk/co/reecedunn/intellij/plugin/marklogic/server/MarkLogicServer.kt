@@ -91,7 +91,7 @@ class MarkLogicServer {
     val appservers get(): List<MarkLogicAppServer> {
         val items = xquery(LIST_APPSERVERS_XQUERY)
         val servers = ArrayList<MarkLogicAppServer>((items.size / 4) + 1)
-        servers.add(MarkLogicAppServer(null, MarkLogicBundle.message("logviewer.app-server.none"), null, null))
+        servers.add(MarkLogicAppServer(null, MarkLogicBundle.message("logviewer.app-server.none"), null, 0))
         for (i in 0..(items.size - 1) step 4) {
             val server = MarkLogicAppServer(
                     items[i].content,

@@ -80,6 +80,7 @@ public class MarkLogicLogViewUI implements LogViewActions {
         mServer.addActionListener(e -> serverSelectionChanged());
 
         mAppServer = new ComboBox<>();
+        mAppServer.addActionListener(e -> appserverSelectionChanged());
 
         MarkLogicProjectSettings settings = MarkLogicProjectSettings.Companion.getInstance(mProject);
         SettingsListener listener = new SettingsListener();
@@ -109,8 +110,14 @@ public class MarkLogicLogViewUI implements LogViewActions {
             Connection.REST);
 
         mLogBuilder = mConnection.createLogRequestBuilder();
-        mLogBuilder.setAppServerPort(0);
-        mLogBuilder.setLogFile("ErrorLog.txt");
+        appserverSelectionChanged();
+    }
+
+    private void appserverSelectionChanged() {
+        if (mLogBuilder == null) return;
+
+        MarkLogicAppServer server = (MarkLogicAppServer)mAppServer.getSelectedItem();
+        mLogBuilder.setAppServerPort(server == null ? 0 : server.getPort());
 
         ApplicationManager.getApplication().executeOnPooledThread(refreshAction());
     }
