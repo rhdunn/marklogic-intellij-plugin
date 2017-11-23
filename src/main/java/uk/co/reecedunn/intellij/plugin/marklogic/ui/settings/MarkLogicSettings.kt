@@ -16,17 +16,14 @@
 package uk.co.reecedunn.intellij.plugin.marklogic.ui.settings
 
 import com.intellij.openapi.Disposable
-import com.intellij.openapi.application.PathManager
 import com.intellij.openapi.components.*
 import com.intellij.util.EventDispatcher
 import com.intellij.util.xmlb.XmlSerializerUtil
 import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicServer
-import uk.co.reecedunn.intellij.plugin.marklogic.ui.resources.MarkLogicBundle
-import java.io.File
 import java.util.*
 
 @State(name = "MarkLogicSettings", storages = arrayOf(Storage("marklogic_config.xml")))
-class MarkLogicSettings : PersistentStateComponent<MarkLogicSettings>, ExportableComponent {
+class MarkLogicSettings : PersistentStateComponent<MarkLogicSettings> {
     // region Event Handlers
 
     interface Listener : EventListener {
@@ -56,13 +53,6 @@ class MarkLogicSettings : PersistentStateComponent<MarkLogicSettings>, Exportabl
     override fun getState(): MarkLogicSettings? = this
 
     override fun loadState(state: MarkLogicSettings) = XmlSerializerUtil.copyBean(state, this)
-
-    // endregion
-    // region ExportableComponent
-
-    override fun getExportFiles(): Array<File> = arrayOf(PathManager.getOptionsFile("marklogic_project_settings"))
-
-    override fun getPresentableName(): String = MarkLogicBundle.message("marklogic.settings.project.title")
 
     // endregion
     // region Instance
