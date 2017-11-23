@@ -17,27 +17,29 @@ package uk.co.reecedunn.intellij.plugin.marklogic.tests.log;
 
 import junit.framework.TestCase;
 import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicAppServer;
-import uk.co.reecedunn.intellij.plugin.marklogic.ui.resources.MarkLogicBundle;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class MarkLogicAppServerTest extends TestCase {
     public void testSystem() {
-        final MarkLogicAppServer appserver =
-            new MarkLogicAppServer(null, MarkLogicBundle.message("logviewer.app-server.none"), null, 0);
-
+        final MarkLogicAppServer appserver = new MarkLogicAppServer(null, "(none)", null, 0);
         assertThat(appserver.toString(), is("(none)"));
 
         assertThat(appserver.logfile(), is("ErrorLog.txt"));
     }
 
     public void testAppServer() {
-        final MarkLogicAppServer appserver =
-            new MarkLogicAppServer("Default", "test", "HTTP", 8020);
-
+        final MarkLogicAppServer appserver = new MarkLogicAppServer("Default", "test", "HTTP", 8020);
         assertThat(appserver.toString(), is("Default :: test : 8020 [HTTP]"));
 
         assertThat(appserver.logfile(), is("8020_ErrorLog.txt"));
+    }
+
+    public void testTaskServer() {
+        final MarkLogicAppServer appserver = new MarkLogicAppServer(null, "Task Server", null, 0);
+        assertThat(appserver.toString(), is("Task Server"));
+
+        assertThat(appserver.logfile(), is("TaskServer_ErrorLog.txt"));
     }
 }

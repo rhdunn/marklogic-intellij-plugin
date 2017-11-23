@@ -25,7 +25,8 @@ data class MarkLogicAppServer(
         group?.let { "$group :: $appserver : $port [$type]" } ?: appserver
 
     fun logfile(): String =
-        if (port == 0) "ErrorLog.txt"
-        else           "${port}_ErrorLog.txt"
+             if (appserver == "Task Server") "TaskServer_ErrorLog.txt"
+        else if (port == 0)                  "ErrorLog.txt"
+        else                                 "${port}_ErrorLog.txt"
 
 }

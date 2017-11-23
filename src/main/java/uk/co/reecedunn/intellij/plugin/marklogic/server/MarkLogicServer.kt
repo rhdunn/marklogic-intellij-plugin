@@ -98,6 +98,7 @@ class MarkLogicServer {
             val items = xquery(LIST_APPSERVERS_XQUERY)
             servers.ensureCapacity((items.size / 4) + 1)
             servers.add(MarkLogicAppServer(null, MarkLogicBundle.message("logviewer.app-server.none"), null, 0))
+            servers.add(MarkLogicAppServer(null, "Task Server", null, 0))
             for (i in 0..(items.size - 1) step 4) {
                 val server = MarkLogicAppServer(
                     items[i].content,
@@ -109,6 +110,7 @@ class MarkLogicServer {
         } catch (e: IOException) {
             if (servers.isEmpty()) {
                 servers.add(MarkLogicAppServer(null, MarkLogicBundle.message("logviewer.app-server.none"), null, 0))
+                servers.add(MarkLogicAppServer(null, "Task Server", null, 0))
             }
         }
         return servers
