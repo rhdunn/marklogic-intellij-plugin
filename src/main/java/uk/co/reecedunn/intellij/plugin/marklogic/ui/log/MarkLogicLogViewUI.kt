@@ -21,6 +21,7 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.ComboBox
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Connection
 import uk.co.reecedunn.intellij.plugin.marklogic.api.LogRequestBuilder
+import uk.co.reecedunn.intellij.plugin.marklogic.log.MarkLogicLogFile
 import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicAppServer
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.settings.MarkLogicProjectSettings
 import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicServer
@@ -116,7 +117,10 @@ class MarkLogicLogViewUI(private val mProject: Project) : LogViewActions {
         return Runnable {
             try {
                 val items = mLogBuilder!!.build().run().items
-                mLogText!!.text = items[0].content
+                mLogText!!.text = ""
+                MarkLogicLogFile.parse(items[0].content).forEach { entry ->
+                    mLogText!!.append("${entry.timestamp} ${entry.level}: ${entry.message.content}\n")
+                }
                 mLogText!!.caretPosition = mLogText!!.document.length
             } catch (e: IOException) {
                 mLogText!!.text = e.message
