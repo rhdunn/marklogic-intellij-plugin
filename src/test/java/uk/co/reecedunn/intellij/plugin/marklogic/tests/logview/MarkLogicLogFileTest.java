@@ -16,8 +16,8 @@
 package uk.co.reecedunn.intellij.plugin.marklogic.tests.logview;
 
 import junit.framework.TestCase;
-import uk.co.reecedunn.intellij.plugin.marklogic.logview.MarkLogicLogEntry;
-import uk.co.reecedunn.intellij.plugin.marklogic.logview.MarkLogicLogFile;
+import uk.co.reecedunn.intellij.plugin.marklogic.log.MarkLogicLogEntry;
+import uk.co.reecedunn.intellij.plugin.marklogic.log.MarkLogicLogFile;
 
 import java.util.Iterator;
 

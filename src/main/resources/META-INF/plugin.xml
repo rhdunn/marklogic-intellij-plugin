@@ -32,7 +32,7 @@
     <configurationType implementation="uk.co.reecedunn.intellij.plugin.marklogic.ui.configuration.MarkLogicConfigurationType"/>
     <programRunner implementation="uk.co.reecedunn.intellij.plugin.marklogic.ui.runner.MarkLogicProgramRunner"/>
 
-    <toolWindow id="MarkLogic Log View" anchor="bottom" secondary="true" icon="/icons/marklogic.png" factoryClass="uk.co.reecedunn.intellij.plugin.marklogic.ui.logview.MarkLogicLogViewFactory"/>
+    <toolWindow id="MarkLogic Log View" anchor="bottom" secondary="true" icon="/icons/marklogic.png" factoryClass="uk.co.reecedunn.intellij.plugin.marklogic.ui.log.MarkLogicLogViewFactory"/>
 
     <projectService serviceInterface="uk.co.reecedunn.intellij.plugin.marklogic.ui.settings.MarkLogicProjectSettings"
                     serviceImplementation="uk.co.reecedunn.intellij.plugin.marklogic.ui.settings.MarkLogicProjectSettings"/>

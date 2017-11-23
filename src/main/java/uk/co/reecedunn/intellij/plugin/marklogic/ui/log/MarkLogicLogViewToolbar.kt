@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package uk.co.reecedunn.intellij.plugin.marklogic.ui.logview
+package uk.co.reecedunn.intellij.plugin.marklogic.ui.log
 
 import com.intellij.icons.AllIcons
 import com.intellij.openapi.actionSystem.*

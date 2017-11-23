@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package uk.co.reecedunn.intellij.plugin.marklogic.logview
+package uk.co.reecedunn.intellij.plugin.marklogic.log
 
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Item
 
