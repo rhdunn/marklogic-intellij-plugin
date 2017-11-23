@@ -17,7 +17,6 @@ package uk.co.reecedunn.intellij.plugin.marklogic.api;
 
 public abstract class LogRequestBuilder {
     private String logfile = "ErrorLog.txt";
-    private int appServerPort = 0;
 
     protected LogRequestBuilder() {
     }
@@ -28,14 +27,6 @@ public abstract class LogRequestBuilder {
 
     public String getLogFile() {
         return logfile;
-    }
-
-    public void setAppServerPort(int appServerPort) {
-        this.appServerPort = appServerPort;
-    }
-
-    public int getAppServerPort() {
-        return appServerPort;
     }
 
     public abstract Request build();

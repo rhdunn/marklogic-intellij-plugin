@@ -27,14 +27,7 @@ public class RestLogRequestBuilder extends LogRequestBuilder {
     }
 
     public Request build() {
-        RequestBuilder builder = RequestBuilder.get(connection.getBaseUri() + "/get-error-log.xqy?filename=" + getLogFileName());
+        RequestBuilder builder = RequestBuilder.get(connection.getBaseUri() + "/get-error-log.xqy?filename=" + getLogFile());
         return new RestRequest(builder.build(), connection);
-    }
-
-    private String getLogFileName() {
-        if (getAppServerPort() == 0) {
-            return getLogFile();
-        }
-        return getAppServerPort() + "_" + getLogFile();
     }
 }
