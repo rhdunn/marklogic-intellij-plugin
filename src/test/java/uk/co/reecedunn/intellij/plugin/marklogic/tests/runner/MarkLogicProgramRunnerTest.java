@@ -26,9 +26,9 @@ import com.intellij.execution.runners.ExecutionEnvironment;
 import com.intellij.execution.runners.ProgramRunner;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import uk.co.reecedunn.intellij.plugin.marklogic.configuration.MarkLogicRunConfiguration;
-import uk.co.reecedunn.intellij.plugin.marklogic.executors.ProfileExecutor;
-import uk.co.reecedunn.intellij.plugin.marklogic.runner.MarkLogicProgramRunner;
+import uk.co.reecedunn.intellij.plugin.marklogic.ui.configuration.MarkLogicRunConfiguration;
+import uk.co.reecedunn.intellij.plugin.marklogic.ui.executors.ProfileExecutor;
+import uk.co.reecedunn.intellij.plugin.marklogic.ui.runner.MarkLogicProgramRunner;
 import uk.co.reecedunn.intellij.plugin.marklogic.tests.configuration.ConfigurationTestCase;
 
 import javax.swing.*;

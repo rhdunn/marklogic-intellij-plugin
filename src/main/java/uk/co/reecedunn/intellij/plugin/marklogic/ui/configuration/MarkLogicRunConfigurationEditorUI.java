@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package uk.co.reecedunn.intellij.plugin.marklogic.configuration;
+package uk.co.reecedunn.intellij.plugin.marklogic.ui.configuration;
 
 import com.intellij.openapi.fileChooser.FileChooserDescriptor;
 import com.intellij.openapi.fileChooser.FileTypeDescriptor;
@@ -23,9 +23,9 @@ import com.intellij.openapi.ui.ComponentWithBrowseButton;
 import com.intellij.openapi.ui.TextComponentAccessor;
 import org.jetbrains.annotations.NotNull;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Connection;
-import uk.co.reecedunn.intellij.plugin.marklogic.resources.MarkLogicBundle;
+import uk.co.reecedunn.intellij.plugin.marklogic.ui.resources.MarkLogicBundle;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.RDFFormat;
-import uk.co.reecedunn.intellij.plugin.marklogic.runner.MarkLogicResultsHandler;
+import uk.co.reecedunn.intellij.plugin.marklogic.ui.runner.MarkLogicResultsHandler;
 import uk.co.reecedunn.intellij.plugin.core.ui.DocumentChangedListener;
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.MarkLogicQueryComboBox;
 

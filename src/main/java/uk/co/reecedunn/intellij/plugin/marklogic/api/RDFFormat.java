@@ -16,7 +16,7 @@
 package uk.co.reecedunn.intellij.plugin.marklogic.api;
 
 import org.jetbrains.annotations.NotNull;
-import uk.co.reecedunn.intellij.plugin.marklogic.resources.MarkLogicBundle;
+import uk.co.reecedunn.intellij.plugin.marklogic.ui.resources.MarkLogicBundle;
 
 public enum RDFFormat {
     N3(MarkLogicBundle.message("format.n3"), "n3", "text/n3", "n3"),

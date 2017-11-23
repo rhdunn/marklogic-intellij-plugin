@@ -18,7 +18,7 @@ package uk.co.reecedunn.intellij.plugin.marklogic.query;
 import com.intellij.openapi.vfs.VirtualFile;
 import org.apache.xmlbeans.impl.common.IOUtil;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.RDFFormat;
-import uk.co.reecedunn.intellij.plugin.marklogic.configuration.MarkLogicRunConfiguration;
+import uk.co.reecedunn.intellij.plugin.marklogic.ui.configuration.MarkLogicRunConfiguration;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.options.EvalOptionsBuilder;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.options.OptionsBuilder;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.vars.KeyValueVarsBuilder;

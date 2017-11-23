@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package uk.co.reecedunn.intellij.plugin.marklogic.settings
+package uk.co.reecedunn.intellij.plugin.marklogic.ui.settings
 
 import com.intellij.openapi.ui.DialogBuilder
 import com.intellij.ui.components.JBPasswordField
@@ -23,7 +23,8 @@ import com.intellij.util.ui.ColumnInfo
 import com.intellij.util.ui.FormBuilder
 import com.intellij.util.ui.table.TableModelEditor
 import com.intellij.util.ui.table.TableModelEditor.EditableColumnInfo
-import uk.co.reecedunn.intellij.plugin.marklogic.resources.MarkLogicBundle
+import uk.co.reecedunn.intellij.plugin.marklogic.settings.MarkLogicServer
+import uk.co.reecedunn.intellij.plugin.marklogic.ui.resources.MarkLogicBundle
 
 private object DISPLAY_NAME_COLUMN_INFO: EditableColumnInfo<MarkLogicServer, String>(
         MarkLogicBundle.message("marklogic.settings.server.name")) {
@@ -100,12 +101,12 @@ private object ServerEditor: TableModelEditor.DialogItemEditor<MarkLogicServer> 
 
     override fun clone(item: MarkLogicServer, forInPlaceEditing: Boolean): MarkLogicServer {
         return MarkLogicServer(
-            item.displayName,
-            item.hostname,
-            item.appServerPort,
-            item.adminPort,
-            item.username,
-            item.password)
+                item.displayName,
+                item.hostname,
+                item.appServerPort,
+                item.adminPort,
+                item.username,
+                item.password)
     }
 
     override fun applyEdited(oldItem: MarkLogicServer, newItem: MarkLogicServer) {

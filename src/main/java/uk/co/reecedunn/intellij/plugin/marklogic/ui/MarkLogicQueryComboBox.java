@@ -17,7 +17,7 @@ package uk.co.reecedunn.intellij.plugin.marklogic.ui;
 
 import com.intellij.openapi.ui.ComboBox;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Item;
-import uk.co.reecedunn.intellij.plugin.marklogic.runner.MarkLogicResultsHandler;
+import uk.co.reecedunn.intellij.plugin.marklogic.ui.runner.MarkLogicResultsHandler;
 
 public class MarkLogicQueryComboBox extends ComboBox<String> implements MarkLogicResultsHandler {
     private final String mDefaultItem;

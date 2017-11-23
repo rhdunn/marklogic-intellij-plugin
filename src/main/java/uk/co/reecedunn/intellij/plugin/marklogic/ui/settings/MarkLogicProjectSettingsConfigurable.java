@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package uk.co.reecedunn.intellij.plugin.marklogic.settings;
+package uk.co.reecedunn.intellij.plugin.marklogic.ui.settings;
 
 import com.intellij.openapi.project.Project;
 import org.jetbrains.annotations.Nls;

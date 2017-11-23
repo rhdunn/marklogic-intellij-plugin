@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package uk.co.reecedunn.intellij.plugin.marklogic.logview;
+package uk.co.reecedunn.intellij.plugin.marklogic.ui.logview;
 
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.application.ApplicationManager;
@@ -24,9 +24,9 @@ import uk.co.reecedunn.intellij.plugin.marklogic.api.Connection;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Item;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.LogRequestBuilder;
 import uk.co.reecedunn.intellij.plugin.marklogic.settings.MarkLogicAppServer;
-import uk.co.reecedunn.intellij.plugin.marklogic.settings.MarkLogicProjectSettings;
+import uk.co.reecedunn.intellij.plugin.marklogic.ui.settings.MarkLogicProjectSettings;
 import uk.co.reecedunn.intellij.plugin.marklogic.settings.MarkLogicServer;
-import uk.co.reecedunn.intellij.plugin.marklogic.settings.MarkLogicServerCellRenderer;
+import uk.co.reecedunn.intellij.plugin.marklogic.ui.settings.MarkLogicServerCellRenderer;
 
 import javax.swing.*;
 import java.io.IOException;

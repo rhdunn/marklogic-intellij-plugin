@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package uk.co.reecedunn.intellij.plugin.marklogic.configuration;
+package uk.co.reecedunn.intellij.plugin.marklogic.ui.configuration;
 
 import com.intellij.execution.ExecutionException;
 import com.intellij.execution.Executor;
@@ -31,8 +31,8 @@ import org.jdom.Element;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.RDFFormat;
-import uk.co.reecedunn.intellij.plugin.marklogic.runner.MarkLogicResultsHandler;
-import uk.co.reecedunn.intellij.plugin.marklogic.runner.MarkLogicRunProfileState;
+import uk.co.reecedunn.intellij.plugin.marklogic.ui.runner.MarkLogicResultsHandler;
+import uk.co.reecedunn.intellij.plugin.marklogic.ui.runner.MarkLogicRunProfileState;
 
 import java.io.File;
 

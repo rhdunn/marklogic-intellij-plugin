@@ -17,7 +17,7 @@ package uk.co.reecedunn.intellij.plugin.marklogic.settings
 
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Connection
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Item
-import uk.co.reecedunn.intellij.plugin.marklogic.resources.MarkLogicBundle
+import uk.co.reecedunn.intellij.plugin.marklogic.ui.resources.MarkLogicBundle
 
 private val LIST_APPSERVERS_XQUERY =
     "import module namespace admin = \"http://marklogic.com/xdmp/admin\" at \"/MarkLogic/admin.xqy\";\n" +
@@ -94,10 +94,10 @@ class MarkLogicServer {
         servers.add(MarkLogicAppServer(null, MarkLogicBundle.message("logviewer.app-server.none"), null, null))
         for (i in 0..(items.size - 1) step 4) {
             val server = MarkLogicAppServer(
-                items[i].content,
-                items[i+1].content,
-                items[i+2].content.toUpperCase(),
-                items[i+3].content.toInt())
+                    items[i].content,
+                    items[i + 1].content,
+                    items[i + 2].content.toUpperCase(),
+                    items[i + 3].content.toInt())
             servers.add(server)
         }
         return servers

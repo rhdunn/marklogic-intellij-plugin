@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package uk.co.reecedunn.intellij.plugin.marklogic.executors;
+package uk.co.reecedunn.intellij.plugin.marklogic.ui.executors;
 
 import com.intellij.execution.executors.DefaultRunExecutor;
 import com.intellij.icons.AllIcons;
 import org.jetbrains.annotations.NotNull;
-import uk.co.reecedunn.intellij.plugin.marklogic.resources.MarkLogicBundle;
+import uk.co.reecedunn.intellij.plugin.marklogic.ui.resources.MarkLogicBundle;
 
 import javax.swing.*;
 

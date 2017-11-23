@@ -18,7 +18,7 @@ package uk.co.reecedunn.intellij.plugin.marklogic.query;
 import com.intellij.execution.executors.DefaultRunExecutor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import uk.co.reecedunn.intellij.plugin.marklogic.executors.ProfileExecutor;
+import uk.co.reecedunn.intellij.plugin.marklogic.ui.executors.ProfileExecutor;
 
 public class XSLTBuilder implements QueryBuilder {
     public static QueryBuilder INSTANCE = new XSLTBuilder();

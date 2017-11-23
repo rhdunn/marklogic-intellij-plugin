@@ -17,7 +17,7 @@ package uk.co.reecedunn.intellij.plugin.marklogic.tests.query;
 
 import com.intellij.execution.executors.DefaultRunExecutor;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.RDFFormat;
-import uk.co.reecedunn.intellij.plugin.marklogic.configuration.MarkLogicRunConfiguration;
+import uk.co.reecedunn.intellij.plugin.marklogic.ui.configuration.MarkLogicRunConfiguration;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.Function;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.QueryBuilder;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.QueryBuilderFactory;

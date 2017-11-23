@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package uk.co.reecedunn.intellij.plugin.marklogic.runner;
+package uk.co.reecedunn.intellij.plugin.marklogic.ui.runner;
 
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Item;
 

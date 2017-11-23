@@ -21,15 +21,14 @@ import com.intellij.lang.Language;
 import com.intellij.mock.MockProjectEx;
 import com.intellij.openapi.extensions.Extensions;
 import com.intellij.openapi.fileTypes.FileTypeRegistry;
-import com.intellij.openapi.util.Getter;
 import com.intellij.openapi.vfs.CharsetToolkit;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.testFramework.LightVirtualFile;
 import com.intellij.testFramework.PlatformLiteFixture;
 import org.jetbrains.annotations.NonNls;
-import uk.co.reecedunn.intellij.plugin.marklogic.configuration.MarkLogicConfigurationFactory;
-import uk.co.reecedunn.intellij.plugin.marklogic.configuration.MarkLogicConfigurationType;
-import uk.co.reecedunn.intellij.plugin.marklogic.configuration.MarkLogicRunConfiguration;
+import uk.co.reecedunn.intellij.plugin.marklogic.ui.configuration.MarkLogicConfigurationFactory;
+import uk.co.reecedunn.intellij.plugin.marklogic.ui.configuration.MarkLogicConfigurationType;
+import uk.co.reecedunn.intellij.plugin.marklogic.ui.configuration.MarkLogicRunConfiguration;
 
 public abstract class ConfigurationTestCase extends PlatformLiteFixture {
     private MarkLogicConfigurationFactory mFactory;
