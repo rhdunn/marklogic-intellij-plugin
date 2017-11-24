@@ -18,6 +18,7 @@ package uk.co.reecedunn.intellij.plugin.marklogic.tests.log;
 import junit.framework.TestCase;
 import uk.co.reecedunn.intellij.plugin.marklogic.log.MarkLogicLogEntry;
 import uk.co.reecedunn.intellij.plugin.marklogic.log.MarkLogicLogFile;
+import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicAppServer;
 
 import java.util.Iterator;
 
@@ -69,7 +70,7 @@ public class MarkLogicLogFileTest extends TestCase {
     public void testTaskServer() {
         MarkLogicLogEntry entry;
         final String logfile =
-            "2001-01-10 12:34:56.789 Debug: Task Server: Lorem ipsum dolor\n";
+            "2001-01-10 12:34:56.789 Debug: TaskServer: Lorem ipsum dolor\n";
         Iterator<MarkLogicLogEntry> entries = MarkLogicLogFile.INSTANCE.parse(logfile, 5.0).iterator();
 
         assertThat(entries.hasNext(), is(true));
@@ -77,7 +78,7 @@ public class MarkLogicLogFileTest extends TestCase {
         assertThat(entry.getDate(), is("2001-01-10"));
         assertThat(entry.getTime(), is("12:34:56.789"));
         assertThat(entry.getLevel(), is("Debug"));
-        assertThat(entry.getAppserver(), is("Task Server"));
+        assertThat(entry.getAppserver(), is(MarkLogicAppServer.Companion.getTASKSERVER().getAppserver()));
         assertThat(entry.getContinuation(), is(false));
         assertThat(entry.getMessage().getItemType(), is("xs:string"));
         assertThat(entry.getMessage().getContentType(), is("text/plain"));

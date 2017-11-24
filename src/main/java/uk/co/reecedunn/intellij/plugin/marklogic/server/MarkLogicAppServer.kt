@@ -42,7 +42,7 @@ data class MarkLogicAppServer(
 
     companion object {
         val SYSTEM     = MarkLogicAppServer(null, MarkLogicBundle.message("logviewer.app-server.none"), null, 0)
-        val TASKSERVER = MarkLogicAppServer(null, "Task Server", null, 0)
+        val TASKSERVER = MarkLogicAppServer(null, "TaskServer", null, 0)
     }
 
 }

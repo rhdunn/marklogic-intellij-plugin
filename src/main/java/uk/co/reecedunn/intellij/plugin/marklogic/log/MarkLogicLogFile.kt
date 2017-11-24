@@ -34,7 +34,7 @@ object MarkLogicLogFile {
         ([0-9:.]+)                               # 2: time
         [\ ]                                     #
         ([A-Za-z]+):                             # 3: log level
-        (\ (Task\ Server|[a-zA-Z0-9\-_]+):)?     # 5: application server name
+        (\ ([a-zA-Z0-9\-_]+):)?                  # 5: application server name
         ([\ +])                                  # 6: MarkLogic 9 continuation
         (.*)                                     # 7: message
     $""".trimMargin().toRegex(RegexOption.COMMENTS)

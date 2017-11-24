@@ -59,7 +59,7 @@ public class MarkLogicAppServerTest extends TestCase {
 
     public void testTaskServer() {
         final MarkLogicAppServer appserver = MarkLogicAppServer.Companion.getTASKSERVER();
-        assertThat(appserver.toString(), is("Task Server"));
+        assertThat(appserver.toString(), is("TaskServer"));
 
         assertThat(appserver.logfile(LogType.ACCESS_LOG, 0), is("TaskServer_AccessLog.txt"));
         assertThat(appserver.logfile(LogType.ACCESS_LOG, 1), is("TaskServer_AccessLog_1.txt"));
