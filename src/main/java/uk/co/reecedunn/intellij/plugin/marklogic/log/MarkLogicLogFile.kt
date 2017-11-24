@@ -27,7 +27,15 @@ data class MarkLogicLogEntry(
 class ParseException(message: String) : RuntimeException(message)
 
 object MarkLogicLogFile {
-    val logline: Regex = "^([0-9\\-]+) ([0-9:.]+) ([A-Za-z]+):([ +])(.*)$".toRegex()
+    val logline: Regex = """^
+        ([0-9\-]+)                     # 1: date
+        [\ ]                           #
+        ([0-9:.]+)                     # 2: time
+        [\ ]                           #
+        ([A-Za-z]+):                   # 3: log level
+        ([\ +])                        # 4: MarkLogic 9 continuation
+        (.*)                           # 5: message
+    $""".trimMargin().toRegex(RegexOption.COMMENTS)
 
     fun parse(logfile: String): Sequence<MarkLogicLogEntry> {
         return logfile.lineSequence().map { line ->
