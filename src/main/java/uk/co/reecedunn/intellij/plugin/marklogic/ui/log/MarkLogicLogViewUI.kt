@@ -106,29 +106,30 @@ class MarkLogicLogViewUI(private val mProject: Project) : LogViewActions {
     }
 
     private fun appserverSelectionChanged() {
-        val appserver = mAppServer?.selectedItem as? MarkLogicAppServer
-        if (mLogBuilder == null || appserver == null) return
-
-        mLogBuilder!!.logFile = appserver.logfile(LogType.ERROR_LOG, 0)
+        if (mLogBuilder == null) return
         ApplicationManager.getApplication().executeOnPooledThread(refreshAction())
     }
 
     override fun refreshAction(): Runnable {
         return Runnable {
             try {
-                val appserver = (mAppServer?.selectedItem as? MarkLogicAppServer)?.let {
+                val appserver = (mAppServer?.selectedItem as? MarkLogicAppServer) ?: MarkLogicAppServer.SYSTEM
+                val appserverName = appserver.let {
                     if (it === MarkLogicAppServer.SYSTEM) null else it.appserver
                 }
+
                 val marklogicVersion =
                     (mServer?.selectedItem as? MarkLogicServer)?.version?.split('-')?.get(0)?.toDouble() ?: 6.0
 
+                mLogBuilder!!.logFile = appserver.logfile(LogType.ERROR_LOG, 0, marklogicVersion)
                 val items = mLogBuilder!!.build().run().items
+
                 mLogText!!.text = ""
                 MarkLogicLogFile.parse(items[0].content, marklogicVersion).forEach { entry ->
                     if (marklogicVersion >= 9.0) {
                         val separator = if (entry.continuation) '+' else ' '
                         mLogText!!.append("${entry.date} ${entry.time} ${entry.level}:${separator}${entry.message.content}\n")
-                    } else if (appserver == entry.appserver) {
+                    } else if (appserverName == entry.appserver) {
                         mLogText!!.append("${entry.date} ${entry.time} ${entry.level}: ${entry.message.content}\n")
                     }
                 }

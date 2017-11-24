@@ -27,50 +27,74 @@ public class MarkLogicAppServerTest extends TestCase {
         final MarkLogicAppServer appserver = MarkLogicAppServer.Companion.getSYSTEM();
         assertThat(appserver.toString(), is("(none)"));
 
-        assertThat(appserver.logfile(LogType.ACCESS_LOG, 0), is("AccessLog.txt"));
-        assertThat(appserver.logfile(LogType.ACCESS_LOG, 1), is("AccessLog_1.txt"));
+        assertThat(appserver.logfile(LogType.ACCESS_LOG, 0, 8.0), is("AccessLog.txt"));
+        assertThat(appserver.logfile(LogType.ACCESS_LOG, 1, 8.0), is("AccessLog_1.txt"));
+        assertThat(appserver.logfile(LogType.ACCESS_LOG, 0, 9.0), is("AccessLog.txt"));
+        assertThat(appserver.logfile(LogType.ACCESS_LOG, 1, 9.0), is("AccessLog_1.txt"));
 
-        assertThat(appserver.logfile(LogType.AUDIT_LOG, 0), is("AuditLog.txt"));
-        assertThat(appserver.logfile(LogType.AUDIT_LOG, 1), is("AuditLog_1.txt"));
+        assertThat(appserver.logfile(LogType.AUDIT_LOG, 0, 8.0), is("AuditLog.txt"));
+        assertThat(appserver.logfile(LogType.AUDIT_LOG, 1, 8.0), is("AuditLog_1.txt"));
+        assertThat(appserver.logfile(LogType.AUDIT_LOG, 0, 9.0), is("AuditLog.txt"));
+        assertThat(appserver.logfile(LogType.AUDIT_LOG, 1, 9.0), is("AuditLog_1.txt"));
 
-        assertThat(appserver.logfile(LogType.CRASH_LOG, 0), is("CrashLog.txt"));
-        assertThat(appserver.logfile(LogType.CRASH_LOG, 1), is("CrashLog_1.txt"));
+        assertThat(appserver.logfile(LogType.CRASH_LOG, 0, 8.0), is("CrashLog.txt"));
+        assertThat(appserver.logfile(LogType.CRASH_LOG, 1, 8.0), is("CrashLog_1.txt"));
+        assertThat(appserver.logfile(LogType.CRASH_LOG, 0, 9.0), is("CrashLog.txt"));
+        assertThat(appserver.logfile(LogType.CRASH_LOG, 1, 9.0), is("CrashLog_1.txt"));
 
-        assertThat(appserver.logfile(LogType.ERROR_LOG, 0), is("ErrorLog.txt"));
-        assertThat(appserver.logfile(LogType.ERROR_LOG, 1), is("ErrorLog_1.txt"));
+        assertThat(appserver.logfile(LogType.ERROR_LOG, 0, 8.0), is("ErrorLog.txt"));
+        assertThat(appserver.logfile(LogType.ERROR_LOG, 1, 8.0), is("ErrorLog_1.txt"));
+        assertThat(appserver.logfile(LogType.ERROR_LOG, 0, 9.0), is("ErrorLog.txt"));
+        assertThat(appserver.logfile(LogType.ERROR_LOG, 1, 9.0), is("ErrorLog_1.txt"));
     }
 
     public void testAppServer() {
         final MarkLogicAppServer appserver = new MarkLogicAppServer("Default", "test", "HTTP", 8020);
         assertThat(appserver.toString(), is("Default :: test : 8020 [HTTP]"));
 
-        assertThat(appserver.logfile(LogType.ACCESS_LOG, 0), is("8020_AccessLog.txt"));
-        assertThat(appserver.logfile(LogType.ACCESS_LOG, 1), is("8020_AccessLog_1.txt"));
+        assertThat(appserver.logfile(LogType.ACCESS_LOG, 0, 8.0), is("8020_AccessLog.txt"));
+        assertThat(appserver.logfile(LogType.ACCESS_LOG, 1, 8.0), is("8020_AccessLog_1.txt"));
+        assertThat(appserver.logfile(LogType.ACCESS_LOG, 0, 9.0), is("8020_AccessLog.txt"));
+        assertThat(appserver.logfile(LogType.ACCESS_LOG, 1, 9.0), is("8020_AccessLog_1.txt"));
 
-        assertThat(appserver.logfile(LogType.AUDIT_LOG, 0), is("8020_AuditLog.txt"));
-        assertThat(appserver.logfile(LogType.AUDIT_LOG, 1), is("8020_AuditLog_1.txt"));
+        assertThat(appserver.logfile(LogType.AUDIT_LOG, 0, 8.0), is("8020_AuditLog.txt"));
+        assertThat(appserver.logfile(LogType.AUDIT_LOG, 1, 8.0), is("8020_AuditLog_1.txt"));
+        assertThat(appserver.logfile(LogType.AUDIT_LOG, 0, 9.0), is("8020_AuditLog.txt"));
+        assertThat(appserver.logfile(LogType.AUDIT_LOG, 1, 9.0), is("8020_AuditLog_1.txt"));
 
-        assertThat(appserver.logfile(LogType.CRASH_LOG, 0), is("8020_CrashLog.txt"));
-        assertThat(appserver.logfile(LogType.CRASH_LOG, 1), is("8020_CrashLog_1.txt"));
+        assertThat(appserver.logfile(LogType.CRASH_LOG, 0, 8.0), is("8020_CrashLog.txt"));
+        assertThat(appserver.logfile(LogType.CRASH_LOG, 1, 8.0), is("8020_CrashLog_1.txt"));
+        assertThat(appserver.logfile(LogType.CRASH_LOG, 0, 9.0), is("8020_CrashLog.txt"));
+        assertThat(appserver.logfile(LogType.CRASH_LOG, 1, 9.0), is("8020_CrashLog_1.txt"));
 
-        assertThat(appserver.logfile(LogType.ERROR_LOG, 0), is("8020_ErrorLog.txt"));
-        assertThat(appserver.logfile(LogType.ERROR_LOG, 1), is("8020_ErrorLog_1.txt"));
+        assertThat(appserver.logfile(LogType.ERROR_LOG, 0, 8.0), is("ErrorLog.txt"));
+        assertThat(appserver.logfile(LogType.ERROR_LOG, 1, 8.0), is("ErrorLog_1.txt"));
+        assertThat(appserver.logfile(LogType.ERROR_LOG, 0, 9.0), is("8020_ErrorLog.txt"));
+        assertThat(appserver.logfile(LogType.ERROR_LOG, 1, 9.0), is("8020_ErrorLog_1.txt"));
     }
 
     public void testTaskServer() {
         final MarkLogicAppServer appserver = MarkLogicAppServer.Companion.getTASKSERVER();
         assertThat(appserver.toString(), is("TaskServer"));
 
-        assertThat(appserver.logfile(LogType.ACCESS_LOG, 0), is("TaskServer_AccessLog.txt"));
-        assertThat(appserver.logfile(LogType.ACCESS_LOG, 1), is("TaskServer_AccessLog_1.txt"));
+        assertThat(appserver.logfile(LogType.ACCESS_LOG, 0, 8.0), is("TaskServer_AccessLog.txt"));
+        assertThat(appserver.logfile(LogType.ACCESS_LOG, 1, 8.0), is("TaskServer_AccessLog_1.txt"));
+        assertThat(appserver.logfile(LogType.ACCESS_LOG, 0, 9.0), is("TaskServer_AccessLog.txt"));
+        assertThat(appserver.logfile(LogType.ACCESS_LOG, 1, 9.0), is("TaskServer_AccessLog_1.txt"));
 
-        assertThat(appserver.logfile(LogType.AUDIT_LOG, 0), is("TaskServer_AuditLog.txt"));
-        assertThat(appserver.logfile(LogType.AUDIT_LOG, 1), is("TaskServer_AuditLog_1.txt"));
+        assertThat(appserver.logfile(LogType.AUDIT_LOG, 0, 8.0), is("TaskServer_AuditLog.txt"));
+        assertThat(appserver.logfile(LogType.AUDIT_LOG, 1, 8.0), is("TaskServer_AuditLog_1.txt"));
+        assertThat(appserver.logfile(LogType.AUDIT_LOG, 0, 9.0), is("TaskServer_AuditLog.txt"));
+        assertThat(appserver.logfile(LogType.AUDIT_LOG, 1, 9.0), is("TaskServer_AuditLog_1.txt"));
 
-        assertThat(appserver.logfile(LogType.CRASH_LOG, 0), is("TaskServer_CrashLog.txt"));
-        assertThat(appserver.logfile(LogType.CRASH_LOG, 1), is("TaskServer_CrashLog_1.txt"));
+        assertThat(appserver.logfile(LogType.CRASH_LOG, 0, 8.0), is("TaskServer_CrashLog.txt"));
+        assertThat(appserver.logfile(LogType.CRASH_LOG, 1, 8.0), is("TaskServer_CrashLog_1.txt"));
+        assertThat(appserver.logfile(LogType.CRASH_LOG, 0, 9.0), is("TaskServer_CrashLog.txt"));
+        assertThat(appserver.logfile(LogType.CRASH_LOG, 1, 9.0), is("TaskServer_CrashLog_1.txt"));
 
-        assertThat(appserver.logfile(LogType.ERROR_LOG, 0), is("TaskServer_ErrorLog.txt"));
-        assertThat(appserver.logfile(LogType.ERROR_LOG, 1), is("TaskServer_ErrorLog_1.txt"));
+        assertThat(appserver.logfile(LogType.ERROR_LOG, 0, 8.0), is("ErrorLog.txt"));
+        assertThat(appserver.logfile(LogType.ERROR_LOG, 1, 8.0), is("ErrorLog_1.txt"));
+        assertThat(appserver.logfile(LogType.ERROR_LOG, 0, 9.0), is("TaskServer_ErrorLog.txt"));
+        assertThat(appserver.logfile(LogType.ERROR_LOG, 1, 9.0), is("TaskServer_ErrorLog_1.txt"));
     }
 }
