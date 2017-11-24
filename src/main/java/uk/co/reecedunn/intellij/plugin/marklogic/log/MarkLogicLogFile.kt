@@ -21,6 +21,7 @@ data class MarkLogicLogEntry(
     val date: String,
     val time: String,
     val level: String,
+    val appserver: String?,
     val continuation: Boolean,
     val message: Item)
 
@@ -33,8 +34,9 @@ object MarkLogicLogFile {
         ([0-9:.]+)                     # 2: time
         [\ ]                           #
         ([A-Za-z]+):                   # 3: log level
-        ([\ +])                        # 4: MarkLogic 9 continuation
-        (.*)                           # 5: message
+        (\ (Task\ Server):)?           # 5: application server name
+        ([\ +])                        # 6: MarkLogic 9 continuation
+        (.*)                           # 7: message
     $""".trimMargin().toRegex(RegexOption.COMMENTS)
 
     fun parse(logfile: String): Sequence<MarkLogicLogEntry> {
@@ -45,8 +47,9 @@ object MarkLogicLogFile {
                     groups[1],
                     groups[2],
                     groups[3],
-                    groups[4] == "+",
-                    Item.create(groups[5], "text/plain", "xs:string"))
+                    if (groups[5].isEmpty()) null else groups[5],
+                    groups[6] == "+",
+                    Item.create(groups[7], "text/plain", "xs:string"))
             } ?: return@map if (line.isEmpty())
                 null
             else

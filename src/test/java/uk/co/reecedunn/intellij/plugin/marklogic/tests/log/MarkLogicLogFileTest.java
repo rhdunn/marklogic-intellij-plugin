@@ -46,6 +46,7 @@ public class MarkLogicLogFileTest extends TestCase {
         assertThat(entry.getDate(), is("2001-01-10"));
         assertThat(entry.getTime(), is("12:34:56.789"));
         assertThat(entry.getLevel(), is("Info"));
+        assertThat(entry.getAppserver(), is(nullValue()));
         assertThat(entry.getContinuation(), is(false));
         assertThat(entry.getMessage().getItemType(), is("xs:string"));
         assertThat(entry.getMessage().getContentType(), is("text/plain"));
@@ -56,10 +57,31 @@ public class MarkLogicLogFileTest extends TestCase {
         assertThat(entry.getDate(), is("2001-01-10"));
         assertThat(entry.getTime(), is("12:34:56.800"));
         assertThat(entry.getLevel(), is("Notice"));
+        assertThat(entry.getAppserver(), is(nullValue()));
         assertThat(entry.getContinuation(), is(false));
         assertThat(entry.getMessage().getItemType(), is("xs:string"));
         assertThat(entry.getMessage().getContentType(), is("text/plain"));
         assertThat(entry.getMessage().getContent(), is("Alpha beta gamma"));
+
+        assertThat(entries.hasNext(), is(false));
+    }
+
+    public void testMarkLogic8_TaskServer() {
+        MarkLogicLogEntry entry;
+        final String logfile =
+            "2001-01-10 12:34:56.789 Debug: Task Server: Lorem ipsum dolor\n";
+        Iterator<MarkLogicLogEntry> entries = MarkLogicLogFile.INSTANCE.parse(logfile).iterator();
+
+        assertThat(entries.hasNext(), is(true));
+        entry = entries.next();
+        assertThat(entry.getDate(), is("2001-01-10"));
+        assertThat(entry.getTime(), is("12:34:56.789"));
+        assertThat(entry.getLevel(), is("Debug"));
+        assertThat(entry.getAppserver(), is("Task Server"));
+        assertThat(entry.getContinuation(), is(false));
+        assertThat(entry.getMessage().getItemType(), is("xs:string"));
+        assertThat(entry.getMessage().getContentType(), is("text/plain"));
+        assertThat(entry.getMessage().getContent(), is("Lorem ipsum dolor"));
 
         assertThat(entries.hasNext(), is(false));
     }
@@ -76,6 +98,7 @@ public class MarkLogicLogFileTest extends TestCase {
         assertThat(entry.getDate(), is("2001-01-10"));
         assertThat(entry.getTime(), is("12:34:56.789"));
         assertThat(entry.getLevel(), is("Info"));
+        assertThat(entry.getAppserver(), is(nullValue()));
         assertThat(entry.getContinuation(), is(false));
         assertThat(entry.getMessage().getItemType(), is("xs:string"));
         assertThat(entry.getMessage().getContentType(), is("text/plain"));
@@ -86,6 +109,7 @@ public class MarkLogicLogFileTest extends TestCase {
         assertThat(entry.getDate(), is("2001-01-10"));
         assertThat(entry.getTime(), is("12:34:56.789"));
         assertThat(entry.getLevel(), is("Info"));
+        assertThat(entry.getAppserver(), is(nullValue()));
         assertThat(entry.getContinuation(), is(true));
         assertThat(entry.getMessage().getItemType(), is("xs:string"));
         assertThat(entry.getMessage().getContentType(), is("text/plain"));
