@@ -116,14 +116,19 @@ class MarkLogicLogViewUI(private val mProject: Project) : LogViewActions {
     override fun refreshAction(): Runnable {
         return Runnable {
             try {
+                val appserver = (mAppServer?.selectedItem as? MarkLogicAppServer)?.let {
+                    if (it === MarkLogicAppServer.SYSTEM) null else it.appserver
+                }
+                val server = (mServer?.selectedItem as? MarkLogicServer)?.version?.split('-')?.get(0)?.toDouble() ?: 6.0
+
                 val items = mLogBuilder!!.build().run().items
                 mLogText!!.text = ""
                 MarkLogicLogFile.parse(items[0].content).forEach { entry ->
-                    val separator = if (entry.continuation) '+' else ' '
-                    if (entry.appserver == null) {
+                    if (server >= 9.0) {
+                        val separator = if (entry.continuation) '+' else ' '
                         mLogText!!.append("${entry.date} ${entry.time} ${entry.level}:${separator}${entry.message.content}\n")
-                    } else {
-                        mLogText!!.append("${entry.date} ${entry.time} ${entry.level}: ${entry.appserver}: ${entry.message.content}\n")
+                    } else if (appserver == entry.appserver) {
+                        mLogText!!.append("${entry.date} ${entry.time} ${entry.level}: ${entry.message.content}\n")
                     }
                 }
                 mLogText!!.caretPosition = mLogText!!.document.length
