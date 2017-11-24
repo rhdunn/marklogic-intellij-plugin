@@ -119,12 +119,13 @@ class MarkLogicLogViewUI(private val mProject: Project) : LogViewActions {
                 val appserver = (mAppServer?.selectedItem as? MarkLogicAppServer)?.let {
                     if (it === MarkLogicAppServer.SYSTEM) null else it.appserver
                 }
-                val server = (mServer?.selectedItem as? MarkLogicServer)?.version?.split('-')?.get(0)?.toDouble() ?: 6.0
+                val marklogicVersion =
+                    (mServer?.selectedItem as? MarkLogicServer)?.version?.split('-')?.get(0)?.toDouble() ?: 6.0
 
                 val items = mLogBuilder!!.build().run().items
                 mLogText!!.text = ""
-                MarkLogicLogFile.parse(items[0].content).forEach { entry ->
-                    if (server >= 9.0) {
+                MarkLogicLogFile.parse(items[0].content, marklogicVersion).forEach { entry ->
+                    if (marklogicVersion >= 9.0) {
                         val separator = if (entry.continuation) '+' else ' '
                         mLogText!!.append("${entry.date} ${entry.time} ${entry.level}:${separator}${entry.message.content}\n")
                     } else if (appserver == entry.appserver) {

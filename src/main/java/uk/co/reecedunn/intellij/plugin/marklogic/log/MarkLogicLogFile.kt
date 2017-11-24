@@ -39,17 +39,30 @@ object MarkLogicLogFile {
         (.*)                                     # 7: message
     $""".trimMargin().toRegex(RegexOption.COMMENTS)
 
-    fun parse(logfile: String): Sequence<MarkLogicLogEntry> {
+    fun parse(logfile: String, marklogicVersion: Double): Sequence<MarkLogicLogEntry> {
         return logfile.lineSequence().map { line ->
             logline.matchEntire(line)?.let {
                 val groups = it.groupValues
-                MarkLogicLogEntry(
-                    groups[1],
-                    groups[2],
-                    groups[3],
-                    if (groups[5].isEmpty()) null else groups[5],
-                    groups[6] == "+",
-                    Item.create(groups[7], "text/plain", "xs:string"))
+                if (marklogicVersion >= 9.0) {
+                    val message =
+                        if (groups[5].isEmpty()) groups[7]
+                        else                     "${groups[5]}: ${groups[7]}"
+                    MarkLogicLogEntry(
+                        groups[1],
+                        groups[2],
+                        groups[3],
+                        null,
+                        groups[6] == "+",
+                        Item.create(message, "text/plain", "xs:string"))
+                } else {
+                    MarkLogicLogEntry(
+                        groups[1],
+                        groups[2],
+                        groups[3],
+                        if (groups[5].isEmpty()) null else groups[5],
+                        groups[6] == "+",
+                        Item.create(groups[7], "text/plain", "xs:string"))
+                }
             } ?: return@map if (line.isEmpty())
                 null
             else
