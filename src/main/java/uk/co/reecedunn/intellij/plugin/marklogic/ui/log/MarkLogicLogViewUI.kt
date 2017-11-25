@@ -53,6 +53,7 @@ class MarkLogicLogViewUI(private val mProject: Project) : LogViewActions {
         }
     }
 
+    private var mSettings: MarkLogicSettings? = null
     private var mConnection: Connection? = null
     private var mLogBuilder: LogRequestBuilder? = null
 
@@ -78,9 +79,9 @@ class MarkLogicLogViewUI(private val mProject: Project) : LogViewActions {
         mAppServer = ComboBox()
         mAppServer!!.addActionListener { e -> appserverSelectionChanged() }
 
-        val settings = MarkLogicSettings.getInstance()
+        mSettings = MarkLogicSettings.getInstance()
         val listener = SettingsListener()
-        settings.addListener(listener, listener)
+        mSettings?.addListener(listener, listener)
         listener.serversChanged()
     }
 
@@ -160,10 +161,11 @@ class MarkLogicLogViewUI(private val mProject: Project) : LogViewActions {
 
                 mLogText!!.text = ""
                 MarkLogicLogFile.parse(items[0].content, marklogicVersion).forEach { entry ->
+                    val color = mSettings?.logColor(entry.level)
                     if (marklogicVersion >= 9.0) {
-                        appendLogEntry(entry)
+                        appendLogEntry(entry, color)
                     } else if (appserverName == entry.appserver) {
-                        appendLogEntry(entry)
+                        appendLogEntry(entry, color)
                     }
                 }
 

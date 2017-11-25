@@ -16,21 +16,22 @@
 package uk.co.reecedunn.intellij.plugin.marklogic.log
 
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Item
+import java.awt.Color
 
 // Reference: https://docs.marklogic.com/guide/admin/logfiles#id_37841
-enum class LogLevel(val displayName: String, val rank: Int) {
-    FINEST("Finest", 0), // lowest priority
-    FINER("Finer", 1),
-    FINE("Fine", 2),
-    DEBUG("Debug", 3),
-    CONFIG("Config", 4),
-    INFO("Info", 5), // default
-    NOTICE("Notice", 6),
-    WARNING("Warning", 7),
-    ERROR("Error", 8),
-    CRITICAL("Critical", 9),
-    ALERT("Alert", 10),
-    EMERGENCY("Emergency", 11); // highest priority
+enum class LogLevel(val displayName: String, val rank: Int, val defaultColor: Color) {
+    FINEST("Finest", 0, Color.BLACK), // (lowest priority)
+    FINER("Finer", 1, Color.BLACK),
+    FINE("Fine", 2, Color.BLACK),
+    DEBUG("Debug", 3, Color.BLACK),
+    CONFIG("Config", 4, Color.BLACK),
+    INFO("Info", 5, Color.BLACK), // (default)
+    NOTICE("Notice", 6, Color.BLUE),
+    WARNING("Warning", 7, Color.ORANGE),
+    ERROR("Error", 8, Color(0x880000)), // = maroon
+    CRITICAL("Critical", 9, Color(0x880000)), // = maroon
+    ALERT("Alert", 10, Color(0x880000)), // = maroon
+    EMERGENCY("Emergency", 11, Color(0x880000)); // = maroon (highest priority)
 
     companion object {
         fun parse(name: String): LogLevel =

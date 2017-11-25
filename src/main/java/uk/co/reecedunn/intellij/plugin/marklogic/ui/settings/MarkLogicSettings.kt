@@ -19,7 +19,9 @@ import com.intellij.openapi.Disposable
 import com.intellij.openapi.components.*
 import com.intellij.util.EventDispatcher
 import com.intellij.util.xmlb.XmlSerializerUtil
+import uk.co.reecedunn.intellij.plugin.marklogic.log.LogLevel
 import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicServer
+import java.awt.Color
 import java.util.*
 
 @State(name = "MarkLogicSettings", storages = arrayOf(Storage("marklogic_config.xml")))
@@ -46,6 +48,9 @@ class MarkLogicSettings : PersistentStateComponent<MarkLogicSettings> {
             field = value
             eventDispatcher.multicaster.serversChanged()
         }
+
+    fun logColor(level: LogLevel): Color? =
+        level.defaultColor
 
     // endregion
     // region PersistentStateComponent
