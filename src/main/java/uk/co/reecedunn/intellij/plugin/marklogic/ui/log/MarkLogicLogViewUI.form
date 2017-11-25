@@ -63,7 +63,7 @@
               <color color="-4144960"/>
             </border>
             <children>
-              <component id="50c67" class="javax.swing.JTextArea" binding="mLogText" custom-create="true">
+              <component id="c77e4" class="javax.swing.JTextPane" binding="mLogText">
                 <constraints/>
                 <properties/>
               </component>

@@ -21,6 +21,7 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.ComboBox
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Connection
 import uk.co.reecedunn.intellij.plugin.marklogic.api.LogRequestBuilder
+import uk.co.reecedunn.intellij.plugin.marklogic.log.MarkLogicLogEntry
 import uk.co.reecedunn.intellij.plugin.marklogic.log.MarkLogicLogFile
 import uk.co.reecedunn.intellij.plugin.marklogic.server.LogType
 import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicAppServer
@@ -30,6 +31,12 @@ import uk.co.reecedunn.intellij.plugin.marklogic.ui.server.MarkLogicServerCellRe
 
 import javax.swing.*
 import java.io.IOException
+import javax.swing.text.StyleConstants
+import java.awt.Color
+import java.awt.Font
+import javax.swing.text.AttributeSet
+import javax.swing.text.SimpleAttributeSet
+import javax.swing.text.StyleContext
 
 class MarkLogicLogViewUI(private val mProject: Project) : LogViewActions {
     private inner class SettingsListener : MarkLogicSettings.Listener, Disposable {
@@ -53,7 +60,7 @@ class MarkLogicLogViewUI(private val mProject: Project) : LogViewActions {
     private var mActionToolbar: JComponent? = null
 
     private var mPanel: JPanel? = null
-    private var mLogText: JTextArea? = null
+    private var mLogText: JTextPane? = null
     private var mServer: JComboBox<MarkLogicServer>? = null
     private var mAppServer: JComboBox<MarkLogicAppServer>? = null
 
@@ -63,9 +70,6 @@ class MarkLogicLogViewUI(private val mProject: Project) : LogViewActions {
     private fun createUIComponents() {
         mActions = MarkLogicLogViewToolbar(this)
         mActionToolbar = mActions!!.component
-
-        mLogText = JTextArea()
-        mLogText!!.isEditable = false
 
         mServer = ComboBox()
         mServer!!.renderer = MarkLogicServerCellRenderer()
@@ -110,6 +114,31 @@ class MarkLogicLogViewUI(private val mProject: Project) : LogViewActions {
         ApplicationManager.getApplication().executeOnPooledThread(refreshAction())
     }
 
+    // region Log View Pane
+
+    private fun createTextAttributes(font: Font?, color: Color?): AttributeSet {
+        val context = StyleContext.getDefaultStyleContext()
+        var attributes: AttributeSet =
+            context.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Alignment, StyleConstants.ALIGN_LEFT)
+        if (color != null) {
+            attributes = context.addAttribute(attributes, StyleConstants.Foreground, color)
+        }
+        if (font != null) {
+            attributes = context.addAttribute(attributes, StyleConstants.FontFamily, font.family)
+            attributes = context.addAttribute(attributes, StyleConstants.FontSize, font.size)
+        }
+        return attributes
+    }
+
+    private fun appendLogEntry(entry: MarkLogicLogEntry, color: Color? = null) {
+        val separator = if (entry.continuation) '+' else ' '
+        mLogText!!.caretPosition = mLogText!!.document.length
+        mLogText!!.setCharacterAttributes(createTextAttributes(UIManager.getFont("Label.font"), color), false)
+        mLogText!!.replaceSelection("${entry.date} ${entry.time} ${entry.level}:${separator}${entry.message.content}\n")
+    }
+
+    // endregion
+
     override fun refreshAction(): Runnable {
         return Runnable {
             try {
@@ -127,10 +156,9 @@ class MarkLogicLogViewUI(private val mProject: Project) : LogViewActions {
                 mLogText!!.text = ""
                 MarkLogicLogFile.parse(items[0].content, marklogicVersion).forEach { entry ->
                     if (marklogicVersion >= 9.0) {
-                        val separator = if (entry.continuation) '+' else ' '
-                        mLogText!!.append("${entry.date} ${entry.time} ${entry.level}:${separator}${entry.message.content}\n")
+                        appendLogEntry(entry)
                     } else if (appserverName == entry.appserver) {
-                        mLogText!!.append("${entry.date} ${entry.time} ${entry.level}: ${entry.message.content}\n")
+                        appendLogEntry(entry)
                     }
                 }
                 mLogText!!.caretPosition = mLogText!!.document.length
