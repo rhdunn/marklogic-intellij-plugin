@@ -169,7 +169,8 @@ class MarkLogicLogViewUI(private val mProject: Project) : LogViewActions {
                     }
                 }
 
-                mLogText!!.caretPosition = if (scrollToEnd) mLogText!!.document.length else position
+                val length = mLogText!!.document.length
+                mLogText!!.caretPosition = if (scrollToEnd) length else Math.min(position, length)
             } catch (e: IOException) {
                 mLogText!!.text = e.message
             }
