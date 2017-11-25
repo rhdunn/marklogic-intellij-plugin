@@ -16,12 +16,15 @@
 package uk.co.reecedunn.intellij.plugin.marklogic.ui.log
 
 import com.intellij.icons.AllIcons
+import com.intellij.idea.ActionsBundle
 import com.intellij.openapi.actionSystem.*
 import com.intellij.openapi.application.ApplicationManager
 import javax.swing.JComponent
 
 interface LogViewActions {
     fun refreshAction(): Runnable
+
+    var scrollToEnd: Boolean
 }
 
 private class RefreshAction(val actions: LogViewActions) : AnAction(AllIcons.Actions.Refresh) {
@@ -30,9 +33,26 @@ private class RefreshAction(val actions: LogViewActions) : AnAction(AllIcons.Act
     }
 }
 
+private class ScrollToEndAction(val actions: LogViewActions) : ToggleAction() {
+    init {
+        val message = ActionsBundle.message("action.EditorConsoleScrollToTheEnd.text")
+        templatePresentation.description = message
+        templatePresentation.text = message
+        templatePresentation.icon = AllIcons.RunConfigurations.Scroll_down
+    }
+
+    override fun isSelected(e: AnActionEvent?): Boolean =
+        actions.scrollToEnd
+
+    override fun setSelected(e: AnActionEvent?, state: Boolean) {
+        actions.scrollToEnd = state
+    }
+}
+
 class MarkLogicLogViewToolbar(actions: LogViewActions) {
     val group: ActionGroup = DefaultActionGroup(
-        RefreshAction(actions))
+        RefreshAction(actions),
+        ScrollToEndAction(actions))
 
     val toolbar: ActionToolbar = ActionManager.getInstance().createActionToolbar(ActionPlaces.TOOLBAR, group, false)
 

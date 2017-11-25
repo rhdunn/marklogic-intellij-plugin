@@ -138,6 +138,7 @@ class MarkLogicLogViewUI(private val mProject: Project) : LogViewActions {
     }
 
     // endregion
+    // region LogViewActions
 
     override fun refreshAction(): Runnable {
         return Runnable {
@@ -153,6 +154,9 @@ class MarkLogicLogViewUI(private val mProject: Project) : LogViewActions {
                 mLogBuilder!!.logFile = appserver.logfile(LogType.ERROR_LOG, 0, marklogicVersion)
                 val items = mLogBuilder!!.build().run().items
 
+                val position = mLogText!!.caretPosition
+                val scrollToEnd = scrollToEnd
+
                 mLogText!!.text = ""
                 MarkLogicLogFile.parse(items[0].content, marklogicVersion).forEach { entry ->
                     if (marklogicVersion >= 9.0) {
@@ -161,10 +165,21 @@ class MarkLogicLogViewUI(private val mProject: Project) : LogViewActions {
                         appendLogEntry(entry)
                     }
                 }
-                mLogText!!.caretPosition = mLogText!!.document.length
+
+                mLogText!!.caretPosition = if (scrollToEnd) mLogText!!.document.length else position
             } catch (e: IOException) {
                 mLogText!!.text = e.message
             }
         }
     }
+
+    override var scrollToEnd: Boolean
+        get() = mLogText!!.caretPosition == mLogText!!.document.length
+        set(value) {
+            if (value) {
+                mLogText!!.caretPosition = mLogText!!.document.length
+            }
+        }
+
+    // endregion
 }
