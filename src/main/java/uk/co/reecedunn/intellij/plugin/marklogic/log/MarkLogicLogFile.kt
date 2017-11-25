@@ -17,10 +17,31 @@ package uk.co.reecedunn.intellij.plugin.marklogic.log
 
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Item
 
+// Reference: https://docs.marklogic.com/guide/admin/logfiles#id_37841
+enum class LogLevel(val displayName: String, val rank: Int) {
+    FINEST("Finest", 0), // lowest priority
+    FINER("Finer", 1),
+    FINE("Fine", 2),
+    DEBUG("Debug", 3),
+    CONFIG("Config", 4),
+    INFO("Info", 5), // default
+    NOTICE("Notice", 6),
+    WARNING("Warning", 7),
+    ERROR("Error", 8),
+    CRITICAL("Critical", 9),
+    ALERT("Alert", 10),
+    EMERGENCY("Emergency", 11); // highest priority
+
+    companion object {
+        fun parse(name: String): LogLevel =
+            LogLevel.values().find { level -> level.displayName == name }!!
+    }
+}
+
 data class MarkLogicLogEntry(
     val date: String,
     val time: String,
-    val level: String,
+    val level: LogLevel,
     val appserver: String?,
     val continuation: Boolean,
     val message: Item)
@@ -50,7 +71,7 @@ object MarkLogicLogFile {
                     MarkLogicLogEntry(
                         groups[1],
                         groups[2],
-                        groups[3],
+                        LogLevel.parse(groups[3]),
                         null,
                         groups[6] == "+",
                         Item.create(message, "text/plain", "xs:string"))
@@ -58,7 +79,7 @@ object MarkLogicLogFile {
                     MarkLogicLogEntry(
                         groups[1],
                         groups[2],
-                        groups[3],
+                        LogLevel.parse(groups[3]),
                         if (groups[5].isEmpty()) null else groups[5],
                         groups[6] == "+",
                         Item.create(groups[7], "text/plain", "xs:string"))
