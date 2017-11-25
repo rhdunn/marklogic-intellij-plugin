@@ -79,7 +79,7 @@ class MarkLogicServer {
     }
 
     override fun toString(): String =
-        displayName ?: hostname
+        displayName?.let { "$it [$hostname]" } ?: hostname
 
     fun xquery(query: String): Array<Item> {
         val connection = Connection.newConnection(hostname, appServerPort, username, password, Connection.XCC)
