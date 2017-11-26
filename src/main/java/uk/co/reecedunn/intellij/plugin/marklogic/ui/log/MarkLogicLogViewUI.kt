@@ -140,7 +140,7 @@ class MarkLogicLogViewUI(private val mProject: Project) : LogViewActions {
     private fun appendLogEntry(entry: MarkLogicLogEntry, color: Color? = null) {
         val separator = if (entry.continuation) '+' else ' '
         mLogText!!.caretPosition = mLogText!!.document.length
-        mLogText!!.setCharacterAttributes(createTextAttributes(UIManager.getFont("Label.font"), color), false)
+        mLogText!!.setCharacterAttributes(createTextAttributes(UIManager.getFont("TextArea.font"), color), false)
         mLogText!!.replaceSelection(
             "${entry.date} ${entry.time} ${entry.level.displayName}:${separator}${entry.message.content}\n")
     }
