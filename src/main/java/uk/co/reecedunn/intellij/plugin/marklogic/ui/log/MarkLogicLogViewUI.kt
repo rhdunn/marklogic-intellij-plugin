@@ -36,6 +36,8 @@ import java.io.IOException
 import javax.swing.text.StyleConstants
 import java.awt.Color
 import java.awt.Font
+import java.awt.event.FocusEvent
+import java.awt.event.FocusListener
 import javax.swing.text.AttributeSet
 import javax.swing.text.SimpleAttributeSet
 import javax.swing.text.StyleContext
@@ -52,6 +54,16 @@ class MarkLogicLogViewUI(private val mProject: Project) : LogViewActions {
         }
 
         override fun dispose() {
+        }
+    }
+
+    private inner class LogViewFocusListener : FocusListener {
+        override fun focusLost(e: FocusEvent?) {
+            (e?.component as? JTextPane)?.caret?.isVisible = false
+        }
+
+        override fun focusGained(e: FocusEvent?) {
+            (e?.component as? JTextPane)?.caret?.isVisible = true
         }
     }
 
@@ -76,7 +88,7 @@ class MarkLogicLogViewUI(private val mProject: Project) : LogViewActions {
 
         mLogText = JTextPane()
         mLogText!!.isEditable = false
-        mLogText!!.caret.isVisible = true
+        mLogText!!.addFocusListener(LogViewFocusListener())
 
         mServer = ComboBox()
         mServer!!.renderer = MarkLogicServerCellRenderer()
@@ -185,7 +197,9 @@ class MarkLogicLogViewUI(private val mProject: Project) : LogViewActions {
             try { // Just in case updating the caret position fails, so isEditable is set in that case.
                 val length = mLogText!!.document.length
                 mLogText!!.caretPosition = if (scrollToEnd) length else Math.min(position, length)
-                mLogText!!.caret.isVisible = true
+                if (mLogText!!.hasFocus()) {
+                    mLogText!!.caret.isVisible = true
+                }
             } finally {
                 mLogText!!.isEditable = false
             }
