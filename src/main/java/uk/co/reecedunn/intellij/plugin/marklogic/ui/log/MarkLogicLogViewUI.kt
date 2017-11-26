@@ -183,6 +183,7 @@ class MarkLogicLogViewUI(private val mProject: Project) : LogViewActions {
                 mLogText!!.text = e.message
             }
             mLogText!!.isEditable = false
+            mLogText!!.caret.isVisible = true
         }
     }
 
