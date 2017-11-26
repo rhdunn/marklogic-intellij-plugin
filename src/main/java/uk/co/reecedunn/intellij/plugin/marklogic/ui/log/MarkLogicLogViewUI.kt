@@ -151,6 +151,9 @@ class MarkLogicLogViewUI(private val mProject: Project) : LogViewActions {
     @CalledInBackground
     override fun refreshAction(): Runnable {
         return Runnable {
+            if (mLogText!!.isEditable) return@Runnable // Another refresh action is in progress.
+            mLogText!!.isEditable = true // Required for replaceSelection in appendLogEntry to work.
+
             val position = mLogText!!.caretPosition
             val scrollToEnd = scrollToEnd
 
@@ -167,7 +170,6 @@ class MarkLogicLogViewUI(private val mProject: Project) : LogViewActions {
                 val items = mLogBuilder!!.build().run().items
 
                 mLogText!!.text = ""
-                mLogText!!.isEditable = true // Required for replaceSelection in appendLogEntry to work.
                 MarkLogicLogFile.parse(items[0].content, marklogicVersion).forEach { entry ->
                     val color = mSettings?.logColor(entry.level)
                     if (marklogicVersion.major >= 9) {
@@ -180,10 +182,13 @@ class MarkLogicLogViewUI(private val mProject: Project) : LogViewActions {
                 mLogText!!.text = e.message
             }
 
-            val length = mLogText!!.document.length
-            mLogText!!.caretPosition = if (scrollToEnd) length else Math.min(position, length)
-            mLogText!!.isEditable = false
-            mLogText!!.caret.isVisible = true
+            try { // Just in case updating the caret position fails, so isEditable is set in that case.
+                val length = mLogText!!.document.length
+                mLogText!!.caretPosition = if (scrollToEnd) length else Math.min(position, length)
+                mLogText!!.caret.isVisible = true
+            } finally {
+                mLogText!!.isEditable = false
+            }
         }
     }
 
