@@ -16,6 +16,7 @@
 package uk.co.reecedunn.intellij.plugin.marklogic.log
 
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Item
+import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicVersion
 import java.awt.Color
 
 // Reference: https://docs.marklogic.com/guide/admin/logfiles#id_37841
@@ -61,7 +62,7 @@ object MarkLogicLogFile {
         (.*)                                     # 7: message
     $""".trimMargin().toRegex(RegexOption.COMMENTS)
 
-    fun parse(logfile: String, marklogicVersion: Double): Sequence<MarkLogicLogEntry> {
+    fun parse(logfile: String, version: MarkLogicVersion): Sequence<MarkLogicLogEntry> {
         return logfile.lineSequence().map { line ->
             logline.matchEntire(line)?.let {
                 val groups = it.groupValues
@@ -70,12 +71,12 @@ object MarkLogicLogFile {
                 // files, so don't treat appserver-like entries as such when
                 // parsing those log files.
                 val message =
-                    if (marklogicVersion <= 8.0 || groups[5].isEmpty())
+                    if (version.major <= 8 || groups[5].isEmpty())
                         groups[7]
                     else
                         "${groups[5]}: ${groups[7]}"
                 val appserver =
-                    if (marklogicVersion >= 9.0 || groups[5].isEmpty())
+                    if (version.major >= 9 || groups[5].isEmpty())
                         null
                     else
                         groups[5]

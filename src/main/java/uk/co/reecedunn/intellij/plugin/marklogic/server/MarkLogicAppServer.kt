@@ -33,9 +33,9 @@ data class MarkLogicAppServer(
     override fun toString(): String =
         group?.let { "$group :: $appserver : $port [$type]" } ?: appserver
 
-    fun logfile(logtype: LogType, generation: Int, marklogicVersion: Double): String {
+    fun logfile(logtype: LogType, generation: Int, version: MarkLogicVersion): String {
         val suffix = if (generation == 0) "" else "_${generation}"
-        return if (marklogicVersion <= 8.0 && logtype === LogType.ERROR_LOG)
+        return if (version.major <= 8 && logtype === LogType.ERROR_LOG)
             "${logtype.type}${suffix}.txt"
         else if (this === TASKSERVER)
             "TaskServer_${logtype.type}${suffix}.txt"

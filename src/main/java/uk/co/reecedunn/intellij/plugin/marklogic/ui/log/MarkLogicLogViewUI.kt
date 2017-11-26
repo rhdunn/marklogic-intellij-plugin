@@ -28,6 +28,7 @@ import uk.co.reecedunn.intellij.plugin.marklogic.server.LogType
 import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicAppServer
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.settings.MarkLogicSettings
 import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicServer
+import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicVersion
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.server.MarkLogicServerCellRenderer
 
 import javax.swing.*
@@ -157,7 +158,7 @@ class MarkLogicLogViewUI(private val mProject: Project) : LogViewActions {
                 }
 
                 val marklogicVersion =
-                    (mServer?.selectedItem as? MarkLogicServer)?.version?.split('-')?.get(0)?.toDouble() ?: 6.0
+                    (mServer?.selectedItem as? MarkLogicServer)?.version ?: MarkLogicVersion(6, 0)
 
                 mLogBuilder!!.logFile = appserver.logfile(LogType.ERROR_LOG, 0, marklogicVersion)
                 val items = mLogBuilder!!.build().run().items
@@ -169,7 +170,7 @@ class MarkLogicLogViewUI(private val mProject: Project) : LogViewActions {
                 mLogText!!.isEditable = true // Required for replaceSelection in appendLogEntry to work.
                 MarkLogicLogFile.parse(items[0].content, marklogicVersion).forEach { entry ->
                     val color = mSettings?.logColor(entry.level)
-                    if (marklogicVersion >= 9.0) {
+                    if (marklogicVersion.major >= 9) {
                         appendLogEntry(entry, color)
                     } else if (appserverName == entry.appserver) {
                         appendLogEntry(entry, color)

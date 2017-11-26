@@ -91,8 +91,8 @@ class MarkLogicServer {
     }
 
     @get:CalledInBackground
-    val version get(): String =
-        xquery(MARKLOGIC_VERSION_XQUERY)[0].content
+    val version get(): MarkLogicVersion =
+        MarkLogicVersion.parse(xquery(MARKLOGIC_VERSION_XQUERY)[0].content)
 
     @get:CalledInBackground
     val appservers get(): List<MarkLogicAppServer> {

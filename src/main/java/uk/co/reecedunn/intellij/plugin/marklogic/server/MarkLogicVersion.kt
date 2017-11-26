@@ -17,7 +17,7 @@ package uk.co.reecedunn.intellij.plugin.marklogic.server
 
 class MarkLogicVersionFormatException(message: String): RuntimeException(message)
 
-data class MarkLogicVersion(val major: Int, val minor: Int, val api: Int?, val patch: Int?) {
+data class MarkLogicVersion(val major: Int, val minor: Int, val api: Int? = null, val patch: Int? = null) {
 
     override fun toString(): String =
         api?.let { "${major}.${minor}-${api}.${patch}" } ?: "${major}.${minor}"
@@ -31,7 +31,7 @@ data class MarkLogicVersion(val major: Int, val minor: Int, val api: Int?, val p
                     throw MarkLogicVersionFormatException("Invalid MarkLogic version: $version")
                 }
             return when (parts.size) {
-                2 -> MarkLogicVersion(parts[0], parts[1], null, null)
+                2 -> MarkLogicVersion(parts[0], parts[1])
                 4 -> MarkLogicVersion(parts[0], parts[1], parts[2], parts[3])
                 else -> throw MarkLogicVersionFormatException("Invalid MarkLogic version: $version")
             }

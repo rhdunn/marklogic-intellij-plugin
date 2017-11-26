@@ -18,24 +18,21 @@ package uk.co.reecedunn.intellij.plugin.marklogic.ui.server
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.ui.ColoredListCellRenderer
 import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicServer
+import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicVersion
 import javax.swing.JList
 
 class MarkLogicServerCellRenderer: ColoredListCellRenderer<MarkLogicServer>() {
-    val cache: HashMap<MarkLogicServer, String> = HashMap()
+    val cache: HashMap<MarkLogicServer, MarkLogicVersion?> = HashMap()
 
-    private fun format(server: MarkLogicServer, version: String?) {
+    private fun format(server: MarkLogicServer, version: MarkLogicVersion?) {
         clear()
-        if (version?.isEmpty() != false) {
-            append(server.toString())
-        } else {
-            append("$server (MarkLogic $version)")
-        }
+        append(version?.let { "$server (MarkLogic $version)" } ?: server.toString())
     }
 
     override fun customizeCellRenderer(list: JList<out MarkLogicServer>, value: MarkLogicServer?, index: Int, selected: Boolean, hasFocus: Boolean) {
         value?.let {
             cache[value]?.let { format(value, it) } ?: ApplicationManager.getApplication().executeOnPooledThread({
-                val version = try { value.version } catch (e: Exception) { "" }
+                val version = try { value.version } catch (e: Exception) { null }
                 cache.put(value, version)
                 format(value, version)
             })
