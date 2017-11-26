@@ -50,6 +50,16 @@ class MarkLogicServerComboBox : ComboBox<MarkLogicServer>(), MarkLogicSettings.L
         MarkLogicSettings.getInstance().addListener(this, this)
     }
 
+    var hostname: String?
+        get() = (selectedItem as? MarkLogicServer)?.hostname
+        set(value) {
+            for (i in 0 until itemCount) {
+                if (getItemAt(i).hostname == value) {
+                    selectedIndex = i
+                }
+            }
+        }
+
     override fun serversChanged() {
         val settings = MarkLogicSettings.getInstance()
 

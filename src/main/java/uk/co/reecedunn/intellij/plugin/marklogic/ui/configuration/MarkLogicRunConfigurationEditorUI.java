@@ -23,21 +23,39 @@ import com.intellij.openapi.ui.ComponentWithBrowseButton;
 import com.intellij.openapi.ui.TextComponentAccessor;
 import org.jetbrains.annotations.NotNull;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Connection;
+import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicServer;
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.resources.MarkLogicBundle;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.RDFFormat;
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.runner.MarkLogicResultsHandler;
 import uk.co.reecedunn.intellij.plugin.core.ui.DocumentChangedListener;
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.runner.MarkLogicQueryComboBox;
+import uk.co.reecedunn.intellij.plugin.marklogic.ui.server.MarkLogicServerComboBox;
 
 import javax.swing.*;
 import javax.swing.event.DocumentListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class MarkLogicRunConfigurationEditorUI {
+    private class MarkLogicServerChangedListener extends DocumentChangedListener implements ActionListener {
+        @Override
+        public void changed() {
+            String query = "for $name in xdmp:databases() ! xdmp:database-name(.) order by $name return $name";
+            run(query, (MarkLogicQueryComboBox)mContentDatabase);
+            run(query, (MarkLogicQueryComboBox)mModuleDatabase);
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            changed();
+        }
+    };
+
     private final MarkLogicConfigurationFactory mFactory;
     private final Project mProject;
 
     private JPanel mPanel;
-    private JTextField mServerHost;
+    private JComboBox<MarkLogicServer> mServerHost;
     private JTextField mServerPort;
     private JTextField mUserName;
     private JPasswordField mPassword;
@@ -55,7 +73,7 @@ public class MarkLogicRunConfigurationEditorUI {
 
     private void createUIComponents() {
         mPanel = new JPanel();
-        mServerHost = new JTextField();
+        mServerHost = new MarkLogicServerComboBox();
         mServerPort = new JTextField();
         mUserName = new JTextField();
         mPassword = new JPasswordField();
@@ -66,15 +84,8 @@ public class MarkLogicRunConfigurationEditorUI {
         mMainModulePath = new ComponentWithBrowseButton<>(new JTextField(), null);
         mTripleFormat = new ComboBox<>(RDFFormat.values());
 
-        DocumentListener listener = new DocumentChangedListener() {
-            @Override
-            public void changed() {
-                String query = "for $name in xdmp:databases() ! xdmp:database-name(.) order by $name return $name";
-                run(query, (MarkLogicQueryComboBox)mContentDatabase);
-                run(query, (MarkLogicQueryComboBox)mModuleDatabase);
-            }
-        };
-        mServerHost.getDocument().addDocumentListener(listener);
+        MarkLogicServerChangedListener listener = new MarkLogicServerChangedListener();
+        mServerHost.addActionListener(listener);
         mServerPort.getDocument().addDocumentListener(listener);
         mUserName.getDocument().addDocumentListener(listener);
         mPassword.getDocument().addDocumentListener(listener);
@@ -92,10 +103,12 @@ public class MarkLogicRunConfigurationEditorUI {
             mProject,
             new FileTypeDescriptor(MarkLogicBundle.message("browser.choose.main.module"), MarkLogicRunConfiguration.EXTENSIONS),
             TextComponentAccessor.TEXT_FIELD_WHOLE_TEXT);
+
+        ((MarkLogicServerComboBox)mServerHost).serversChanged();
     }
 
     public void reset(@NotNull MarkLogicRunConfiguration configuration) {
-        mServerHost.setText(configuration.getServerHost());
+        ((MarkLogicServerComboBox)mServerHost).setHostname(configuration.getServerHost());
         mServerPort.setText(Integer.toString(configuration.getServerPort()));
         mUserName.setText(configuration.getUserName());
         mPassword.setText(configuration.getPassword());
@@ -108,7 +121,7 @@ public class MarkLogicRunConfigurationEditorUI {
     }
 
     public void apply(@NotNull MarkLogicRunConfiguration configuration) {
-        configuration.setServerHost(mServerHost.getText());
+        configuration.setServerHost(((MarkLogicServerComboBox)mServerHost).getHostname());
         configuration.setServerPort(toInteger(mServerPort.getText(), configuration.getServerPort()));
         configuration.setUserName(mUserName.getText());
         configuration.setPassword(String.valueOf(mPassword.getPassword()));
@@ -136,8 +149,8 @@ public class MarkLogicRunConfigurationEditorUI {
     private boolean run(String query, MarkLogicResultsHandler handler) {
         // NOTE: Using SettingsEditor.getFactory or getSnapshot don't work, as
         // they throw a NullPointerException when processing the events.
-        MarkLogicRunConfiguration configuration = (MarkLogicRunConfiguration)mFactory.createTemplateConfiguration(mProject);
+        MarkLogicRunConfiguration configuration = (MarkLogicRunConfiguration) mFactory.createTemplateConfiguration(mProject);
         apply(configuration);
-        return configuration.run(query, handler);
+        return configuration.getServerHost() != null && configuration.run(query, handler);
     }
 }
