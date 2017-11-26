@@ -37,17 +37,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MarkLogicRunConfigurationEditorUI {
-    private class MarkLogicServerChangedListener extends DocumentChangedListener implements ActionListener {
+    private class MarkLogicServerChangedListener implements ActionListener {
         @Override
-        public void changed() {
+        public void actionPerformed(ActionEvent e) {
             String query = "for $name in xdmp:databases() ! xdmp:database-name(.) order by $name return $name";
             run(query, (MarkLogicQueryComboBox)mContentDatabase);
             run(query, (MarkLogicQueryComboBox)mModuleDatabase);
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            changed();
         }
     };
 
@@ -56,9 +51,6 @@ public class MarkLogicRunConfigurationEditorUI {
 
     private JPanel mPanel;
     private JComboBox<MarkLogicServer> mServerHost;
-    private JTextField mServerPort;
-    private JTextField mUserName;
-    private JPasswordField mPassword;
     private JComboBox<Double> mServerVersion;
     private JComboBox<String> mContentDatabase;
     private JComboBox<String> mModuleDatabase;
@@ -74,9 +66,6 @@ public class MarkLogicRunConfigurationEditorUI {
     private void createUIComponents() {
         mPanel = new JPanel();
         mServerHost = new MarkLogicServerComboBox();
-        mServerPort = new JTextField();
-        mUserName = new JTextField();
-        mPassword = new JPasswordField();
         mServerVersion = new ComboBox<>(Connection.SUPPORTED_MARKLOGIC_VERSIONS);
         mContentDatabase = new MarkLogicQueryComboBox(MarkLogicBundle.message("database.none"));
         mModuleDatabase = new MarkLogicQueryComboBox(MarkLogicBundle.message("database.file.system"));
@@ -86,9 +75,6 @@ public class MarkLogicRunConfigurationEditorUI {
 
         MarkLogicServerChangedListener listener = new MarkLogicServerChangedListener();
         mServerHost.addActionListener(listener);
-        mServerPort.getDocument().addDocumentListener(listener);
-        mUserName.getDocument().addDocumentListener(listener);
-        mPassword.getDocument().addDocumentListener(listener);
 
         mModuleRoot.addBrowseFolderListener(
             MarkLogicBundle.message("browser.choose.module.root"),
@@ -109,9 +95,6 @@ public class MarkLogicRunConfigurationEditorUI {
 
     public void reset(@NotNull MarkLogicRunConfiguration configuration) {
         mServerHost.setSelectedItem(configuration.getServer());
-        mServerPort.setText(Integer.toString(configuration.getServerPort()));
-        mUserName.setText(configuration.getUserName());
-        mPassword.setText(configuration.getPassword());
         mServerVersion.setSelectedItem(configuration.getMarkLogicVersion());
         ((MarkLogicQueryComboBox)mContentDatabase).setItem(configuration.getContentDatabase());
         ((MarkLogicQueryComboBox)mModuleDatabase).setItem(configuration.getModuleDatabase());
@@ -122,9 +105,6 @@ public class MarkLogicRunConfigurationEditorUI {
 
     public void apply(@NotNull MarkLogicRunConfiguration configuration) {
         configuration.setServer((MarkLogicServer)mServerHost.getSelectedItem());
-        configuration.setServerPort(toInteger(mServerPort.getText(), configuration.getServerPort()));
-        configuration.setUserName(mUserName.getText());
-        configuration.setPassword(String.valueOf(mPassword.getPassword()));
         configuration.setMarkLogicVersion((Double)mServerVersion.getSelectedItem());
         configuration.setContentDatabase(((MarkLogicQueryComboBox)mContentDatabase).getItem());
         configuration.setModuleDatabase(((MarkLogicQueryComboBox)mModuleDatabase).getItem());
@@ -138,19 +118,11 @@ public class MarkLogicRunConfigurationEditorUI {
         return mPanel;
     }
 
-    private int toInteger(String value, int defaultValue) {
-        try {
-            return Integer.valueOf(value);
-        } catch (NumberFormatException e) {
-            return defaultValue;
-        }
-    }
-
     private boolean run(String query, MarkLogicResultsHandler handler) {
         // NOTE: Using SettingsEditor.getFactory or getSnapshot don't work, as
         // they throw a NullPointerException when processing the events.
         MarkLogicRunConfiguration configuration = (MarkLogicRunConfiguration) mFactory.createTemplateConfiguration(mProject);
         apply(configuration);
-        return configuration.getServerHost() != null && configuration.run(query, handler);
+        return configuration.getServer() != null && configuration.run(query, handler);
     }
 }

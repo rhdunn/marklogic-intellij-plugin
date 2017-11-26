@@ -52,9 +52,6 @@ public class MarkLogicRunConfiguration extends RunConfigurationBase {
     @SuppressWarnings("WeakerAccess") // DefaultJDOMExternalizer requires public access to the fields.
     static class ConfigData {
         public String serverHost = "localhost";
-        public int serverPort = 8000;
-        public String userName = "";
-        public String password = "";
         public double markLogicVersion = 7.0;
         public String contentDatabase = null;
         public String moduleDatabase = null;
@@ -118,38 +115,6 @@ public class MarkLogicRunConfiguration extends RunConfigurationBase {
     public void setServer(MarkLogicServer server) {
         mServer = server;
         data.serverHost = mServer.getHostname();
-    }
-
-    public String getServerHost() {
-        return data.serverHost;
-    }
-
-    public void setServerHost(String host) {
-        data.serverHost = host;
-    }
-
-    public int getServerPort() {
-        return data.serverPort;
-    }
-
-    public void setServerPort(int port) {
-        data.serverPort = port;
-    }
-
-    public String getUserName() {
-        return data.userName;
-    }
-
-    public void setUserName(String userName) {
-        this.data.userName = userName;
-    }
-
-    public String getPassword() {
-        return data.password;
-    }
-
-    public void setPassword(String password) {
-        this.data.password = password;
     }
 
     public double getMarkLogicVersion() {

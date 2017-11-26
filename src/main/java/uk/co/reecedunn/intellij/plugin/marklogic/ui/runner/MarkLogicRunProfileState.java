@@ -73,15 +73,10 @@ public class MarkLogicRunProfileState extends CommandLineState {
 
     private Connection createConnection(MarkLogicRunConfiguration configuration) {
         return Connection.newConnection(
-            configuration.getServerHost(),
-            configuration.getServerPort(),
-            nullableValueOf(configuration.getUserName()),
-            nullableValueOf(configuration.getPassword()),
+            configuration.getServer().getHostname(),
+            configuration.getServer().getAppServerPort(),
+            configuration.getServer().getUsername(),
+            configuration.getServer().getPassword(),
             configuration.getMarkLogicVersion());
-    }
-
-    private String nullableValueOf(String value) {
-        if (value == null || value.isEmpty()) return null;
-        return value;
     }
 }
