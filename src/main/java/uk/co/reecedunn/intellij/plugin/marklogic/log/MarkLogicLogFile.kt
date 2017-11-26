@@ -65,26 +65,28 @@ object MarkLogicLogFile {
         return logfile.lineSequence().map { line ->
             logline.matchEntire(line)?.let {
                 val groups = it.groupValues
-                if (marklogicVersion >= 9.0) {
-                    val message =
-                        if (groups[5].isEmpty()) groups[7]
-                        else                     "${groups[5]}: ${groups[7]}"
-                    MarkLogicLogEntry(
-                        groups[1],
-                        groups[2],
-                        LogLevel.parse(groups[3]),
-                        null,
-                        groups[6] == "+",
-                        Item.create(message, "text/plain", "xs:string"))
-                } else {
-                    MarkLogicLogEntry(
-                        groups[1],
-                        groups[2],
-                        LogLevel.parse(groups[3]),
-                        if (groups[5].isEmpty()) null else groups[5],
-                        groups[6] == "+",
-                        Item.create(groups[7], "text/plain", "xs:string"))
-                }
+
+                // MarkLogic >= 9.0 places appserver logs in their own separate
+                // files, so don't treat appserver-like entries as such when
+                // parsing those log files.
+                val message =
+                    if (marklogicVersion <= 8.0 || groups[5].isEmpty())
+                        groups[7]
+                    else
+                        "${groups[5]}: ${groups[7]}"
+                val appserver =
+                    if (marklogicVersion >= 9.0 || groups[5].isEmpty())
+                        null
+                    else
+                        groups[5]
+
+                MarkLogicLogEntry(
+                    groups[1],
+                    groups[2],
+                    LogLevel.parse(groups[3]),
+                    appserver,
+                    groups[6] == "+",
+                    Item.create(message, "text/plain", "xs:string"))
             } ?: return@map if (line.isEmpty())
                 null
             else
