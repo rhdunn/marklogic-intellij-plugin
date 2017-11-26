@@ -15,7 +15,6 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.ui.log
 
-import com.intellij.openapi.Disposable
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.ComboBox
@@ -29,7 +28,7 @@ import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicAppServer
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.settings.MarkLogicSettings
 import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicServer
 import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicVersion
-import uk.co.reecedunn.intellij.plugin.marklogic.ui.server.MarkLogicServerCellRenderer
+import uk.co.reecedunn.intellij.plugin.marklogic.ui.server.MarkLogicServerComboBox
 
 import javax.swing.*
 import java.io.IOException
@@ -43,20 +42,6 @@ import javax.swing.text.SimpleAttributeSet
 import javax.swing.text.StyleContext
 
 class MarkLogicLogViewUI(private val mProject: Project) : LogViewActions {
-    private inner class SettingsListener : MarkLogicSettings.Listener, Disposable {
-        override fun serversChanged() {
-            val settings = MarkLogicSettings.getInstance()
-
-            mServer!!.removeAllItems()
-            for (server in settings.servers) {
-                mServer!!.addItem(server)
-            }
-        }
-
-        override fun dispose() {
-        }
-    }
-
     private inner class LogViewFocusListener : FocusListener {
         override fun focusLost(e: FocusEvent?) {
             (e?.component as? JTextPane)?.caret?.isVisible = false
@@ -90,17 +75,13 @@ class MarkLogicLogViewUI(private val mProject: Project) : LogViewActions {
         mLogText!!.isEditable = false
         mLogText!!.addFocusListener(LogViewFocusListener())
 
-        mServer = ComboBox()
-        mServer!!.renderer = MarkLogicServerCellRenderer()
+        mServer = MarkLogicServerComboBox()
         mServer!!.addActionListener { e -> serverSelectionChanged() }
 
         mAppServer = ComboBox()
         mAppServer!!.addActionListener { e -> appserverSelectionChanged() }
 
-        mSettings = MarkLogicSettings.getInstance()
-        val listener = SettingsListener()
-        mSettings?.addListener(listener, listener)
-        listener.serversChanged()
+        (mServer as? MarkLogicSettings.Listener)!!.serversChanged()
     }
 
     private fun serverSelectionChanged() {

@@ -15,13 +15,16 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.ui.server
 
+import com.intellij.openapi.Disposable
 import com.intellij.openapi.application.ApplicationManager
+import com.intellij.openapi.ui.ComboBox
 import com.intellij.ui.ColoredListCellRenderer
 import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicServer
 import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicVersion
+import uk.co.reecedunn.intellij.plugin.marklogic.ui.settings.MarkLogicSettings
 import javax.swing.JList
 
-class MarkLogicServerCellRenderer: ColoredListCellRenderer<MarkLogicServer>() {
+private class MarkLogicServerCellRenderer: ColoredListCellRenderer<MarkLogicServer>() {
     val cache: HashMap<MarkLogicServer, MarkLogicVersion?> = HashMap()
 
     private fun format(server: MarkLogicServer, version: MarkLogicVersion?) {
@@ -39,4 +42,23 @@ class MarkLogicServerCellRenderer: ColoredListCellRenderer<MarkLogicServer>() {
         }
     }
 
+}
+
+class MarkLogicServerComboBox : ComboBox<MarkLogicServer>(), MarkLogicSettings.Listener, Disposable {
+    init {
+        renderer = MarkLogicServerCellRenderer()
+        MarkLogicSettings.getInstance().addListener(this, this)
+    }
+
+    override fun serversChanged() {
+        val settings = MarkLogicSettings.getInstance()
+
+        removeAllItems()
+        for (server in settings.servers) {
+            addItem(server)
+        }
+    }
+
+    override fun dispose() {
+    }
 }
