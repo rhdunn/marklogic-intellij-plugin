@@ -15,6 +15,7 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.server
 
+import org.jetbrains.annotations.CalledInBackground
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Connection
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Item
 import java.io.IOException
@@ -81,6 +82,7 @@ class MarkLogicServer {
     override fun toString(): String =
         displayName?.let { "$it [$hostname]" } ?: hostname
 
+    @CalledInBackground
     fun xquery(query: String): Array<Item> {
         val connection = Connection.newConnection(hostname, appServerPort, username, password, Connection.XCC)
         val queryBuilder = connection.createEvalRequestBuilder()
@@ -88,9 +90,11 @@ class MarkLogicServer {
         return queryBuilder.build().run().items
     }
 
+    @get:CalledInBackground
     val version get(): String =
         xquery(MARKLOGIC_VERSION_XQUERY)[0].content
 
+    @get:CalledInBackground
     val appservers get(): List<MarkLogicAppServer> {
         val servers = ArrayList<MarkLogicAppServer>()
         try {

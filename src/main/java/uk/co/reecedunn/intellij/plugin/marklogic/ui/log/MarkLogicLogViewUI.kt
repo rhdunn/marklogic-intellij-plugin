@@ -19,6 +19,7 @@ import com.intellij.openapi.Disposable
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.ComboBox
+import org.jetbrains.annotations.CalledInBackground
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Connection
 import uk.co.reecedunn.intellij.plugin.marklogic.api.LogRequestBuilder
 import uk.co.reecedunn.intellij.plugin.marklogic.log.MarkLogicLogEntry
@@ -146,6 +147,7 @@ class MarkLogicLogViewUI(private val mProject: Project) : LogViewActions {
     // endregion
     // region LogViewActions
 
+    @CalledInBackground
     override fun refreshAction(): Runnable {
         return Runnable {
             try {
