@@ -151,6 +151,9 @@ class MarkLogicLogViewUI(private val mProject: Project) : LogViewActions {
     @CalledInBackground
     override fun refreshAction(): Runnable {
         return Runnable {
+            val position = mLogText!!.caretPosition
+            val scrollToEnd = scrollToEnd
+
             try {
                 val appserver = (mAppServer?.selectedItem as? MarkLogicAppServer) ?: MarkLogicAppServer.SYSTEM
                 val appserverName = appserver.let {
@@ -163,9 +166,6 @@ class MarkLogicLogViewUI(private val mProject: Project) : LogViewActions {
                 mLogBuilder!!.logFile = appserver.logfile(LogType.ERROR_LOG, 0, marklogicVersion)
                 val items = mLogBuilder!!.build().run().items
 
-                val position = mLogText!!.caretPosition
-                val scrollToEnd = scrollToEnd
-
                 mLogText!!.text = ""
                 mLogText!!.isEditable = true // Required for replaceSelection in appendLogEntry to work.
                 MarkLogicLogFile.parse(items[0].content, marklogicVersion).forEach { entry ->
@@ -176,12 +176,12 @@ class MarkLogicLogViewUI(private val mProject: Project) : LogViewActions {
                         appendLogEntry(entry, color)
                     }
                 }
-
-                val length = mLogText!!.document.length
-                mLogText!!.caretPosition = if (scrollToEnd) length else Math.min(position, length)
             } catch (e: IOException) {
                 mLogText!!.text = e.message
             }
+
+            val length = mLogText!!.document.length
+            mLogText!!.caretPosition = if (scrollToEnd) length else Math.min(position, length)
             mLogText!!.isEditable = false
             mLogText!!.caret.isVisible = true
         }
