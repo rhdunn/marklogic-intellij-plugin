@@ -72,6 +72,10 @@ class MarkLogicLogViewUI(private val mProject: Project) : LogViewActions {
         mActions = MarkLogicLogViewToolbar(this)
         mActionToolbar = mActions!!.component
 
+        mLogText = JTextPane()
+        mLogText!!.isEditable = false
+        mLogText!!.caret.isVisible = true
+
         mServer = ComboBox()
         mServer!!.renderer = MarkLogicServerCellRenderer()
         mServer!!.addActionListener { e -> serverSelectionChanged() }
@@ -160,6 +164,7 @@ class MarkLogicLogViewUI(private val mProject: Project) : LogViewActions {
                 val scrollToEnd = scrollToEnd
 
                 mLogText!!.text = ""
+                mLogText!!.isEditable = true // Required for replaceSelection in appendLogEntry to work.
                 MarkLogicLogFile.parse(items[0].content, marklogicVersion).forEach { entry ->
                     val color = mSettings?.logColor(entry.level)
                     if (marklogicVersion >= 9.0) {
@@ -174,6 +179,7 @@ class MarkLogicLogViewUI(private val mProject: Project) : LogViewActions {
             } catch (e: IOException) {
                 mLogText!!.text = e.message
             }
+            mLogText!!.isEditable = false
         }
     }
 
