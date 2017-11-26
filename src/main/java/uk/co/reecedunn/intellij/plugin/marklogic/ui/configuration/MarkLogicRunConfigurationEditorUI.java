@@ -108,7 +108,7 @@ public class MarkLogicRunConfigurationEditorUI {
     }
 
     public void reset(@NotNull MarkLogicRunConfiguration configuration) {
-        ((MarkLogicServerComboBox)mServerHost).setHostname(configuration.getServerHost());
+        mServerHost.setSelectedItem(configuration.getServer());
         mServerPort.setText(Integer.toString(configuration.getServerPort()));
         mUserName.setText(configuration.getUserName());
         mPassword.setText(configuration.getPassword());
@@ -121,7 +121,7 @@ public class MarkLogicRunConfigurationEditorUI {
     }
 
     public void apply(@NotNull MarkLogicRunConfiguration configuration) {
-        configuration.setServerHost(((MarkLogicServerComboBox)mServerHost).getHostname());
+        configuration.setServer((MarkLogicServer)mServerHost.getSelectedItem());
         configuration.setServerPort(toInteger(mServerPort.getText(), configuration.getServerPort()));
         configuration.setUserName(mUserName.getText());
         configuration.setPassword(String.valueOf(mPassword.getPassword()));

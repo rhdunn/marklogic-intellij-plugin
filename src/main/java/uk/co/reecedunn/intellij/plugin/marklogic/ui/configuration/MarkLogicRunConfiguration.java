@@ -31,12 +31,16 @@ import org.jdom.Element;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.RDFFormat;
+import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicServer;
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.runner.MarkLogicResultsHandler;
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.runner.MarkLogicRunProfileState;
+import uk.co.reecedunn.intellij.plugin.marklogic.ui.settings.MarkLogicSettings;
 
 import java.io.File;
 
 public class MarkLogicRunConfiguration extends RunConfigurationBase {
+    private MarkLogicServer mServer;
+
     public static final String[] EXTENSIONS = new String[]{
         "xq", "xqy", "xquery", "xql", "xqu",
         "js", "sjs",
@@ -93,6 +97,11 @@ public class MarkLogicRunConfiguration extends RunConfigurationBase {
         super.readExternal(element);
         DefaultJDOMExternalizer.readExternal(data, element);
         setMainModulePath(data.mainModulePath); // Update the associated VirtualFile.
+        MarkLogicSettings.Companion.getInstance().getServers().forEach((server) -> {
+            if (server.getHostname().equals(data.serverHost)) {
+                setServer(server);
+            }
+        });
     }
 
     @SuppressWarnings("deprecation")
@@ -100,6 +109,15 @@ public class MarkLogicRunConfiguration extends RunConfigurationBase {
     public void writeExternal(Element element) throws WriteExternalException {
         super.writeExternal(element);
         DefaultJDOMExternalizer.writeExternal(data, element);
+    }
+
+    public MarkLogicServer getServer() {
+        return mServer;
+    }
+
+    public void setServer(MarkLogicServer server) {
+        mServer = server;
+        data.serverHost = mServer.getHostname();
     }
 
     public String getServerHost() {
