@@ -24,9 +24,7 @@ import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicVersion
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.settings.MarkLogicSettings
 import javax.swing.JList
 
-private class MarkLogicServerCellRenderer: ColoredListCellRenderer<MarkLogicServer>() {
-    val cache: HashMap<MarkLogicServer, MarkLogicVersion?> = HashMap()
-
+private class MarkLogicServerCellRenderer(val cache: HashMap<MarkLogicServer, MarkLogicVersion?>): ColoredListCellRenderer<MarkLogicServer>() {
     private fun format(server: MarkLogicServer, version: MarkLogicVersion?) {
         clear()
         append(version?.let { "$server (MarkLogic $version)" } ?: server.toString())
@@ -45,13 +43,18 @@ private class MarkLogicServerCellRenderer: ColoredListCellRenderer<MarkLogicServ
 }
 
 class MarkLogicServerComboBox : ComboBox<MarkLogicServer>(), MarkLogicSettings.Listener, Disposable {
+    val cache: HashMap<MarkLogicServer, MarkLogicVersion?> = HashMap()
+
     init {
-        renderer = MarkLogicServerCellRenderer()
+        renderer = MarkLogicServerCellRenderer(cache)
         MarkLogicSettings.getInstance().addListener(this, this)
     }
 
+    val server get(): MarkLogicServer? =
+        selectedItem as? MarkLogicServer
+
     var hostname: String?
-        get() = (selectedItem as? MarkLogicServer)?.hostname
+        get() = server?.hostname
         set(value) {
             for (i in 0 until itemCount) {
                 if (getItemAt(i).hostname == value) {
@@ -59,6 +62,9 @@ class MarkLogicServerComboBox : ComboBox<MarkLogicServer>(), MarkLogicSettings.L
                 }
             }
         }
+
+    val version get(): MarkLogicVersion? =
+        cache[server]
 
     override fun serversChanged() {
         val settings = MarkLogicSettings.getInstance()
