@@ -50,7 +50,7 @@ class MarkLogicServerComboBox : ComboBox<MarkLogicServer>(), MarkLogicSettings.L
     val cache: HashMap<MarkLogicServer, Any?> = HashMap()
 
     init {
-        renderer = MarkLogicServerCellRenderer(cache)
+        setRenderer(MarkLogicServerCellRenderer(cache))
         MarkLogicSettings.getInstance().addListener(this, this)
     }
 
