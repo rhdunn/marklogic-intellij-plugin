@@ -35,7 +35,8 @@ private class MarkLogicServerCellRenderer(val cache: HashMap<MarkLogicServer, An
 
     override fun customizeCellRenderer(list: JList<out MarkLogicServer>, value: MarkLogicServer?, index: Int, selected: Boolean, hasFocus: Boolean) {
         value?.let {
-            cache[value]?.let { format(value, it) } ?: ApplicationManager.getApplication().executeOnPooledThread({
+            val cachedVersion = cache[value]
+            cachedVersion?.let { format(value, cachedVersion) } ?: ApplicationManager.getApplication().executeOnPooledThread({
                 val version: Any? = try { value.version } catch (e: Exception) { e }
                 cache.put(value, version)
                 format(value, version)
