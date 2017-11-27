@@ -24,16 +24,19 @@ import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicVersion
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.settings.MarkLogicSettings
 import javax.swing.JList
 
-private class MarkLogicServerCellRenderer(val cache: HashMap<MarkLogicServer, MarkLogicVersion?>): ColoredListCellRenderer<MarkLogicServer>() {
-    private fun format(server: MarkLogicServer, version: MarkLogicVersion?) {
+private class MarkLogicServerCellRenderer(val cache: HashMap<MarkLogicServer, Any?>): ColoredListCellRenderer<MarkLogicServer>() {
+    private fun format(server: MarkLogicServer, version: Any?) {
         clear()
-        append(version?.let { "$server (MarkLogic $version)" } ?: server.toString())
+        when (version) {
+            is MarkLogicVersion -> append("$server (MarkLogic $version)")
+            else -> append(server.toString())
+        }
     }
 
     override fun customizeCellRenderer(list: JList<out MarkLogicServer>, value: MarkLogicServer?, index: Int, selected: Boolean, hasFocus: Boolean) {
         value?.let {
             cache[value]?.let { format(value, it) } ?: ApplicationManager.getApplication().executeOnPooledThread({
-                val version = try { value.version } catch (e: Exception) { null }
+                val version: Any? = try { value.version } catch (e: Exception) { e }
                 cache.put(value, version)
                 format(value, version)
             })
@@ -43,7 +46,7 @@ private class MarkLogicServerCellRenderer(val cache: HashMap<MarkLogicServer, Ma
 }
 
 class MarkLogicServerComboBox : ComboBox<MarkLogicServer>(), MarkLogicSettings.Listener, Disposable {
-    val cache: HashMap<MarkLogicServer, MarkLogicVersion?> = HashMap()
+    val cache: HashMap<MarkLogicServer, Any?> = HashMap()
 
     init {
         renderer = MarkLogicServerCellRenderer(cache)
@@ -64,7 +67,10 @@ class MarkLogicServerComboBox : ComboBox<MarkLogicServer>(), MarkLogicSettings.L
         }
 
     val version get(): MarkLogicVersion? =
-        cache[server]
+        cache[server] as? MarkLogicVersion
+
+    val exception get(): Exception? =
+        cache[server] as? Exception
 
     override fun serversChanged() {
         val settings = MarkLogicSettings.getInstance()
