@@ -74,6 +74,7 @@ class MarkLogicServerComboBox : ComboBox<MarkLogicServer>(), MarkLogicSettings.L
 
     override fun serversChanged() {
         val settings = MarkLogicSettings.getInstance()
+        cache.clear()
 
         removeAllItems()
         for (server in settings.servers) {
