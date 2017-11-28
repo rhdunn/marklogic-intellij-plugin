@@ -42,16 +42,6 @@ import javax.swing.text.SimpleAttributeSet
 import javax.swing.text.StyleContext
 
 class MarkLogicLogViewUI(private val mProject: Project) : LogViewActions {
-    private inner class LogViewFocusListener : FocusListener {
-        override fun focusLost(e: FocusEvent?) {
-            (e?.component as? JTextPane)?.caret?.isVisible = false
-        }
-
-        override fun focusGained(e: FocusEvent?) {
-            (e?.component as? JTextPane)?.caret?.isVisible = true
-        }
-    }
-
     private var mSettings: MarkLogicSettings? = null
     private var mConnection: Connection? = null
     private var mLogBuilder: LogRequestBuilder? = null
@@ -71,9 +61,7 @@ class MarkLogicLogViewUI(private val mProject: Project) : LogViewActions {
         mActions = MarkLogicLogViewToolbar(this)
         mActionToolbar = mActions!!.component
 
-        mLogText = JTextPane()
-        mLogText!!.isEditable = false
-        mLogText!!.addFocusListener(LogViewFocusListener())
+        mLogText = MarkLogicLogView()
 
         mServer = MarkLogicServerComboBox()
         mServer!!.addActionListener { e -> serverSelectionChanged() }
@@ -114,31 +102,6 @@ class MarkLogicLogViewUI(private val mProject: Project) : LogViewActions {
         ApplicationManager.getApplication().executeOnPooledThread(refreshAction())
     }
 
-    // region Log View Pane
-
-    private fun createTextAttributes(font: Font?, color: Color?): AttributeSet {
-        val context = StyleContext.getDefaultStyleContext()
-        var attributes: AttributeSet =
-            context.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Alignment, StyleConstants.ALIGN_LEFT)
-        if (color != null) {
-            attributes = context.addAttribute(attributes, StyleConstants.Foreground, color)
-        }
-        if (font != null) {
-            attributes = context.addAttribute(attributes, StyleConstants.FontFamily, font.family)
-            attributes = context.addAttribute(attributes, StyleConstants.FontSize, font.size)
-        }
-        return attributes
-    }
-
-    private fun appendLogEntry(entry: MarkLogicLogEntry, color: Color? = null) {
-        val separator = if (entry.continuation) '+' else ' '
-        mLogText!!.caretPosition = mLogText!!.document.length
-        mLogText!!.setCharacterAttributes(createTextAttributes(UIManager.getFont("TextArea.font"), color), false)
-        mLogText!!.replaceSelection(
-            "${entry.date} ${entry.time} ${entry.level.displayName}:${separator}${entry.message.content}\n")
-    }
-
-    // endregion
     // region LogViewActions
 
     @CalledInBackground
@@ -162,15 +125,11 @@ class MarkLogicLogViewUI(private val mProject: Project) : LogViewActions {
                 mLogBuilder!!.logFile = appserver.logfile(LogType.ERROR_LOG, 0, marklogicVersion)
                 val items = mLogBuilder!!.build().run().items
 
-                mLogText!!.text = ""
-                MarkLogicLogFile.parse(items[0].content, marklogicVersion).forEach { entry ->
-                    val color = mSettings?.logColor(entry.level)
-                    if (marklogicVersion.major >= 9) {
-                        appendLogEntry(entry, color)
-                    } else if (appserverName == entry.appserver) {
-                        appendLogEntry(entry, color)
-                    }
-                }
+                (mLogText as? MarkLogicLogView)!!.update(
+                    MarkLogicLogFile.parse(items[0].content, marklogicVersion),
+                    appserverName,
+                    marklogicVersion,
+                    mSettings)
             } catch (e: IOException) {
                 mLogText!!.text = e.message
             }
