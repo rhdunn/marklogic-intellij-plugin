@@ -16,13 +16,13 @@
 package uk.co.reecedunn.intellij.plugin.marklogic.ui.log
 
 import uk.co.reecedunn.intellij.plugin.marklogic.log.MarkLogicLogEntry
-import uk.co.reecedunn.intellij.plugin.marklogic.log.MarkLogicLogFile
 import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicVersion
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.settings.MarkLogicSettings
 import java.awt.Color
 import java.awt.Font
 import java.awt.event.FocusEvent
 import java.awt.event.FocusListener
+import java.awt.event.MouseEvent
 import javax.swing.JTextPane
 import javax.swing.UIManager
 import javax.swing.text.AttributeSet
@@ -82,4 +82,15 @@ class MarkLogicLogView: JTextPane() {
             }
         }
     }
+
+    // JTextComponent.getToolTipText can throw an NPE in some cases.
+    // Specifically:
+    // 1.  Switching from the System app-server logs, to the TaskServer logs;
+    // 2.  Moving the mouse between the log view text pane and the app-server
+    //     combobox.
+    //
+    // This NPE occurs in javax.swing.text.View, line 1041. Therefore, disable
+    // tooltips for this control.
+    override fun getToolTipText(event: MouseEvent?): String? =
+        null
 }
