@@ -1,6 +1,8 @@
 buildscript {
+    ext.idea_version = System.getenv("IDEA_VERSION") ?: 'IC-2017.2'
     ext.kotlin_version = '1.1.4-3'
     ext.junit_milestone = ''
+
     repositories {
         maven { url 'http://dl.bintray.com/jetbrains/intellij-plugin-service' }
         mavenCentral()
@@ -43,8 +45,7 @@ dependencies {
 }
 
 intellij {
-    def ideaVersion = System.getenv("IDEA_VERSION")
-    version = ideaVersion ? ideaVersion : 'IC-2017.2' // IntelliJ IDEA dependency
+    version = idea_version
     println "Building for IntelliJ version: ${version}"
 
     plugins 'coverage'  // Bundled plugin dependencies
