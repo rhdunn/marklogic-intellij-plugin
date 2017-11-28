@@ -29,7 +29,7 @@ public class MarkLogicAppServerTest extends TestCase {
 
     public void testSystem() {
         final MarkLogicAppServer appserver = MarkLogicAppServer.Companion.getSYSTEM();
-        assertThat(appserver.toString(), is("(none)"));
+        assertThat(appserver.toString(), is("System (MarkLogic)"));
 
         assertThat(appserver.logfile(LogType.ACCESS_LOG, 0, MARKLOGIC_8), is("AccessLog.txt"));
         assertThat(appserver.logfile(LogType.ACCESS_LOG, 1, MARKLOGIC_8), is("AccessLog_1.txt"));
