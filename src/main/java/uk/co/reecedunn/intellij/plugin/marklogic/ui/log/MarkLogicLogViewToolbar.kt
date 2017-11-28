@@ -16,9 +16,9 @@
 package uk.co.reecedunn.intellij.plugin.marklogic.ui.log
 
 import com.intellij.icons.AllIcons
-import com.intellij.idea.ActionsBundle
 import com.intellij.openapi.actionSystem.*
 import com.intellij.openapi.application.ApplicationManager
+import uk.co.reecedunn.intellij.plugin.marklogic.ui.resources.MarkLogicBundle
 import javax.swing.JComponent
 
 interface LogViewActions {
@@ -27,7 +27,14 @@ interface LogViewActions {
     var scrollToEnd: Boolean
 }
 
-private class RefreshAction(val actions: LogViewActions) : AnAction(AllIcons.Actions.Refresh) {
+private class RefreshAction(val actions: LogViewActions) : AnAction() {
+    init {
+        val message = MarkLogicBundle.message("action.refresh")
+        templatePresentation.description = message
+        templatePresentation.text = message
+        templatePresentation.icon = AllIcons.Actions.Refresh
+    }
+
     override fun actionPerformed(e: AnActionEvent?) {
         ApplicationManager.getApplication().executeOnPooledThread(actions.refreshAction())
     }
@@ -35,7 +42,7 @@ private class RefreshAction(val actions: LogViewActions) : AnAction(AllIcons.Act
 
 private class ScrollToEndAction(val actions: LogViewActions) : ToggleAction() {
     init {
-        val message = ActionsBundle.message("action.EditorConsoleScrollToTheEnd.text")
+        val message = MarkLogicBundle.message("action.scroll-to-end")
         templatePresentation.description = message
         templatePresentation.text = message
         templatePresentation.icon = AllIcons.RunConfigurations.Scroll_down
