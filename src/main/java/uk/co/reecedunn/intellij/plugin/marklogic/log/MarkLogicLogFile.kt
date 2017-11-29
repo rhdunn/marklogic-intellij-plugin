@@ -28,7 +28,7 @@ enum class LogLevel(val displayName: String, val rank: Int, val defaultColor: Co
     CONFIG("Config", 4, Color.BLACK),
     INFO("Info", 5, Color.BLACK), // (default)
     NOTICE("Notice", 6, Color.BLUE),
-    WARNING("Warning", 7, Color.ORANGE),
+    WARNING("Warning", 7, Color(0xFF8C00)), // = darkorange
     ERROR("Error", 8, Color(0x880000)), // = maroon
     CRITICAL("Critical", 9, Color(0x880000)), // = maroon
     ALERT("Alert", 10, Color(0x880000)), // = maroon
