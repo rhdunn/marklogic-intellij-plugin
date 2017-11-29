@@ -19,20 +19,25 @@ import uk.co.reecedunn.intellij.plugin.marklogic.api.Item
 import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicVersion
 import java.awt.Color
 
+private val BLACK = Color(0x000000)
+private val BLUE = Color(0x0000FF)
+private val DARK_ORANGE = Color(0xFF8C00)
+private val MAROON = Color(0x880000)
+
 // Reference: https://docs.marklogic.com/guide/admin/logfiles#id_37841
 enum class LogLevel(val displayName: String, val rank: Int, val defaultColor: Color) {
-    FINEST("Finest", 0, Color.BLACK), // (lowest priority)
-    FINER("Finer", 1, Color.BLACK),
-    FINE("Fine", 2, Color.BLACK),
-    DEBUG("Debug", 3, Color.BLACK),
-    CONFIG("Config", 4, Color.BLACK),
-    INFO("Info", 5, Color.BLACK), // (default)
-    NOTICE("Notice", 6, Color.BLUE),
-    WARNING("Warning", 7, Color(0xFF8C00)), // = darkorange
-    ERROR("Error", 8, Color(0x880000)), // = maroon
-    CRITICAL("Critical", 9, Color(0x880000)), // = maroon
-    ALERT("Alert", 10, Color(0x880000)), // = maroon
-    EMERGENCY("Emergency", 11, Color(0x880000)); // = maroon (highest priority)
+    FINEST("Finest", 0, BLACK), // (lowest priority)
+    FINER("Finer", 1, BLACK),
+    FINE("Fine", 2, BLACK),
+    DEBUG("Debug", 3, BLACK),
+    CONFIG("Config", 4, BLACK),
+    INFO("Info", 5, BLACK), // (default)
+    NOTICE("Notice", 6, BLUE),
+    WARNING("Warning", 7, DARK_ORANGE),
+    ERROR("Error", 8, MAROON),
+    CRITICAL("Critical", 9, MAROON),
+    ALERT("Alert", 10, MAROON),
+    EMERGENCY("Emergency", 11, MAROON); // (highest priority)
 
     companion object {
         fun parse(name: String): LogLevel =
