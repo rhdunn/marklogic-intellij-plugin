@@ -58,6 +58,8 @@ class MarkLogicLogViewUI(private val mProject: Project) : LogViewActions {
         mPanel
 
     private fun createUIComponents() {
+        mSettings = MarkLogicSettings.getInstance()
+
         mActions = MarkLogicLogViewToolbar(this)
         mActionToolbar = mActions!!.component
 
