@@ -93,4 +93,9 @@ class MarkLogicLogView: JTextPane() {
     // tooltips for this control.
     override fun getToolTipText(event: MouseEvent?): String? =
         null
+
+    override fun updateUI() {
+        super.updateUI()
+        background = UIManager.getColor("TextField.background")
+    }
 }
