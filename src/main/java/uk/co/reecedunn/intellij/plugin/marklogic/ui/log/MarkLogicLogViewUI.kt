@@ -17,11 +17,10 @@ package uk.co.reecedunn.intellij.plugin.marklogic.ui.log
 
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.project.Project
-import com.intellij.openapi.ui.ComboBox
 import org.jetbrains.annotations.CalledInBackground
+import uk.co.reecedunn.intellij.plugin.core.ui.ComboBox
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Connection
 import uk.co.reecedunn.intellij.plugin.marklogic.api.LogRequestBuilder
-import uk.co.reecedunn.intellij.plugin.marklogic.log.MarkLogicLogEntry
 import uk.co.reecedunn.intellij.plugin.marklogic.log.MarkLogicLogFile
 import uk.co.reecedunn.intellij.plugin.marklogic.server.LogType
 import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicAppServer
@@ -32,14 +31,6 @@ import uk.co.reecedunn.intellij.plugin.marklogic.ui.server.MarkLogicServerComboB
 
 import javax.swing.*
 import java.io.IOException
-import javax.swing.text.StyleConstants
-import java.awt.Color
-import java.awt.Font
-import java.awt.event.FocusEvent
-import java.awt.event.FocusListener
-import javax.swing.text.AttributeSet
-import javax.swing.text.SimpleAttributeSet
-import javax.swing.text.StyleContext
 
 class MarkLogicLogViewUI(private val mProject: Project) : LogViewActions {
     private var mSettings: MarkLogicSettings? = null
@@ -82,10 +73,7 @@ class MarkLogicLogViewUI(private val mProject: Project) : LogViewActions {
         }
 
         ApplicationManager.getApplication().executeOnPooledThread {
-            mAppServer!!.removeAllItems()
-            for (appserver in server.appservers) {
-                mAppServer!!.addItem(appserver)
-            }
+            (mAppServer as? ComboBox<MarkLogicAppServer>)!!.items = server.appservers
         }
 
         mConnection = Connection.newConnection(

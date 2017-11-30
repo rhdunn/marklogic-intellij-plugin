@@ -95,7 +95,7 @@ class MarkLogicServer {
         MarkLogicVersion.parse(xquery(MARKLOGIC_VERSION_XQUERY)[0].content)
 
     @get:CalledInBackground
-    val appservers get(): List<MarkLogicAppServer> {
+    val appservers get(): Sequence<MarkLogicAppServer> {
         val servers = ArrayList<MarkLogicAppServer>()
         try {
             val items = xquery(LIST_APPSERVERS_XQUERY)
@@ -116,7 +116,7 @@ class MarkLogicServer {
                 servers.add(MarkLogicAppServer.TASKSERVER)
             }
         }
-        return servers
+        return servers.asSequence()
     }
 
 }
