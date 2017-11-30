@@ -4,6 +4,8 @@
 
 - [License Information](#license-information)
 - [Features](#features)
+  - [Run/Debug Configurations](#run-debug-configurations)
+  - [Log Viewer](#log-viewer)
 
 ----------
 
@@ -12,11 +14,13 @@ This project provides MarkLogic integration for the IntelliJ IDE.
 _Supported IntelliJ Platforms:_ IntelliJ IDEA Community, IntelliJ IDEA Ultimate,
 PhpStorm, WebStorm, PyCharm, RubyMine, AppCode, CLion, Rider, Android Studio
 
-_Supported IntelliJ Versions:_ 2017.1 - 2017.2
+_Supported IntelliJ Versions:_ 2017.1 - 2017.3
 
 _Supported MarkLogic Versions:_ 5.0 - 9.0
 
 ## Features
+
+### Run/Debug Configurations
 
 Supports running and profiling the following query types:
 1. XQuery
@@ -37,6 +41,11 @@ RDF triples can be returned in the following formats:
 
 __NOTE:__ On MarkLogic 7, these triple formats are reported as text/plain
 due to limitations in the MarkLogic API.
+
+### Log Viewer
+
+Supports displaying MarkLogic `ErrorLog.txt` logs for the configured MarkLogic
+instances.
 
 ## License Information
 

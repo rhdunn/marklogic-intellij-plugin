@@ -1,6 +1,6 @@
 # Change Log
 
-## 0.2 - (In Development)
+## 0.2 - 2017-11-30
 
 1. Provide a log viewer for MarkLogic ErrorLog.txt files.
 
