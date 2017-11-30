@@ -17,8 +17,8 @@ package uk.co.reecedunn.intellij.plugin.marklogic.ui.server
 
 import com.intellij.openapi.Disposable
 import com.intellij.openapi.application.ApplicationManager
-import com.intellij.openapi.ui.ComboBox
 import com.intellij.ui.ColoredListCellRenderer
+import uk.co.reecedunn.intellij.plugin.core.ui.ComboBox
 import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicServer
 import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicVersion
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.settings.MarkLogicSettings
@@ -60,11 +60,7 @@ class MarkLogicServerComboBox : ComboBox<MarkLogicServer>(), MarkLogicSettings.L
     var hostname: String?
         get() = server?.hostname
         set(value) {
-            for (i in 0 until itemCount) {
-                if (getItemAt(i).hostname == value) {
-                    selectedIndex = i
-                }
-            }
+            items.find { item -> item.hostname == value }.let { item -> selectedItem = item }
         }
 
     val version get(): MarkLogicVersion? =
@@ -76,11 +72,7 @@ class MarkLogicServerComboBox : ComboBox<MarkLogicServer>(), MarkLogicSettings.L
     override fun serversChanged() {
         val settings = MarkLogicSettings.getInstance()
         cache.clear()
-
-        removeAllItems()
-        for (server in settings.servers) {
-            addItem(server)
-        }
+        items = settings.servers.asSequence()
     }
 
     override fun dispose() {

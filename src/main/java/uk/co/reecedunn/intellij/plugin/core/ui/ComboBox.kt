@@ -32,7 +32,7 @@ private class ItemIterator<T>(val combobox: ComboBox<T>) : Iterator<T> {
 
 }
 
-class ComboBox<T>: ComboBox<T>() {
+open class ComboBox<T>: ComboBox<T>() {
     var items: Sequence<T>
         get() = ItemIterator<T>(this).asSequence()
         set(value) {
