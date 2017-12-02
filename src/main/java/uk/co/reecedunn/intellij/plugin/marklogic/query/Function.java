@@ -169,7 +169,7 @@ public enum Function {
         this.parameters = parameters;
     }
 
-    public String buildQueryFromTemplate(MarkLogicRunConfiguration configuration) {
+    public String buildQuery(MarkLogicRunConfiguration configuration) {
         final String query = readFileContent(configuration.getMainModuleFile());
 
         final StringBuilder options = new StringBuilder();
@@ -199,10 +199,6 @@ public enum Function {
                 .replace("$TRIPLE_FORMAT", tripleFormat.getMarkLogicName())
                 .replace("$CONTENT_TYPE",  tripleFormat.getContentType());
         }
-    }
-
-    public void buildQuery(StringBuilder builder, MarkLogicRunConfiguration configuration) {
-        builder.append(buildQueryFromTemplate(configuration));
     }
 
     private String readFileContent(VirtualFile file) {

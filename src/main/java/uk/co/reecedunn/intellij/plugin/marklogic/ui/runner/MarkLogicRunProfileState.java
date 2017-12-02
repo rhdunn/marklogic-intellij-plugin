@@ -52,13 +52,10 @@ public class MarkLogicRunProfileState extends CommandLineState {
             throw new ExecutionException("Cannot run the query file with MarkLogic " + configuration.getMarkLogicVersion());
         }
 
-        StringBuilder xquery = new StringBuilder();
-        function.buildQuery(xquery, configuration);
-
         Connection connection = createConnection(configuration);
         EvalRequestBuilder builder = connection.createEvalRequestBuilder();
         builder.setContentDatabase(configuration.getContentDatabase());
-        builder.setXQuery(xquery.toString());
+        builder.setXQuery(function.buildQuery(configuration));
         return new MarkLogicRequestHandler(builder.build(), configuration.getMainModulePath());
     }
 
