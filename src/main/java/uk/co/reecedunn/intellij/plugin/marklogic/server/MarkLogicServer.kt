@@ -25,6 +25,8 @@ private val MARKLOGIC_VERSION_XQUERY = QueryFile("queries/marklogic-version.xqy"
 
 private val LIST_APPSERVERS_XQUERY = QueryFile("queries/list-appservers.xqy")
 
+val LIST_DATABASES_XQUERY = QueryFile("queries/list-databases.xqy")
+
 /**
  * Connection details for a MarkLogic server.
  */

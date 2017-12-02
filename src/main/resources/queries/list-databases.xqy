@@ -1,0 +1,1 @@
+for $name in xdmp:databases() ! xdmp:database-name(.) order by $name return $name

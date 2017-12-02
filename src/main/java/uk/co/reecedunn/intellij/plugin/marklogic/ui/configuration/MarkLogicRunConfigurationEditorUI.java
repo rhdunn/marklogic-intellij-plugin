@@ -23,7 +23,9 @@ import com.intellij.openapi.ui.ComponentWithBrowseButton;
 import com.intellij.openapi.ui.TextComponentAccessor;
 import org.jetbrains.annotations.NotNull;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Connection;
+import uk.co.reecedunn.intellij.plugin.marklogic.query.QueryFile;
 import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicServer;
+import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicServerKt;
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.resources.MarkLogicBundle;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.RDFFormat;
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.runner.MarkLogicResultsHandler;
@@ -40,9 +42,8 @@ public class MarkLogicRunConfigurationEditorUI {
     private class MarkLogicServerChangedListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            String query = "for $name in xdmp:databases() ! xdmp:database-name(.) order by $name return $name";
-            run(query, (MarkLogicQueryComboBox)mContentDatabase);
-            run(query, (MarkLogicQueryComboBox)mModuleDatabase);
+            run(MarkLogicServerKt.getLIST_DATABASES_XQUERY(), (MarkLogicQueryComboBox)mContentDatabase);
+            run(MarkLogicServerKt.getLIST_DATABASES_XQUERY(), (MarkLogicQueryComboBox)mModuleDatabase);
         }
     };
 
@@ -118,11 +119,11 @@ public class MarkLogicRunConfigurationEditorUI {
         return mPanel;
     }
 
-    private boolean run(String query, MarkLogicResultsHandler handler) {
+    private boolean run(QueryFile query, MarkLogicResultsHandler handler) {
         // NOTE: Using SettingsEditor.getFactory or getSnapshot don't work, as
         // they throw a NullPointerException when processing the events.
         MarkLogicRunConfiguration configuration = (MarkLogicRunConfiguration) mFactory.createTemplateConfiguration(mProject);
         apply(configuration);
-        return configuration.getServer() != null && configuration.run(query, handler);
+        return configuration.getServer() != null && configuration.run(query.getContents(), handler);
     }
 }
