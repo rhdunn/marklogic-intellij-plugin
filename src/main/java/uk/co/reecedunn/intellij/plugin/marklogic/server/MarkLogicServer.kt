@@ -23,16 +23,7 @@ import java.io.IOException
 
 private val MARKLOGIC_VERSION_XQUERY = QueryFile("queries/marklogic-version.xqy")
 
-private val LIST_APPSERVERS_XQUERY =
-    "import module namespace admin = \"http://marklogic.com/xdmp/admin\" at \"/MarkLogic/admin.xqy\";\n" +
-    "let \$config := admin:get-configuration()\n" +
-    "for \$groupId in admin:get-group-ids(\$config)\n" +
-    "let \$groupName := admin:group-get-name(\$config, \$groupId)\n" +
-    "for \$appServerId in admin:group-get-appserver-ids(\$config, \$groupId)" +
-    "let \$appServerName := admin:appserver-get-name(\$config, \$appServerId)" +
-    "let \$port := admin:appserver-get-port(\$config, \$appServerId)" +
-    "let \$type := admin:appserver-get-type(\$config, \$appServerId)" +
-    "return (\$groupName, \$appServerName, \$type, \$port)"
+private val LIST_APPSERVERS_XQUERY = QueryFile("queries/list-appservers.xqy")
 
 /**
  * Connection details for a MarkLogic server.
