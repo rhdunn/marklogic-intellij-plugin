@@ -2,10 +2,10 @@
 
 [![Build Status](https://travis-ci.org/rhdunn/marklogic-intellij-plugin.svg)](https://travis-ci.org/rhdunn/marklogic-intellij-plugin)
 
-- [License Information](#license-information)
 - [Features](#features)
   - [Run/Debug Configurations](#run-debug-configurations)
   - [Log Viewer](#log-viewer)
+- [License Information](#license-information)
 
 ----------
 
