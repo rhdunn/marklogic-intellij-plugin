@@ -44,7 +44,7 @@ public class FunctionTest extends ConfigurationTestCase {
             "let $vars := ()\n" +
             "let $options := <options xmlns=\"xdmp:eval\"><modules>0</modules><root>/</root></options>\n" +
             "return try { xdmp:eval($query, $vars, $options) } catch ($e) { $e }\n";
-        assertThat(builder.toString(), is(expected));
+        assertThat(builder.toString().replaceAll("\r\n", "\n"), is(expected));
     }
 
     public void testQueryWithDoubleQuotes() {
@@ -63,7 +63,7 @@ public class FunctionTest extends ConfigurationTestCase {
             "let $vars := ()\n" +
             "let $options := <options xmlns=\"xdmp:eval\"><modules>0</modules><root>/</root></options>\n" +
             "return try { xdmp:eval($query, $vars, $options) } catch ($e) { $e }\n";
-        assertThat(builder.toString(), is(expected));
+        assertThat(builder.toString().replaceAll("\r\n", "\n"), is(expected));
     }
 
     public void testQueryWithXmlEntities() {
@@ -82,7 +82,7 @@ public class FunctionTest extends ConfigurationTestCase {
             "let $vars := ()\n" +
             "let $options := <options xmlns=\"xdmp:eval\"><modules>0</modules><root>/</root></options>\n" +
             "return try { xdmp:eval($query, $vars, $options) } catch ($e) { $e }\n";
-        assertThat(builder.toString(), is(expected));
+        assertThat(builder.toString().replaceAll("\r\n", "\n"), is(expected));
     }
 
     public void testQueryWithOptions() {
@@ -109,7 +109,7 @@ public class FunctionTest extends ConfigurationTestCase {
                     "<root>dolor</root>" +
                 "</options>\n" +
             "return try { xdmp:eval($query, $vars, $options) } catch ($e) { $e }\n";
-        assertThat(builder.toString(), is(expected));
+        assertThat(builder.toString().replaceAll("\r\n", "\n"), is(expected));
     }
 
     public void testNoVarsAndOptionsBuilder() {
@@ -128,7 +128,7 @@ public class FunctionTest extends ConfigurationTestCase {
             "let $vars := ()\n" +
             "let $options := ()\n" +
             "return try { xdmp:sql($query) } catch ($e) { $e }\n";
-        assertThat(builder.toString(), is(expected));
+        assertThat(builder.toString().replaceAll("\r\n", "\n"), is(expected));
     }
 
     public void testRdfTripleFormat_MarkLogic6() {
@@ -149,7 +149,7 @@ public class FunctionTest extends ConfigurationTestCase {
             "let $vars := ()\n" +
             "let $options := <options xmlns=\"xdmp:eval\"><modules>0</modules><root>/</root></options>\n" +
             "return try { xdmp:eval($query, $vars, $options) } catch ($e) { $e }\n";
-        assertThat(builder.toString(), is(expected));
+        assertThat(builder.toString().replaceAll("\r\n", "\n"), is(expected));
     }
 
     public void testRdfTripleFormat_MarkLogic7() {
@@ -181,6 +181,6 @@ public class FunctionTest extends ConfigurationTestCase {
             "    else\n" +
             "        $ret\n" +
             "} catch ($e) { $e }\n";
-        assertThat(builder.toString(), is(expected));
+        assertThat(builder.toString().replaceAll("\r\n", "\n"), is(expected));
     }
 }

@@ -169,12 +169,35 @@ public enum Function {
         this.parameters = parameters;
     }
 
+    public String buildQueryFromTemplate(MarkLogicRunConfiguration configuration) {
+        final String query = readFileContent(configuration.getMainModuleFile());
+
+        final StringBuilder options = new StringBuilder();
+        if (optionsBuilder != null) {
+            optionsBuilder.reset();
+            optionsBuilder.setContentDatabase(configuration.getContentDatabase());
+            optionsBuilder.setModulesDatabase(configuration.getModuleDatabase());
+            optionsBuilder.setModulesRoot(configuration.getModuleRoot());
+            optionsBuilder.build(options);
+        } else {
+            options.append("()");
+        }
+
+        return MarkLogicQueryKt.getRUN_QUERY().getQuery()
+            .replace("$QUERY_STRING", asXQueryStringContent(query))
+            .replace("$OPTIONS",      options.toString())
+            .replace("$FUNCTION",     function);
+    }
+
     public void buildQuery(StringBuilder builder, MarkLogicRunConfiguration configuration) {
         RDFFormat tripleFormat = configuration.getTripleFormat();
         double markLogicVersion = configuration.getMarkLogicVersion();
 
         if (tripleFormat != RDFFormat.SEM_TRIPLE && markLogicVersion >= 7.0) {
             builder.append("import module namespace sem = \"http://marklogic.com/semantics\" at \"/MarkLogic/semantics.xqy\";\n");
+        } else {
+            builder.append(buildQueryFromTemplate(configuration));
+            return;
         }
 
         final String query = readFileContent(configuration.getMainModuleFile());

@@ -23,6 +23,8 @@ val LIST_APPSERVERS_XQUERY = MarkLogicQuery("queries/list-appservers.xqy")
 
 val LIST_DATABASES_XQUERY = MarkLogicQuery("queries/list-databases.xqy")
 
+val RUN_QUERY = MarkLogicQuery("queries/run-query.xqy")
+
 class MarkLogicQuery(val path: String) {
     val query: String
 
