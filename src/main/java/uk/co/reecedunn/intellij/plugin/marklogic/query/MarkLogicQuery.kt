@@ -25,6 +25,8 @@ val LIST_DATABASES_XQUERY = MarkLogicQuery("queries/list-databases.xqy")
 
 val RUN_QUERY = MarkLogicQuery("queries/run-query.xqy")
 
+val RUN_QUERY_AS_RDF = MarkLogicQuery("queries/run-query-as-rdf.xqy")
+
 class MarkLogicQuery(val path: String) {
     val query: String
 

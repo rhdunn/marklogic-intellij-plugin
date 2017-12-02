@@ -183,64 +183,26 @@ public enum Function {
             options.append("()");
         }
 
-        return MarkLogicQueryKt.getRUN_QUERY().getQuery()
-            .replace("$QUERY_STRING", asXQueryStringContent(query))
-            .replace("$OPTIONS",      options.toString())
-            .replace("$FUNCTION",     function);
-    }
-
-    public void buildQuery(StringBuilder builder, MarkLogicRunConfiguration configuration) {
         RDFFormat tripleFormat = configuration.getTripleFormat();
         double markLogicVersion = configuration.getMarkLogicVersion();
 
-        if (tripleFormat != RDFFormat.SEM_TRIPLE && markLogicVersion >= 7.0) {
-            builder.append("import module namespace sem = \"http://marklogic.com/semantics\" at \"/MarkLogic/semantics.xqy\";\n");
-        } else {
-            builder.append(buildQueryFromTemplate(configuration));
-            return;
-        }
-
-        final String query = readFileContent(configuration.getMainModuleFile());
-        builder.append("let $query := \"");
-        builder.append(asXQueryStringContent(query));
-        builder.append("\"\n");
-
-        builder.append("let $vars := ()\n");
-
-        builder.append("let $options := ");
-        if (optionsBuilder != null) {
-            optionsBuilder.reset();
-            optionsBuilder.setContentDatabase(configuration.getContentDatabase());
-            optionsBuilder.setModulesDatabase(configuration.getModuleDatabase());
-            optionsBuilder.setModulesRoot(configuration.getModuleRoot());
-            optionsBuilder.build(builder);
-        } else {
-            builder.append("()");
-        }
-        builder.append('\n');
-
-        builder.append("return try {");
         if (tripleFormat == RDFFormat.SEM_TRIPLE || markLogicVersion < 7.0) {
-            builder.append(' ');
-            builder.append(function);
-            builder.append(' ');
+            return MarkLogicQueryKt.getRUN_QUERY().getQuery()
+                .replace("$QUERY_STRING", asXQueryStringContent(query))
+                .replace("$OPTIONS",      options.toString())
+                .replace("$FUNCTION",     function);
         } else {
-            builder.append('\n');
-            builder.append("    let $ret     := ");
-            builder.append(function);
-            builder.append('\n');
-            builder.append("    let $triples := for $item in $ret where $item instance of sem:triple return $item\n");
-            builder.append("    let $other   := for $item in $ret where not($item instance of sem:triple) return $item\n");
-            builder.append("    return if (count($triples) > 0) then\n");
-            // NOTE: Using xdmp:set-response-content-type overrides the multipart Content-Type for the response, but
-            // still writes out the multipart data.
-            builder.append("        let $fmt := sem:rdf-serialize($triples, \"").append(tripleFormat.getMarkLogicName()).append("\")\n");
-            builder.append("        let $_ := xdmp:add-response-header(\"X-Content-Type\", \"").append(tripleFormat.getContentType()).append("\")\n");
-            builder.append("        return ($fmt, $other)\n");
-            builder.append("    else\n");
-            builder.append("        $ret\n");
+            return MarkLogicQueryKt.getRUN_QUERY_AS_RDF().getQuery()
+                .replace("$QUERY_STRING",  asXQueryStringContent(query))
+                .replace("$OPTIONS",       options.toString())
+                .replace("$FUNCTION",      function)
+                .replace("$TRIPLE_FORMAT", tripleFormat.getMarkLogicName())
+                .replace("$CONTENT_TYPE",  tripleFormat.getContentType());
         }
-        builder.append("} catch ($e) { $e }\n");
+    }
+
+    public void buildQuery(StringBuilder builder, MarkLogicRunConfiguration configuration) {
+        builder.append(buildQueryFromTemplate(configuration));
     }
 
     private String readFileContent(VirtualFile file) {
