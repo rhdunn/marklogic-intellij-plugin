@@ -26,5 +26,6 @@ public interface OptionsBuilder {
 
     void setModulesRoot(String modulesRoot);
 
-    void build(@NotNull StringBuilder builder);
+    @NotNull
+    String build();
 }

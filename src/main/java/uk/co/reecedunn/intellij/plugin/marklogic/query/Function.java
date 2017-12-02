@@ -172,15 +172,15 @@ public enum Function {
     public String buildQuery(MarkLogicRunConfiguration configuration) {
         final String query = readFileContent(configuration.getMainModuleFile());
 
-        final StringBuilder options = new StringBuilder();
+        final String options;
         if (optionsBuilder != null) {
             optionsBuilder.reset();
             optionsBuilder.setContentDatabase(configuration.getContentDatabase());
             optionsBuilder.setModulesDatabase(configuration.getModuleDatabase());
             optionsBuilder.setModulesRoot(configuration.getModuleRoot());
-            optionsBuilder.build(options);
+            options = optionsBuilder.build();
         } else {
-            options.append("()");
+            options = "()";
         }
 
         RDFFormat tripleFormat = configuration.getTripleFormat();
@@ -189,12 +189,12 @@ public enum Function {
         if (tripleFormat == RDFFormat.SEM_TRIPLE || markLogicVersion < 7.0) {
             return MarkLogicQueryKt.getRUN_QUERY().getQuery()
                 .replace("$QUERY_STRING", asXQueryStringContent(query))
-                .replace("$OPTIONS",      options.toString())
+                .replace("$OPTIONS",      options)
                 .replace("$FUNCTION",     function);
         } else {
             return MarkLogicQueryKt.getRUN_QUERY_AS_RDF().getQuery()
                 .replace("$QUERY_STRING",  asXQueryStringContent(query))
-                .replace("$OPTIONS",       options.toString())
+                .replace("$OPTIONS",       options)
                 .replace("$FUNCTION",      function)
                 .replace("$TRIPLE_FORMAT", tripleFormat.getMarkLogicName())
                 .replace("$CONTENT_TYPE",  tripleFormat.getContentType());

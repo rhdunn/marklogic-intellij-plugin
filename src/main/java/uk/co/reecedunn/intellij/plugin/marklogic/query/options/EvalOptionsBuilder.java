@@ -51,13 +51,16 @@ public class EvalOptionsBuilder implements OptionsBuilder {
         this.modulesRoot = modulesRoot;
     }
 
+    @NotNull
     @Override
-    public void build(@NotNull StringBuilder builder) {
+    public String build() {
+        StringBuilder builder = new StringBuilder();
         builder.append("<options xmlns=\"xdmp:eval\">");
         buildDatabaseOption(builder, "database", contentDatabase, null);
         buildDatabaseOption(builder, "modules", modulesDatabase, FILESYSTEM_MODULES_DB);
         buildOption(builder, "root", modulesRoot);
         builder.append("</options>");
+        return builder.toString();
     }
 
     private void buildDatabaseOption(StringBuilder options, String option, String database, String defaultDatabaseId) {

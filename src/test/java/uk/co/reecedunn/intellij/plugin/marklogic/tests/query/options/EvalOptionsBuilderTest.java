@@ -26,68 +26,59 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class EvalOptionsBuilderTest extends TestCase {
     public void testNoOptions() {
         OptionsBuilder builder = EvalOptionsBuilder.INSTANCE;
-        StringBuilder vars = new StringBuilder();
 
         builder.reset();
-        builder.build(vars);
 
         final String expected =
             "<options xmlns=\"xdmp:eval\">" +
             "<modules>0</modules>" +
             "</options>";
-        assertThat(vars.toString(), is(expected));
+        assertThat(builder.build(), is(expected));
     }
 
     public void testContentDatabaseOption() {
         OptionsBuilder builder = EvalOptionsBuilder.INSTANCE;
-        StringBuilder vars = new StringBuilder();
 
         builder.reset();
         builder.setContentDatabase("lorem");
-        builder.build(vars);
 
         final String expected =
             "<options xmlns=\"xdmp:eval\">" +
             "<database>{xdmp:database(\"lorem\")}</database>" +
             "<modules>0</modules>" +
             "</options>";
-        assertThat(vars.toString(), is(expected));
+        assertThat(builder.build(), is(expected));
     }
 
     public void testModulesDatabaseOption() {
         OptionsBuilder builder = EvalOptionsBuilder.INSTANCE;
-        StringBuilder vars = new StringBuilder();
 
         builder.reset();
         builder.setModulesDatabase("lorem");
-        builder.build(vars);
 
         final String expected =
             "<options xmlns=\"xdmp:eval\">" +
             "<modules>{xdmp:database(\"lorem\")}</modules>" +
             "</options>";
-        assertThat(vars.toString(), is(expected));
+        assertThat(builder.build(), is(expected));
     }
 
     public void testModulesRootOption() {
         OptionsBuilder builder = EvalOptionsBuilder.INSTANCE;
-        StringBuilder vars = new StringBuilder();
 
         builder.reset();
         builder.setModulesRoot("lorem");
-        builder.build(vars);
 
         final String expected =
             "<options xmlns=\"xdmp:eval\">" +
             "<modules>0</modules>" +
             "<root>lorem</root>" +
             "</options>";
-        assertThat(vars.toString(), is(expected));
+        assertThat(builder.build(), is(expected));
     }
 
     public void testResetOptions() {
         OptionsBuilder builder = EvalOptionsBuilder.INSTANCE;
-        StringBuilder vars = new StringBuilder();
 
         builder.reset();
         builder.setContentDatabase("lorem");
@@ -95,12 +86,10 @@ public class EvalOptionsBuilderTest extends TestCase {
         builder.setModulesRoot("/dolor");
         builder.reset();
 
-        builder.build(vars);
-
         final String expected =
             "<options xmlns=\"xdmp:eval\">" +
             "<modules>0</modules>" +
             "</options>";
-        assertThat(vars.toString(), is(expected));
+        assertThat(builder.build(), is(expected));
     }
 }
