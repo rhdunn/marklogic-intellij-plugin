@@ -18,10 +18,10 @@ package uk.co.reecedunn.intellij.plugin.marklogic.server
 import org.jetbrains.annotations.CalledInBackground
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Connection
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Item
+import uk.co.reecedunn.intellij.plugin.marklogic.query.QueryFile
 import java.io.IOException
 
-private val MARKLOGIC_VERSION_XQUERY =
-    "xdmp:version()"
+private val MARKLOGIC_VERSION_XQUERY = QueryFile("queries/marklogic-version.xqy")
 
 private val LIST_APPSERVERS_XQUERY =
     "import module namespace admin = \"http://marklogic.com/xdmp/admin\" at \"/MarkLogic/admin.xqy\";\n" +
@@ -89,6 +89,10 @@ class MarkLogicServer {
         queryBuilder.xQuery = query
         return queryBuilder.build().run().items
     }
+
+    @CalledInBackground
+    fun xquery(query: QueryFile): Array<Item> =
+        xquery(query.contents)
 
     @get:CalledInBackground
     val version get(): MarkLogicVersion =
