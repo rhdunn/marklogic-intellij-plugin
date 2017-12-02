@@ -17,6 +17,12 @@ package uk.co.reecedunn.intellij.plugin.marklogic.query
 
 import org.apache.commons.compress.utils.IOUtils
 
+val MARKLOGIC_VERSION_XQUERY = MarkLogicQuery("queries/marklogic-version.xqy")
+
+val LIST_APPSERVERS_XQUERY = MarkLogicQuery("queries/list-appservers.xqy")
+
+val LIST_DATABASES_XQUERY = MarkLogicQuery("queries/list-databases.xqy")
+
 class MarkLogicQuery(val path: String) {
     val query: String
 

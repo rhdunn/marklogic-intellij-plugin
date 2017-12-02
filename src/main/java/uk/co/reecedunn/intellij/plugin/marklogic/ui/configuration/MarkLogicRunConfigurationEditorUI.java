@@ -24,8 +24,8 @@ import com.intellij.openapi.ui.TextComponentAccessor;
 import org.jetbrains.annotations.NotNull;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Connection;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.MarkLogicQuery;
+import uk.co.reecedunn.intellij.plugin.marklogic.query.MarkLogicQueryKt;
 import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicServer;
-import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicServerKt;
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.resources.MarkLogicBundle;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.RDFFormat;
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.runner.MarkLogicResultsHandler;
@@ -40,8 +40,8 @@ public class MarkLogicRunConfigurationEditorUI {
     private class MarkLogicServerChangedListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            run(MarkLogicServerKt.getLIST_DATABASES_XQUERY(), (MarkLogicQueryComboBox)mContentDatabase);
-            run(MarkLogicServerKt.getLIST_DATABASES_XQUERY(), (MarkLogicQueryComboBox)mModuleDatabase);
+            run(MarkLogicQueryKt.getLIST_DATABASES_XQUERY(), (MarkLogicQueryComboBox)mContentDatabase);
+            run(MarkLogicQueryKt.getLIST_DATABASES_XQUERY(), (MarkLogicQueryComboBox)mModuleDatabase);
         }
     };
 

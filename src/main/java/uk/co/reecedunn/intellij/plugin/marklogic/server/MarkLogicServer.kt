@@ -18,14 +18,10 @@ package uk.co.reecedunn.intellij.plugin.marklogic.server
 import org.jetbrains.annotations.CalledInBackground
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Connection
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Item
+import uk.co.reecedunn.intellij.plugin.marklogic.query.LIST_APPSERVERS_XQUERY
+import uk.co.reecedunn.intellij.plugin.marklogic.query.MARKLOGIC_VERSION_XQUERY
 import uk.co.reecedunn.intellij.plugin.marklogic.query.MarkLogicQuery
 import java.io.IOException
-
-private val MARKLOGIC_VERSION_XQUERY = MarkLogicQuery("queries/marklogic-version.xqy")
-
-private val LIST_APPSERVERS_XQUERY = MarkLogicQuery("queries/list-appservers.xqy")
-
-val LIST_DATABASES_XQUERY = MarkLogicQuery("queries/list-databases.xqy")
 
 /**
  * Connection details for a MarkLogic server.
