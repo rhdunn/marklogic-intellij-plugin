@@ -17,12 +17,12 @@ package uk.co.reecedunn.intellij.plugin.marklogic.query
 
 import org.apache.commons.compress.utils.IOUtils
 
-class QueryFile(val path: String) {
-    val contents: String
+class MarkLogicQuery(val path: String) {
+    val query: String
 
     init {
         val loader = this::class.java.classLoader
         val data = loader.getResourceAsStream(path)
-        contents = String(IOUtils.toByteArray(data), Charsets.UTF_8)
+        query = String(IOUtils.toByteArray(data), Charsets.UTF_8)
     }
 }

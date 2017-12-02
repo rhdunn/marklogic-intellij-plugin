@@ -23,18 +23,16 @@ import com.intellij.openapi.ui.ComponentWithBrowseButton;
 import com.intellij.openapi.ui.TextComponentAccessor;
 import org.jetbrains.annotations.NotNull;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Connection;
-import uk.co.reecedunn.intellij.plugin.marklogic.query.QueryFile;
+import uk.co.reecedunn.intellij.plugin.marklogic.query.MarkLogicQuery;
 import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicServer;
 import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicServerKt;
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.resources.MarkLogicBundle;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.RDFFormat;
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.runner.MarkLogicResultsHandler;
-import uk.co.reecedunn.intellij.plugin.core.ui.DocumentChangedListener;
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.runner.MarkLogicQueryComboBox;
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.server.MarkLogicServerComboBox;
 
 import javax.swing.*;
-import javax.swing.event.DocumentListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -119,11 +117,11 @@ public class MarkLogicRunConfigurationEditorUI {
         return mPanel;
     }
 
-    private boolean run(QueryFile query, MarkLogicResultsHandler handler) {
+    private boolean run(MarkLogicQuery query, MarkLogicResultsHandler handler) {
         // NOTE: Using SettingsEditor.getFactory or getSnapshot don't work, as
         // they throw a NullPointerException when processing the events.
         MarkLogicRunConfiguration configuration = (MarkLogicRunConfiguration) mFactory.createTemplateConfiguration(mProject);
         apply(configuration);
-        return configuration.getServer() != null && configuration.run(query.getContents(), handler);
+        return configuration.getServer() != null && configuration.run(query.getQuery(), handler);
     }
 }
