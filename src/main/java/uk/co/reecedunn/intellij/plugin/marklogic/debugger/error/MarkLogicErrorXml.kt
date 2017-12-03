@@ -17,18 +17,17 @@ package uk.co.reecedunn.intellij.plugin.marklogic.debugger.error
 
 import com.intellij.xdebugger.frame.XExecutionStack
 import com.intellij.xdebugger.frame.XStackFrame
-import uk.co.reecedunn.intellij.plugin.core.xml.XmlDocument
+import uk.co.reecedunn.intellij.plugin.core.xml.*
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.resources.MarkLogicBundle
+
+private val ERROR_ERROR = XmlElementName("error", "http://marklogic.com/xdmp/error")
 
 class MarkLogicErrorXml internal constructor(val doc: XmlDocument):
         XExecutionStack(MarkLogicBundle.message("debugger.thread.error")) {
 
     constructor(errorXml: String): this(XmlDocument.parse(errorXml)) {
-        val error = doc.root
-        if (error.localName != "error" ||
-            error.namespaceURI != "http://marklogic.com/xdmp/error") {
-            throw RuntimeException("[${error.namespaceURI}]${error.localName} is not a MarkLogic error XML document.")
-        }
+        if (doc.root.name != ERROR_ERROR)
+            throw RuntimeException("${doc.root.name} is not a MarkLogic error XML document.")
     }
 
     override fun getTopFrame(): XStackFrame? {
