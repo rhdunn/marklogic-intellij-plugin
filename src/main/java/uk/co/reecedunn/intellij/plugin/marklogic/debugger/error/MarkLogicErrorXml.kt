@@ -21,6 +21,8 @@ import uk.co.reecedunn.intellij.plugin.core.xml.*
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.resources.MarkLogicBundle
 
 private val ERROR_CODE = XmlElementName("code", "http://marklogic.com/xdmp/error")
+private val ERROR_DATA = XmlElementName("data", "http://marklogic.com/xdmp/error")
+private val ERROR_DATUM = XmlElementName("datum", "http://marklogic.com/xdmp/error")
 private val ERROR_ERROR = XmlElementName("error", "http://marklogic.com/xdmp/error")
 private val ERROR_EXPR = XmlElementName("expr", "http://marklogic.com/xdmp/error")
 private val ERROR_MESSAGE = XmlElementName("message", "http://marklogic.com/xdmp/error")
@@ -39,11 +41,19 @@ class MarkLogicErrorXml internal constructor(private val doc: XmlDocument):
     // region MarkLogic Error
 
     val code get(): String = doc.child(ERROR_CODE).text().first()
+
     val name get(): String = doc.child(ERROR_NAME).text().first()
+
     val XQueryVersion get(): String = doc.child(ERROR_XQUERY_VERSION).text().first()
+
     val message get(): String = doc.child(ERROR_MESSAGE).text().first()
+
     val retryable get(): Boolean = doc.child(ERROR_RETRYABLE).text().first().toBoolean()
+
     val expr get(): String = doc.child(ERROR_EXPR).text().first()
+
+    val data get(): Sequence<String> =
+        doc.child(ERROR_DATA).child(ERROR_DATUM).text()
 
     // endregion
     // region XExecutionStack

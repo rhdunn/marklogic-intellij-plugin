@@ -34,5 +34,23 @@ class MarkLogicErrorXmlTest : TestCase() {
         assertThat(error.message, `is`("Division by zero"))
         assertThat(error.retryable, `is`(false))
         assertThat(error.expr, `is`("2 div 0"))
+
+        assertThat(error.data.count(), `is`(0))
+    }
+
+    fun testErrorDetails_Data() {
+        val xml = TestResource("debugger/error/cast-as.xml").toString()
+        val error = MarkLogicErrorXml(xml)
+
+        assertThat(error.code, `is`("XDMP-CAST"))
+        assertThat(error.name, `is`("err:FORG0001"))
+        assertThat(error.XQueryVersion, `is`("1.0-ml"))
+        assertThat(error.message, `is`("Invalid cast"))
+        assertThat(error.retryable, `is`(false))
+        assertThat(error.expr, `is`("() cast as xs:boolean"))
+
+        assertThat(error.data.count(), `is`(2))
+        assertThat(error.data.first(), `is`("()"))
+        assertThat(error.data.last(), `is`("xs:boolean"))
     }
 }

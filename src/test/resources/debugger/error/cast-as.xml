@@ -1,0 +1,41 @@
+<error:error xsi:schemaLocation="http://marklogic.com/xdmp/error error.xsd" xmlns:error="http://marklogic.com/xdmp/error" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <error:code>XDMP-CAST</error:code>
+    <error:name>err:FORG0001</error:name>
+    <error:xquery-version>1.0-ml</error:xquery-version>
+    <error:message>Invalid cast</error:message>
+    <error:format-string>XDMP-CAST: (err:FORG0001) () cast as xs:boolean -- Invalid cast: () cast as xs:boolean</error:format-string>
+    <error:retryable>false</error:retryable>
+    <error:expr>() cast as xs:boolean</error:expr>
+    <error:data>
+        <error:datum>()</error:datum>
+        <error:datum>xs:boolean</error:datum>
+    </error:data>
+    <error:stack>
+        <error:frame>
+            <error:line>1</error:line>
+            <error:column>3</error:column>
+            <error:operation>xdmp:eval("() cast as xs:boolean", (), &lt;options xmlns="xdmp:eval"&gt;&lt;database&gt;1598436954797797328&lt;/database&gt;...&lt;/options&gt;)</error:operation>
+            <error:xquery-version>1.0-ml</error:xquery-version>
+        </error:frame>
+        <error:frame>
+            <error:uri>/eval</error:uri>
+            <error:line>6</error:line>
+            <error:column>18</error:column>
+            <error:variables>
+                <error:variable>
+                    <error:name xmlns="">query</error:name>
+                    <error:value>"() cast as xs:boolean"</error:value>
+                </error:variable>
+                <error:variable>
+                    <error:name xmlns="">vars</error:name>
+                    <error:value>()</error:value>
+                </error:variable>
+                <error:variable>
+                    <error:name xmlns="">options</error:name>
+                    <error:value>&lt;options xmlns="xdmp:eval"&gt;&lt;database&gt;1234567890&lt;/database&gt;...&lt;/options&gt;</error:value>
+                </error:variable>
+            </error:variables>
+            <error:xquery-version>1.0-ml</error:xquery-version>
+        </error:frame>
+    </error:stack>
+</error:error>
