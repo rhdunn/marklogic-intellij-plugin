@@ -16,8 +16,26 @@
 package uk.co.reecedunn.intellij.plugin.core.xml
 
 import org.w3c.dom.Element
+import org.w3c.dom.NodeList
 import org.w3c.dom.Text
 
+// region child:: axis
+
+fun Element.child(ref: XmlElementName?): Sequence<Element> {
+    val nodes: NodeList =
+        if (ref == null)                childNodes
+        else if (ref.namespace == null) getElementsByTagName(ref.localName)
+        else                            getElementsByTagNameNS(ref.namespace, ref.localName)
+    return nodes.asSequence().filterIsInstance<Element>()
+}
+
+fun XmlDocument.child(ref: XmlElementName?): Sequence<Element> =
+    root.child(ref)
+
+fun Sequence<Element>.child(ref: XmlElementName?): Sequence<Element> =
+    flatMap { element -> element.child(ref) }
+
+// endregion
 // region text()
 
 fun Element.text(): Sequence<String> =
