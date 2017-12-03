@@ -28,6 +28,8 @@ class MarkLogicErrorXmlTest : TestCase() {
         val xml = TestResource("debugger/error/eval-divide-by-zero.xml").toString()
         val error = MarkLogicErrorXml(xml)
 
+        assertThat(error.code, `is`("XDMP-DIVBYZERO"))
+
         assertThat(error.topFrame, `is`(nullValue()))
     }
 }

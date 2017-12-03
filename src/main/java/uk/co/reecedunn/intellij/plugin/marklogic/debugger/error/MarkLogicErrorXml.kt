@@ -30,10 +30,22 @@ class MarkLogicErrorXml internal constructor(val doc: XmlDocument):
             throw RuntimeException("${doc.root.name} is not a MarkLogic error XML document.")
     }
 
+    // region MarkLogic Error
+
+    val code get(): String {
+        val nodes = doc.root.getElementsByTagNameNS("http://marklogic.com/xdmp/error", "code")
+        return nodes.item(0).childNodes.item(0).nodeValue
+    }
+
+    // endregion
+    // region XExecutionStack
+
     override fun getTopFrame(): XStackFrame? {
         return null
     }
 
     override fun computeStackFrames(firstFrameIndex: Int, container: XStackFrameContainer?) {
     }
+
+    // endregion
 }
