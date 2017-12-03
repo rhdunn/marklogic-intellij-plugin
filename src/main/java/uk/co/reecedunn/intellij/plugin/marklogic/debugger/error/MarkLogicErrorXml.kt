@@ -17,27 +17,14 @@ package uk.co.reecedunn.intellij.plugin.marklogic.debugger.error
 
 import com.intellij.xdebugger.frame.XExecutionStack
 import com.intellij.xdebugger.frame.XStackFrame
-import org.w3c.dom.Document
-import org.xml.sax.InputSource
-import uk.co.reecedunn.intellij.plugin.marklogic.api.Item
+import uk.co.reecedunn.intellij.plugin.core.xml.XmlDocument
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.resources.MarkLogicBundle
-import java.io.StringReader
-import javax.xml.parsers.DocumentBuilder
-import javax.xml.parsers.DocumentBuilderFactory
 
-private fun createDocumentBuilder(): DocumentBuilder {
-    val factory = DocumentBuilderFactory.newInstance()
-    factory.isNamespaceAware = true
-    return factory.newDocumentBuilder()
-}
-
-private val builder = createDocumentBuilder()
-
-class MarkLogicErrorXml internal constructor(val doc: Document):
+class MarkLogicErrorXml internal constructor(val doc: XmlDocument):
         XExecutionStack(MarkLogicBundle.message("debugger.thread.error")) {
 
-    constructor(errorXml: String): this(builder.parse(InputSource(StringReader(errorXml)))) {
-        val error = doc.documentElement
+    constructor(errorXml: String): this(XmlDocument.parse(errorXml)) {
+        val error = doc.root
         if (error.localName != "error" ||
             error.namespaceURI != "http://marklogic.com/xdmp/error") {
             throw RuntimeException("[${error.namespaceURI}]${error.localName} is not a MarkLogic error XML document.")
