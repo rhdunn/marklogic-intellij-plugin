@@ -24,12 +24,15 @@ import uk.co.reecedunn.intellij.plugin.marklogic.debugger.error.MarkLogicErrorXm
 import uk.co.reecedunn.intellij.plugin.marklogic.tests.TestResource
 
 class MarkLogicErrorXmlTest : TestCase() {
-    fun testEmptySequence() {
+    fun testErrorDetails_NoData() {
         val xml = TestResource("debugger/error/eval-divide-by-zero.xml").toString()
         val error = MarkLogicErrorXml(xml)
 
         assertThat(error.code, `is`("XDMP-DIVBYZERO"))
-
-        assertThat(error.topFrame, `is`(nullValue()))
+        assertThat(error.name, `is`("err:FOAR0001"))
+        assertThat(error.XQueryVersion, `is`("1.0-ml"))
+        assertThat(error.message, `is`("Division by zero"))
+        assertThat(error.retryable, `is`(false))
+        assertThat(error.expr, `is`("2 div 0"))
     }
 }

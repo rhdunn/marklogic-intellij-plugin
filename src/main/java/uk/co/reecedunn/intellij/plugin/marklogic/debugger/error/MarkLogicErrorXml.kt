@@ -22,8 +22,13 @@ import uk.co.reecedunn.intellij.plugin.marklogic.ui.resources.MarkLogicBundle
 
 private val ERROR_CODE = XmlElementName("code", "http://marklogic.com/xdmp/error")
 private val ERROR_ERROR = XmlElementName("error", "http://marklogic.com/xdmp/error")
+private val ERROR_EXPR = XmlElementName("expr", "http://marklogic.com/xdmp/error")
+private val ERROR_MESSAGE = XmlElementName("message", "http://marklogic.com/xdmp/error")
+private val ERROR_NAME = XmlElementName("name", "http://marklogic.com/xdmp/error")
+private val ERROR_RETRYABLE = XmlElementName("retryable", "http://marklogic.com/xdmp/error")
+private val ERROR_XQUERY_VERSION = XmlElementName("xquery-version", "http://marklogic.com/xdmp/error")
 
-class MarkLogicErrorXml internal constructor(val doc: XmlDocument):
+class MarkLogicErrorXml internal constructor(private val doc: XmlDocument):
         XExecutionStack(MarkLogicBundle.message("debugger.thread.error")) {
 
     constructor(errorXml: String): this(XmlDocument.parse(errorXml)) {
@@ -33,8 +38,12 @@ class MarkLogicErrorXml internal constructor(val doc: XmlDocument):
 
     // region MarkLogic Error
 
-    val code get(): String =
-        doc.child(ERROR_CODE).text().first()
+    val code get(): String = doc.child(ERROR_CODE).text().first()
+    val name get(): String = doc.child(ERROR_NAME).text().first()
+    val XQueryVersion get(): String = doc.child(ERROR_XQUERY_VERSION).text().first()
+    val message get(): String = doc.child(ERROR_MESSAGE).text().first()
+    val retryable get(): Boolean = doc.child(ERROR_RETRYABLE).text().first().toBoolean()
+    val expr get(): String = doc.child(ERROR_EXPR).text().first()
 
     // endregion
     // region XExecutionStack
