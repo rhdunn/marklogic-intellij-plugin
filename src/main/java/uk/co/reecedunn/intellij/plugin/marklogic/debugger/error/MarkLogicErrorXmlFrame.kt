@@ -24,14 +24,17 @@ import uk.co.reecedunn.intellij.plugin.core.xml.text
 private val ERROR_COLUMN = XmlElementName("column", "http://marklogic.com/xdmp/error")
 private val ERROR_LINE = XmlElementName("line", "http://marklogic.com/xdmp/error")
 private val ERROR_OPERATION = XmlElementName("operation", "http://marklogic.com/xdmp/error")
+private val ERROR_URI = XmlElementName("uri", "http://marklogic.com/xdmp/error")
 private val ERROR_XQUERY_VERSION = XmlElementName("xquery-version", "http://marklogic.com/xdmp/error")
 
 class MarkLogicErrorXmlFrame internal constructor(val frame: Element): XStackFrame() {
+    val uri: String? = frame.child(ERROR_URI).text().firstOrNull()
+
     val line: Int = frame.child(ERROR_LINE).text().first().toInt()
 
     val column: Int = frame.child(ERROR_COLUMN).text().first().toInt()
 
-    val operation: String = frame.child(ERROR_OPERATION).text().first()
+    val operation: String? = frame.child(ERROR_OPERATION).text().firstOrNull()
 
     val XQueryVersion get(): String = frame.child(ERROR_XQUERY_VERSION).text().first()
 }

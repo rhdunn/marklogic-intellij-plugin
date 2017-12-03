@@ -69,6 +69,10 @@ class MarkLogicErrorXml internal constructor(private val doc: XmlDocument):
     }
 
     override fun computeStackFrames(firstFrameIndex: Int, container: XStackFrameContainer?) {
+        container?.let {
+            val frames = frames.drop(firstFrameIndex).map { frame -> MarkLogicErrorXmlFrame(frame) }
+            it.addStackFrames(frames.toMutableList(), true)
+        }
     }
 
     // endregion

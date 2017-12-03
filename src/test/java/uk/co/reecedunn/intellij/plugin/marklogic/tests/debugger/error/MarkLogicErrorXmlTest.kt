@@ -15,6 +15,8 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.tests.debugger.error
 
+import com.intellij.xdebugger.frame.XExecutionStack
+import com.intellij.xdebugger.frame.XStackFrame
 import junit.framework.TestCase
 
 import org.hamcrest.CoreMatchers.`is`
@@ -23,6 +25,7 @@ import org.hamcrest.MatcherAssert.assertThat
 import uk.co.reecedunn.intellij.plugin.marklogic.debugger.error.MarkLogicErrorXml
 import uk.co.reecedunn.intellij.plugin.marklogic.debugger.error.MarkLogicErrorXmlFrame
 import uk.co.reecedunn.intellij.plugin.marklogic.tests.TestResource
+import uk.co.reecedunn.intellij.plugin.marklogic.tests.debugger.StackFrameContainer
 
 class MarkLogicErrorXmlTest : TestCase() {
     fun testErrorDetails_NoData() {
@@ -55,10 +58,32 @@ class MarkLogicErrorXmlTest : TestCase() {
         assertThat(error.data.last(), `is`("xs:boolean"))
     }
 
-    fun testFrameDetails() {
+    fun testComputeStackFrames() {
+        val xml = TestResource("debugger/error/eval-divide-by-zero.xml").toString()
+        val frames = StackFrameContainer()
+        MarkLogicErrorXml(xml).computeStackFrames(0, frames)
+        assertThat(frames.frames.size, `is`(2))
+
+        val frame1 = frames.frames.get(0) as MarkLogicErrorXmlFrame
+        assertThat(frame1.uri, `is`(nullValue()))
+        assertThat(frame1.line, `is`(1))
+        assertThat(frame1.column, `is`(2))
+        assertThat(frame1.operation, `is`("xdmp:eval(\"2 div 0\", (), <options xmlns=\"xdmp:eval\"><database>1598436954797797328</database>...</options>)"))
+        assertThat(frame1.XQueryVersion, `is`("1.0-ml"))
+
+        val frame2 = frames.frames.get(1) as MarkLogicErrorXmlFrame
+        assertThat(frame2.uri, `is`("/eval"))
+        assertThat(frame2.line, `is`(6))
+        assertThat(frame2.column, `is`(18))
+        assertThat(frame2.operation, `is`(nullValue()))
+        assertThat(frame2.XQueryVersion, `is`("1.0-ml"))
+    }
+
+    fun testTopFrame() {
         val xml = TestResource("debugger/error/eval-divide-by-zero.xml").toString()
         val frame = (MarkLogicErrorXml(xml).topFrame as? MarkLogicErrorXmlFrame)!!
 
+        assertThat(frame.uri, `is`(nullValue()))
         assertThat(frame.line, `is`(1))
         assertThat(frame.column, `is`(2))
         assertThat(frame.operation, `is`("xdmp:eval(\"2 div 0\", (), <options xmlns=\"xdmp:eval\"><database>1598436954797797328</database>...</options>)"))
