@@ -17,6 +17,7 @@ package uk.co.reecedunn.intellij.plugin.marklogic.debugger.error
 
 import com.intellij.xdebugger.frame.XExecutionStack
 import com.intellij.xdebugger.frame.XStackFrame
+import org.w3c.dom.Element
 import uk.co.reecedunn.intellij.plugin.core.xml.*
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.resources.MarkLogicBundle
 
@@ -34,7 +35,8 @@ class MarkLogicErrorXml internal constructor(val doc: XmlDocument):
 
     val code get(): String {
         val nodes = doc.root.getElementsByTagNameNS("http://marklogic.com/xdmp/error", "code")
-        return nodes.asSequence().first().childNodes.asSequence().first().nodeValue
+        val element = nodes.asSequence().first() as Element
+        return element.text().first()
     }
 
     // endregion
