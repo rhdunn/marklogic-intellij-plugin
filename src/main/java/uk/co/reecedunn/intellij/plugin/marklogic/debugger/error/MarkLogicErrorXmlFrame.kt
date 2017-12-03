@@ -15,7 +15,9 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.debugger.error
 
+import com.intellij.xdebugger.frame.XCompositeNode
 import com.intellij.xdebugger.frame.XStackFrame
+import com.intellij.xdebugger.frame.XValueChildrenList
 import org.w3c.dom.Element
 import uk.co.reecedunn.intellij.plugin.core.xml.XmlElementName
 import uk.co.reecedunn.intellij.plugin.core.xml.child
@@ -25,6 +27,8 @@ private val ERROR_COLUMN = XmlElementName("column", "http://marklogic.com/xdmp/e
 private val ERROR_LINE = XmlElementName("line", "http://marklogic.com/xdmp/error")
 private val ERROR_OPERATION = XmlElementName("operation", "http://marklogic.com/xdmp/error")
 private val ERROR_URI = XmlElementName("uri", "http://marklogic.com/xdmp/error")
+private val ERROR_VARIABLE = XmlElementName("variable", "http://marklogic.com/xdmp/error")
+private val ERROR_VARIABLES = XmlElementName("variables", "http://marklogic.com/xdmp/error")
 private val ERROR_XQUERY_VERSION = XmlElementName("xquery-version", "http://marklogic.com/xdmp/error")
 
 class MarkLogicErrorXmlFrame internal constructor(val frame: Element): XStackFrame() {
@@ -37,4 +41,14 @@ class MarkLogicErrorXmlFrame internal constructor(val frame: Element): XStackFra
     val operation: String? = frame.child(ERROR_OPERATION).text().firstOrNull()
 
     val XQueryVersion get(): String = frame.child(ERROR_XQUERY_VERSION).text().first()
+
+    private val variables get(): Sequence<Element> = frame.child(ERROR_VARIABLES).child(ERROR_VARIABLE)
+
+    override fun computeChildren(node: XCompositeNode) {
+        val vars = XValueChildrenList()
+        variables.map { variable -> MarkLogicErrorXmlVariable(variable) }.forEach { variable ->
+            vars.add(variable)
+        }
+        node.addChildren(vars, true)
+    }
 }

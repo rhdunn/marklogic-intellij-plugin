@@ -20,14 +20,8 @@ import com.intellij.xdebugger.frame.XStackFrame
 
 class StackFrameContainer: XExecutionStack.XStackFrameContainer {
     val frames: List<XStackFrame> = ArrayList()
-
     var error: String? = null
-        get() = field
-        private set(value) { field = value }
-
     var isLast: Boolean = false
-        get() = field
-        private set(value) { field = value }
 
     fun reset() {
         (frames as ArrayList).clear()
