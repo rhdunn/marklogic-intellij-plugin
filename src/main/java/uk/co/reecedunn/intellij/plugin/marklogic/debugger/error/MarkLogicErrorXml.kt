@@ -17,6 +17,7 @@ package uk.co.reecedunn.intellij.plugin.marklogic.debugger.error
 
 import com.intellij.xdebugger.frame.XExecutionStack
 import com.intellij.xdebugger.frame.XStackFrame
+import org.w3c.dom.Element
 import uk.co.reecedunn.intellij.plugin.core.xml.*
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.resources.MarkLogicBundle
 
@@ -25,9 +26,11 @@ private val ERROR_DATA = XmlElementName("data", "http://marklogic.com/xdmp/error
 private val ERROR_DATUM = XmlElementName("datum", "http://marklogic.com/xdmp/error")
 private val ERROR_ERROR = XmlElementName("error", "http://marklogic.com/xdmp/error")
 private val ERROR_EXPR = XmlElementName("expr", "http://marklogic.com/xdmp/error")
+private val ERROR_FRAME = XmlElementName("frame", "http://marklogic.com/xdmp/error")
 private val ERROR_MESSAGE = XmlElementName("message", "http://marklogic.com/xdmp/error")
 private val ERROR_NAME = XmlElementName("name", "http://marklogic.com/xdmp/error")
 private val ERROR_RETRYABLE = XmlElementName("retryable", "http://marklogic.com/xdmp/error")
+private val ERROR_STACK = XmlElementName("stack", "http://marklogic.com/xdmp/error")
 private val ERROR_XQUERY_VERSION = XmlElementName("xquery-version", "http://marklogic.com/xdmp/error")
 
 class MarkLogicErrorXml internal constructor(private val doc: XmlDocument):
@@ -55,11 +58,14 @@ class MarkLogicErrorXml internal constructor(private val doc: XmlDocument):
     val data get(): Sequence<String> =
         doc.child(ERROR_DATA).child(ERROR_DATUM).text()
 
+    private val frames get(): Sequence<Element> =
+        doc.child(ERROR_STACK).child(ERROR_FRAME)
+
     // endregion
     // region XExecutionStack
 
     override fun getTopFrame(): XStackFrame? {
-        return null
+        return frames.firstOrNull()?.let { MarkLogicErrorXmlFrame(it) }
     }
 
     override fun computeStackFrames(firstFrameIndex: Int, container: XStackFrameContainer?) {

@@ -21,6 +21,7 @@ import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.CoreMatchers.nullValue
 import org.hamcrest.MatcherAssert.assertThat
 import uk.co.reecedunn.intellij.plugin.marklogic.debugger.error.MarkLogicErrorXml
+import uk.co.reecedunn.intellij.plugin.marklogic.debugger.error.MarkLogicErrorXmlFrame
 import uk.co.reecedunn.intellij.plugin.marklogic.tests.TestResource
 
 class MarkLogicErrorXmlTest : TestCase() {
@@ -52,5 +53,15 @@ class MarkLogicErrorXmlTest : TestCase() {
         assertThat(error.data.count(), `is`(2))
         assertThat(error.data.first(), `is`("()"))
         assertThat(error.data.last(), `is`("xs:boolean"))
+    }
+
+    fun testFrameDetails() {
+        val xml = TestResource("debugger/error/eval-divide-by-zero.xml").toString()
+        val frame = (MarkLogicErrorXml(xml).topFrame as? MarkLogicErrorXmlFrame)!!
+
+        assertThat(frame.line, `is`(1))
+        assertThat(frame.column, `is`(2))
+        assertThat(frame.operation, `is`("xdmp:eval(\"2 div 0\", (), <options xmlns=\"xdmp:eval\"><database>1598436954797797328</database>...</options>)"))
+        assertThat(frame.XQueryVersion, `is`("1.0-ml"))
     }
 }
