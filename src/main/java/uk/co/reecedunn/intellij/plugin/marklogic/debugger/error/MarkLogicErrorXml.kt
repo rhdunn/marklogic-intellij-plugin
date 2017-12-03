@@ -34,7 +34,7 @@ class MarkLogicErrorXml internal constructor(val doc: XmlDocument):
 
     val code get(): String {
         val nodes = doc.root.getElementsByTagNameNS("http://marklogic.com/xdmp/error", "code")
-        return nodes.item(0).childNodes.item(0).nodeValue
+        return nodes.asSequence().first().childNodes.asSequence().first().nodeValue
     }
 
     // endregion
