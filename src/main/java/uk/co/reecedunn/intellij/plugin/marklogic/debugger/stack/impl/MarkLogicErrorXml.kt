@@ -15,33 +15,29 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.debugger.stack.impl
 
-import com.intellij.xdebugger.frame.XCompositeNode
-import com.intellij.xdebugger.frame.XExecutionStack
-import com.intellij.xdebugger.frame.XStackFrame
-import com.intellij.xdebugger.frame.XValueChildrenList
+import com.intellij.xdebugger.frame.*
 import org.w3c.dom.Element
 import uk.co.reecedunn.intellij.plugin.core.xml.*
-import uk.co.reecedunn.intellij.plugin.marklogic.debugger.error.MarkLogicErrorXmlVariable
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.resources.MarkLogicBundle
 
 private val ERROR_CODE = XmlElementName("code", "http://marklogic.com/xdmp/error")
+private val ERROR_COLUMN = XmlElementName("column", "http://marklogic.com/xdmp/error")
 private val ERROR_DATA = XmlElementName("data", "http://marklogic.com/xdmp/error")
 private val ERROR_DATUM = XmlElementName("datum", "http://marklogic.com/xdmp/error")
 private val ERROR_ERROR = XmlElementName("error", "http://marklogic.com/xdmp/error")
 private val ERROR_EXPR = XmlElementName("expr", "http://marklogic.com/xdmp/error")
 private val ERROR_FRAME = XmlElementName("frame", "http://marklogic.com/xdmp/error")
+private val ERROR_LINE = XmlElementName("line", "http://marklogic.com/xdmp/error")
 private val ERROR_MESSAGE = XmlElementName("message", "http://marklogic.com/xdmp/error")
 private val ERROR_NAME = XmlElementName("name", "http://marklogic.com/xdmp/error")
+private val ERROR_OPERATION = XmlElementName("operation", "http://marklogic.com/xdmp/error")
 private val ERROR_RETRYABLE = XmlElementName("retryable", "http://marklogic.com/xdmp/error")
 private val ERROR_STACK = XmlElementName("stack", "http://marklogic.com/xdmp/error")
-private val ERROR_XQUERY_VERSION = XmlElementName("xquery-version", "http://marklogic.com/xdmp/error")
-
-private val ERROR_COLUMN = XmlElementName("column", "http://marklogic.com/xdmp/error")
-private val ERROR_LINE = XmlElementName("line", "http://marklogic.com/xdmp/error")
-private val ERROR_OPERATION = XmlElementName("operation", "http://marklogic.com/xdmp/error")
 private val ERROR_URI = XmlElementName("uri", "http://marklogic.com/xdmp/error")
+private val ERROR_VALUE = XmlElementName("value", "http://marklogic.com/xdmp/error")
 private val ERROR_VARIABLE = XmlElementName("variable", "http://marklogic.com/xdmp/error")
 private val ERROR_VARIABLES = XmlElementName("variables", "http://marklogic.com/xdmp/error")
+private val ERROR_XQUERY_VERSION = XmlElementName("xquery-version", "http://marklogic.com/xdmp/error")
 
 class MarkLogicErrorXml internal constructor(private val doc: XmlDocument):
         XExecutionStack(MarkLogicBundle.message("debugger.thread.error")) {
@@ -107,5 +103,15 @@ class MarkLogicErrorXmlFrame internal constructor(val frame: Element): XStackFra
             vars.add(variable)
         }
         node.addChildren(vars, true)
+    }
+}
+
+class MarkLogicErrorXmlVariable internal constructor(private val variable: Element):
+        XNamedValue(variable.child(ERROR_NAME).text().first()) {
+
+    override fun getEvaluationExpression(): String? =
+        variable.child(ERROR_VALUE).text().first()
+
+    override fun computePresentation(node: XValueNode, place: XValuePlace) {
     }
 }
