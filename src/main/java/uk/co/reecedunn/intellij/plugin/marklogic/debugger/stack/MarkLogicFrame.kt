@@ -15,8 +15,6 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.debugger.stack
 
-import org.w3c.dom.Element
-
 interface MarkLogicFrame {
     val uri: String?
 
@@ -28,5 +26,5 @@ interface MarkLogicFrame {
 
     val XQueryVersion: String
 
-    val variables: Sequence<Element>
+    val variables: Sequence<MarkLogicVariable>
 }

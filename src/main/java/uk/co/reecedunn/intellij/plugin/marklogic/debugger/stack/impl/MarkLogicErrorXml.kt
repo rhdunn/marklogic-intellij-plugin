@@ -101,16 +101,15 @@ class MarkLogicErrorXmlFrame internal constructor(val frame: Element): XStackFra
 
     override val XQueryVersion get(): String = frame.child(ERROR_XQUERY_VERSION).text().first()
 
-    override val variables get(): Sequence<Element> = frame.child(ERROR_VARIABLES).child(ERROR_VARIABLE)
+    override val variables get(): Sequence<MarkLogicVariable> =
+        frame.child(ERROR_VARIABLES).child(ERROR_VARIABLE).map { variable -> MarkLogicErrorXmlVariable(variable) }
 
     // endregion
     // reion XStackFrame
 
     override fun computeChildren(node: XCompositeNode) {
         val vars = XValueChildrenList()
-        variables.map { variable -> MarkLogicErrorXmlVariable(variable) }.forEach { variable ->
-            vars.add(variable)
-        }
+        variables.forEach { variable -> vars.add(variable as XNamedValue) }
         node.addChildren(vars, true)
     }
 
