@@ -20,6 +20,7 @@ import org.w3c.dom.Element
 import uk.co.reecedunn.intellij.plugin.core.xml.*
 import uk.co.reecedunn.intellij.plugin.marklogic.debugger.stack.MarkLogicError
 import uk.co.reecedunn.intellij.plugin.marklogic.debugger.stack.MarkLogicFrame
+import uk.co.reecedunn.intellij.plugin.marklogic.debugger.stack.MarkLogicVariable
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.resources.MarkLogicBundle
 
 private val ERROR_CODE = XmlElementName("code", "http://marklogic.com/xdmp/error")
@@ -117,11 +118,22 @@ class MarkLogicErrorXmlFrame internal constructor(val frame: Element): XStackFra
 }
 
 class MarkLogicErrorXmlVariable internal constructor(private val variable: Element):
-        XNamedValue(variable.child(ERROR_NAME).text().first()) {
+        XNamedValue(variable.child(ERROR_NAME).text().first()),
+        MarkLogicVariable {
+    // region MarkLogicVariable
+
+    override val localName get(): String = super.getName()
+
+    override val value: String = variable.child(ERROR_VALUE).text().first()
+
+    // endregion
+    // region XValue
 
     override fun getEvaluationExpression(): String? =
-        variable.child(ERROR_VALUE).text().first()
+        value
 
     override fun computePresentation(node: XValueNode, place: XValuePlace) {
     }
+
+    // endregion
 }
