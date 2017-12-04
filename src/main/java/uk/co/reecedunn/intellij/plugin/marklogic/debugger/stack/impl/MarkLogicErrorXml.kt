@@ -19,6 +19,7 @@ import com.intellij.xdebugger.frame.*
 import org.w3c.dom.Element
 import uk.co.reecedunn.intellij.plugin.core.xml.*
 import uk.co.reecedunn.intellij.plugin.marklogic.debugger.stack.MarkLogicError
+import uk.co.reecedunn.intellij.plugin.marklogic.debugger.stack.MarkLogicFrame
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.resources.MarkLogicBundle
 
 private val ERROR_CODE = XmlElementName("code", "http://marklogic.com/xdmp/error")
@@ -86,18 +87,23 @@ class MarkLogicErrorXml internal constructor(private val doc: XmlDocument):
     // endregion
 }
 
-class MarkLogicErrorXmlFrame internal constructor(val frame: Element): XStackFrame() {
-    val uri: String? = frame.child(ERROR_URI).text().firstOrNull()
+class MarkLogicErrorXmlFrame internal constructor(val frame: Element): XStackFrame(), MarkLogicFrame {
+    // region MarkLogicFrame
 
-    val line: Int = frame.child(ERROR_LINE).text().first().toInt()
+    override val uri get(): String? = frame.child(ERROR_URI).text().firstOrNull()
 
-    val column: Int = frame.child(ERROR_COLUMN).text().first().toInt()
+    override val line get(): Int = frame.child(ERROR_LINE).text().first().toInt()
 
-    val operation: String? = frame.child(ERROR_OPERATION).text().firstOrNull()
+    override val column get(): Int = frame.child(ERROR_COLUMN).text().first().toInt()
 
-    val XQueryVersion get(): String = frame.child(ERROR_XQUERY_VERSION).text().first()
+    override val operation get(): String? = frame.child(ERROR_OPERATION).text().firstOrNull()
 
-    private val variables get(): Sequence<Element> = frame.child(ERROR_VARIABLES).child(ERROR_VARIABLE)
+    override val XQueryVersion get(): String = frame.child(ERROR_XQUERY_VERSION).text().first()
+
+    override val variables get(): Sequence<Element> = frame.child(ERROR_VARIABLES).child(ERROR_VARIABLE)
+
+    // endregion
+    // reion XStackFrame
 
     override fun computeChildren(node: XCompositeNode) {
         val vars = XValueChildrenList()
@@ -106,6 +112,8 @@ class MarkLogicErrorXmlFrame internal constructor(val frame: Element): XStackFra
         }
         node.addChildren(vars, true)
     }
+
+    // endregion
 }
 
 class MarkLogicErrorXmlVariable internal constructor(private val variable: Element):
