@@ -15,8 +15,6 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.debugger.stack
 
-import org.w3c.dom.Element
-
 interface MarkLogicError {
     val code: String
 
@@ -32,5 +30,5 @@ interface MarkLogicError {
 
     val data: Sequence<String>
 
-    val frames: Sequence<Element>
+    val frames: Sequence<MarkLogicFrame>
 }

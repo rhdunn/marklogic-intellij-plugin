@@ -68,19 +68,19 @@ class MarkLogicErrorXml internal constructor(private val doc: XmlDocument):
     override val data get(): Sequence<String> =
         doc.child(ERROR_DATA).child(ERROR_DATUM).text()
 
-    override val frames get(): Sequence<Element> =
-        doc.child(ERROR_STACK).child(ERROR_FRAME)
+    override val frames get(): Sequence<MarkLogicFrame> =
+        doc.child(ERROR_STACK).child(ERROR_FRAME).map { frame -> MarkLogicErrorXmlFrame(frame) }
 
     // endregion
     // region XExecutionStack
 
     override fun getTopFrame(): XStackFrame? {
-        return frames.firstOrNull()?.let { MarkLogicErrorXmlFrame(it) }
+        return frames.firstOrNull() as? XStackFrame
     }
 
     override fun computeStackFrames(firstFrameIndex: Int, container: XStackFrameContainer?) {
         container?.let {
-            val frames = frames.drop(firstFrameIndex).map { frame -> MarkLogicErrorXmlFrame(frame) }
+            val frames = frames.drop(firstFrameIndex).map { frame -> frame as XStackFrame }
             it.addStackFrames(frames.toMutableList(), true)
         }
     }
