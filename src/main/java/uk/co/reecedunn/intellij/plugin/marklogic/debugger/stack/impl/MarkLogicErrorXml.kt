@@ -13,12 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package uk.co.reecedunn.intellij.plugin.marklogic.debugger.error
+package uk.co.reecedunn.intellij.plugin.marklogic.debugger.stack.impl
 
 import com.intellij.xdebugger.frame.XExecutionStack
 import com.intellij.xdebugger.frame.XStackFrame
 import org.w3c.dom.Element
 import uk.co.reecedunn.intellij.plugin.core.xml.*
+import uk.co.reecedunn.intellij.plugin.marklogic.debugger.error.MarkLogicErrorXmlFrame
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.resources.MarkLogicBundle
 
 private val ERROR_CODE = XmlElementName("code", "http://marklogic.com/xdmp/error")
