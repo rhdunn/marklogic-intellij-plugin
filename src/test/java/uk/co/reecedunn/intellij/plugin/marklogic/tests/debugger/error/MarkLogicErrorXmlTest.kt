@@ -21,8 +21,8 @@ import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.CoreMatchers.nullValue
 import org.hamcrest.MatcherAssert.assertThat
 import uk.co.reecedunn.intellij.plugin.marklogic.debugger.stack.impl.MarkLogicErrorXml
-import uk.co.reecedunn.intellij.plugin.marklogic.debugger.error.MarkLogicErrorXmlFrame
 import uk.co.reecedunn.intellij.plugin.marklogic.debugger.error.MarkLogicErrorXmlVariable
+import uk.co.reecedunn.intellij.plugin.marklogic.debugger.stack.impl.MarkLogicErrorXmlFrame
 import uk.co.reecedunn.intellij.plugin.marklogic.tests.TestResource
 import uk.co.reecedunn.intellij.plugin.marklogic.tests.debugger.CompositeNode
 import uk.co.reecedunn.intellij.plugin.marklogic.tests.debugger.StackFrameContainer
