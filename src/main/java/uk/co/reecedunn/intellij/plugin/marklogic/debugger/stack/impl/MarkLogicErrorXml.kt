@@ -18,6 +18,7 @@ package uk.co.reecedunn.intellij.plugin.marklogic.debugger.stack.impl
 import com.intellij.xdebugger.frame.*
 import org.w3c.dom.Element
 import uk.co.reecedunn.intellij.plugin.core.xml.*
+import uk.co.reecedunn.intellij.plugin.marklogic.debugger.stack.MarkLogicError
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.resources.MarkLogicBundle
 
 private val ERROR_CODE = XmlElementName("code", "http://marklogic.com/xdmp/error")
@@ -40,31 +41,32 @@ private val ERROR_VARIABLES = XmlElementName("variables", "http://marklogic.com/
 private val ERROR_XQUERY_VERSION = XmlElementName("xquery-version", "http://marklogic.com/xdmp/error")
 
 class MarkLogicErrorXml internal constructor(private val doc: XmlDocument):
-        XExecutionStack(MarkLogicBundle.message("debugger.thread.error")) {
+        XExecutionStack(MarkLogicBundle.message("debugger.thread.error")),
+        MarkLogicError {
 
     constructor(errorXml: String): this(XmlDocument.parse(errorXml)) {
         if (doc.root.name != ERROR_ERROR)
             throw RuntimeException("${doc.root.name} is not a MarkLogic error XML document.")
     }
 
-    // region MarkLogic Error
+    // region MarkLogicError
 
-    val code get(): String = doc.child(ERROR_CODE).text().first()
+    override val code get(): String = doc.child(ERROR_CODE).text().first()
 
-    val name get(): String = doc.child(ERROR_NAME).text().first()
+    override val name get(): String = doc.child(ERROR_NAME).text().first()
 
-    val XQueryVersion get(): String = doc.child(ERROR_XQUERY_VERSION).text().first()
+    override val XQueryVersion get(): String = doc.child(ERROR_XQUERY_VERSION).text().first()
 
-    val message get(): String = doc.child(ERROR_MESSAGE).text().first()
+    override val message get(): String = doc.child(ERROR_MESSAGE).text().first()
 
-    val retryable get(): Boolean = doc.child(ERROR_RETRYABLE).text().first().toBoolean()
+    override val retryable get(): Boolean = doc.child(ERROR_RETRYABLE).text().first().toBoolean()
 
-    val expr get(): String = doc.child(ERROR_EXPR).text().first()
+    override val expr get(): String = doc.child(ERROR_EXPR).text().first()
 
-    val data get(): Sequence<String> =
+    override val data get(): Sequence<String> =
         doc.child(ERROR_DATA).child(ERROR_DATUM).text()
 
-    private val frames get(): Sequence<Element> =
+    override val frames get(): Sequence<Element> =
         doc.child(ERROR_STACK).child(ERROR_FRAME)
 
     // endregion
