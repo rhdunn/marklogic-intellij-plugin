@@ -23,19 +23,16 @@ import com.intellij.execution.filters.RegexpFilter;
 import com.intellij.execution.process.ProcessHandler;
 import com.intellij.execution.runners.ExecutionEnvironment;
 import com.intellij.execution.ui.ConsoleView;
-import com.intellij.icons.AllIcons;
 import com.intellij.openapi.actionSystem.AnAction;
-import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.project.DumbAware;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Connection;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.EvalRequestBuilder;
+import uk.co.reecedunn.intellij.plugin.marklogic.debugger.stack.view.MarkLogicViewErrorAction;
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.configuration.MarkLogicRunConfiguration;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.Function;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.QueryBuilder;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.QueryBuilderFactory;
-import uk.co.reecedunn.intellij.plugin.marklogic.ui.resources.MarkLogicBundle;
 
 public class MarkLogicRunProfileState extends CommandLineState {
     public MarkLogicRunProfileState(@Nullable ExecutionEnvironment environment) {
@@ -49,12 +46,12 @@ public class MarkLogicRunProfileState extends CommandLineState {
     protected AnAction[] createActions(final ConsoleView console, final ProcessHandler processHandler, Executor executor) {
         if (console == null || !console.canPause() || (executor != null && !DefaultRunExecutor.EXECUTOR_ID.equals(executor.getId()))) {
             return new AnAction[] {
-                new ViewErrorAction()
+                new MarkLogicViewErrorAction()
             };
         }
         return new AnAction[] {
             new PauseOutputAction(console, processHandler),
-            new ViewErrorAction()
+            new MarkLogicViewErrorAction()
         };
     }
 
@@ -96,18 +93,5 @@ public class MarkLogicRunProfileState extends CommandLineState {
             configuration.getServer().getUsername(),
             configuration.getServer().getPassword(),
             configuration.getMarkLogicVersion());
-    }
-
-    protected static class ViewErrorAction extends AnAction implements DumbAware {
-        public ViewErrorAction() {
-            final String message = MarkLogicBundle.message("action.refresh");
-            getTemplatePresentation().setDescription(message);
-            getTemplatePresentation().setText(message);
-            getTemplatePresentation().setIcon(AllIcons.Actions.ShowViewer);
-        }
-
-        @Override
-        public void actionPerformed(AnActionEvent e) {
-        }
     }
 }
