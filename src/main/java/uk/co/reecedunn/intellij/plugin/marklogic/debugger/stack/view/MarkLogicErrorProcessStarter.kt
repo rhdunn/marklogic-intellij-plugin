@@ -21,10 +21,11 @@ import com.intellij.xdebugger.XDebugSession
 import com.intellij.xdebugger.evaluation.XDebuggerEditorsProvider
 import com.intellij.xdebugger.frame.XExecutionStack
 import uk.co.reecedunn.intellij.plugin.core.debugger.MimeTypeDebuggerEditorsProvider
+import uk.co.reecedunn.intellij.plugin.marklogic.query.XQueryType
 
 private class MarkLogicErrorProcess(session: XDebugSession): XDebugProcess(session) {
     override fun getEditorsProvider(): XDebuggerEditorsProvider {
-        return MimeTypeDebuggerEditorsProvider("application/xquery")
+        return MimeTypeDebuggerEditorsProvider(XQueryType.mimeType)
     }
 }
 
