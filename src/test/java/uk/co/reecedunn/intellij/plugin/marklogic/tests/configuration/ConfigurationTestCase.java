@@ -18,14 +18,22 @@ package uk.co.reecedunn.intellij.plugin.marklogic.tests.configuration;
 import com.intellij.core.CoreFileTypeRegistry;
 import com.intellij.execution.configurations.ConfigurationType;
 import com.intellij.lang.Language;
+import com.intellij.mock.MockLocalFileSystem;
 import com.intellij.mock.MockProjectEx;
 import com.intellij.openapi.extensions.Extensions;
 import com.intellij.openapi.fileTypes.FileTypeRegistry;
+import com.intellij.openapi.util.Disposer;
 import com.intellij.openapi.vfs.CharsetToolkit;
 import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.openapi.vfs.VirtualFileManager;
+import com.intellij.openapi.vfs.VirtualFileSystem;
+import com.intellij.openapi.vfs.impl.VirtualFileManagerImpl;
 import com.intellij.testFramework.LightVirtualFile;
 import com.intellij.testFramework.PlatformLiteFixture;
+import com.intellij.util.messages.MessageBus;
 import org.jetbrains.annotations.NonNls;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.function.Executable;
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.configuration.MarkLogicConfigurationFactory;
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.configuration.MarkLogicConfigurationType;
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.configuration.MarkLogicRunConfiguration;
@@ -35,12 +43,24 @@ public abstract class ConfigurationTestCase extends PlatformLiteFixture {
 
     protected void setUp() throws Exception {
         super.setUp();
+        initApplication();
+
         Extensions.registerAreaClass("IDEA_PROJECT", null);
         myProject = new MockProjectEx(getTestRootDisposable());
         FileTypeRegistry.ourInstanceGetter = CoreFileTypeRegistry::new;
 
         ConfigurationType configurationType = new MarkLogicConfigurationType();
         mFactory = (MarkLogicConfigurationFactory)configurationType.getConfigurationFactories()[0];
+
+        final VirtualFileSystem[] fileSystems = new VirtualFileSystem[] {};
+        final MessageBus messageBus = myProject.getMessageBus();
+        registerApplicationService(VirtualFileManager.class, new VirtualFileManagerImpl(fileSystems, messageBus));
+    }
+
+    // IntelliJ 2017.1+ UsefulTestCase provides an assertThrows that returns void, but JUnit 5 M3+ returns the exception.
+    @SuppressWarnings("unchecked")
+    protected static <T extends Throwable> T assertThrows(Class<T> expectedType, Executable executable) {
+        return Assertions.assertThrows(expectedType, executable);
     }
 
     public MarkLogicRunConfiguration createConfiguration() {
@@ -51,5 +71,10 @@ public abstract class ConfigurationTestCase extends PlatformLiteFixture {
         VirtualFile file = new LightVirtualFile(name, Language.ANY, text);
         file.setCharset(CharsetToolkit.UTF8_CHARSET);
         return file;
+    }
+
+    protected <T> void registerApplicationService(final Class<T> aClass, T object) {
+        getApplication().registerService(aClass, object);
+        Disposer.register(myProject, () -> getApplication().getPicoContainer().unregisterComponent(aClass.getName()));
     }
 }

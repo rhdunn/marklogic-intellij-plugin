@@ -15,8 +15,10 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.query;
 
+import com.intellij.execution.ExecutionException;
 import com.intellij.openapi.vfs.VirtualFile;
 import org.apache.xmlbeans.impl.common.IOUtil;
+import org.jetbrains.annotations.NotNull;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.RDFFormat;
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.configuration.MarkLogicRunConfiguration;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.options.EvalOptionsBuilder;
@@ -25,10 +27,7 @@ import uk.co.reecedunn.intellij.plugin.marklogic.query.vars.KeyValueVarsBuilder;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.vars.MapVarsBuilder;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.vars.VarsBuilder;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.StringWriter;
+import java.io.*;
 
 public enum Function {
     DBG_EVAL_50(
@@ -169,8 +168,8 @@ public enum Function {
         this.parameters = parameters;
     }
 
-    public String buildQuery(MarkLogicRunConfiguration configuration) {
-        final String query = readFileContent(configuration.getMainModuleFile());
+    public String buildQuery(MarkLogicRunConfiguration configuration) throws ExecutionException {
+        final String query = readFileContent(configuration);
 
         final String options;
         if (optionsBuilder != null) {
@@ -201,15 +200,15 @@ public enum Function {
         }
     }
 
-    private String readFileContent(VirtualFile file) {
-        if (file != null) {
-            try {
-                return streamToString(file.getInputStream());
-            } catch (IOException e) {
-                //
-            }
+    private String readFileContent(MarkLogicRunConfiguration configuration) throws ExecutionException {
+        final VirtualFile file = configuration.getMainModuleFile();
+        if (file == null)
+            throw new ExecutionException("Missing query file: " + configuration.getMainModulePath());
+        try {
+            return streamToString(file.getInputStream());
+        } catch (IOException e) {
+            throw new ExecutionException(e);
         }
-        return null;
     }
 
     private String streamToString(InputStream stream) throws IOException {
@@ -218,7 +217,7 @@ public enum Function {
         return writer.toString();
     }
 
-    private String asXQueryStringContent(String query) {
+    private String asXQueryStringContent(@NotNull String query) {
         return query.replaceAll("\"", "\"\"").replaceAll("&", "&amp;");
     }
 }

@@ -15,7 +15,10 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.tests.query;
 
+import com.intellij.execution.ExecutionException;
 import com.intellij.execution.executors.DefaultRunExecutor;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.function.Executable;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.RDFFormat;
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.configuration.MarkLogicRunConfiguration;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.Function;
@@ -23,12 +26,25 @@ import uk.co.reecedunn.intellij.plugin.marklogic.query.QueryBuilder;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.QueryBuilderFactory;
 import uk.co.reecedunn.intellij.plugin.marklogic.tests.configuration.ConfigurationTestCase;
 
+import java.io.FileNotFoundException;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 @SuppressWarnings("ConstantConditions")
 public class FunctionTest extends ConfigurationTestCase {
-    public void testEval() {
+    public void testMainModuleFilePathNotFound() {
+        final MarkLogicRunConfiguration configuration = createConfiguration();
+        configuration.setMainModulePath("test-main-module-file-file-path-not-found.xqy");
+
+        QueryBuilder queryBuilder = QueryBuilderFactory.createQueryBuilderForFile(configuration.getMainModulePath());
+        Function function = queryBuilder.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, 5.0);
+
+        ExecutionException e = assertThrows(ExecutionException.class, () -> function.buildQuery(configuration));
+        assertThat(e.getMessage(), is("Missing query file: test-main-module-file-file-path-not-found.xqy"));
+    }
+
+    public void testEval() throws ExecutionException {
         final String query = "(1, 2, 3)";
         final MarkLogicRunConfiguration configuration = createConfiguration();
         configuration.setMainModuleFile(createVirtualFile("test.xqy", query));
@@ -45,7 +61,7 @@ public class FunctionTest extends ConfigurationTestCase {
         assertThat(actual, is(expected));
     }
 
-    public void testQueryWithDoubleQuotes() {
+    public void testQueryWithDoubleQuotes() throws ExecutionException {
         final String query = "1 || \"st\"";
         final MarkLogicRunConfiguration configuration = createConfiguration();
         configuration.setMainModuleFile(createVirtualFile("test.xqy", query));
@@ -62,7 +78,7 @@ public class FunctionTest extends ConfigurationTestCase {
         assertThat(actual, is(expected));
     }
 
-    public void testQueryWithXmlEntities() {
+    public void testQueryWithXmlEntities() throws ExecutionException {
         final String query = "<a>&amp;</a>";
         final MarkLogicRunConfiguration configuration = createConfiguration();
         configuration.setMainModuleFile(createVirtualFile("test.xqy", query));
@@ -79,7 +95,7 @@ public class FunctionTest extends ConfigurationTestCase {
         assertThat(actual, is(expected));
     }
 
-    public void testQueryWithOptions() {
+    public void testQueryWithOptions() throws ExecutionException {
         final String query = "(1, 2)";
         final MarkLogicRunConfiguration configuration = createConfiguration();
         configuration.setMainModuleFile(createVirtualFile("test.xqy", query));
@@ -104,7 +120,7 @@ public class FunctionTest extends ConfigurationTestCase {
         assertThat(actual, is(expected));
     }
 
-    public void testNoVarsAndOptionsBuilder() {
+    public void testNoVarsAndOptionsBuilder() throws ExecutionException {
         final String query = "select * from authors";
         final MarkLogicRunConfiguration configuration = createConfiguration();
         configuration.setMainModuleFile(createVirtualFile("test.sql", query));
@@ -121,7 +137,7 @@ public class FunctionTest extends ConfigurationTestCase {
         assertThat(actual, is(expected));
     }
 
-    public void testRdfTripleFormat_MarkLogic6() {
+    public void testRdfTripleFormat_MarkLogic6() throws ExecutionException {
         final String query = "34";
         final MarkLogicRunConfiguration configuration = createConfiguration();
         configuration.setMainModuleFile(createVirtualFile("test.xqy", query));
@@ -140,7 +156,7 @@ public class FunctionTest extends ConfigurationTestCase {
         assertThat(actual, is(expected));
     }
 
-    public void testRdfTripleFormat_MarkLogic7() {
+    public void testRdfTripleFormat_MarkLogic7() throws ExecutionException {
         final String query = "34";
         final MarkLogicRunConfiguration configuration = createConfiguration();
         configuration.setMainModuleFile(createVirtualFile("test.xqy", query));
