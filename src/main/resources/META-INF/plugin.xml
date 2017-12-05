@@ -20,6 +20,7 @@
   <change-notes><![CDATA[
     <h3>Release 0.3-dev:</h3>
     <ol>
+      <li>Fix an exception when running queries with IntelliJ 2017.3.</li>
     </ol>
   ]]></change-notes>
 

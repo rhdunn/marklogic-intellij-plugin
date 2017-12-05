@@ -16,6 +16,7 @@
 package uk.co.reecedunn.intellij.plugin.marklogic.ui.runner;
 
 import com.intellij.execution.process.ProcessHandler;
+import com.intellij.execution.process.ProcessOutputTypes;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Item;
@@ -81,8 +82,8 @@ public class MarkLogicRequestHandler extends ProcessHandler implements MarkLogic
 
     @Override
     public void onException(Exception e) {
-        notifyTextAvailable(e.getMessage(), null);
-        notifyTextAvailable("\n", null);
+        notifyTextAvailable(e.getMessage(), ProcessOutputTypes.STDOUT);
+        notifyTextAvailable("\n", ProcessOutputTypes.STDOUT);
     }
 
     @Override
@@ -91,9 +92,9 @@ public class MarkLogicRequestHandler extends ProcessHandler implements MarkLogic
 
     @Override
     public void onItem(Item item) {
-        notifyTextAvailable("----- " + item.getItemType() + " [" + item.getContentType() + "]\n", null);
-        notifyTextAvailable(item.getContent(), null);
-        notifyTextAvailable("\n", null);
+        notifyTextAvailable("----- " + item.getItemType() + " [" + item.getContentType() + "]\n", ProcessOutputTypes.STDOUT);
+        notifyTextAvailable(item.getContent(), ProcessOutputTypes.STDOUT);
+        notifyTextAvailable("\n", ProcessOutputTypes.STDOUT);
     }
 
     @Override
