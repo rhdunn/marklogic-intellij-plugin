@@ -25,7 +25,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class MarkLogicVersionTest extends TestCase {
-    public void testFullVersion() {
+    public void testApiWithPatch() {
         final MarkLogicVersion version = MarkLogicVersion.Companion.parse("8.0-6.3");
         assertThat(version.getMajor(), is(8));
         assertThat(version.getMinor(), is(0));
@@ -33,6 +33,16 @@ public class MarkLogicVersionTest extends TestCase {
         assertThat(version.getPatch(), is(3));
 
         assertThat(version.toString(), is("8.0-6.3"));
+    }
+
+    public void testApiWithoutPatch() {
+        final MarkLogicVersion version = MarkLogicVersion.Companion.parse("9.0-2");
+        assertThat(version.getMajor(), is(9));
+        assertThat(version.getMinor(), is(0));
+        assertThat(version.getApi(), is(2));
+        assertThat(version.getPatch(), is(nullValue()));
+
+        assertThat(version.toString(), is("9.0-2"));
     }
 
     public void testSimpleVersion() {
@@ -52,8 +62,12 @@ public class MarkLogicVersionTest extends TestCase {
     }
 
     public void testWrongNumberOfParts() {
-        MarkLogicVersionFormatException e =
-                assertThrows(MarkLogicVersionFormatException.class, () -> MarkLogicVersion.Companion.parse("7.0-5"));
-        assertThat(e.getMessage(), is("Invalid MarkLogic version: 7.0-5"));
+        MarkLogicVersionFormatException e;
+
+        e = assertThrows(MarkLogicVersionFormatException.class, () -> MarkLogicVersion.Companion.parse("6"));
+        assertThat(e.getMessage(), is("Invalid MarkLogic version: 6"));
+
+        e = assertThrows(MarkLogicVersionFormatException.class, () -> MarkLogicVersion.Companion.parse("7.0-5.6.7"));
+        assertThat(e.getMessage(), is("Invalid MarkLogic version: 7.0-5.6.7"));
     }
 }

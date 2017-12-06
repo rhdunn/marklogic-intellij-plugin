@@ -20,7 +20,7 @@ class MarkLogicVersionFormatException(message: String): RuntimeException(message
 data class MarkLogicVersion(val major: Int, val minor: Int, val api: Int? = null, val patch: Int? = null) {
 
     override fun toString(): String =
-        api?.let { "${major}.${minor}-${api}.${patch}" } ?: "${major}.${minor}"
+        api?.let { patch?.let { "${major}.${minor}-${api}.${patch}" } ?: "${major}.${minor}-${api}" } ?: "${major}.${minor}"
 
     companion object {
         fun parse(version: String): MarkLogicVersion {
@@ -32,6 +32,7 @@ data class MarkLogicVersion(val major: Int, val minor: Int, val api: Int? = null
                 }
             return when (parts.size) {
                 2 -> MarkLogicVersion(parts[0], parts[1])
+                3 -> MarkLogicVersion(parts[0], parts[1], parts[2])
                 4 -> MarkLogicVersion(parts[0], parts[1], parts[2], parts[3])
                 else -> throw MarkLogicVersionFormatException("Invalid MarkLogic version: $version")
             }
