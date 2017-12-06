@@ -46,9 +46,7 @@ public class MarkLogicRunProfileState extends CommandLineState {
 
     @NotNull
     protected AnAction[] createActions(final ConsoleView console, final ProcessHandler processHandler, Executor executor) {
-        return new AnAction[] {
-            new MarkLogicViewErrorAction()
-        };
+        return AnAction.EMPTY_ARRAY;
     }
 
     @NotNull
