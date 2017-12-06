@@ -34,7 +34,7 @@ public class RestResponse implements Response {
     }
 
     @Override
-    public void close() throws IOException {
+    public void close() {
     }
 
     @NotNull

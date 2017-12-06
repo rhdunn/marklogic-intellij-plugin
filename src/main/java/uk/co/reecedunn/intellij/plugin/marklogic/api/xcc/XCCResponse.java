@@ -36,7 +36,7 @@ public class XCCResponse implements Response {
     }
 
     @Override
-    public void close() throws IOException {
+    public void close() {
         session.close();
         resultSequence.close();
     }

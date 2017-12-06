@@ -20,7 +20,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.IOException;
 
 public interface Response {
-    void close() throws IOException;
+    void close();
 
     @NotNull
     Item[] getItems() throws IOException;
