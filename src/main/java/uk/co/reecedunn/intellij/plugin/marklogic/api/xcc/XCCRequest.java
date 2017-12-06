@@ -43,7 +43,7 @@ public class XCCRequest implements Request {
             throw new ResponseException(e.getResponseCode(), e.getResponseMessage(), null);
         } catch (RequestException | IllegalStateException e) {
             // IllegalStateException is thrown for invalid credentials.
-            throw new IOException(e);
+            throw new IOException(e.getMessage(), e);
         }
     }
 }
