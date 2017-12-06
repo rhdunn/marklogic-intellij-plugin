@@ -17,6 +17,7 @@ package uk.co.reecedunn.intellij.plugin.marklogic.api.xcc;
 
 import com.marklogic.xcc.Session;
 import com.marklogic.xcc.exceptions.RequestException;
+import com.marklogic.xcc.exceptions.RequestPermissionException;
 import com.marklogic.xcc.exceptions.ServerResponseException;
 import org.jetbrains.annotations.NotNull;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Request;
@@ -41,8 +42,9 @@ public class XCCRequest implements Request {
             return new XCCResponse(session.submitRequest(request), session);
         } catch (ServerResponseException e) {
             throw new ResponseException(e.getResponseCode(), e.getResponseMessage(), null);
+        } catch (RequestPermissionException e) {
+            throw new ResponseException(401, "Unauthorized", null);
         } catch (RequestException | IllegalStateException e) {
-            // IllegalStateException is thrown for invalid credentials.
             throw new IOException(e.getMessage(), e);
         }
     }
