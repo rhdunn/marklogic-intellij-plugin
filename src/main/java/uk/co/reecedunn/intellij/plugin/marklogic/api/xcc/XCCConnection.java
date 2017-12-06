@@ -15,6 +15,7 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.api.xcc;
 
+import com.intellij.execution.ExecutionException;
 import com.marklogic.xcc.ContentSource;
 import com.marklogic.xcc.ContentSourceFactory;
 import org.jetbrains.annotations.NotNull;
@@ -50,8 +51,12 @@ public class XCCConnection extends Connection {
     }
 
     @NotNull
-    public static Connection newConnection(String hostname, int port, String username, String password) {
-        ContentSource source = ContentSourceFactory.newContentSource(hostname, port, username, password);
-        return new XCCConnection(source);
+    public static Connection newConnection(String hostname, int port, String username, String password) throws ExecutionException {
+        try {
+            ContentSource source = ContentSourceFactory.newContentSource(hostname, port, username, password);
+            return new XCCConnection(source);
+        } catch (IllegalArgumentException e) {
+            throw new ExecutionException(e.getMessage(), e);
+        }
     }
 }

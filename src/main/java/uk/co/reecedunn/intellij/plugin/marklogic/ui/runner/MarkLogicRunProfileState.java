@@ -72,19 +72,19 @@ public class MarkLogicRunProfileState extends CommandLineState {
     }
 
     public boolean run(String query, MarkLogicResultsHandler handler, MarkLogicRunConfiguration configuration) {
-        Connection connection = createConnection(configuration);
-        EvalRequestBuilder builder = connection.createEvalRequestBuilder();
-        builder.setContentDatabase(configuration.getContentDatabase());
-        builder.setXQuery(query);
-        MarkLogicRequestHandler restHandler = new MarkLogicRequestHandler(builder.build(), "/eval");
         try {
+            Connection connection = createConnection(configuration);
+            EvalRequestBuilder builder = connection.createEvalRequestBuilder();
+            builder.setContentDatabase(configuration.getContentDatabase());
+            builder.setXQuery(query);
+            MarkLogicRequestHandler restHandler = new MarkLogicRequestHandler(builder.build(), "/eval");
             return restHandler.run(handler);
-        } catch (IOException e) {
+        } catch (Exception e) {
             return false;
         }
     }
 
-    private Connection createConnection(MarkLogicRunConfiguration configuration) {
+    private Connection createConnection(MarkLogicRunConfiguration configuration) throws ExecutionException {
         return Connection.newConnection(
             configuration.getServer().getHostname(),
             configuration.getServer().getAppServerPort(),

@@ -15,6 +15,7 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.api;
 
+import com.intellij.execution.ExecutionException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.rest.RestConnection;
@@ -46,7 +47,7 @@ public abstract class Connection {
     public abstract LogRequestBuilder createLogRequestBuilder();
 
     @NotNull
-    public static Connection newConnection(String hostname, int port, @Nullable String username, @Nullable String password, double markLogicVersion) {
+    public static Connection newConnection(String hostname, int port, @Nullable String username, @Nullable String password, double markLogicVersion) throws ExecutionException {
         if (markLogicVersion >= REST) {
             return RestConnection.newConnection(hostname, port, username, password);
         }
