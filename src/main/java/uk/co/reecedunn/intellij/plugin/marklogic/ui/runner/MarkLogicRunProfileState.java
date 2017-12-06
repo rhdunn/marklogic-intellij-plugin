@@ -46,13 +46,7 @@ public class MarkLogicRunProfileState extends CommandLineState {
 
     @NotNull
     protected AnAction[] createActions(final ConsoleView console, final ProcessHandler processHandler, Executor executor) {
-        if (console == null || !console.canPause() || (executor != null && !DefaultRunExecutor.EXECUTOR_ID.equals(executor.getId()))) {
-            return new AnAction[] {
-                new MarkLogicViewErrorAction()
-            };
-        }
         return new AnAction[] {
-            new PauseOutputAction(console, processHandler),
             new MarkLogicViewErrorAction()
         };
     }
