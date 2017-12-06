@@ -114,7 +114,7 @@ public class MarkLogicRunConfiguration extends RunConfigurationBase {
 
     public void setServer(MarkLogicServer server) {
         mServer = server;
-        data.serverHost = mServer.getHostname();
+        data.serverHost = (mServer == null) ? null : mServer.getHostname();
     }
 
     public double getMarkLogicVersion() {
