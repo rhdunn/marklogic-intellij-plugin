@@ -34,6 +34,8 @@ import uk.co.reecedunn.intellij.plugin.marklogic.query.Function;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.QueryBuilder;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.QueryBuilderFactory;
 
+import java.io.IOException;
+
 public class MarkLogicRunProfileState extends CommandLineState {
     public MarkLogicRunProfileState(@Nullable ExecutionEnvironment environment) {
         super(environment);
@@ -83,7 +85,11 @@ public class MarkLogicRunProfileState extends CommandLineState {
         builder.setContentDatabase(configuration.getContentDatabase());
         builder.setXQuery(query);
         MarkLogicRequestHandler restHandler = new MarkLogicRequestHandler(builder.build(), "/eval");
-        return restHandler.run(handler);
+        try {
+            return restHandler.run(handler);
+        } catch (IOException e) {
+            return false;
+        }
     }
 
     private Connection createConnection(MarkLogicRunConfiguration configuration) {

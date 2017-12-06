@@ -57,20 +57,19 @@ public class MarkLogicRequestHandler extends ProcessHandler implements MarkLogic
     @Override
     public void startNotify() {
         super.startNotify();
-        run(this);
-        notifyProcessDetached();
+        try {
+            run(this);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } finally {
+            notifyProcessDetached();
+        }
     }
 
-    public boolean run(MarkLogicResultsHandler handler) {
-        Item[] results;
-        try {
-            Response response = request.run();
-            results = response.getItems();
-            response.close();
-        } catch (IOException e) {
-            handler.onException(e);
-            return false;
-        }
+    public boolean run(MarkLogicResultsHandler handler) throws IOException {
+        Response response = request.run();
+        Item[] results = response.getItems();
+        response.close();
 
         handler.onStart();
         for (Item item : results) {
