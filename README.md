@@ -22,12 +22,16 @@ _Supported MarkLogic Versions:_ 5.0 - 9.0
 
 ### Run/Debug Configurations
 
-Supports running and profiling the following query types:
-1. XQuery
-1. Server-side JavaScript (MarkLogic 8 or later)
-1. SQL (MarkLogic 8 or later, run only)
-1. SPARQL Query (MarkLogic 7 or later, run only)
-1. SPARQL Update (MarkLogic 8 or later, run only)
+Supports running and profiling the following query types, with the minimum
+required MarkLogic version:
+
+| Query Type             | Run | Profile |
+|------------------------|-----|---------|
+| XQuery                 | Yes | Yes     |
+| Server-side JavaScript | 8.0 | 8.0     |
+| SPARQL Query           | 7.0 | No      |
+| SPARQL Update          | 8.0 | No      |
+| SQL                    | 8.0 | No      |
 
 RDF triples can be returned in the following formats:
 1. N3 (Notation3)
