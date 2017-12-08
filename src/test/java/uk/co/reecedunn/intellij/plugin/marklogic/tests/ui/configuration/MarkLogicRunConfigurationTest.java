@@ -74,7 +74,8 @@ public class MarkLogicRunConfigurationTest extends ConfigurationTestCase {
 
         configuration.setMainModulePath("module/test.xqy");
         assertThat(configuration.getMainModulePath(), is("module/test.xqy"));
-        assertThat(configuration.getMainModuleFile(), is(nullValue()));
+        assertThat(configuration.getMainModuleFile(), is(notNullValue()));
+        assertThat(configuration.getMainModuleFile().getCanonicalPath(), is("/module/test.xqy"));
     }
 
     public void testMainModuleFile() {

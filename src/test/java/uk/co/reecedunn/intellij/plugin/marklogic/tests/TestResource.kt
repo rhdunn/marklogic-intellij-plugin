@@ -19,10 +19,14 @@ import org.apache.commons.compress.utils.IOUtils
 import java.io.InputStream
 
 class TestResource(val path: String) {
-    val data: InputStream
+    val data: InputStream?
+
+    val contents get(): String? =
+        data?.let { String(IOUtils.toByteArray(it), Charsets.UTF_8) }
+        // String(IOUtils.toByteArray(data), Charsets.UTF_8)
 
     override fun toString(): String =
-        String(IOUtils.toByteArray(data), Charsets.UTF_8)
+        contents!!
 
     init {
         val loader = this::class.java.classLoader

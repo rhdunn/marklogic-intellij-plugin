@@ -32,8 +32,10 @@ import com.intellij.testFramework.LightVirtualFile;
 import com.intellij.testFramework.PlatformLiteFixture;
 import com.intellij.util.messages.MessageBus;
 import org.jetbrains.annotations.NonNls;
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.function.Executable;
+import uk.co.reecedunn.intellij.plugin.marklogic.tests.TestResource;
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.configuration.MarkLogicConfigurationFactory;
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.configuration.MarkLogicConfigurationType;
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.configuration.MarkLogicRunConfiguration;
@@ -54,7 +56,14 @@ public abstract class ConfigurationTestCase extends PlatformLiteFixture {
 
         final VirtualFileSystem[] fileSystems = new VirtualFileSystem[] {};
         final MessageBus messageBus = myProject.getMessageBus();
-        registerApplicationService(VirtualFileManager.class, new VirtualFileManagerImpl(fileSystems, messageBus));
+        registerApplicationService(VirtualFileManager.class, new VirtualFileManagerImpl(fileSystems, messageBus) {
+            @Override
+            public VirtualFile findFileByUrl(@NotNull String url) {
+                String path = url.replace("file://", "");
+                String contents = new TestResource(path).getContents();
+                return (contents == null) ? null : createVirtualFile(path, contents);
+            }
+        });
     }
 
     // IntelliJ 2017.1+ UsefulTestCase provides an assertThrows that returns void, but JUnit 5 M3+ returns the exception.
