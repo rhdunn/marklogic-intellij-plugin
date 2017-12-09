@@ -39,6 +39,10 @@ class MarkLogicSettings : PersistentStateComponent<MarkLogicSettings> {
         eventDispatcher.addListener(listener, disposable)
     }
 
+    fun removeListener(listener: Listener) {
+        eventDispatcher.removeListener(listener)
+    }
+
     // endregion
     // region Settings Data
 

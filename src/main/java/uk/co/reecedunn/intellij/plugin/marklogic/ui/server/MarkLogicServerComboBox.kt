@@ -76,5 +76,6 @@ class MarkLogicServerComboBox : ComboBox<MarkLogicServer>(), MarkLogicSettings.L
     }
 
     override fun dispose() {
+        MarkLogicSettings.getInstance().removeListener(this)
     }
 }
