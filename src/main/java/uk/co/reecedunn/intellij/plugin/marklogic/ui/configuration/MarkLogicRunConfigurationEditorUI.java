@@ -22,7 +22,6 @@ import com.intellij.openapi.ui.ComboBox;
 import com.intellij.openapi.ui.ComponentWithBrowseButton;
 import com.intellij.openapi.ui.TextComponentAccessor;
 import org.jetbrains.annotations.NotNull;
-import uk.co.reecedunn.intellij.plugin.marklogic.api.Connection;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.MarkLogicQuery;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.MarkLogicQueryKt;
 import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicServer;
@@ -44,14 +43,13 @@ public class MarkLogicRunConfigurationEditorUI {
             run(MarkLogicQueryKt.getLIST_DATABASES_XQUERY(), (MarkLogicQueryComboBox)mContentDatabase);
             run(MarkLogicQueryKt.getLIST_DATABASES_XQUERY(), (MarkLogicQueryComboBox)mModuleDatabase);
         }
-    };
+    }
 
     private final MarkLogicConfigurationFactory mFactory;
     private final Project mProject;
 
     private JPanel mPanel;
     private JComboBox<MarkLogicServer> mServerHost;
-    private JComboBox<MarkLogicVersion> mServerVersion;
     private JComboBox<String> mContentDatabase;
     private JComboBox<String> mModuleDatabase;
     private ComponentWithBrowseButton<JTextField> mModuleRoot;
@@ -66,7 +64,6 @@ public class MarkLogicRunConfigurationEditorUI {
     private void createUIComponents() {
         mPanel = new JPanel();
         mServerHost = new MarkLogicServerComboBox();
-        mServerVersion = new ComboBox<>(Connection.SUPPORTED_MARKLOGIC_VERSIONS);
         mContentDatabase = new MarkLogicQueryComboBox(MarkLogicBundle.message("database.none"));
         mModuleDatabase = new MarkLogicQueryComboBox(MarkLogicBundle.message("database.file.system"));
         mModuleRoot = new ComponentWithBrowseButton<>(new JTextField(), null);
@@ -95,7 +92,6 @@ public class MarkLogicRunConfigurationEditorUI {
 
     public void reset(@NotNull MarkLogicRunConfiguration configuration) {
         mServerHost.setSelectedItem(configuration.getServer());
-        mServerVersion.setSelectedItem(configuration.getMarkLogicVersion());
         ((MarkLogicQueryComboBox)mContentDatabase).setItem(configuration.getContentDatabase());
         ((MarkLogicQueryComboBox)mModuleDatabase).setItem(configuration.getModuleDatabase());
         mModuleRoot.getChildComponent().setText(configuration.getModuleRoot());
@@ -105,12 +101,16 @@ public class MarkLogicRunConfigurationEditorUI {
 
     public void apply(@NotNull MarkLogicRunConfiguration configuration) {
         configuration.setServer((MarkLogicServer)mServerHost.getSelectedItem());
-        configuration.setMarkLogicVersion((MarkLogicVersion)mServerVersion.getSelectedItem());
         configuration.setContentDatabase(((MarkLogicQueryComboBox)mContentDatabase).getItem());
         configuration.setModuleDatabase(((MarkLogicQueryComboBox)mModuleDatabase).getItem());
         configuration.setModuleRoot(mModuleRoot.getChildComponent().getText());
         configuration.setMainModulePath(mMainModulePath.getChildComponent().getText());
         configuration.setTripleFormat((RDFFormat)mTripleFormat.getSelectedItem());
+
+        MarkLogicVersion version = ((MarkLogicServerComboBox)mServerHost).getVersion();
+        if (version != null) {
+            configuration.setMarkLogicVersion(version);
+        }
     }
 
     @NotNull

@@ -35,14 +35,6 @@ public abstract class Connection {
      */
     public static final MarkLogicVersion REST = MarkLogicVersionKt.getMARKLOGIC_8();
 
-    public static final MarkLogicVersion[] SUPPORTED_MARKLOGIC_VERSIONS = new MarkLogicVersion[] {
-        MarkLogicVersionKt.getMARKLOGIC_5(),
-        MarkLogicVersionKt.getMARKLOGIC_6(),
-        MarkLogicVersionKt.getMARKLOGIC_7(),
-        MarkLogicVersionKt.getMARKLOGIC_8(),
-        MarkLogicVersionKt.getMARKLOGIC_9(),
-    };
-
     protected Connection() {
     }
 
