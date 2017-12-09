@@ -146,6 +146,10 @@ public class MarkLogicRunConfiguration extends RunConfigurationBase implements P
         data.markLogicVersion = new MarkLogicVersion((int)markLogicVersion, 0, null, null);
     }
 
+    public MarkLogicVersion getMarkLogicVersion() {
+        return data.markLogicVersion;
+    }
+
     public String getContentDatabase() {
         return data.contentDatabase;
     }

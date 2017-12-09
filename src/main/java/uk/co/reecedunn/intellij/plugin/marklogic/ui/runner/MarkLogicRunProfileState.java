@@ -86,6 +86,6 @@ public class MarkLogicRunProfileState extends CommandLineState {
             configuration.getServer().getAppServerPort(),
             configuration.getServer().getUsername(),
             configuration.getServer().getPassword(),
-            configuration.getMarkLogicMajorMinor());
+            configuration.getMarkLogicVersion());
     }
 }

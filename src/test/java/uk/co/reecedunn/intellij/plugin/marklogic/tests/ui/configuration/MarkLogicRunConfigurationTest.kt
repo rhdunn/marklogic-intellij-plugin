@@ -82,14 +82,25 @@ class MarkLogicRunConfigurationTest : ConfigurationTestCase() {
 
         val configuration = createConfiguration()
         assertThat(configuration.markLogicMajorMinor, `is`(7.0))
+        assertThat(configuration.markLogicVersion.major, `is`(7))
+        assertThat(configuration.markLogicVersion.minor, `is`(0))
+        assertThat(configuration.markLogicVersion.api, `is`(nullValue()))
+        assertThat(configuration.markLogicVersion.patch, `is`(nullValue()))
 
         configuration.markLogicMajorMinor = 9.0
-        assertThat(configuration.markLogicMajorMinor, `is`(9.0))
+        assertThat(configuration.markLogicVersion.major, `is`(9))
+        assertThat(configuration.markLogicVersion.minor, `is`(0))
+        assertThat(configuration.markLogicVersion.api, `is`(nullValue()))
+        assertThat(configuration.markLogicVersion.patch, `is`(nullValue()))
 
         assertThat(serialize(configuration), `is`(serialized))
 
         val other = deserialize(serialized)
         assertThat(other.markLogicMajorMinor, `is`(9.0))
+        assertThat(other.markLogicVersion.major, `is`(9))
+        assertThat(other.markLogicVersion.minor, `is`(0))
+        assertThat(other.markLogicVersion.api, `is`(nullValue()))
+        assertThat(other.markLogicVersion.patch, `is`(nullValue()))
     }
 
     fun testContentDatabase() {

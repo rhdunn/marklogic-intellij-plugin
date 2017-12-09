@@ -20,6 +20,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.rest.RestConnection;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.xcc.XCCConnection;
+import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicVersion;
 
 import java.io.IOException;
 
@@ -27,11 +28,11 @@ public abstract class Connection {
     /**
      * MarkLogic version to use the XCC API in newConnection.
      */
-    public static final double XCC = 5.0;
+    public static final MarkLogicVersion XCC = new MarkLogicVersion(5, 0, null, null);
     /**
      * MarkLogic version to use the REST API in newConnection, including fetching error logs.
      */
-    public static final double REST = 8.0;
+    public static final MarkLogicVersion REST = new MarkLogicVersion(8, 0, null, null);
 
     public static final Double[] SUPPORTED_MARKLOGIC_VERSIONS = new Double[] {
         5.0, 6.0, 7.0, 8.0, 9.0,
@@ -47,8 +48,8 @@ public abstract class Connection {
     public abstract LogRequestBuilder createLogRequestBuilder();
 
     @NotNull
-    public static Connection newConnection(String hostname, int port, @Nullable String username, @Nullable String password, double markLogicVersion) throws ExecutionException {
-        if (markLogicVersion >= REST) {
+    public static Connection newConnection(String hostname, int port, @Nullable String username, @Nullable String password, @NotNull MarkLogicVersion markLogicVersion) throws ExecutionException {
+        if (markLogicVersion.getMajor() >= REST.getMajor()) {
             return RestConnection.newConnection(hostname, port, username, password);
         }
         return XCCConnection.newConnection(hostname, port, username, password);
