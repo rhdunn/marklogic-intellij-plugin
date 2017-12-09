@@ -26,6 +26,7 @@ import uk.co.reecedunn.intellij.plugin.marklogic.api.Connection;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.MarkLogicQuery;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.MarkLogicQueryKt;
 import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicServer;
+import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicVersion;
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.resources.MarkLogicBundle;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.RDFFormat;
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.runner.MarkLogicResultsHandler;
@@ -50,7 +51,7 @@ public class MarkLogicRunConfigurationEditorUI {
 
     private JPanel mPanel;
     private JComboBox<MarkLogicServer> mServerHost;
-    private JComboBox<Double> mServerVersion;
+    private JComboBox<MarkLogicVersion> mServerVersion;
     private JComboBox<String> mContentDatabase;
     private JComboBox<String> mModuleDatabase;
     private ComponentWithBrowseButton<JTextField> mModuleRoot;
@@ -94,7 +95,7 @@ public class MarkLogicRunConfigurationEditorUI {
 
     public void reset(@NotNull MarkLogicRunConfiguration configuration) {
         mServerHost.setSelectedItem(configuration.getServer());
-        mServerVersion.setSelectedItem(configuration.getMarkLogicMajorMinor());
+        mServerVersion.setSelectedItem(configuration.getMarkLogicVersion());
         ((MarkLogicQueryComboBox)mContentDatabase).setItem(configuration.getContentDatabase());
         ((MarkLogicQueryComboBox)mModuleDatabase).setItem(configuration.getModuleDatabase());
         mModuleRoot.getChildComponent().setText(configuration.getModuleRoot());
@@ -104,7 +105,7 @@ public class MarkLogicRunConfigurationEditorUI {
 
     public void apply(@NotNull MarkLogicRunConfiguration configuration) {
         configuration.setServer((MarkLogicServer)mServerHost.getSelectedItem());
-        configuration.setMarkLogicMajorMinor((Double)mServerVersion.getSelectedItem());
+        configuration.setMarkLogicVersion((MarkLogicVersion)mServerVersion.getSelectedItem());
         configuration.setContentDatabase(((MarkLogicQueryComboBox)mContentDatabase).getItem());
         configuration.setModuleDatabase(((MarkLogicQueryComboBox)mModuleDatabase).getItem());
         configuration.setModuleRoot(mModuleRoot.getChildComponent().getText());

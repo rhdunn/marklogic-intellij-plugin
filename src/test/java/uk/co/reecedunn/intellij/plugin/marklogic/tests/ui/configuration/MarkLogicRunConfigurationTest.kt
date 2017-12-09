@@ -31,6 +31,7 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.jdom.Element
 import org.jdom.input.SAXBuilder
 import org.jdom.output.XMLOutputter
+import uk.co.reecedunn.intellij.plugin.marklogic.server.MARKLOGIC_9
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.configuration.MarkLogicRunConfiguration
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.settings.MarkLogicSettings
 import java.io.StringReader
@@ -75,7 +76,7 @@ class MarkLogicRunConfigurationTest : ConfigurationTestCase() {
         assertThat(other.server.password, `is`("test3"))
     }
 
-    fun testMarkLogicVersion() {
+    fun testMarkLogicMajorMinor() {
         val serialized = """<test>
             <option name="markLogicVersion" value="9.0" />
         </test>""".replace("\n[ ]*".toRegex(), "")
@@ -88,6 +89,36 @@ class MarkLogicRunConfigurationTest : ConfigurationTestCase() {
         assertThat(configuration.markLogicVersion.patch, `is`(nullValue()))
 
         configuration.markLogicMajorMinor = 9.0
+        assertThat(configuration.markLogicMajorMinor, `is`(9.0))
+        assertThat(configuration.markLogicVersion.major, `is`(9))
+        assertThat(configuration.markLogicVersion.minor, `is`(0))
+        assertThat(configuration.markLogicVersion.api, `is`(nullValue()))
+        assertThat(configuration.markLogicVersion.patch, `is`(nullValue()))
+
+        assertThat(serialize(configuration), `is`(serialized))
+
+        val other = deserialize(serialized)
+        assertThat(other.markLogicMajorMinor, `is`(9.0))
+        assertThat(other.markLogicVersion.major, `is`(9))
+        assertThat(other.markLogicVersion.minor, `is`(0))
+        assertThat(other.markLogicVersion.api, `is`(nullValue()))
+        assertThat(other.markLogicVersion.patch, `is`(nullValue()))
+    }
+
+    fun testMarkLogicVersion() {
+        val serialized = """<test>
+            <option name="markLogicVersion" value="9.0" />
+        </test>""".replace("\n[ ]*".toRegex(), "")
+
+        val configuration = createConfiguration()
+        assertThat(configuration.markLogicMajorMinor, `is`(7.0))
+        assertThat(configuration.markLogicVersion.major, `is`(7))
+        assertThat(configuration.markLogicVersion.minor, `is`(0))
+        assertThat(configuration.markLogicVersion.api, `is`(nullValue()))
+        assertThat(configuration.markLogicVersion.patch, `is`(nullValue()))
+
+        configuration.markLogicVersion = MARKLOGIC_9
+        assertThat(configuration.markLogicMajorMinor, `is`(9.0))
         assertThat(configuration.markLogicVersion.major, `is`(9))
         assertThat(configuration.markLogicVersion.minor, `is`(0))
         assertThat(configuration.markLogicVersion.api, `is`(nullValue()))
