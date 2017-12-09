@@ -33,6 +33,7 @@ import org.jetbrains.annotations.Nullable;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.RDFFormat;
 import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicServer;
 import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicVersion;
+import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicVersionKt;
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.runner.MarkLogicResultsHandler;
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.runner.MarkLogicRunProfileState;
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.settings.MarkLogicSettings;
@@ -68,7 +69,7 @@ public class MarkLogicRunConfiguration extends RunConfigurationBase implements P
     static class ConfigData {
         public String serverHost = "localhost";
         @OptionTag(converter = MarkLogicVersionConverter.class)
-        public MarkLogicVersion markLogicVersion = new MarkLogicVersion(7, 0, null, null);
+        public MarkLogicVersion markLogicVersion = MarkLogicVersionKt.getMARKLOGIC_7();
         public String contentDatabase = null;
         public String moduleDatabase = null;
         public String moduleRoot = "/";

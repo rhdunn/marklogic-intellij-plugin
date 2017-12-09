@@ -18,7 +18,7 @@ package uk.co.reecedunn.intellij.plugin.marklogic.tests.query;
 import com.intellij.execution.ExecutionException;
 import com.intellij.execution.executors.DefaultRunExecutor;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.RDFFormat;
-import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicVersion;
+import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicVersionKt;
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.configuration.MarkLogicRunConfiguration;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.Function;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.QueryBuilder;
@@ -30,15 +30,12 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 @SuppressWarnings("ConstantConditions")
 public class FunctionTest extends ConfigurationTestCase {
-    private static final MarkLogicVersion MARKLOGIC_5 = new MarkLogicVersion(5, 0, null, null);
-    private static final MarkLogicVersion MARKLOGIC_8 = new MarkLogicVersion(8, 0, null, null);
-
     public void testMainModuleFilePathNotFound() {
         final MarkLogicRunConfiguration configuration = createConfiguration();
         configuration.setMainModulePath("test-main-module-file-file-path-not-found.xqy");
 
         QueryBuilder queryBuilder = QueryBuilderFactory.createQueryBuilderForFile(configuration.getMainModulePath());
-        Function function = queryBuilder.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, MARKLOGIC_5);
+        Function function = queryBuilder.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_5());
 
         ExecutionException e = assertThrows(ExecutionException.class, () -> function.buildQuery(configuration));
         assertThat(e.getMessage(), is("Missing query file: test-main-module-file-file-path-not-found.xqy"));
@@ -50,7 +47,7 @@ public class FunctionTest extends ConfigurationTestCase {
         configuration.setMainModuleFile(createVirtualFile("test.xqy", query));
 
         QueryBuilder queryBuilder = QueryBuilderFactory.createQueryBuilderForFile(configuration.getMainModulePath());
-        Function function = queryBuilder.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, MARKLOGIC_5);
+        Function function = queryBuilder.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_5());
 
         final String actual = function.buildQuery(configuration).replaceAll("\r\n", "\n");
         final String expected =
@@ -67,7 +64,7 @@ public class FunctionTest extends ConfigurationTestCase {
         configuration.setMainModuleFile(createVirtualFile("test.xqy", query));
 
         QueryBuilder queryBuilder = QueryBuilderFactory.createQueryBuilderForFile(configuration.getMainModulePath());
-        Function function = queryBuilder.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, MARKLOGIC_5);
+        Function function = queryBuilder.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_5());
 
         final String actual = function.buildQuery(configuration).replaceAll("\r\n", "\n");
         final String expected =
@@ -84,7 +81,7 @@ public class FunctionTest extends ConfigurationTestCase {
         configuration.setMainModuleFile(createVirtualFile("test.xqy", query));
 
         QueryBuilder queryBuilder = QueryBuilderFactory.createQueryBuilderForFile(configuration.getMainModulePath());
-        Function function = queryBuilder.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, MARKLOGIC_5);
+        Function function = queryBuilder.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_5());
 
         final String actual = function.buildQuery(configuration).replaceAll("\r\n", "\n");
         final String expected =
@@ -104,7 +101,7 @@ public class FunctionTest extends ConfigurationTestCase {
         configuration.setModuleRoot("dolor");
 
         QueryBuilder queryBuilder = QueryBuilderFactory.createQueryBuilderForFile(configuration.getMainModulePath());
-        Function function = queryBuilder.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, MARKLOGIC_5);
+        Function function = queryBuilder.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_5());
 
         final String actual = function.buildQuery(configuration).replaceAll("\r\n", "\n");
         final String expected =
@@ -126,7 +123,7 @@ public class FunctionTest extends ConfigurationTestCase {
         configuration.setMainModuleFile(createVirtualFile("test.sql", query));
 
         QueryBuilder queryBuilder = QueryBuilderFactory.createQueryBuilderForFile(configuration.getMainModulePath());
-        Function function = queryBuilder.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, MARKLOGIC_8);
+        Function function = queryBuilder.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_8());
 
         final String actual = function.buildQuery(configuration).replaceAll("\r\n", "\n");
         final String expected =
@@ -145,7 +142,7 @@ public class FunctionTest extends ConfigurationTestCase {
         configuration.setTripleFormat(RDFFormat.TURTLE);
 
         QueryBuilder queryBuilder = QueryBuilderFactory.createQueryBuilderForFile(configuration.getMainModulePath());
-        Function function = queryBuilder.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, MARKLOGIC_8);
+        Function function = queryBuilder.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_8());
 
         final String actual = function.buildQuery(configuration).replaceAll("\r\n", "\n");
         final String expected =
@@ -164,7 +161,7 @@ public class FunctionTest extends ConfigurationTestCase {
         configuration.setTripleFormat(RDFFormat.TURTLE);
 
         QueryBuilder queryBuilder = QueryBuilderFactory.createQueryBuilderForFile(configuration.getMainModulePath());
-        Function function = queryBuilder.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, MARKLOGIC_8);
+        Function function = queryBuilder.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_8());
 
         final String actual = function.buildQuery(configuration).replaceAll("\r\n", "\n");
         final String expected =

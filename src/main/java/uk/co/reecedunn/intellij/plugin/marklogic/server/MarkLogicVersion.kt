@@ -17,6 +17,12 @@ package uk.co.reecedunn.intellij.plugin.marklogic.server
 
 class MarkLogicVersionFormatException(message: String): RuntimeException(message)
 
+val MARKLOGIC_5 = MarkLogicVersion(5, 0, null, null)
+val MARKLOGIC_6 = MarkLogicVersion(6, 0, null, null)
+val MARKLOGIC_7 = MarkLogicVersion(7, 0, null, null)
+val MARKLOGIC_8 = MarkLogicVersion(8, 0, null, null)
+val MARKLOGIC_9 = MarkLogicVersion(9, 0, null, null)
+
 data class MarkLogicVersion(val major: Int, val minor: Int, val api: Int? = null, val patch: Int? = null) {
 
     override fun toString(): String =

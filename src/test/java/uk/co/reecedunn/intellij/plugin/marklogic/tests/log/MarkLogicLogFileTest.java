@@ -20,7 +20,7 @@ import uk.co.reecedunn.intellij.plugin.marklogic.log.LogLevel;
 import uk.co.reecedunn.intellij.plugin.marklogic.log.MarkLogicLogEntry;
 import uk.co.reecedunn.intellij.plugin.marklogic.log.MarkLogicLogFile;
 import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicAppServer;
-import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicVersion;
+import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicVersionKt;
 
 import java.util.Iterator;
 
@@ -29,13 +29,10 @@ import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class MarkLogicLogFileTest extends TestCase {
-    private static final MarkLogicVersion MARKLOGIC_5 = new MarkLogicVersion(5, 0, null, null);
-    private static final MarkLogicVersion MARKLOGIC_9 = new MarkLogicVersion(9, 0, null, null);
-
     public void testEmptyLogFile() {
         final String logfile =
             "";
-        Iterator<MarkLogicLogEntry> entries = MarkLogicLogFile.INSTANCE.parse(logfile, MARKLOGIC_5).iterator();
+        Iterator<MarkLogicLogEntry> entries = MarkLogicLogFile.INSTANCE.parse(logfile, MarkLogicVersionKt.getMARKLOGIC_5()).iterator();
 
         assertThat(entries.hasNext(), is(false));
     }
@@ -45,7 +42,7 @@ public class MarkLogicLogFileTest extends TestCase {
         final String logfile =
             "2001-01-10 12:34:56.789 Info: Lorem ipsum dolor\n" +
             "2001-01-10 12:34:56.800 Notice: Alpha beta gamma\n";
-        Iterator<MarkLogicLogEntry> entries = MarkLogicLogFile.INSTANCE.parse(logfile, MARKLOGIC_5).iterator();
+        Iterator<MarkLogicLogEntry> entries = MarkLogicLogFile.INSTANCE.parse(logfile, MarkLogicVersionKt.getMARKLOGIC_5()).iterator();
 
         assertThat(entries.hasNext(), is(true));
         entry = entries.next();
@@ -76,7 +73,7 @@ public class MarkLogicLogFileTest extends TestCase {
         MarkLogicLogEntry entry;
         final String logfile =
             "2001-01-10 12:34:56.789 Debug: TaskServer: Lorem ipsum dolor\n";
-        Iterator<MarkLogicLogEntry> entries = MarkLogicLogFile.INSTANCE.parse(logfile, MARKLOGIC_5).iterator();
+        Iterator<MarkLogicLogEntry> entries = MarkLogicLogFile.INSTANCE.parse(logfile, MarkLogicVersionKt.getMARKLOGIC_5()).iterator();
 
         assertThat(entries.hasNext(), is(true));
         entry = entries.next();
@@ -96,7 +93,7 @@ public class MarkLogicLogFileTest extends TestCase {
         MarkLogicLogEntry entry;
         final String logfile =
             "2001-01-10 12:34:56.789 Debug: abc-2d_3e: Lorem ipsum dolor\n";
-        Iterator<MarkLogicLogEntry> entries = MarkLogicLogFile.INSTANCE.parse(logfile, MARKLOGIC_5).iterator();
+        Iterator<MarkLogicLogEntry> entries = MarkLogicLogFile.INSTANCE.parse(logfile, MarkLogicVersionKt.getMARKLOGIC_5()).iterator();
 
         assertThat(entries.hasNext(), is(true));
         entry = entries.next();
@@ -117,7 +114,7 @@ public class MarkLogicLogFileTest extends TestCase {
         final String logfile =
             "2001-01-10 12:34:56.789 Info: Alpha\n" +
             "2001-01-10 12:34:56.789 Info:+Beta\n";
-        Iterator<MarkLogicLogEntry> entries = MarkLogicLogFile.INSTANCE.parse(logfile, MARKLOGIC_9).iterator();
+        Iterator<MarkLogicLogEntry> entries = MarkLogicLogFile.INSTANCE.parse(logfile, MarkLogicVersionKt.getMARKLOGIC_9()).iterator();
 
         assertThat(entries.hasNext(), is(true));
         entry = entries.next();

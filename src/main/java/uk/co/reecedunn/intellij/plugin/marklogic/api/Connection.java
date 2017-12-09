@@ -21,6 +21,7 @@ import org.jetbrains.annotations.Nullable;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.rest.RestConnection;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.xcc.XCCConnection;
 import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicVersion;
+import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicVersionKt;
 
 import java.io.IOException;
 
@@ -28,11 +29,11 @@ public abstract class Connection {
     /**
      * MarkLogic version to use the XCC API in newConnection.
      */
-    public static final MarkLogicVersion XCC = new MarkLogicVersion(5, 0, null, null);
+    public static final MarkLogicVersion XCC = MarkLogicVersionKt.getMARKLOGIC_5();
     /**
      * MarkLogic version to use the REST API in newConnection, including fetching error logs.
      */
-    public static final MarkLogicVersion REST = new MarkLogicVersion(8, 0, null, null);
+    public static final MarkLogicVersion REST = MarkLogicVersionKt.getMARKLOGIC_8();
 
     public static final Double[] SUPPORTED_MARKLOGIC_VERSIONS = new Double[] {
         5.0, 6.0, 7.0, 8.0, 9.0,

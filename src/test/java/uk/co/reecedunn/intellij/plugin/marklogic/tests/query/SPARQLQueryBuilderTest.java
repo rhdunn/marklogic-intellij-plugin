@@ -18,7 +18,7 @@ package uk.co.reecedunn.intellij.plugin.marklogic.tests.query;
 import com.intellij.execution.executors.DefaultDebugExecutor;
 import com.intellij.execution.executors.DefaultRunExecutor;
 import junit.framework.TestCase;
-import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicVersion;
+import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicVersionKt;
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.profile.ProfileExecutor;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.Function;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.QueryBuilder;
@@ -29,69 +29,63 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 @SuppressWarnings("ConstantConditions")
 public class SPARQLQueryBuilderTest extends TestCase {
-    private static final MarkLogicVersion MARKLOGIC_5 = new MarkLogicVersion(5, 0, null, null);
-    private static final MarkLogicVersion MARKLOGIC_6 = new MarkLogicVersion(6, 0, null, null);
-    private static final MarkLogicVersion MARKLOGIC_7 = new MarkLogicVersion(7, 0, null, null);
-    private static final MarkLogicVersion MARKLOGIC_8 = new MarkLogicVersion(8, 0, null, null);
-    private static final MarkLogicVersion MARKLOGIC_9 = new MarkLogicVersion(9, 0, null, null);
-
     public void testEvalRun() {
         QueryBuilder sparql = SPARQLQueryBuilder.INSTANCE;
 
-        assertThat(sparql.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, MARKLOGIC_5), is(nullValue()));
-        assertThat(sparql.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, MARKLOGIC_6), is(nullValue()));
-        assertThat(sparql.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, MARKLOGIC_7), is(Function.SEM_SPARQL_70));
-        assertThat(sparql.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, MARKLOGIC_8), is(Function.SEM_SPARQL_70));
-        assertThat(sparql.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, MARKLOGIC_9), is(Function.SEM_SPARQL_70));
+        assertThat(sparql.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_5()), is(nullValue()));
+        assertThat(sparql.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_6()), is(nullValue()));
+        assertThat(sparql.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_7()), is(Function.SEM_SPARQL_70));
+        assertThat(sparql.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_8()), is(Function.SEM_SPARQL_70));
+        assertThat(sparql.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_9()), is(Function.SEM_SPARQL_70));
     }
 
     public void testEvalProfile() {
         QueryBuilder sparql = SPARQLQueryBuilder.INSTANCE;
 
-        assertThat(sparql.createEvalBuilder(ProfileExecutor.EXECUTOR_ID, MARKLOGIC_5), is(nullValue()));
-        assertThat(sparql.createEvalBuilder(ProfileExecutor.EXECUTOR_ID, MARKLOGIC_6), is(nullValue()));
-        assertThat(sparql.createEvalBuilder(ProfileExecutor.EXECUTOR_ID, MARKLOGIC_7), is(nullValue()));
-        assertThat(sparql.createEvalBuilder(ProfileExecutor.EXECUTOR_ID, MARKLOGIC_8), is(nullValue()));
-        assertThat(sparql.createEvalBuilder(ProfileExecutor.EXECUTOR_ID, MARKLOGIC_9), is(nullValue()));
+        assertThat(sparql.createEvalBuilder(ProfileExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_5()), is(nullValue()));
+        assertThat(sparql.createEvalBuilder(ProfileExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_6()), is(nullValue()));
+        assertThat(sparql.createEvalBuilder(ProfileExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_7()), is(nullValue()));
+        assertThat(sparql.createEvalBuilder(ProfileExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_8()), is(nullValue()));
+        assertThat(sparql.createEvalBuilder(ProfileExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_9()), is(nullValue()));
     }
 
     public void testEvalDebug() {
         QueryBuilder sparql = SPARQLQueryBuilder.INSTANCE;
 
-        assertThat(sparql.createEvalBuilder(DefaultDebugExecutor.EXECUTOR_ID, MARKLOGIC_5), is(nullValue()));
-        assertThat(sparql.createEvalBuilder(DefaultDebugExecutor.EXECUTOR_ID, MARKLOGIC_6), is(nullValue()));
-        assertThat(sparql.createEvalBuilder(DefaultDebugExecutor.EXECUTOR_ID, MARKLOGIC_7), is(nullValue()));
-        assertThat(sparql.createEvalBuilder(DefaultDebugExecutor.EXECUTOR_ID, MARKLOGIC_8), is(nullValue()));
-        assertThat(sparql.createEvalBuilder(DefaultDebugExecutor.EXECUTOR_ID, MARKLOGIC_9), is(nullValue()));
+        assertThat(sparql.createEvalBuilder(DefaultDebugExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_5()), is(nullValue()));
+        assertThat(sparql.createEvalBuilder(DefaultDebugExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_6()), is(nullValue()));
+        assertThat(sparql.createEvalBuilder(DefaultDebugExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_7()), is(nullValue()));
+        assertThat(sparql.createEvalBuilder(DefaultDebugExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_8()), is(nullValue()));
+        assertThat(sparql.createEvalBuilder(DefaultDebugExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_9()), is(nullValue()));
     }
 
     public void testInvokeRun() {
         QueryBuilder sparql = SPARQLQueryBuilder.INSTANCE;
 
-        assertThat(sparql.createInvokeBuilder(DefaultRunExecutor.EXECUTOR_ID, MARKLOGIC_5), is(nullValue()));
-        assertThat(sparql.createInvokeBuilder(DefaultRunExecutor.EXECUTOR_ID, MARKLOGIC_6), is(nullValue()));
-        assertThat(sparql.createInvokeBuilder(DefaultRunExecutor.EXECUTOR_ID, MARKLOGIC_7), is(nullValue()));
-        assertThat(sparql.createInvokeBuilder(DefaultRunExecutor.EXECUTOR_ID, MARKLOGIC_8), is(nullValue()));
-        assertThat(sparql.createInvokeBuilder(DefaultRunExecutor.EXECUTOR_ID, MARKLOGIC_9), is(nullValue()));
+        assertThat(sparql.createInvokeBuilder(DefaultRunExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_5()), is(nullValue()));
+        assertThat(sparql.createInvokeBuilder(DefaultRunExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_6()), is(nullValue()));
+        assertThat(sparql.createInvokeBuilder(DefaultRunExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_7()), is(nullValue()));
+        assertThat(sparql.createInvokeBuilder(DefaultRunExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_8()), is(nullValue()));
+        assertThat(sparql.createInvokeBuilder(DefaultRunExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_9()), is(nullValue()));
     }
 
     public void testInvokeProfile() {
         QueryBuilder sparql = SPARQLQueryBuilder.INSTANCE;
 
-        assertThat(sparql.createInvokeBuilder(ProfileExecutor.EXECUTOR_ID, MARKLOGIC_5), is(nullValue()));
-        assertThat(sparql.createInvokeBuilder(ProfileExecutor.EXECUTOR_ID, MARKLOGIC_6), is(nullValue()));
-        assertThat(sparql.createInvokeBuilder(ProfileExecutor.EXECUTOR_ID, MARKLOGIC_7), is(nullValue()));
-        assertThat(sparql.createInvokeBuilder(ProfileExecutor.EXECUTOR_ID, MARKLOGIC_8), is(nullValue()));
-        assertThat(sparql.createInvokeBuilder(ProfileExecutor.EXECUTOR_ID, MARKLOGIC_9), is(nullValue()));
+        assertThat(sparql.createInvokeBuilder(ProfileExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_5()), is(nullValue()));
+        assertThat(sparql.createInvokeBuilder(ProfileExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_6()), is(nullValue()));
+        assertThat(sparql.createInvokeBuilder(ProfileExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_7()), is(nullValue()));
+        assertThat(sparql.createInvokeBuilder(ProfileExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_8()), is(nullValue()));
+        assertThat(sparql.createInvokeBuilder(ProfileExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_9()), is(nullValue()));
     }
 
     public void testInvokeDebug() {
         QueryBuilder sparql = SPARQLQueryBuilder.INSTANCE;
 
-        assertThat(sparql.createInvokeBuilder(DefaultDebugExecutor.EXECUTOR_ID, MARKLOGIC_5), is(nullValue()));
-        assertThat(sparql.createInvokeBuilder(DefaultDebugExecutor.EXECUTOR_ID, MARKLOGIC_6), is(nullValue()));
-        assertThat(sparql.createInvokeBuilder(DefaultDebugExecutor.EXECUTOR_ID, MARKLOGIC_7), is(nullValue()));
-        assertThat(sparql.createInvokeBuilder(DefaultDebugExecutor.EXECUTOR_ID, MARKLOGIC_8), is(nullValue()));
-        assertThat(sparql.createInvokeBuilder(DefaultDebugExecutor.EXECUTOR_ID, MARKLOGIC_9), is(nullValue()));
+        assertThat(sparql.createInvokeBuilder(DefaultDebugExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_5()), is(nullValue()));
+        assertThat(sparql.createInvokeBuilder(DefaultDebugExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_6()), is(nullValue()));
+        assertThat(sparql.createInvokeBuilder(DefaultDebugExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_7()), is(nullValue()));
+        assertThat(sparql.createInvokeBuilder(DefaultDebugExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_8()), is(nullValue()));
+        assertThat(sparql.createInvokeBuilder(DefaultDebugExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_9()), is(nullValue()));
     }
 }
