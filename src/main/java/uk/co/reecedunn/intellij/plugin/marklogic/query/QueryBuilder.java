@@ -17,11 +17,12 @@ package uk.co.reecedunn.intellij.plugin.marklogic.query;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicVersion;
 
 public interface QueryBuilder {
     @Nullable
-    Function createEvalBuilder(@NotNull String executorId, double markLogicVersion);
+    Function createEvalBuilder(@NotNull String executorId, @NotNull MarkLogicVersion markLogicVersion);
 
     @Nullable
-    Function createInvokeBuilder(@NotNull String executorId, double markLogicVersion);
+    Function createInvokeBuilder(@NotNull String executorId, @NotNull MarkLogicVersion markLogicVersion);
 }

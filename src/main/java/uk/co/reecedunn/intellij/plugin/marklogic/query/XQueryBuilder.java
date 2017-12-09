@@ -19,6 +19,7 @@ import com.intellij.execution.executors.DefaultDebugExecutor;
 import com.intellij.execution.executors.DefaultRunExecutor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicVersion;
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.profile.ProfileExecutor;
 
 public class XQueryBuilder implements QueryBuilder {
@@ -28,26 +29,26 @@ public class XQueryBuilder implements QueryBuilder {
     }
 
     @Nullable
-    public Function createEvalBuilder(@NotNull String executorId, double markLogicVersion) {
+    public Function createEvalBuilder(@NotNull String executorId, @NotNull MarkLogicVersion markLogicVersion) {
         if (DefaultRunExecutor.EXECUTOR_ID.equals(executorId)) {
-            return markLogicVersion >= 7.0 ? Function.XDMP_EVAL_70 : Function.XDMP_EVAL_50;
+            return markLogicVersion.getMajor() >= 7 ? Function.XDMP_EVAL_70 : Function.XDMP_EVAL_50;
         } else if (ProfileExecutor.EXECUTOR_ID.equals(executorId)) {
-            return markLogicVersion >= 8.0 ? Function.PROF_EVAL_80 : Function.PROF_EVAL_50;
+            return markLogicVersion.getMajor() >= 8 ? Function.PROF_EVAL_80 : Function.PROF_EVAL_50;
         } else if (DefaultDebugExecutor.EXECUTOR_ID.equals(executorId)) {
-            return markLogicVersion >= 8.0 ? Function.DBG_EVAL_80 : Function.DBG_EVAL_50;
+            return markLogicVersion.getMajor() >= 8 ? Function.DBG_EVAL_80 : Function.DBG_EVAL_50;
         } else {
             return null;
         }
     }
 
     @Nullable
-    public Function createInvokeBuilder(@NotNull String executorId, double markLogicVersion) {
+    public Function createInvokeBuilder(@NotNull String executorId, @NotNull MarkLogicVersion markLogicVersion) {
         if (DefaultRunExecutor.EXECUTOR_ID.equals(executorId)) {
-            return markLogicVersion >= 7.0 ? Function.XDMP_INVOKE_70 : Function.XDMP_INVOKE_50;
+            return markLogicVersion.getMajor() >= 7 ? Function.XDMP_INVOKE_70 : Function.XDMP_INVOKE_50;
         } else if (ProfileExecutor.EXECUTOR_ID.equals(executorId)) {
-            return markLogicVersion >= 8.0 ? Function.PROF_INVOKE_80 : Function.PROF_INVOKE_50;
+            return markLogicVersion.getMajor() >= 8 ? Function.PROF_INVOKE_80 : Function.PROF_INVOKE_50;
         } else if (DefaultDebugExecutor.EXECUTOR_ID.equals(executorId)) {
-            return markLogicVersion >= 8.0 ? Function.DBG_INVOKE_80 : Function.DBG_INVOKE_50;
+            return markLogicVersion.getMajor() >= 8 ? Function.DBG_INVOKE_80 : Function.DBG_INVOKE_50;
         } else {
             return null;
         }

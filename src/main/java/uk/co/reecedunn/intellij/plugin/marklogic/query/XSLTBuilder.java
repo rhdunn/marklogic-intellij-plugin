@@ -18,6 +18,7 @@ package uk.co.reecedunn.intellij.plugin.marklogic.query;
 import com.intellij.execution.executors.DefaultRunExecutor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicVersion;
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.profile.ProfileExecutor;
 
 public class XSLTBuilder implements QueryBuilder {
@@ -27,7 +28,7 @@ public class XSLTBuilder implements QueryBuilder {
     }
 
     @Nullable
-    public Function createEvalBuilder(@NotNull String executorId, double markLogicVersion) {
+    public Function createEvalBuilder(@NotNull String executorId, @NotNull MarkLogicVersion markLogicVersion) {
         if (DefaultRunExecutor.EXECUTOR_ID.equals(executorId)) {
             return Function.XDMP_XSLT_EVAL_50;
         } else if (ProfileExecutor.EXECUTOR_ID.equals(executorId)) {
@@ -38,7 +39,7 @@ public class XSLTBuilder implements QueryBuilder {
     }
 
     @Nullable
-    public Function createInvokeBuilder(@NotNull String executorId, double markLogicVersion) {
+    public Function createInvokeBuilder(@NotNull String executorId, @NotNull MarkLogicVersion markLogicVersion) {
         if (DefaultRunExecutor.EXECUTOR_ID.equals(executorId)) {
             return Function.XDMP_XSLT_INVOKE_50;
         } else if (ProfileExecutor.EXECUTOR_ID.equals(executorId)) {

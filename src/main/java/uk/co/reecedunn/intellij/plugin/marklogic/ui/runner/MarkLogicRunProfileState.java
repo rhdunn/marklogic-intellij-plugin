@@ -55,7 +55,7 @@ public class MarkLogicRunProfileState extends CommandLineState {
             throw new ExecutionException("Unsupported query file: " + configuration.getMainModulePath());
         }
 
-        Function function = queryBuilder.createEvalBuilder(getEnvironment().getExecutor().getId(), configuration.getMarkLogicMajorMinor());
+        Function function = queryBuilder.createEvalBuilder(getEnvironment().getExecutor().getId(), configuration.getMarkLogicVersion());
         if (function == null) {
             throw new ExecutionException("Cannot run the query file with MarkLogic " + configuration.getMarkLogicMajorMinor());
         }

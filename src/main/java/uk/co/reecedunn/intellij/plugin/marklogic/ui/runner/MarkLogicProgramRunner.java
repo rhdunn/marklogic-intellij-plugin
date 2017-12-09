@@ -39,6 +39,6 @@ public class MarkLogicProgramRunner extends DefaultProgramRunner {
         final MarkLogicRunConfiguration configuration = (MarkLogicRunConfiguration) profile;
         final QueryBuilder queryBuilder = QueryBuilderFactory.createQueryBuilderForFile(configuration.getMainModulePath());
         return queryBuilder != null &&
-               queryBuilder.createEvalBuilder(executorId, configuration.getMarkLogicMajorMinor()) != null;
+               queryBuilder.createEvalBuilder(executorId, configuration.getMarkLogicVersion()) != null;
     }
 }

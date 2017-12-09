@@ -18,6 +18,7 @@ package uk.co.reecedunn.intellij.plugin.marklogic.tests.query;
 import com.intellij.execution.executors.DefaultDebugExecutor;
 import com.intellij.execution.executors.DefaultRunExecutor;
 import junit.framework.TestCase;
+import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicVersion;
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.profile.ProfileExecutor;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.Function;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.SQLBuilder;
@@ -28,63 +29,69 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 @SuppressWarnings("ConstantConditions")
 public class SQLBuilderTest extends TestCase {
+    private static final MarkLogicVersion MARKLOGIC_5 = new MarkLogicVersion(5, 0, null, null);
+    private static final MarkLogicVersion MARKLOGIC_6 = new MarkLogicVersion(6, 0, null, null);
+    private static final MarkLogicVersion MARKLOGIC_7 = new MarkLogicVersion(7, 0, null, null);
+    private static final MarkLogicVersion MARKLOGIC_8 = new MarkLogicVersion(8, 0, null, null);
+    private static final MarkLogicVersion MARKLOGIC_9 = new MarkLogicVersion(9, 0, null, null);
+
     public void testEvalRun() {
         QueryBuilder sql = SQLBuilder.INSTANCE;
 
-        assertThat(sql.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, 5.0), is(nullValue()));
-        assertThat(sql.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, 6.0), is(nullValue()));
-        assertThat(sql.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, 7.0), is(nullValue()));
-        assertThat(sql.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, 8.0), is(Function.XDMP_SQL_80));
-        assertThat(sql.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, 9.0), is(Function.XDMP_SQL_90));
+        assertThat(sql.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, MARKLOGIC_5), is(nullValue()));
+        assertThat(sql.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, MARKLOGIC_6), is(nullValue()));
+        assertThat(sql.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, MARKLOGIC_7), is(nullValue()));
+        assertThat(sql.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, MARKLOGIC_8), is(Function.XDMP_SQL_80));
+        assertThat(sql.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, MARKLOGIC_9), is(Function.XDMP_SQL_90));
     }
 
     public void testEvalProfile() {
         QueryBuilder sql = SQLBuilder.INSTANCE;
 
-        assertThat(sql.createEvalBuilder(ProfileExecutor.EXECUTOR_ID, 5.0), is(nullValue()));
-        assertThat(sql.createEvalBuilder(ProfileExecutor.EXECUTOR_ID, 6.0), is(nullValue()));
-        assertThat(sql.createEvalBuilder(ProfileExecutor.EXECUTOR_ID, 7.0), is(nullValue()));
-        assertThat(sql.createEvalBuilder(ProfileExecutor.EXECUTOR_ID, 8.0), is(nullValue()));
-        assertThat(sql.createEvalBuilder(ProfileExecutor.EXECUTOR_ID, 9.0), is(nullValue()));
+        assertThat(sql.createEvalBuilder(ProfileExecutor.EXECUTOR_ID, MARKLOGIC_5), is(nullValue()));
+        assertThat(sql.createEvalBuilder(ProfileExecutor.EXECUTOR_ID, MARKLOGIC_6), is(nullValue()));
+        assertThat(sql.createEvalBuilder(ProfileExecutor.EXECUTOR_ID, MARKLOGIC_7), is(nullValue()));
+        assertThat(sql.createEvalBuilder(ProfileExecutor.EXECUTOR_ID, MARKLOGIC_8), is(nullValue()));
+        assertThat(sql.createEvalBuilder(ProfileExecutor.EXECUTOR_ID, MARKLOGIC_9), is(nullValue()));
     }
 
     public void testEvalDebug() {
         QueryBuilder sql = SQLBuilder.INSTANCE;
 
-        assertThat(sql.createEvalBuilder(DefaultDebugExecutor.EXECUTOR_ID, 5.0), is(nullValue()));
-        assertThat(sql.createEvalBuilder(DefaultDebugExecutor.EXECUTOR_ID, 6.0), is(nullValue()));
-        assertThat(sql.createEvalBuilder(DefaultDebugExecutor.EXECUTOR_ID, 7.0), is(nullValue()));
-        assertThat(sql.createEvalBuilder(DefaultDebugExecutor.EXECUTOR_ID, 8.0), is(nullValue()));
-        assertThat(sql.createEvalBuilder(DefaultDebugExecutor.EXECUTOR_ID, 9.0), is(nullValue()));
+        assertThat(sql.createEvalBuilder(DefaultDebugExecutor.EXECUTOR_ID, MARKLOGIC_5), is(nullValue()));
+        assertThat(sql.createEvalBuilder(DefaultDebugExecutor.EXECUTOR_ID, MARKLOGIC_6), is(nullValue()));
+        assertThat(sql.createEvalBuilder(DefaultDebugExecutor.EXECUTOR_ID, MARKLOGIC_7), is(nullValue()));
+        assertThat(sql.createEvalBuilder(DefaultDebugExecutor.EXECUTOR_ID, MARKLOGIC_8), is(nullValue()));
+        assertThat(sql.createEvalBuilder(DefaultDebugExecutor.EXECUTOR_ID, MARKLOGIC_9), is(nullValue()));
     }
 
     public void testInvokeRun() {
         QueryBuilder sql = SQLBuilder.INSTANCE;
 
-        assertThat(sql.createInvokeBuilder(DefaultRunExecutor.EXECUTOR_ID, 5.0), is(nullValue()));
-        assertThat(sql.createInvokeBuilder(DefaultRunExecutor.EXECUTOR_ID, 6.0), is(nullValue()));
-        assertThat(sql.createInvokeBuilder(DefaultRunExecutor.EXECUTOR_ID, 7.0), is(nullValue()));
-        assertThat(sql.createInvokeBuilder(DefaultRunExecutor.EXECUTOR_ID, 8.0), is(nullValue()));
-        assertThat(sql.createInvokeBuilder(DefaultRunExecutor.EXECUTOR_ID, 9.0), is(nullValue()));
+        assertThat(sql.createInvokeBuilder(DefaultRunExecutor.EXECUTOR_ID, MARKLOGIC_5), is(nullValue()));
+        assertThat(sql.createInvokeBuilder(DefaultRunExecutor.EXECUTOR_ID, MARKLOGIC_6), is(nullValue()));
+        assertThat(sql.createInvokeBuilder(DefaultRunExecutor.EXECUTOR_ID, MARKLOGIC_7), is(nullValue()));
+        assertThat(sql.createInvokeBuilder(DefaultRunExecutor.EXECUTOR_ID, MARKLOGIC_8), is(nullValue()));
+        assertThat(sql.createInvokeBuilder(DefaultRunExecutor.EXECUTOR_ID, MARKLOGIC_9), is(nullValue()));
     }
 
     public void testInvokeProfile() {
         QueryBuilder sql = SQLBuilder.INSTANCE;
 
-        assertThat(sql.createInvokeBuilder(ProfileExecutor.EXECUTOR_ID, 5.0), is(nullValue()));
-        assertThat(sql.createInvokeBuilder(ProfileExecutor.EXECUTOR_ID, 6.0), is(nullValue()));
-        assertThat(sql.createInvokeBuilder(ProfileExecutor.EXECUTOR_ID, 7.0), is(nullValue()));
-        assertThat(sql.createInvokeBuilder(ProfileExecutor.EXECUTOR_ID, 8.0), is(nullValue()));
-        assertThat(sql.createInvokeBuilder(ProfileExecutor.EXECUTOR_ID, 9.0), is(nullValue()));
+        assertThat(sql.createInvokeBuilder(ProfileExecutor.EXECUTOR_ID, MARKLOGIC_5), is(nullValue()));
+        assertThat(sql.createInvokeBuilder(ProfileExecutor.EXECUTOR_ID, MARKLOGIC_6), is(nullValue()));
+        assertThat(sql.createInvokeBuilder(ProfileExecutor.EXECUTOR_ID, MARKLOGIC_7), is(nullValue()));
+        assertThat(sql.createInvokeBuilder(ProfileExecutor.EXECUTOR_ID, MARKLOGIC_8), is(nullValue()));
+        assertThat(sql.createInvokeBuilder(ProfileExecutor.EXECUTOR_ID, MARKLOGIC_9), is(nullValue()));
     }
 
     public void testInvokeDebug() {
         QueryBuilder sql = SQLBuilder.INSTANCE;
 
-        assertThat(sql.createInvokeBuilder(DefaultDebugExecutor.EXECUTOR_ID, 5.0), is(nullValue()));
-        assertThat(sql.createInvokeBuilder(DefaultDebugExecutor.EXECUTOR_ID, 6.0), is(nullValue()));
-        assertThat(sql.createInvokeBuilder(DefaultDebugExecutor.EXECUTOR_ID, 7.0), is(nullValue()));
-        assertThat(sql.createInvokeBuilder(DefaultDebugExecutor.EXECUTOR_ID, 8.0), is(nullValue()));
-        assertThat(sql.createInvokeBuilder(DefaultDebugExecutor.EXECUTOR_ID, 9.0), is(nullValue()));
+        assertThat(sql.createInvokeBuilder(DefaultDebugExecutor.EXECUTOR_ID, MARKLOGIC_5), is(nullValue()));
+        assertThat(sql.createInvokeBuilder(DefaultDebugExecutor.EXECUTOR_ID, MARKLOGIC_6), is(nullValue()));
+        assertThat(sql.createInvokeBuilder(DefaultDebugExecutor.EXECUTOR_ID, MARKLOGIC_7), is(nullValue()));
+        assertThat(sql.createInvokeBuilder(DefaultDebugExecutor.EXECUTOR_ID, MARKLOGIC_8), is(nullValue()));
+        assertThat(sql.createInvokeBuilder(DefaultDebugExecutor.EXECUTOR_ID, MARKLOGIC_9), is(nullValue()));
     }
 }

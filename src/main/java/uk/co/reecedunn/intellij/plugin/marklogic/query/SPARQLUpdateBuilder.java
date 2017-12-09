@@ -18,6 +18,7 @@ package uk.co.reecedunn.intellij.plugin.marklogic.query;
 import com.intellij.execution.executors.DefaultRunExecutor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicVersion;
 
 public class SPARQLUpdateBuilder implements QueryBuilder {
     public static QueryBuilder INSTANCE = new SPARQLUpdateBuilder();
@@ -26,15 +27,15 @@ public class SPARQLUpdateBuilder implements QueryBuilder {
     }
 
     @Nullable
-    public Function createEvalBuilder(@NotNull String executorId, double markLogicVersion) {
-        if (DefaultRunExecutor.EXECUTOR_ID.equals(executorId) && markLogicVersion >= 8.0) {
+    public Function createEvalBuilder(@NotNull String executorId, @NotNull MarkLogicVersion markLogicVersion) {
+        if (DefaultRunExecutor.EXECUTOR_ID.equals(executorId) && markLogicVersion.getMajor() >= 8) {
             return Function.SEM_SPARQL_UPDATE_80;
         }
         return null;
     }
 
     @Nullable
-    public Function createInvokeBuilder(@NotNull String executorId, double markLogicVersion) {
+    public Function createInvokeBuilder(@NotNull String executorId, @NotNull MarkLogicVersion markLogicVersion) {
         return null;
     }
 }
