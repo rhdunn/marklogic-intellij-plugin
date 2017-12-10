@@ -25,11 +25,14 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VfsUtil;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.VirtualFileManager;
+import com.intellij.util.xmlb.Converter;
 import com.intellij.util.xmlb.XmlSerializerUtil;
+import com.intellij.util.xmlb.annotations.OptionTag;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.RDFFormat;
 import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicServer;
+import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicVersion;
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.runner.MarkLogicResultsHandler;
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.runner.MarkLogicRunProfileState;
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.settings.MarkLogicSettings;
@@ -37,6 +40,20 @@ import uk.co.reecedunn.intellij.plugin.marklogic.ui.settings.MarkLogicSettings;
 import java.io.File;
 
 public class MarkLogicRunConfiguration extends RunConfigurationBase implements PersistentStateComponent<MarkLogicRunConfiguration.ConfigData> {
+    public static class MarkLogicVersionConverter extends Converter<MarkLogicVersion> {
+        @Nullable
+        @Override
+        public MarkLogicVersion fromString(@NotNull String version) {
+            return MarkLogicVersion.Companion.parse(version);
+        }
+
+        @NotNull
+        @Override
+        public String toString(@NotNull MarkLogicVersion version) {
+            return version.toString();
+        }
+    }
+
     private MarkLogicServer mServer;
 
     public static final String[] EXTENSIONS = new String[]{
@@ -50,7 +67,8 @@ public class MarkLogicRunConfiguration extends RunConfigurationBase implements P
     @SuppressWarnings("WeakerAccess") // DefaultJDOMExternalizer requires public access to the fields.
     static class ConfigData {
         public String serverHost = "localhost";
-        public double markLogicVersion = 7.0;
+        @OptionTag(converter = MarkLogicVersionConverter.class)
+        public MarkLogicVersion markLogicVersion = new MarkLogicVersion(7, 0, null, null);
         public String contentDatabase = null;
         public String moduleDatabase = null;
         public String moduleRoot = "/";
@@ -121,11 +139,11 @@ public class MarkLogicRunConfiguration extends RunConfigurationBase implements P
     }
 
     public double getMarkLogicMajorMinor() {
-        return data.markLogicVersion;
+        return data.markLogicVersion.getMajor();
     }
 
     public void setMarkLogicMajorMinor(double markLogicVersion) {
-        data.markLogicVersion = markLogicVersion;
+        data.markLogicVersion = new MarkLogicVersion((int)markLogicVersion, 0, null, null);
     }
 
     public String getContentDatabase() {
