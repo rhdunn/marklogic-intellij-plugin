@@ -117,11 +117,11 @@ public class MarkLogicRunConfiguration extends RunConfigurationBase {
         data.serverHost = (mServer == null) ? null : mServer.getHostname();
     }
 
-    public double getMarkLogicVersion() {
+    public double getMarkLogicMajorMinor() {
         return data.markLogicVersion;
     }
 
-    public void setMarkLogicVersion(double markLogicVersion) {
+    public void setMarkLogicMajorMinor(double markLogicVersion) {
         data.markLogicVersion = markLogicVersion;
     }
 

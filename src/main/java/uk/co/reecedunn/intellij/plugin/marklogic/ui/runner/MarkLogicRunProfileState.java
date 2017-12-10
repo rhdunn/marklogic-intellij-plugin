@@ -18,7 +18,6 @@ package uk.co.reecedunn.intellij.plugin.marklogic.ui.runner;
 import com.intellij.execution.ExecutionException;
 import com.intellij.execution.Executor;
 import com.intellij.execution.configurations.CommandLineState;
-import com.intellij.execution.executors.DefaultRunExecutor;
 import com.intellij.execution.filters.RegexpFilter;
 import com.intellij.execution.process.ProcessHandler;
 import com.intellij.execution.runners.ExecutionEnvironment;
@@ -28,13 +27,10 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Connection;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.EvalRequestBuilder;
-import uk.co.reecedunn.intellij.plugin.marklogic.debugger.stack.view.MarkLogicViewErrorAction;
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.configuration.MarkLogicRunConfiguration;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.Function;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.QueryBuilder;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.QueryBuilderFactory;
-
-import java.io.IOException;
 
 public class MarkLogicRunProfileState extends CommandLineState {
     public MarkLogicRunProfileState(@Nullable ExecutionEnvironment environment) {
@@ -59,9 +55,9 @@ public class MarkLogicRunProfileState extends CommandLineState {
             throw new ExecutionException("Unsupported query file: " + configuration.getMainModulePath());
         }
 
-        Function function = queryBuilder.createEvalBuilder(getEnvironment().getExecutor().getId(), configuration.getMarkLogicVersion());
+        Function function = queryBuilder.createEvalBuilder(getEnvironment().getExecutor().getId(), configuration.getMarkLogicMajorMinor());
         if (function == null) {
-            throw new ExecutionException("Cannot run the query file with MarkLogic " + configuration.getMarkLogicVersion());
+            throw new ExecutionException("Cannot run the query file with MarkLogic " + configuration.getMarkLogicMajorMinor());
         }
 
         Connection connection = createConnection(configuration);
@@ -90,6 +86,6 @@ public class MarkLogicRunProfileState extends CommandLineState {
             configuration.getServer().getAppServerPort(),
             configuration.getServer().getUsername(),
             configuration.getServer().getPassword(),
-            configuration.getMarkLogicVersion());
+            configuration.getMarkLogicMajorMinor());
     }
 }

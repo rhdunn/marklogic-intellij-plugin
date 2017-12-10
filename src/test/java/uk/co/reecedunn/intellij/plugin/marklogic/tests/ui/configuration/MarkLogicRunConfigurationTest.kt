@@ -93,15 +93,15 @@ class MarkLogicRunConfigurationTest : ConfigurationTestCase() {
         </test>""".replace("\n[ ]*".toRegex(), "")
 
         val configuration = createConfiguration()
-        assertThat(configuration.markLogicVersion, `is`(7.0))
+        assertThat(configuration.markLogicMajorMinor, `is`(7.0))
 
-        configuration.markLogicVersion = 9.0
-        assertThat(configuration.markLogicVersion, `is`(9.0))
+        configuration.markLogicMajorMinor = 9.0
+        assertThat(configuration.markLogicMajorMinor, `is`(9.0))
 
         assertThat(serialize(configuration), `is`(serialized))
 
         val other = deserialize(serialized)
-        assertThat(other.markLogicVersion, `is`(9.0))
+        assertThat(other.markLogicMajorMinor, `is`(9.0))
     }
 
     fun testContentDatabase() {

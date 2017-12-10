@@ -77,7 +77,7 @@ public class MarkLogicProgramRunnerTest extends ConfigurationTestCase {
     public void testNoActionsAvailable() {
         MarkLogicRunConfiguration profile = createConfiguration();
         profile.setMainModuleFile(createVirtualFile("test.sjs", "2"));
-        profile.setMarkLogicVersion(7.0);
+        profile.setMarkLogicMajorMinor(7.0);
 
         ProgramRunner runner = new MarkLogicProgramRunner();
         assertThat(runner.canRun(DefaultRunExecutor.EXECUTOR_ID, profile), is(false));
@@ -89,7 +89,7 @@ public class MarkLogicProgramRunnerTest extends ConfigurationTestCase {
     public void testRunOnly() {
         MarkLogicRunConfiguration profile = createConfiguration();
         profile.setMainModuleFile(createVirtualFile("test.sjs", "2"));
-        profile.setMarkLogicVersion(8.0);
+        profile.setMarkLogicMajorMinor(8.0);
 
         ProgramRunner runner = new MarkLogicProgramRunner();
         assertThat(runner.canRun(DefaultRunExecutor.EXECUTOR_ID, profile), is(true));
@@ -101,7 +101,7 @@ public class MarkLogicProgramRunnerTest extends ConfigurationTestCase {
     public void testRunAndProfile() {
         MarkLogicRunConfiguration profile = createConfiguration();
         profile.setMainModuleFile(createVirtualFile("test.xsl", ""));
-        profile.setMarkLogicVersion(8.0);
+        profile.setMarkLogicMajorMinor(8.0);
 
         ProgramRunner runner = new MarkLogicProgramRunner();
         assertThat(runner.canRun(DefaultRunExecutor.EXECUTOR_ID, profile), is(true));
@@ -114,7 +114,7 @@ public class MarkLogicProgramRunnerTest extends ConfigurationTestCase {
         // NOTE: Debugging support is not currently enabled.
         MarkLogicRunConfiguration profile = createConfiguration();
         profile.setMainModuleFile(createVirtualFile("test.xqy", "2"));
-        profile.setMarkLogicVersion(8.0);
+        profile.setMarkLogicMajorMinor(8.0);
 
         ProgramRunner runner = new MarkLogicProgramRunner();
         assertThat(runner.canRun(DefaultRunExecutor.EXECUTOR_ID, profile), is(true));

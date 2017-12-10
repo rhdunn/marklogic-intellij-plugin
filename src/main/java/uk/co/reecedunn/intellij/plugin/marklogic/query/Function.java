@@ -183,7 +183,7 @@ public enum Function {
         }
 
         RDFFormat tripleFormat = configuration.getTripleFormat();
-        double markLogicVersion = configuration.getMarkLogicVersion();
+        double markLogicVersion = configuration.getMarkLogicMajorMinor();
 
         if (tripleFormat == RDFFormat.SEM_TRIPLE || markLogicVersion < 7.0) {
             return MarkLogicQueryKt.getRUN_QUERY().getQuery()

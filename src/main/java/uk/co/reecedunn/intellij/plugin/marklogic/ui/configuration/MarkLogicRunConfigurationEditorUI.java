@@ -94,7 +94,7 @@ public class MarkLogicRunConfigurationEditorUI {
 
     public void reset(@NotNull MarkLogicRunConfiguration configuration) {
         mServerHost.setSelectedItem(configuration.getServer());
-        mServerVersion.setSelectedItem(configuration.getMarkLogicVersion());
+        mServerVersion.setSelectedItem(configuration.getMarkLogicMajorMinor());
         ((MarkLogicQueryComboBox)mContentDatabase).setItem(configuration.getContentDatabase());
         ((MarkLogicQueryComboBox)mModuleDatabase).setItem(configuration.getModuleDatabase());
         mModuleRoot.getChildComponent().setText(configuration.getModuleRoot());
@@ -104,7 +104,7 @@ public class MarkLogicRunConfigurationEditorUI {
 
     public void apply(@NotNull MarkLogicRunConfiguration configuration) {
         configuration.setServer((MarkLogicServer)mServerHost.getSelectedItem());
-        configuration.setMarkLogicVersion((Double)mServerVersion.getSelectedItem());
+        configuration.setMarkLogicMajorMinor((Double)mServerVersion.getSelectedItem());
         configuration.setContentDatabase(((MarkLogicQueryComboBox)mContentDatabase).getItem());
         configuration.setModuleDatabase(((MarkLogicQueryComboBox)mModuleDatabase).getItem());
         configuration.setModuleRoot(mModuleRoot.getChildComponent().getText());

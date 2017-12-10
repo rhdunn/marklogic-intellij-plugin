@@ -17,16 +17,12 @@ package uk.co.reecedunn.intellij.plugin.marklogic.tests.query;
 
 import com.intellij.execution.ExecutionException;
 import com.intellij.execution.executors.DefaultRunExecutor;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.function.Executable;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.RDFFormat;
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.configuration.MarkLogicRunConfiguration;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.Function;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.QueryBuilder;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.QueryBuilderFactory;
 import uk.co.reecedunn.intellij.plugin.marklogic.tests.configuration.ConfigurationTestCase;
-
-import java.io.FileNotFoundException;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -141,7 +137,7 @@ public class FunctionTest extends ConfigurationTestCase {
         final String query = "34";
         final MarkLogicRunConfiguration configuration = createConfiguration();
         configuration.setMainModuleFile(createVirtualFile("test.xqy", query));
-        configuration.setMarkLogicVersion(6.0);
+        configuration.setMarkLogicMajorMinor(6.0);
         configuration.setTripleFormat(RDFFormat.TURTLE);
 
         QueryBuilder queryBuilder = QueryBuilderFactory.createQueryBuilderForFile(configuration.getMainModulePath());
@@ -160,7 +156,7 @@ public class FunctionTest extends ConfigurationTestCase {
         final String query = "34";
         final MarkLogicRunConfiguration configuration = createConfiguration();
         configuration.setMainModuleFile(createVirtualFile("test.xqy", query));
-        configuration.setMarkLogicVersion(7.0);
+        configuration.setMarkLogicMajorMinor(7.0);
         configuration.setTripleFormat(RDFFormat.TURTLE);
 
         QueryBuilder queryBuilder = QueryBuilderFactory.createQueryBuilderForFile(configuration.getMainModulePath());
