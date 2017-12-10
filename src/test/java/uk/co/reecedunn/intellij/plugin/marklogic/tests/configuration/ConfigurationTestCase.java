@@ -60,6 +60,9 @@ public abstract class ConfigurationTestCase extends PlatformLiteFixture {
             @Override
             public VirtualFile findFileByUrl(@NotNull String url) {
                 String path = url.replace("file://", "");
+                if (path.startsWith("/")) {
+                    path = path.substring(1);
+                }
                 String contents = new TestResource(path).getContents();
                 return (contents == null) ? null : createVirtualFile(path, contents);
             }
