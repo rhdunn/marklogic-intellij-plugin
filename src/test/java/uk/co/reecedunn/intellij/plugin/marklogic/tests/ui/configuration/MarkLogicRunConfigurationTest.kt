@@ -48,12 +48,6 @@ class MarkLogicRunConfigurationTest : ConfigurationTestCase() {
     fun testServer() {
         val serialized = """<test>
             <option name="serverHost" value="localhost.test" />
-            <option name="markLogicVersion" value="7.0" />
-            <option name="contentDatabase" />
-            <option name="moduleDatabase" />
-            <option name="moduleRoot" value="/" />
-            <option name="mainModulePath" value="" />
-            <option name="tripleFormat" value="sem:triple" />
         </test>""".replace("\n[ ]*".toRegex(), "")
 
         val configuration = createConfiguration()
@@ -83,13 +77,7 @@ class MarkLogicRunConfigurationTest : ConfigurationTestCase() {
 
     fun testMarkLogicVersion() {
         val serialized = """<test>
-            <option name="serverHost" value="localhost" />
             <option name="markLogicVersion" value="9.0" />
-            <option name="contentDatabase" />
-            <option name="moduleDatabase" />
-            <option name="moduleRoot" value="/" />
-            <option name="mainModulePath" value="" />
-            <option name="tripleFormat" value="sem:triple" />
         </test>""".replace("\n[ ]*".toRegex(), "")
 
         val configuration = createConfiguration()
@@ -106,13 +94,7 @@ class MarkLogicRunConfigurationTest : ConfigurationTestCase() {
 
     fun testContentDatabase() {
         val serialized = """<test>
-            <option name="serverHost" value="localhost" />
-            <option name="markLogicVersion" value="7.0" />
             <option name="contentDatabase" value="test-content" />
-            <option name="moduleDatabase" />
-            <option name="moduleRoot" value="/" />
-            <option name="mainModulePath" value="" />
-            <option name="tripleFormat" value="sem:triple" />
         </test>""".replace("\n[ ]*".toRegex(), "")
 
         val configuration = createConfiguration()
@@ -129,13 +111,7 @@ class MarkLogicRunConfigurationTest : ConfigurationTestCase() {
 
     fun testModuleDatabase() {
         val serialized = """<test>
-            <option name="serverHost" value="localhost" />
-            <option name="markLogicVersion" value="7.0" />
-            <option name="contentDatabase" />
             <option name="moduleDatabase" value="test-modules" />
-            <option name="moduleRoot" value="/" />
-            <option name="mainModulePath" value="" />
-            <option name="tripleFormat" value="sem:triple" />
         </test>""".replace("\n[ ]*".toRegex(), "")
 
         val configuration = createConfiguration()
@@ -152,13 +128,7 @@ class MarkLogicRunConfigurationTest : ConfigurationTestCase() {
 
     fun testModuleRoot() {
         val serialized = """<test>
-            <option name="serverHost" value="localhost" />
-            <option name="markLogicVersion" value="7.0" />
-            <option name="contentDatabase" />
-            <option name="moduleDatabase" />
             <option name="moduleRoot" value="/lorem/ipsum" />
-            <option name="mainModulePath" value="" />
-            <option name="tripleFormat" value="sem:triple" />
         </test>""".replace("\n[ ]*".toRegex(), "")
 
         val configuration = createConfiguration()
@@ -175,13 +145,7 @@ class MarkLogicRunConfigurationTest : ConfigurationTestCase() {
 
     fun testMainModulePath() {
         val serialized = """<test>
-            <option name="serverHost" value="localhost" />
-            <option name="markLogicVersion" value="7.0" />
-            <option name="contentDatabase" />
-            <option name="moduleDatabase" />
-            <option name="moduleRoot" value="/" />
             <option name="mainModulePath" value="module/test.xqy" />
-            <option name="tripleFormat" value="sem:triple" />
         </test>""".replace("\n[ ]*".toRegex(), "")
 
         val configuration = createConfiguration()
@@ -203,13 +167,7 @@ class MarkLogicRunConfigurationTest : ConfigurationTestCase() {
 
     fun testMainModuleFile() {
         val serialized = """<test>
-            <option name="serverHost" value="localhost" />
-            <option name="markLogicVersion" value="7.0" />
-            <option name="contentDatabase" />
-            <option name="moduleDatabase" />
-            <option name="moduleRoot" value="/" />
             <option name="mainModulePath" value="/module/test.xqy" />
-            <option name="tripleFormat" value="sem:triple" />
         </test>""".replace("\n[ ]*".toRegex(), "")
 
         val configuration = createConfiguration()
@@ -231,12 +189,6 @@ class MarkLogicRunConfigurationTest : ConfigurationTestCase() {
 
     fun testTripleFormat() {
         val serialized = """<test>
-            <option name="serverHost" value="localhost" />
-            <option name="markLogicVersion" value="7.0" />
-            <option name="contentDatabase" />
-            <option name="moduleDatabase" />
-            <option name="moduleRoot" value="/" />
-            <option name="mainModulePath" value="" />
             <option name="tripleFormat" value="turtle" />
         </test>""".replace("\n[ ]*".toRegex(), "")
 

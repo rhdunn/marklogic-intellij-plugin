@@ -19,15 +19,13 @@ import com.intellij.execution.ExecutionException;
 import com.intellij.execution.Executor;
 import com.intellij.execution.configurations.*;
 import com.intellij.execution.runners.ExecutionEnvironment;
+import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.options.SettingsEditor;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.DefaultJDOMExternalizer;
-import com.intellij.openapi.util.InvalidDataException;
-import com.intellij.openapi.util.WriteExternalException;
 import com.intellij.openapi.vfs.VfsUtil;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.VirtualFileManager;
-import org.jdom.Element;
+import com.intellij.util.xmlb.XmlSerializerUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.RDFFormat;
@@ -38,7 +36,7 @@ import uk.co.reecedunn.intellij.plugin.marklogic.ui.settings.MarkLogicSettings;
 
 import java.io.File;
 
-public class MarkLogicRunConfiguration extends RunConfigurationBase {
+public class MarkLogicRunConfiguration extends RunConfigurationBase implements PersistentStateComponent<MarkLogicRunConfiguration.ConfigData> {
     private MarkLogicServer mServer;
 
     public static final String[] EXTENSIONS = new String[]{
@@ -67,6 +65,8 @@ public class MarkLogicRunConfiguration extends RunConfigurationBase {
         super(project, factory, name);
     }
 
+    // region RunConfigurationBase
+
     @Override
     public void checkConfiguration() throws RuntimeConfigurationException {
     }
@@ -88,11 +88,18 @@ public class MarkLogicRunConfiguration extends RunConfigurationBase {
         return state.run(query, handler, this);
     }
 
-    @SuppressWarnings("deprecation")
+    // endregion
+    // region PersistentStateComponent
+
+    @Nullable
     @Override
-    public void readExternal(Element element) throws InvalidDataException {
-        super.readExternal(element);
-        DefaultJDOMExternalizer.readExternal(data, element);
+    public ConfigData getState() {
+        return data;
+    }
+
+    @Override
+    public void loadState(ConfigData state) {
+        XmlSerializerUtil.copyBean(state, data);
         setMainModulePath(data.mainModulePath); // Update the associated VirtualFile.
         MarkLogicSettings.Companion.getInstance().getServers().forEach((server) -> {
             if (server.getHostname().equals(data.serverHost)) {
@@ -101,12 +108,8 @@ public class MarkLogicRunConfiguration extends RunConfigurationBase {
         });
     }
 
-    @SuppressWarnings("deprecation")
-    @Override
-    public void writeExternal(Element element) throws WriteExternalException {
-        super.writeExternal(element);
-        DefaultJDOMExternalizer.writeExternal(data, element);
-    }
+    // endregion
+    // region Settings
 
     public MarkLogicServer getServer() {
         return mServer;
@@ -176,4 +179,6 @@ public class MarkLogicRunConfiguration extends RunConfigurationBase {
     public void setTripleFormat(RDFFormat tripleFormat) {
         data.tripleFormat = tripleFormat.getMarkLogicName();
     }
+
+    // endregion
 }
