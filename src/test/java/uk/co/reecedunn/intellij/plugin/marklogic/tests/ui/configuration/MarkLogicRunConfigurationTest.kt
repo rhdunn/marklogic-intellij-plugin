@@ -47,7 +47,7 @@ class MarkLogicRunConfigurationTest : ConfigurationTestCase() {
 
     fun testServer() {
         val serialized = """<test>
-            <option name="serverHost" value="localhost" />
+            <option name="serverHost" value="localhost.test" />
             <option name="markLogicVersion" value="7.0" />
             <option name="contentDatabase" />
             <option name="moduleDatabase" />
@@ -59,14 +59,26 @@ class MarkLogicRunConfigurationTest : ConfigurationTestCase() {
         val configuration = createConfiguration()
         assertThat(configuration.server, `is`(nullValue()))
 
-        val server = MarkLogicServer(null, "localhost", 8000, 8001, "testuser", "test")
+        val server = MarkLogicServer(null, "localhost.test", 8000, 8001, "testuser", "test")
         configuration.server = server
-        assertThat(configuration.server, `is`(server))
+        assertThat(configuration.server, `is`(notNullValue()))
+        assertThat(configuration.server.displayName, `is`(nullValue()))
+        assertThat(configuration.server.hostname, `is`("localhost.test"))
+        assertThat(configuration.server.appServerPort, `is`(8000))
+        assertThat(configuration.server.adminPort, `is`(8001))
+        assertThat(configuration.server.username, `is`("testuser"))
+        assertThat(configuration.server.password, `is`("test"))
 
         assertThat(serialize(configuration), `is`(serialized))
 
         val other = deserialize(serialized)
-        assertThat(other.server.hostname, `is`("localhost"))
+        assertThat(other.server, `is`(notNullValue()))
+        assertThat(other.server.displayName, `is`("ipsum"))
+        assertThat(other.server.hostname, `is`("localhost.test"))
+        assertThat(other.server.appServerPort, `is`(9000))
+        assertThat(other.server.adminPort, `is`(9001))
+        assertThat(other.server.username, `is`("testuser3"))
+        assertThat(other.server.password, `is`("test3"))
     }
 
     fun testMarkLogicVersion() {
