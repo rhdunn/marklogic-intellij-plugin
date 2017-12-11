@@ -20,7 +20,6 @@ import com.intellij.core.CoreFileTypeRegistry;
 import com.intellij.execution.configurations.ConfigurationType;
 import com.intellij.execution.configurations.RunConfiguration;
 import com.intellij.lang.Language;
-import com.intellij.mock.MockLocalFileSystem;
 import com.intellij.mock.MockProjectEx;
 import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.extensions.Extensions;
@@ -35,7 +34,6 @@ import com.intellij.testFramework.LightVirtualFile;
 import com.intellij.testFramework.PlatformLiteFixture;
 import com.intellij.util.messages.MessageBus;
 import org.jdom.Element;
-import org.jdom.output.XMLOutputter;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Assertions;
@@ -44,6 +42,9 @@ import uk.co.reecedunn.intellij.plugin.marklogic.tests.TestResource;
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.configuration.MarkLogicConfigurationFactory;
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.configuration.MarkLogicConfigurationType;
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.configuration.MarkLogicRunConfiguration;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 public abstract class ConfigurationTestCase extends PlatformLiteFixture {
     private MarkLogicConfigurationFactory mFactory;
@@ -97,9 +98,17 @@ public abstract class ConfigurationTestCase extends PlatformLiteFixture {
         return (MarkLogicRunConfiguration)mFactory.createTemplateConfiguration(myProject);
     }
 
-    public void serializeStateInto(RunConfiguration configuration, Element element) {
+    public void serializeStateInto(RunConfiguration configuration, Element element) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         if (configuration instanceof PersistentStateComponent) {
-            XmlSerializer.serializeStateInto((PersistentStateComponent)configuration, element);
+            try {
+                // IntelliJ 2017.3 and later implements serializeStateInto, and deprecates serializeInto.
+                Method method = XmlSerializer.class.getMethod("serializeStateInto", PersistentStateComponent.class, Element.class);
+                method.invoke(null, (PersistentStateComponent)configuration, element);
+            } catch (NoSuchMethodException e) {
+                // IntelliJ 2017.2 and earlier don't implement serializeStateInto.
+                Method method = XmlSerializer.class.getMethod("serializeInto", Object.class, Element.class);
+                method.invoke(null, ((PersistentStateComponent)configuration).getState(), element);
+            }
         } else {
             configuration.writeExternal(element);
         }

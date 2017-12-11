@@ -15,10 +15,7 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.tests.ui.configuration
 
-import com.intellij.configurationStore.deserializeAndLoadState
-import com.intellij.configurationStore.serializeStateInto
 import com.intellij.execution.configurations.RunConfiguration
-import com.intellij.openapi.components.PersistentStateComponent
 import com.intellij.openapi.vfs.VirtualFile
 import uk.co.reecedunn.intellij.plugin.marklogic.api.RDFFormat
 import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicServer
