@@ -48,7 +48,7 @@ class MarkLogicRunConfigurationTest : ConfigurationTestCase() {
             <option name="serverHost" value="localhost.test" />
         </test>""".replace("\n[ ]*".toRegex(), "")
 
-        val configuration = createConfiguration()
+        var configuration = createConfiguration()
         assertThat(configuration.server, `is`(nullValue()))
 
         val server = MarkLogicServer(null, "localhost.test", 8000, 8001, "testuser", "test")
@@ -63,14 +63,14 @@ class MarkLogicRunConfigurationTest : ConfigurationTestCase() {
 
         assertThat(serialize(configuration), `is`(serialized))
 
-        val other = deserialize(serialized)
-        assertThat(other.server, `is`(notNullValue()))
-        assertThat(other.server.displayName, `is`("ipsum"))
-        assertThat(other.server.hostname, `is`("localhost.test"))
-        assertThat(other.server.appServerPort, `is`(9000))
-        assertThat(other.server.adminPort, `is`(9001))
-        assertThat(other.server.username, `is`("testuser3"))
-        assertThat(other.server.password, `is`("test3"))
+        configuration = deserialize(serialized)
+        assertThat(configuration.server, `is`(notNullValue()))
+        assertThat(configuration.server.displayName, `is`("ipsum"))
+        assertThat(configuration.server.hostname, `is`("localhost.test"))
+        assertThat(configuration.server.appServerPort, `is`(9000))
+        assertThat(configuration.server.adminPort, `is`(9001))
+        assertThat(configuration.server.username, `is`("testuser3"))
+        assertThat(configuration.server.password, `is`("test3"))
     }
 
     fun testMarkLogicVersion() {
@@ -78,7 +78,7 @@ class MarkLogicRunConfigurationTest : ConfigurationTestCase() {
             <option name="markLogicVersion" value="9.0" />
         </test>""".replace("\n[ ]*".toRegex(), "")
 
-        val configuration = createConfiguration()
+        var configuration = createConfiguration()
         assertThat(configuration.markLogicVersion.major, `is`(7))
         assertThat(configuration.markLogicVersion.minor, `is`(0))
         assertThat(configuration.markLogicVersion.api, `is`(nullValue()))
@@ -92,11 +92,11 @@ class MarkLogicRunConfigurationTest : ConfigurationTestCase() {
 
         assertThat(serialize(configuration), `is`(serialized))
 
-        val other = deserialize(serialized)
-        assertThat(other.markLogicVersion.major, `is`(9))
-        assertThat(other.markLogicVersion.minor, `is`(0))
-        assertThat(other.markLogicVersion.api, `is`(nullValue()))
-        assertThat(other.markLogicVersion.patch, `is`(nullValue()))
+        configuration = deserialize(serialized)
+        assertThat(configuration.markLogicVersion.major, `is`(9))
+        assertThat(configuration.markLogicVersion.minor, `is`(0))
+        assertThat(configuration.markLogicVersion.api, `is`(nullValue()))
+        assertThat(configuration.markLogicVersion.patch, `is`(nullValue()))
     }
 
     fun testContentDatabase() {
@@ -104,7 +104,7 @@ class MarkLogicRunConfigurationTest : ConfigurationTestCase() {
             <option name="contentDatabase" value="test-content" />
         </test>""".replace("\n[ ]*".toRegex(), "")
 
-        val configuration = createConfiguration()
+        var configuration = createConfiguration()
         assertThat(configuration.contentDatabase, `is`(nullValue()))
 
         configuration.contentDatabase = "test-content"
@@ -112,8 +112,8 @@ class MarkLogicRunConfigurationTest : ConfigurationTestCase() {
 
         assertThat(serialize(configuration), `is`(serialized))
 
-        val other = deserialize(serialized)
-        assertThat(other.contentDatabase, `is`("test-content"))
+        configuration = deserialize(serialized)
+        assertThat(configuration.contentDatabase, `is`("test-content"))
     }
 
     fun testModuleDatabase() {
@@ -121,7 +121,7 @@ class MarkLogicRunConfigurationTest : ConfigurationTestCase() {
             <option name="moduleDatabase" value="test-modules" />
         </test>""".replace("\n[ ]*".toRegex(), "")
 
-        val configuration = createConfiguration()
+        var configuration = createConfiguration()
         assertThat(configuration.moduleDatabase, `is`(nullValue()))
 
         configuration.moduleDatabase = "test-modules"
@@ -129,8 +129,8 @@ class MarkLogicRunConfigurationTest : ConfigurationTestCase() {
 
         assertThat(serialize(configuration), `is`(serialized))
 
-        val other = deserialize(serialized)
-        assertThat(other.moduleDatabase, `is`("test-modules"))
+        configuration = deserialize(serialized)
+        assertThat(configuration.moduleDatabase, `is`("test-modules"))
     }
 
     fun testModuleRoot() {
@@ -138,7 +138,7 @@ class MarkLogicRunConfigurationTest : ConfigurationTestCase() {
             <option name="moduleRoot" value="/lorem/ipsum" />
         </test>""".replace("\n[ ]*".toRegex(), "")
 
-        val configuration = createConfiguration()
+        var configuration = createConfiguration()
         assertThat(configuration.moduleRoot, `is`("/"))
 
         configuration.moduleRoot = "/lorem/ipsum"
@@ -146,8 +146,8 @@ class MarkLogicRunConfigurationTest : ConfigurationTestCase() {
 
         assertThat(serialize(configuration), `is`(serialized))
 
-        val other = deserialize(serialized)
-        assertThat(other.moduleRoot, `is`("/lorem/ipsum"))
+        configuration = deserialize(serialized)
+        assertThat(configuration.moduleRoot, `is`("/lorem/ipsum"))
     }
 
     fun testMainModulePath() {
@@ -155,7 +155,7 @@ class MarkLogicRunConfigurationTest : ConfigurationTestCase() {
             <option name="mainModulePath" value="module/test.xqy" />
         </test>""".replace("\n[ ]*".toRegex(), "")
 
-        val configuration = createConfiguration()
+        var configuration = createConfiguration()
         assertThat(configuration.mainModulePath, `is`(""))
         assertThat<VirtualFile>(configuration.mainModuleFile, `is`(nullValue()))
 
@@ -166,10 +166,10 @@ class MarkLogicRunConfigurationTest : ConfigurationTestCase() {
 
         assertThat(serialize(configuration), `is`(serialized))
 
-        val other = deserialize(serialized)
-        assertThat(other.mainModulePath, `is`("module/test.xqy"))
-        assertThat<VirtualFile>(other.mainModuleFile, `is`(notNullValue()))
-        assertThat<String>(other.mainModuleFile.canonicalPath, `is`("/module/test.xqy"))
+        configuration = deserialize(serialized)
+        assertThat(configuration.mainModulePath, `is`("module/test.xqy"))
+        assertThat<VirtualFile>(configuration.mainModuleFile, `is`(notNullValue()))
+        assertThat<String>(configuration.mainModuleFile.canonicalPath, `is`("/module/test.xqy"))
     }
 
     fun testMainModuleFile() {
@@ -177,7 +177,7 @@ class MarkLogicRunConfigurationTest : ConfigurationTestCase() {
             <option name="mainModulePath" value="/module/test.xqy" />
         </test>""".replace("\n[ ]*".toRegex(), "")
 
-        val configuration = createConfiguration()
+        var configuration = createConfiguration()
         assertThat(configuration.mainModulePath, `is`(""))
         assertThat<VirtualFile>(configuration.mainModuleFile, `is`(nullValue()))
 
@@ -188,10 +188,10 @@ class MarkLogicRunConfigurationTest : ConfigurationTestCase() {
 
         assertThat(serialize(configuration), `is`(serialized))
 
-        val other = deserialize(serialized)
-        assertThat(other.mainModulePath, `is`("/module/test.xqy"))
-        assertThat<VirtualFile>(other.mainModuleFile, `is`(notNullValue()))
-        assertThat<String>(other.mainModuleFile.canonicalPath, `is`("/module/test.xqy"))
+        configuration = deserialize(serialized)
+        assertThat(configuration.mainModulePath, `is`("/module/test.xqy"))
+        assertThat<VirtualFile>(configuration.mainModuleFile, `is`(notNullValue()))
+        assertThat<String>(configuration.mainModuleFile.canonicalPath, `is`("/module/test.xqy"))
     }
 
     fun testTripleFormat() {
@@ -199,7 +199,7 @@ class MarkLogicRunConfigurationTest : ConfigurationTestCase() {
             <option name="tripleFormat" value="turtle" />
         </test>""".replace("\n[ ]*".toRegex(), "")
 
-        val configuration = createConfiguration()
+        var configuration = createConfiguration()
         assertThat(configuration.tripleFormat, `is`(RDFFormat.SEM_TRIPLE))
 
         configuration.tripleFormat = RDFFormat.TURTLE
@@ -207,8 +207,8 @@ class MarkLogicRunConfigurationTest : ConfigurationTestCase() {
 
         assertThat(serialize(configuration), `is`(serialized))
 
-        val other = deserialize(serialized)
-        assertThat(other.tripleFormat, `is`(RDFFormat.TURTLE))
+        configuration = deserialize(serialized)
+        assertThat(configuration.tripleFormat, `is`(RDFFormat.TURTLE))
     }
 
     // region Serialization Helpers
