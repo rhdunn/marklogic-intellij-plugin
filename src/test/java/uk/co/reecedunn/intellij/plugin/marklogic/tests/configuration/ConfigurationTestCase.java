@@ -15,11 +15,14 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.tests.configuration;
 
+import com.intellij.configurationStore.XmlSerializer;
 import com.intellij.core.CoreFileTypeRegistry;
 import com.intellij.execution.configurations.ConfigurationType;
+import com.intellij.execution.configurations.RunConfiguration;
 import com.intellij.lang.Language;
 import com.intellij.mock.MockLocalFileSystem;
 import com.intellij.mock.MockProjectEx;
+import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.extensions.Extensions;
 import com.intellij.openapi.fileTypes.FileTypeRegistry;
 import com.intellij.openapi.util.Disposer;
@@ -31,6 +34,8 @@ import com.intellij.openapi.vfs.impl.VirtualFileManagerImpl;
 import com.intellij.testFramework.LightVirtualFile;
 import com.intellij.testFramework.PlatformLiteFixture;
 import com.intellij.util.messages.MessageBus;
+import org.jdom.Element;
+import org.jdom.output.XMLOutputter;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Assertions;
@@ -75,10 +80,6 @@ public abstract class ConfigurationTestCase extends PlatformLiteFixture {
         return Assertions.assertThrows(expectedType, executable);
     }
 
-    public MarkLogicRunConfiguration createConfiguration() {
-        return (MarkLogicRunConfiguration)mFactory.createTemplateConfiguration(myProject);
-    }
-
     public VirtualFile createVirtualFile(@NonNls String name, String text) {
         VirtualFile file = new LightVirtualFile(name, Language.ANY, text);
         file.setCharset(CharsetToolkit.UTF8_CHARSET);
@@ -89,4 +90,28 @@ public abstract class ConfigurationTestCase extends PlatformLiteFixture {
         getApplication().registerService(aClass, object);
         Disposer.register(myProject, () -> getApplication().getPicoContainer().unregisterComponent(aClass.getName()));
     }
+
+    // region Run Configuration Helpers
+
+    public MarkLogicRunConfiguration createConfiguration() {
+        return (MarkLogicRunConfiguration)mFactory.createTemplateConfiguration(myProject);
+    }
+
+    public void serializeStateInto(RunConfiguration configuration, Element element) {
+        if (configuration instanceof PersistentStateComponent) {
+            XmlSerializer.serializeStateInto((PersistentStateComponent)configuration, element);
+        } else {
+            configuration.writeExternal(element);
+        }
+    }
+
+    public void deserializeAndLoadState(RunConfiguration configuration, Element element) {
+        if (configuration instanceof PersistentStateComponent) {
+            XmlSerializer.deserializeAndLoadState((PersistentStateComponent)configuration, element);
+        } else {
+            configuration.readExternal(element);
+        }
+    }
+
+    // endregion
 }

@@ -218,23 +218,14 @@ class MarkLogicRunConfigurationTest : ConfigurationTestCase() {
 
     private fun serialize(configuration: RunConfiguration): String {
         val element = Element("test")
-        if (configuration is PersistentStateComponent<*>) {
-            configuration.serializeStateInto(element)
-        } else {
-            configuration.writeExternal(element)
-        }
+        serializeStateInto(configuration, element);
         return XMLOutputter().outputString(element)
     }
 
     private fun deserialize(xml: String): MarkLogicRunConfiguration {
         val document = SAXBuilder().build(StringReader(xml))
-
         val ret = createConfiguration()
-        if (ret is PersistentStateComponent<*>) {
-            ret.deserializeAndLoadState(document.rootElement)
-        } else {
-            ret.readExternal(document.rootElement)
-        }
+        deserializeAndLoadState(ret, document.rootElement)
         return ret
     }
 
