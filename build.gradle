@@ -12,7 +12,7 @@ buildscript {
         return "181" // version == "LATEST-TRUNK-SNAPSHOT"
     }
 
-    ext.idea_version = System.getenv("IDEA_VERSION") ?: 'IC-2017.3'
+    ext.idea_version = System.getenv("IDEA_VERSION") ?: 'IC-2017.2'
     ext.idea_since_build = System.getenv("IDEA_SINCE_BUILD") ?: ext.since_from_version(ext.idea_version)
     ext.kotlin_version = '1.1.4-3'
     ext.junit_milestone = ''

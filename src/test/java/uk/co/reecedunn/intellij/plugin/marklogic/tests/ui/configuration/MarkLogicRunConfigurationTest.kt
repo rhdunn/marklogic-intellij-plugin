@@ -17,13 +17,11 @@ package uk.co.reecedunn.intellij.plugin.marklogic.tests.ui.configuration
 
 import com.intellij.execution.configurations.RunConfiguration
 import com.intellij.openapi.vfs.VirtualFile
+import org.hamcrest.CoreMatchers.*
 import uk.co.reecedunn.intellij.plugin.marklogic.api.RDFFormat
 import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicServer
 import uk.co.reecedunn.intellij.plugin.marklogic.tests.configuration.ConfigurationTestCase
 
-import org.hamcrest.CoreMatchers.`is`
-import org.hamcrest.CoreMatchers.notNullValue
-import org.hamcrest.CoreMatchers.nullValue
 import org.hamcrest.MatcherAssert.assertThat
 import org.jdom.Element
 import org.jdom.input.SAXBuilder
@@ -44,8 +42,18 @@ class MarkLogicRunConfigurationTest : ConfigurationTestCase() {
     }
 
     fun testServer() {
-        val serialized = """<test>
+        val serializedCompact = """<test>
             <option name="serverHost" value="localhost.test" />
+        </test>""".replace("\n[ ]*".toRegex(), "")
+
+        val serializedFull = """<test>
+            <option name="serverHost" value="localhost.test" />
+            <option name="markLogicVersion" value="7.0" />
+            <option name="contentDatabase" />
+            <option name="moduleDatabase" />
+            <option name="moduleRoot" value="/" />
+            <option name="mainModulePath" value="" />
+            <option name="tripleFormat" value="sem:triple" />
         </test>""".replace("\n[ ]*".toRegex(), "")
 
         var configuration = createConfiguration()
@@ -61,9 +69,9 @@ class MarkLogicRunConfigurationTest : ConfigurationTestCase() {
         assertThat(configuration.server.username, `is`("testuser"))
         assertThat(configuration.server.password, `is`("test"))
 
-        assertThat(serialize(configuration), `is`(serialized))
+        assertThat(serialize(configuration), `is`(anyOf(equalTo(serializedCompact), equalTo(serializedFull))))
 
-        configuration = deserialize(serialized)
+        configuration = deserialize(serializedCompact)
         assertThat(configuration.server, `is`(notNullValue()))
         assertThat(configuration.server.displayName, `is`("ipsum"))
         assertThat(configuration.server.hostname, `is`("localhost.test"))
@@ -74,8 +82,18 @@ class MarkLogicRunConfigurationTest : ConfigurationTestCase() {
     }
 
     fun testMarkLogicVersion() {
-        val serialized = """<test>
+        val serializedCompact = """<test>
             <option name="markLogicVersion" value="9.0" />
+        </test>""".replace("\n[ ]*".toRegex(), "")
+
+        val serializedFull = """<test>
+            <option name="serverHost" value="localhost" />
+            <option name="markLogicVersion" value="9.0" />
+            <option name="contentDatabase" />
+            <option name="moduleDatabase" />
+            <option name="moduleRoot" value="/" />
+            <option name="mainModulePath" value="" />
+            <option name="tripleFormat" value="sem:triple" />
         </test>""".replace("\n[ ]*".toRegex(), "")
 
         var configuration = createConfiguration()
@@ -90,9 +108,9 @@ class MarkLogicRunConfigurationTest : ConfigurationTestCase() {
         assertThat(configuration.markLogicVersion.api, `is`(nullValue()))
         assertThat(configuration.markLogicVersion.patch, `is`(nullValue()))
 
-        assertThat(serialize(configuration), `is`(serialized))
+        assertThat(serialize(configuration), `is`(anyOf(equalTo(serializedCompact), equalTo(serializedFull))))
 
-        configuration = deserialize(serialized)
+        configuration = deserialize(serializedCompact)
         assertThat(configuration.markLogicVersion.major, `is`(9))
         assertThat(configuration.markLogicVersion.minor, `is`(0))
         assertThat(configuration.markLogicVersion.api, `is`(nullValue()))
@@ -100,8 +118,18 @@ class MarkLogicRunConfigurationTest : ConfigurationTestCase() {
     }
 
     fun testContentDatabase() {
-        val serialized = """<test>
+        val serializedCompact = """<test>
             <option name="contentDatabase" value="test-content" />
+        </test>""".replace("\n[ ]*".toRegex(), "")
+
+        val serializedFull = """<test>
+            <option name="serverHost" value="localhost" />
+            <option name="markLogicVersion" value="7.0" />
+            <option name="contentDatabase" value="test-content" />
+            <option name="moduleDatabase" />
+            <option name="moduleRoot" value="/" />
+            <option name="mainModulePath" value="" />
+            <option name="tripleFormat" value="sem:triple" />
         </test>""".replace("\n[ ]*".toRegex(), "")
 
         var configuration = createConfiguration()
@@ -110,15 +138,25 @@ class MarkLogicRunConfigurationTest : ConfigurationTestCase() {
         configuration.contentDatabase = "test-content"
         assertThat(configuration.contentDatabase, `is`("test-content"))
 
-        assertThat(serialize(configuration), `is`(serialized))
+        assertThat(serialize(configuration), `is`(anyOf(equalTo(serializedCompact), equalTo(serializedFull))))
 
-        configuration = deserialize(serialized)
+        configuration = deserialize(serializedCompact)
         assertThat(configuration.contentDatabase, `is`("test-content"))
     }
 
     fun testModuleDatabase() {
-        val serialized = """<test>
+        val serializedCompact = """<test>
             <option name="moduleDatabase" value="test-modules" />
+        </test>""".replace("\n[ ]*".toRegex(), "")
+
+        val serializedFull = """<test>
+            <option name="serverHost" value="localhost" />
+            <option name="markLogicVersion" value="7.0" />
+            <option name="contentDatabase" />
+            <option name="moduleDatabase" value="test-modules" />
+            <option name="moduleRoot" value="/" />
+            <option name="mainModulePath" value="" />
+            <option name="tripleFormat" value="sem:triple" />
         </test>""".replace("\n[ ]*".toRegex(), "")
 
         var configuration = createConfiguration()
@@ -127,15 +165,25 @@ class MarkLogicRunConfigurationTest : ConfigurationTestCase() {
         configuration.moduleDatabase = "test-modules"
         assertThat(configuration.moduleDatabase, `is`("test-modules"))
 
-        assertThat(serialize(configuration), `is`(serialized))
+        assertThat(serialize(configuration), `is`(anyOf(equalTo(serializedCompact), equalTo(serializedFull))))
 
-        configuration = deserialize(serialized)
+        configuration = deserialize(serializedCompact)
         assertThat(configuration.moduleDatabase, `is`("test-modules"))
     }
 
     fun testModuleRoot() {
-        val serialized = """<test>
+        val serializedCompact = """<test>
             <option name="moduleRoot" value="/lorem/ipsum" />
+        </test>""".replace("\n[ ]*".toRegex(), "")
+
+        val serializedFull = """<test>
+            <option name="serverHost" value="localhost" />
+            <option name="markLogicVersion" value="7.0" />
+            <option name="contentDatabase" />
+            <option name="moduleDatabase" />
+            <option name="moduleRoot" value="/lorem/ipsum" />
+            <option name="mainModulePath" value="" />
+            <option name="tripleFormat" value="sem:triple" />
         </test>""".replace("\n[ ]*".toRegex(), "")
 
         var configuration = createConfiguration()
@@ -144,15 +192,25 @@ class MarkLogicRunConfigurationTest : ConfigurationTestCase() {
         configuration.moduleRoot = "/lorem/ipsum"
         assertThat(configuration.moduleRoot, `is`("/lorem/ipsum"))
 
-        assertThat(serialize(configuration), `is`(serialized))
+        assertThat(serialize(configuration), `is`(anyOf(equalTo(serializedCompact), equalTo(serializedFull))))
 
-        configuration = deserialize(serialized)
+        configuration = deserialize(serializedCompact)
         assertThat(configuration.moduleRoot, `is`("/lorem/ipsum"))
     }
 
     fun testMainModulePath() {
-        val serialized = """<test>
+        val serializedCompact = """<test>
             <option name="mainModulePath" value="module/test.xqy" />
+        </test>""".replace("\n[ ]*".toRegex(), "")
+
+        val serializedFull = """<test>
+            <option name="serverHost" value="localhost" />
+            <option name="markLogicVersion" value="7.0" />
+            <option name="contentDatabase" />
+            <option name="moduleDatabase" />
+            <option name="moduleRoot" value="/" />
+            <option name="mainModulePath" value="module/test.xqy" />
+            <option name="tripleFormat" value="sem:triple" />
         </test>""".replace("\n[ ]*".toRegex(), "")
 
         var configuration = createConfiguration()
@@ -164,17 +222,27 @@ class MarkLogicRunConfigurationTest : ConfigurationTestCase() {
         assertThat<VirtualFile>(configuration.mainModuleFile, `is`(notNullValue()))
         assertThat<String>(configuration.mainModuleFile.canonicalPath, `is`("/module/test.xqy"))
 
-        assertThat(serialize(configuration), `is`(serialized))
+        assertThat(serialize(configuration), `is`(anyOf(equalTo(serializedCompact), equalTo(serializedFull))))
 
-        configuration = deserialize(serialized)
+        configuration = deserialize(serializedCompact)
         assertThat(configuration.mainModulePath, `is`("module/test.xqy"))
         assertThat<VirtualFile>(configuration.mainModuleFile, `is`(notNullValue()))
         assertThat<String>(configuration.mainModuleFile.canonicalPath, `is`("/module/test.xqy"))
     }
 
     fun testMainModuleFile() {
-        val serialized = """<test>
+        val serializedCompact = """<test>
             <option name="mainModulePath" value="/module/test.xqy" />
+        </test>""".replace("\n[ ]*".toRegex(), "")
+
+        val serializedFull = """<test>
+            <option name="serverHost" value="localhost" />
+            <option name="markLogicVersion" value="7.0" />
+            <option name="contentDatabase" />
+            <option name="moduleDatabase" />
+            <option name="moduleRoot" value="/" />
+            <option name="mainModulePath" value="/module/test.xqy" />
+            <option name="tripleFormat" value="sem:triple" />
         </test>""".replace("\n[ ]*".toRegex(), "")
 
         var configuration = createConfiguration()
@@ -186,16 +254,26 @@ class MarkLogicRunConfigurationTest : ConfigurationTestCase() {
         assertThat<VirtualFile>(configuration.mainModuleFile, `is`(notNullValue()))
         assertThat<String>(configuration.mainModuleFile.canonicalPath, `is`("/module/test.xqy"))
 
-        assertThat(serialize(configuration), `is`(serialized))
+        assertThat(serialize(configuration), `is`(anyOf(equalTo(serializedCompact), equalTo(serializedFull))))
 
-        configuration = deserialize(serialized)
+        configuration = deserialize(serializedCompact)
         assertThat(configuration.mainModulePath, `is`("/module/test.xqy"))
         assertThat<VirtualFile>(configuration.mainModuleFile, `is`(notNullValue()))
         assertThat<String>(configuration.mainModuleFile.canonicalPath, `is`("/module/test.xqy"))
     }
 
     fun testTripleFormat() {
-        val serialized = """<test>
+        val serializedCompact = """<test>
+            <option name="tripleFormat" value="turtle" />
+        </test>""".replace("\n[ ]*".toRegex(), "")
+
+        val serializedFull = """<test>
+            <option name="serverHost" value="localhost" />
+            <option name="markLogicVersion" value="7.0" />
+            <option name="contentDatabase" />
+            <option name="moduleDatabase" />
+            <option name="moduleRoot" value="/" />
+            <option name="mainModulePath" value="" />
             <option name="tripleFormat" value="turtle" />
         </test>""".replace("\n[ ]*".toRegex(), "")
 
@@ -205,9 +283,9 @@ class MarkLogicRunConfigurationTest : ConfigurationTestCase() {
         configuration.tripleFormat = RDFFormat.TURTLE
         assertThat(configuration.tripleFormat, `is`(RDFFormat.TURTLE))
 
-        assertThat(serialize(configuration), `is`(serialized))
+        assertThat(serialize(configuration), `is`(anyOf(equalTo(serializedCompact), equalTo(serializedFull))))
 
-        configuration = deserialize(serialized)
+        configuration = deserialize(serializedCompact)
         assertThat(configuration.tripleFormat, `is`(RDFFormat.TURTLE))
     }
 
