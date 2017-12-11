@@ -139,14 +139,6 @@ public class MarkLogicRunConfiguration extends RunConfigurationBase implements P
         data.serverHost = (mServer == null) ? null : mServer.getHostname();
     }
 
-    public double getMarkLogicMajorMinor() {
-        return data.markLogicVersion.getMajor();
-    }
-
-    public void setMarkLogicMajorMinor(double markLogicVersion) {
-        data.markLogicVersion = new MarkLogicVersion((int)markLogicVersion, 0, null, null);
-    }
-
     public MarkLogicVersion getMarkLogicVersion() {
         return data.markLogicVersion;
     }

@@ -57,7 +57,7 @@ public class MarkLogicRunProfileState extends CommandLineState {
 
         Function function = queryBuilder.createEvalBuilder(getEnvironment().getExecutor().getId(), configuration.getMarkLogicVersion());
         if (function == null) {
-            throw new ExecutionException("Cannot run the query file with MarkLogic " + configuration.getMarkLogicMajorMinor());
+            throw new ExecutionException("Cannot run the query file with MarkLogic " + configuration.getMarkLogicVersion());
         }
 
         Connection connection = createConnection(configuration);

@@ -26,6 +26,7 @@ import com.intellij.execution.runners.ExecutionEnvironment;
 import com.intellij.execution.runners.ProgramRunner;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicVersionKt;
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.configuration.MarkLogicRunConfiguration;
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.profile.ProfileExecutor;
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.runner.MarkLogicProgramRunner;
@@ -77,7 +78,7 @@ public class MarkLogicProgramRunnerTest extends ConfigurationTestCase {
     public void testNoActionsAvailable() {
         MarkLogicRunConfiguration profile = createConfiguration();
         profile.setMainModuleFile(createVirtualFile("test.sjs", "2"));
-        profile.setMarkLogicMajorMinor(7.0);
+        profile.setMarkLogicVersion(MarkLogicVersionKt.getMARKLOGIC_7());
 
         ProgramRunner runner = new MarkLogicProgramRunner();
         assertThat(runner.canRun(DefaultRunExecutor.EXECUTOR_ID, profile), is(false));
@@ -89,7 +90,7 @@ public class MarkLogicProgramRunnerTest extends ConfigurationTestCase {
     public void testRunOnly() {
         MarkLogicRunConfiguration profile = createConfiguration();
         profile.setMainModuleFile(createVirtualFile("test.sjs", "2"));
-        profile.setMarkLogicMajorMinor(8.0);
+        profile.setMarkLogicVersion(MarkLogicVersionKt.getMARKLOGIC_8());
 
         ProgramRunner runner = new MarkLogicProgramRunner();
         assertThat(runner.canRun(DefaultRunExecutor.EXECUTOR_ID, profile), is(true));
@@ -101,7 +102,7 @@ public class MarkLogicProgramRunnerTest extends ConfigurationTestCase {
     public void testRunAndProfile() {
         MarkLogicRunConfiguration profile = createConfiguration();
         profile.setMainModuleFile(createVirtualFile("test.xsl", ""));
-        profile.setMarkLogicMajorMinor(8.0);
+        profile.setMarkLogicVersion(MarkLogicVersionKt.getMARKLOGIC_8());
 
         ProgramRunner runner = new MarkLogicProgramRunner();
         assertThat(runner.canRun(DefaultRunExecutor.EXECUTOR_ID, profile), is(true));
@@ -114,7 +115,7 @@ public class MarkLogicProgramRunnerTest extends ConfigurationTestCase {
         // NOTE: Debugging support is not currently enabled.
         MarkLogicRunConfiguration profile = createConfiguration();
         profile.setMainModuleFile(createVirtualFile("test.xqy", "2"));
-        profile.setMarkLogicMajorMinor(8.0);
+        profile.setMarkLogicVersion(MarkLogicVersionKt.getMARKLOGIC_8());
 
         ProgramRunner runner = new MarkLogicProgramRunner();
         assertThat(runner.canRun(DefaultRunExecutor.EXECUTOR_ID, profile), is(true));

@@ -138,7 +138,7 @@ public class FunctionTest extends ConfigurationTestCase {
         final String query = "34";
         final MarkLogicRunConfiguration configuration = createConfiguration();
         configuration.setMainModuleFile(createVirtualFile("test.xqy", query));
-        configuration.setMarkLogicMajorMinor(6.0);
+        configuration.setMarkLogicVersion(MarkLogicVersionKt.getMARKLOGIC_6());
         configuration.setTripleFormat(RDFFormat.TURTLE);
 
         QueryBuilder queryBuilder = QueryBuilderFactory.createQueryBuilderForFile(configuration.getMainModulePath());
@@ -157,7 +157,7 @@ public class FunctionTest extends ConfigurationTestCase {
         final String query = "34";
         final MarkLogicRunConfiguration configuration = createConfiguration();
         configuration.setMainModuleFile(createVirtualFile("test.xqy", query));
-        configuration.setMarkLogicMajorMinor(7.0);
+        configuration.setMarkLogicVersion(MarkLogicVersionKt.getMARKLOGIC_7());
         configuration.setTripleFormat(RDFFormat.TURTLE);
 
         QueryBuilder queryBuilder = QueryBuilderFactory.createQueryBuilderForFile(configuration.getMainModulePath());
