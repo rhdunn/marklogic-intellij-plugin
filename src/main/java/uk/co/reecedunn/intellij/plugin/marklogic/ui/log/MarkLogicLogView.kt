@@ -25,10 +25,7 @@ import java.awt.event.FocusListener
 import java.awt.event.MouseEvent
 import javax.swing.JTextPane
 import javax.swing.UIManager
-import javax.swing.text.AttributeSet
-import javax.swing.text.SimpleAttributeSet
-import javax.swing.text.StyleConstants
-import javax.swing.text.StyleContext
+import javax.swing.text.*
 
 private class LogViewFocusListener : FocusListener {
     override fun focusLost(e: FocusEvent?) {
@@ -60,25 +57,26 @@ class MarkLogicLogView: JTextPane() {
         return attributes
     }
 
-    private fun appendLogEntry(entry: MarkLogicLogEntry, color: Color? = null) {
+    private fun appendLogEntry(doc: StyledDocument, entry: MarkLogicLogEntry, color: Color? = null) {
         val separator = if (entry.continuation) '+' else ' '
-        caretPosition = document.length
-        setCharacterAttributes(createTextAttributes(UIManager.getFont("TextArea.font"), color), false)
-        replaceSelection(
-            "${entry.date} ${entry.time} ${entry.level.displayName}:${separator}${entry.message.content}\n")
+        doc.insertString(
+            doc.length,
+            "${entry.date} ${entry.time} ${entry.level.displayName}:${separator}${entry.message.content}\n",
+            createTextAttributes(UIManager.getFont("TextArea.font"), color))
     }
 
     fun update(entries: Sequence<MarkLogicLogEntry>,
                appserverName: String?,
                marklogicVersion: MarkLogicVersion,
                settings: MarkLogicSettings?) {
-        text = ""
+        val doc = styledDocument
+        doc.remove(0, doc.length)
         entries.forEach { entry ->
             val color = settings?.logColor(entry.level)
             if (marklogicVersion.major >= 9) {
-                appendLogEntry(entry, color)
+                appendLogEntry(doc, entry, color)
             } else if (appserverName == entry.appserver) {
-                appendLogEntry(entry, color)
+                appendLogEntry(doc, entry, color)
             }
         }
     }
