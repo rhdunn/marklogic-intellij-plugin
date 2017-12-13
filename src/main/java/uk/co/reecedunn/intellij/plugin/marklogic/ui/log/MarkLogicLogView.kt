@@ -15,6 +15,7 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.ui.log
 
+import uk.co.reecedunn.intellij.plugin.marklogic.log.LogLevel
 import uk.co.reecedunn.intellij.plugin.marklogic.log.MarkLogicLogEntry
 import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicVersion
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.settings.MarkLogicSettings
@@ -79,6 +80,17 @@ class MarkLogicLogView: JTextPane() {
                 appendLogEntry(doc, entry, color)
             }
         }
+    }
+
+    fun logException(e: Exception, settings: MarkLogicSettings?) {
+        val doc = styledDocument
+        doc.remove(0, doc.length)
+
+        val color = settings?.logColor(LogLevel.ERROR)
+        doc.insertString(
+            0,
+            "${e.message}\n",
+            createTextAttributes(UIManager.getFont("TextArea.font"), color))
     }
 
     // JTextComponent.getToolTipText can throw an NPE in some cases.

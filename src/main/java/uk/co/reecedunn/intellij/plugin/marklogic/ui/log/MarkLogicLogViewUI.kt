@@ -121,7 +121,7 @@ class MarkLogicLogViewUI(private val mProject: Project) : LogViewActions {
                     marklogicVersion,
                     mSettings)
             } catch (e: IOException) {
-                mLogText!!.text = e.message
+                (mLogText as? MarkLogicLogView)!!.logException(e, mSettings)
             }
 
             try { // Just in case updating the caret position fails, so isEditable is set in that case.
