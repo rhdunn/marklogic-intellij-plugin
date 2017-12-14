@@ -43,7 +43,7 @@ public class RestResponse implements Response {
         int statusCode = response.getStatus().getStatusCode();
         if (statusCode != 200) {
             final Message part = response.getParts()[0];
-            final Item message = Item.create(part.getBody(), part.getHeader("Content-Type"), "xs:string");
+            final Item message = Item.Companion.create(part.getBody(), part.getHeader("Content-Type"), "xs:string");
             throw new ResponseException(statusCode, response.getStatus().getReasonPhrase(), message);
         }
 
@@ -57,13 +57,13 @@ public class RestResponse implements Response {
 
             final String primitive = part.getHeader("X-Primitive");
             if (internalContentType == null) {
-                items.add(Item.create(part.getBody(), contentType, primitive));
+                items.add(Item.Companion.create(part.getBody(), contentType, primitive));
             } else {
-                items.add(Item.create(part.getBody(), internalContentType, primitive));
+                items.add(Item.Companion.create(part.getBody(), internalContentType, primitive));
             }
         }
         if (items.isEmpty()) {
-            items.add(Item.create("()", "text/plain", "empty-sequence()"));
+            items.add(Item.Companion.create("()", "text/plain", "empty-sequence()"));
         }
         return items.toArray(new Item[items.size()]);
     }

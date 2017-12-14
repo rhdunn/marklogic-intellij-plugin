@@ -27,12 +27,12 @@ public class ItemTest extends TestCase {
 
     @Query("()")
     public void testEmptySequence() {
-        Item xcc = Item.create("()", "empty-sequence()");
+        Item xcc = Item.Companion.create("()", "empty-sequence()");
         assertThat(xcc.getContent(), is("()"));
         assertThat(xcc.getContentType(), is("text/plain"));
         assertThat(xcc.getItemType(), is("empty-sequence()"));
 
-        Item rest = Item.create("()", "text/plain", "empty-sequence()");
+        Item rest = Item.Companion.create("()", "text/plain", "empty-sequence()");
         assertThat(rest.getContent(), is("()"));
         assertThat(rest.getContentType(), is("text/plain"));
         assertThat(rest.getItemType(), is("empty-sequence()"));
@@ -40,12 +40,12 @@ public class ItemTest extends TestCase {
 
     @Query("1.5")
     public void testXsDecimal() {
-        Item xcc = Item.create("1.5", "xs:decimal");
+        Item xcc = Item.Companion.create("1.5", "xs:decimal");
         assertThat(xcc.getContent(), is("1.5"));
         assertThat(xcc.getContentType(), is("text/plain"));
         assertThat(xcc.getItemType(), is("xs:decimal"));
 
-        Item rest = Item.create("1.5", "text/plain", "decimal");
+        Item rest = Item.Companion.create("1.5", "text/plain", "decimal");
         assertThat(rest.getContent(), is("1.5"));
         assertThat(rest.getContentType(), is("text/plain"));
         assertThat(rest.getItemType(), is("decimal"));
@@ -53,12 +53,12 @@ public class ItemTest extends TestCase {
 
     @Query("1e5")
     public void testXsDouble() {
-        Item xcc = Item.create("1e5", "xs:double");
+        Item xcc = Item.Companion.create("1e5", "xs:double");
         assertThat(xcc.getContent(), is("1e5"));
         assertThat(xcc.getContentType(), is("text/plain"));
         assertThat(xcc.getItemType(), is("xs:double"));
 
-        Item rest = Item.create("1e5", "text/plain", "double");
+        Item rest = Item.Companion.create("1e5", "text/plain", "double");
         assertThat(rest.getContent(), is("1e5"));
         assertThat(rest.getContentType(), is("text/plain"));
         assertThat(rest.getItemType(), is("double"));
@@ -66,12 +66,12 @@ public class ItemTest extends TestCase {
 
     @Query("15")
     public void testXsInteger() {
-        Item xcc = Item.create("15", "xs:integer");
+        Item xcc = Item.Companion.create("15", "xs:integer");
         assertThat(xcc.getContent(), is("15"));
         assertThat(xcc.getContentType(), is("text/plain"));
         assertThat(xcc.getItemType(), is("xs:integer"));
 
-        Item rest = Item.create("15", "text/plain", "integer");
+        Item rest = Item.Companion.create("15", "text/plain", "integer");
         assertThat(rest.getContent(), is("15"));
         assertThat(rest.getContentType(), is("text/plain"));
         assertThat(rest.getItemType(), is("integer"));
@@ -79,12 +79,12 @@ public class ItemTest extends TestCase {
 
     @Query("'abc'")
     public void testXsString() {
-        Item xcc = Item.create("abc", "xs:string");
+        Item xcc = Item.Companion.create("abc", "xs:string");
         assertThat(xcc.getContent(), is("abc"));
         assertThat(xcc.getContentType(), is("text/plain"));
         assertThat(xcc.getItemType(), is("xs:string"));
 
-        Item rest = Item.create("abc", "text/plain", "string");
+        Item rest = Item.Companion.create("abc", "text/plain", "string");
         assertThat(rest.getContent(), is("abc"));
         assertThat(rest.getContentType(), is("text/plain"));
         assertThat(rest.getItemType(), is("string"));
@@ -95,12 +95,12 @@ public class ItemTest extends TestCase {
 
     @Query("array-node { 1, 2 }")
     public void testArrayNode() {
-        Item xcc = Item.create("[1, 2]", "array-node()");
+        Item xcc = Item.Companion.create("[1, 2]", "array-node()");
         assertThat(xcc.getContent(), is("[1, 2]"));
         assertThat(xcc.getContentType(), is("application/json"));
         assertThat(xcc.getItemType(), is("array-node()"));
 
-        Item rest = Item.create("[1, 2]", "application/json", "array-node()");
+        Item rest = Item.Companion.create("[1, 2]", "application/json", "array-node()");
         assertThat(rest.getContent(), is("[1, 2]"));
         assertThat(rest.getContentType(), is("application/json"));
         assertThat(rest.getItemType(), is("array-node()"));
@@ -108,12 +108,12 @@ public class ItemTest extends TestCase {
 
     @Query("<a b='c'/>/@*")
     public void testAttribute() {
-        Item xcc = Item.create("c", "attribute()");
+        Item xcc = Item.Companion.create("c", "attribute()");
         assertThat(xcc.getContent(), is("c"));
         assertThat(xcc.getContentType(), is("text/plain"));
         assertThat(xcc.getItemType(), is("attribute()"));
 
-        Item rest = Item.create("c", "text/plain", "attribute()");
+        Item rest = Item.Companion.create("c", "text/plain", "attribute()");
         assertThat(rest.getContent(), is("c"));
         assertThat(rest.getContentType(), is("text/plain"));
         assertThat(rest.getItemType(), is("attribute()"));
@@ -121,12 +121,12 @@ public class ItemTest extends TestCase {
 
     @Query("binary { 'ab' }")
     public void testBinary() {
-        Item xcc = Item.create("«", "binary()");
+        Item xcc = Item.Companion.create("«", "binary()");
         assertThat(xcc.getContent(), is("«"));
         assertThat(xcc.getContentType(), is("application/octet-stream"));
         assertThat(xcc.getItemType(), is("binary()"));
 
-        Item rest = Item.create("«", "application/x-unknown-content-type", "binary()");
+        Item rest = Item.Companion.create("«", "application/x-unknown-content-type", "binary()");
         assertThat(rest.getContent(), is("«"));
         assertThat(rest.getContentType(), is("application/octet-stream"));
         assertThat(rest.getItemType(), is("binary()"));
@@ -134,12 +134,12 @@ public class ItemTest extends TestCase {
 
     @Query("boolean-node { true() }")
     public void testBooleanNode() {
-        Item xcc = Item.create("true", "boolean-node()");
+        Item xcc = Item.Companion.create("true", "boolean-node()");
         assertThat(xcc.getContent(), is("true"));
         assertThat(xcc.getContentType(), is("application/json"));
         assertThat(xcc.getItemType(), is("boolean-node()"));
 
-        Item rest = Item.create("true", "application/json", "boolean-node()");
+        Item rest = Item.Companion.create("true", "application/json", "boolean-node()");
         assertThat(rest.getContent(), is("true"));
         assertThat(rest.getContentType(), is("application/json"));
         assertThat(rest.getItemType(), is("boolean-node()"));
@@ -147,12 +147,12 @@ public class ItemTest extends TestCase {
 
     @Query("<!-- a -->")
     public void testComment() {
-        Item xcc = Item.create("<!-- a -->", "comment()");
+        Item xcc = Item.Companion.create("<!-- a -->", "comment()");
         assertThat(xcc.getContent(), is("<!-- a -->"));
         assertThat(xcc.getContentType(), is("text/plain"));
         assertThat(xcc.getItemType(), is("comment()"));
 
-        Item rest = Item.create("<!-- a -->", "text/plain", "comment()");
+        Item rest = Item.Companion.create("<!-- a -->", "text/plain", "comment()");
         assertThat(rest.getContent(), is("<!-- a -->"));
         assertThat(rest.getContentType(), is("text/plain"));
         assertThat(rest.getItemType(), is("comment()"));
@@ -160,12 +160,12 @@ public class ItemTest extends TestCase {
 
     @Query("document { <a/> }")
     public void testDocument() {
-        Item xcc = Item.create("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<a/>", "document-node()");
+        Item xcc = Item.Companion.create("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<a/>", "document-node()");
         assertThat(xcc.getContent(), is("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<a/>"));
         assertThat(xcc.getContentType(), is("application/xml"));
         assertThat(xcc.getItemType(), is("document-node()"));
 
-        Item rest = Item.create("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<a/>", "application/xml", "document-node()");
+        Item rest = Item.Companion.create("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<a/>", "application/xml", "document-node()");
         assertThat(rest.getContent(), is("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<a/>"));
         assertThat(rest.getContentType(), is("application/xml"));
         assertThat(rest.getItemType(), is("document-node()"));
@@ -173,12 +173,12 @@ public class ItemTest extends TestCase {
 
     @Query("<a/>")
     public void testElement() {
-        Item xcc = Item.create("<a/>", "element()");
+        Item xcc = Item.Companion.create("<a/>", "element()");
         assertThat(xcc.getContent(), is("<a/>"));
         assertThat(xcc.getContentType(), is("application/xml"));
         assertThat(xcc.getItemType(), is("element()"));
 
-        Item rest = Item.create("<a/>", "application/xml", "element()");
+        Item rest = Item.Companion.create("<a/>", "application/xml", "element()");
         assertThat(rest.getContent(), is("<a/>"));
         assertThat(rest.getContentType(), is("application/xml"));
         assertThat(rest.getItemType(), is("element()"));
@@ -186,12 +186,12 @@ public class ItemTest extends TestCase {
 
     @Query("null-node {}")
     public void testNullNode() {
-        Item xcc = Item.create("null", "null-node()");
+        Item xcc = Item.Companion.create("null", "null-node()");
         assertThat(xcc.getContent(), is("null"));
         assertThat(xcc.getContentType(), is("application/json"));
         assertThat(xcc.getItemType(), is("null-node()"));
 
-        Item rest = Item.create("null", "application/json", "null-node()");
+        Item rest = Item.Companion.create("null", "application/json", "null-node()");
         assertThat(rest.getContent(), is("null"));
         assertThat(rest.getContentType(), is("application/json"));
         assertThat(rest.getItemType(), is("null-node()"));
@@ -199,12 +199,12 @@ public class ItemTest extends TestCase {
 
     @Query("number-node { 2 }")
     public void testNumberNode() {
-        Item xcc = Item.create("2", "number-node()");
+        Item xcc = Item.Companion.create("2", "number-node()");
         assertThat(xcc.getContent(), is("2"));
         assertThat(xcc.getContentType(), is("application/json"));
         assertThat(xcc.getItemType(), is("number-node()"));
 
-        Item rest = Item.create("2", "application/json", "number-node()");
+        Item rest = Item.Companion.create("2", "application/json", "number-node()");
         assertThat(rest.getContent(), is("2"));
         assertThat(rest.getContentType(), is("application/json"));
         assertThat(rest.getItemType(), is("number-node()"));
@@ -212,12 +212,12 @@ public class ItemTest extends TestCase {
 
     @Query("object-node { 1: 2 }")
     public void testObjectNode() {
-        Item xcc = Item.create("{\"1\": 2}", "object-node()");
+        Item xcc = Item.Companion.create("{\"1\": 2}", "object-node()");
         assertThat(xcc.getContent(), is("{\"1\": 2}"));
         assertThat(xcc.getContentType(), is("application/json"));
         assertThat(xcc.getItemType(), is("object-node()"));
 
-        Item rest = Item.create("{\"1\": 2}", "application/json", "object-node()");
+        Item rest = Item.Companion.create("{\"1\": 2}", "application/json", "object-node()");
         assertThat(rest.getContent(), is("{\"1\": 2}"));
         assertThat(rest.getContentType(), is("application/json"));
         assertThat(rest.getItemType(), is("object-node()"));
@@ -225,12 +225,12 @@ public class ItemTest extends TestCase {
 
     @Query("<?a?>")
     public void testProcessingInstruction() {
-        Item xcc = Item.create("<?a?>", "processing-instruction()");
+        Item xcc = Item.Companion.create("<?a?>", "processing-instruction()");
         assertThat(xcc.getContent(), is("<?a?>"));
         assertThat(xcc.getContentType(), is("text/plain"));
         assertThat(xcc.getItemType(), is("processing-instruction()"));
 
-        Item rest = Item.create("<?a?>", "text/plain", "processing-instruction()");
+        Item rest = Item.Companion.create("<?a?>", "text/plain", "processing-instruction()");
         assertThat(rest.getContent(), is("<?a?>"));
         assertThat(rest.getContentType(), is("text/plain"));
         assertThat(rest.getItemType(), is("processing-instruction()"));
@@ -238,12 +238,12 @@ public class ItemTest extends TestCase {
 
     @Query("<a>abc</a>/text()")
     public void testText() {
-        Item xcc = Item.create("abc", "text()");
+        Item xcc = Item.Companion.create("abc", "text()");
         assertThat(xcc.getContent(), is("abc"));
         assertThat(xcc.getContentType(), is("text/plain"));
         assertThat(xcc.getItemType(), is("text()"));
 
-        Item rest = Item.create("abc", "text/plain", "text()");
+        Item rest = Item.Companion.create("abc", "text/plain", "text()");
         assertThat(rest.getContent(), is("abc"));
         assertThat(rest.getContentType(), is("text/plain"));
         assertThat(rest.getItemType(), is("text()"));
@@ -254,12 +254,12 @@ public class ItemTest extends TestCase {
 
     @Query("true()")
     public void testXsBoolean() {
-        Item xcc = Item.create("true", "xs:boolean");
+        Item xcc = Item.Companion.create("true", "xs:boolean");
         assertThat(xcc.getContent(), is("true"));
         assertThat(xcc.getContentType(), is("text/plain"));
         assertThat(xcc.getItemType(), is("xs:boolean"));
 
-        Item rest = Item.create("true", "text/plain", "boolean");
+        Item rest = Item.Companion.create("true", "text/plain", "boolean");
         assertThat(rest.getContent(), is("true"));
         assertThat(rest.getContentType(), is("text/plain"));
         assertThat(rest.getItemType(), is("boolean"));
@@ -271,12 +271,12 @@ public class ItemTest extends TestCase {
         // information to identify it as JSON, and the XCC API does not identify
         // it as a map:map.
 
-        Item xcc = Item.create("{}", "json:object");
+        Item xcc = Item.Companion.create("{}", "json:object");
         assertThat(xcc.getContent(), is("{}"));
         assertThat(xcc.getContentType(), is("text/plain"));
         assertThat(xcc.getItemType(), is("json:object"));
 
-        Item rest = Item.create("{}", "text/plain", "map");
+        Item rest = Item.Companion.create("{}", "text/plain", "map");
         assertThat(rest.getContent(), is("{}"));
         assertThat(rest.getContentType(), is("text/plain"));
         assertThat(rest.getItemType(), is("map"));
@@ -287,12 +287,12 @@ public class ItemTest extends TestCase {
 
     @Query("xs:float(1.5)")
     public void testXsFloat() {
-        Item xcc = Item.create("1.5", "xs:float");
+        Item xcc = Item.Companion.create("1.5", "xs:float");
         assertThat(xcc.getContent(), is("1.5"));
         assertThat(xcc.getContentType(), is("text/plain"));
         assertThat(xcc.getItemType(), is("xs:float"));
 
-        Item rest = Item.create("1.5", "text/plain", "float");
+        Item rest = Item.Companion.create("1.5", "text/plain", "float");
         assertThat(rest.getContent(), is("1.5"));
         assertThat(rest.getContentType(), is("text/plain"));
         assertThat(rest.getItemType(), is("float"));
@@ -300,12 +300,12 @@ public class ItemTest extends TestCase {
 
     @Query("xs:yearMonthDuration('P2Y')")
     public void testXsYearMonthDuration() {
-        Item xcc = Item.create("P2Y", "xs:yearMonthDuration");
+        Item xcc = Item.Companion.create("P2Y", "xs:yearMonthDuration");
         assertThat(xcc.getContent(), is("P2Y"));
         assertThat(xcc.getContentType(), is("text/plain"));
         assertThat(xcc.getItemType(), is("xs:yearMonthDuration"));
 
-        Item rest = Item.create("P2Y", "text/plain", "yearMonthDuration");
+        Item rest = Item.Companion.create("P2Y", "text/plain", "yearMonthDuration");
         assertThat(rest.getContent(), is("P2Y"));
         assertThat(rest.getContentType(), is("text/plain"));
         assertThat(rest.getItemType(), is("yearMonthDuration"));
