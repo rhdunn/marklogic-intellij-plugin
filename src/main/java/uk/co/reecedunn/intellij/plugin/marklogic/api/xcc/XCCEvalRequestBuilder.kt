@@ -16,6 +16,7 @@
 package uk.co.reecedunn.intellij.plugin.marklogic.api.xcc
 
 import com.marklogic.xcc.RequestOptions
+import com.marklogic.xcc.types.ValueType
 import uk.co.reecedunn.intellij.plugin.marklogic.api.EvalRequestBuilder
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Request
 
@@ -32,6 +33,24 @@ class XCCEvalRequestBuilder internal constructor(private val connection: XCCConn
 
         val session = connection.contentSource.newSession(contentDatabase)
         val request = session.newAdhocQuery(query, options)
+
+        for (name in variableNames) {
+            val value = getVariable(name)
+            val type =
+                try {
+                    if (value.itemType == "empty-sequence()")
+                        ValueType.SEQUENCE
+                    else
+                        ValueType.valueOf(value.itemType)
+                } catch (e: Exception) {
+                    ValueType.XS_STRING // unknown item
+                }
+            if (name.namespace != null) {
+                request.setNewVariable(name.namespace, name.localname, type, value.content)
+            } else {
+                request.setNewVariable(name.localname, type, value.content)
+            }
+        }
         return XCCRequest(session, request)
     }
 }
