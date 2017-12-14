@@ -15,7 +15,6 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.api.rest;
 
-import com.google.gson.JsonObject;
 import org.apache.http.client.methods.RequestBuilder;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -33,7 +32,6 @@ public class RestEvalRequestBuilder extends EvalRequestBuilder {
         RequestBuilder builder = RequestBuilder.post(connection.getBaseUri() + "/v1/eval");
         addParameter(builder, "xquery", getXQuery());
         addParameter(builder, "javascript", getJavaScript());
-        addParameter(builder, "vars", getVarsJson());
         addParameter(builder, "database", getContentDatabase());
         addParameter(builder, "txid", getTransactionID());
         return new RestRequest(builder.build(), connection);

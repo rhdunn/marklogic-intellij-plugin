@@ -15,12 +15,14 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.api;
 
-import com.google.gson.JsonObject;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 public abstract class EvalRequestBuilder {
     private String xquery = null;
     private String javascript = null;
-    private JsonObject vars = null;
+    private final HashMap<QName, Item> vars = new HashMap<>();
     private String database = null;
     private String txid = null;
 
@@ -45,18 +47,22 @@ public abstract class EvalRequestBuilder {
         return javascript;
     }
 
-    public void addVariable(String name, String value) {
-        if (vars == null) {
-            vars = new JsonObject();
+    public void addVariables(Map<QName, Item> variables) {
+        for (Map.Entry<QName, Item> variable: variables.entrySet()) {
+            vars.put(variable.getKey(), variable.getValue());
         }
-        vars.addProperty(name, value);
     }
 
-    public String getVarsJson() {
-        if (vars == null) {
-            return null;
-        }
-        return vars.toString();
+    public void addVariable(QName name, Item value) {
+        vars.put(name, value);
+    }
+
+    public Item getVariable(QName name) {
+        return vars.get(name);
+    }
+
+    public Set<QName> getVariableNames() {
+        return vars.keySet();
     }
 
     public void setContentDatabase(String database) {

@@ -37,8 +37,6 @@ public class XCCEvalRequestBuilder extends EvalRequestBuilder {
             options.setQueryLanguage("javascript");
         }
 
-        // TODO: getVarsJson()
-
         Session session = connection.getContentSource().newSession(getContentDatabase());
         com.marklogic.xcc.Request request = session.newAdhocQuery(query, options);
         return new XCCRequest(session, request);
