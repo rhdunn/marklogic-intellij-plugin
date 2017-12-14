@@ -76,8 +76,8 @@ class MarkLogicServer {
     fun xquery(query: String, variables: HashMap<QName, Item>? = null): Array<Item> {
         val connection = Connection.newConnection(hostname, appServerPort, username, password, Connection.XCC)
         val queryBuilder = connection.createEvalRequestBuilder()
-        queryBuilder.xQuery = query
-        queryBuilder.addVariables(variables)
+        queryBuilder.XQuery = query
+        variables?.let { queryBuilder.addVariables(it) }
         return queryBuilder.build().run().items
     }
 
