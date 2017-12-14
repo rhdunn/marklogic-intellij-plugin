@@ -18,6 +18,7 @@ package uk.co.reecedunn.intellij.plugin.marklogic.server
 import org.jetbrains.annotations.CalledInBackground
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Connection
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Item
+import uk.co.reecedunn.intellij.plugin.marklogic.api.QName
 import uk.co.reecedunn.intellij.plugin.marklogic.query.LIST_APPSERVERS_XQUERY
 import uk.co.reecedunn.intellij.plugin.marklogic.query.MARKLOGIC_VERSION_XQUERY
 import uk.co.reecedunn.intellij.plugin.marklogic.query.MarkLogicQuery
@@ -72,10 +73,11 @@ class MarkLogicServer {
         displayName?.let { "$it [$hostname]" } ?: hostname
 
     @CalledInBackground
-    fun xquery(query: String): Array<Item> {
+    fun xquery(query: String, variables: HashMap<QName, Item>? = null): Array<Item> {
         val connection = Connection.newConnection(hostname, appServerPort, username, password, Connection.XCC)
         val queryBuilder = connection.createEvalRequestBuilder()
         queryBuilder.xQuery = query
+        queryBuilder.addVariables(variables)
         return queryBuilder.build().run().items
     }
 
