@@ -42,11 +42,11 @@ public class JavaScriptBuilderTest extends TestCase {
     public void testEvalProfile() {
         QueryBuilder js = JavaScriptBuilder.INSTANCE;
 
-        assertThat(js.createEvalBuilder(ProfileExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_5()), is(nullValue()));
-        assertThat(js.createEvalBuilder(ProfileExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_6()), is(nullValue()));
-        assertThat(js.createEvalBuilder(ProfileExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_7()), is(nullValue()));
-        assertThat(js.createEvalBuilder(ProfileExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_8()), is(nullValue()));
-        assertThat(js.createEvalBuilder(ProfileExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_9()), is(nullValue()));
+        assertThat(js.createEvalBuilder(ProfileExecutor.Companion.getEXECUTOR_ID(), MarkLogicVersionKt.getMARKLOGIC_5()), is(nullValue()));
+        assertThat(js.createEvalBuilder(ProfileExecutor.Companion.getEXECUTOR_ID(), MarkLogicVersionKt.getMARKLOGIC_6()), is(nullValue()));
+        assertThat(js.createEvalBuilder(ProfileExecutor.Companion.getEXECUTOR_ID(), MarkLogicVersionKt.getMARKLOGIC_7()), is(nullValue()));
+        assertThat(js.createEvalBuilder(ProfileExecutor.Companion.getEXECUTOR_ID(), MarkLogicVersionKt.getMARKLOGIC_8()), is(nullValue()));
+        assertThat(js.createEvalBuilder(ProfileExecutor.Companion.getEXECUTOR_ID(), MarkLogicVersionKt.getMARKLOGIC_9()), is(nullValue()));
     }
 
     public void testEvalDebug() {
@@ -72,11 +72,11 @@ public class JavaScriptBuilderTest extends TestCase {
     public void testInvokeProfile() {
         QueryBuilder js = JavaScriptBuilder.INSTANCE;
 
-        assertThat(js.createInvokeBuilder(ProfileExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_5()), is(nullValue()));
-        assertThat(js.createInvokeBuilder(ProfileExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_6()), is(nullValue()));
-        assertThat(js.createInvokeBuilder(ProfileExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_7()), is(nullValue()));
-        assertThat(js.createInvokeBuilder(ProfileExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_8()), is(nullValue()));
-        assertThat(js.createInvokeBuilder(ProfileExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_9()), is(nullValue()));
+        assertThat(js.createInvokeBuilder(ProfileExecutor.Companion.getEXECUTOR_ID(), MarkLogicVersionKt.getMARKLOGIC_5()), is(nullValue()));
+        assertThat(js.createInvokeBuilder(ProfileExecutor.Companion.getEXECUTOR_ID(), MarkLogicVersionKt.getMARKLOGIC_6()), is(nullValue()));
+        assertThat(js.createInvokeBuilder(ProfileExecutor.Companion.getEXECUTOR_ID(), MarkLogicVersionKt.getMARKLOGIC_7()), is(nullValue()));
+        assertThat(js.createInvokeBuilder(ProfileExecutor.Companion.getEXECUTOR_ID(), MarkLogicVersionKt.getMARKLOGIC_8()), is(nullValue()));
+        assertThat(js.createInvokeBuilder(ProfileExecutor.Companion.getEXECUTOR_ID(), MarkLogicVersionKt.getMARKLOGIC_9()), is(nullValue()));
     }
 
     public void testInvokeDebug() {

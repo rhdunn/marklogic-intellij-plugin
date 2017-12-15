@@ -42,11 +42,11 @@ public class SQLBuilderTest extends TestCase {
     public void testEvalProfile() {
         QueryBuilder sql = SQLBuilder.INSTANCE;
 
-        assertThat(sql.createEvalBuilder(ProfileExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_5()), is(nullValue()));
-        assertThat(sql.createEvalBuilder(ProfileExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_6()), is(nullValue()));
-        assertThat(sql.createEvalBuilder(ProfileExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_7()), is(nullValue()));
-        assertThat(sql.createEvalBuilder(ProfileExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_8()), is(nullValue()));
-        assertThat(sql.createEvalBuilder(ProfileExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_9()), is(nullValue()));
+        assertThat(sql.createEvalBuilder(ProfileExecutor.Companion.getEXECUTOR_ID(), MarkLogicVersionKt.getMARKLOGIC_5()), is(nullValue()));
+        assertThat(sql.createEvalBuilder(ProfileExecutor.Companion.getEXECUTOR_ID(), MarkLogicVersionKt.getMARKLOGIC_6()), is(nullValue()));
+        assertThat(sql.createEvalBuilder(ProfileExecutor.Companion.getEXECUTOR_ID(), MarkLogicVersionKt.getMARKLOGIC_7()), is(nullValue()));
+        assertThat(sql.createEvalBuilder(ProfileExecutor.Companion.getEXECUTOR_ID(), MarkLogicVersionKt.getMARKLOGIC_8()), is(nullValue()));
+        assertThat(sql.createEvalBuilder(ProfileExecutor.Companion.getEXECUTOR_ID(), MarkLogicVersionKt.getMARKLOGIC_9()), is(nullValue()));
     }
 
     public void testEvalDebug() {
@@ -72,11 +72,11 @@ public class SQLBuilderTest extends TestCase {
     public void testInvokeProfile() {
         QueryBuilder sql = SQLBuilder.INSTANCE;
 
-        assertThat(sql.createInvokeBuilder(ProfileExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_5()), is(nullValue()));
-        assertThat(sql.createInvokeBuilder(ProfileExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_6()), is(nullValue()));
-        assertThat(sql.createInvokeBuilder(ProfileExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_7()), is(nullValue()));
-        assertThat(sql.createInvokeBuilder(ProfileExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_8()), is(nullValue()));
-        assertThat(sql.createInvokeBuilder(ProfileExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_9()), is(nullValue()));
+        assertThat(sql.createInvokeBuilder(ProfileExecutor.Companion.getEXECUTOR_ID(), MarkLogicVersionKt.getMARKLOGIC_5()), is(nullValue()));
+        assertThat(sql.createInvokeBuilder(ProfileExecutor.Companion.getEXECUTOR_ID(), MarkLogicVersionKt.getMARKLOGIC_6()), is(nullValue()));
+        assertThat(sql.createInvokeBuilder(ProfileExecutor.Companion.getEXECUTOR_ID(), MarkLogicVersionKt.getMARKLOGIC_7()), is(nullValue()));
+        assertThat(sql.createInvokeBuilder(ProfileExecutor.Companion.getEXECUTOR_ID(), MarkLogicVersionKt.getMARKLOGIC_8()), is(nullValue()));
+        assertThat(sql.createInvokeBuilder(ProfileExecutor.Companion.getEXECUTOR_ID(), MarkLogicVersionKt.getMARKLOGIC_9()), is(nullValue()));
     }
 
     public void testInvokeDebug() {

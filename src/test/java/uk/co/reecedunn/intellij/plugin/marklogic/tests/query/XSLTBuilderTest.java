@@ -42,11 +42,11 @@ public class XSLTBuilderTest extends TestCase {
     public void testEvalProfile() {
         QueryBuilder xslt = XSLTBuilder.INSTANCE;
 
-        assertThat(xslt.createEvalBuilder(ProfileExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_5()), is(Function.PROF_XSLT_EVAL_50));
-        assertThat(xslt.createEvalBuilder(ProfileExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_6()), is(Function.PROF_XSLT_EVAL_50));
-        assertThat(xslt.createEvalBuilder(ProfileExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_7()), is(Function.PROF_XSLT_EVAL_50));
-        assertThat(xslt.createEvalBuilder(ProfileExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_8()), is(Function.PROF_XSLT_EVAL_50));
-        assertThat(xslt.createEvalBuilder(ProfileExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_9()), is(Function.PROF_XSLT_EVAL_50));
+        assertThat(xslt.createEvalBuilder(ProfileExecutor.Companion.getEXECUTOR_ID(), MarkLogicVersionKt.getMARKLOGIC_5()), is(Function.PROF_XSLT_EVAL_50));
+        assertThat(xslt.createEvalBuilder(ProfileExecutor.Companion.getEXECUTOR_ID(), MarkLogicVersionKt.getMARKLOGIC_6()), is(Function.PROF_XSLT_EVAL_50));
+        assertThat(xslt.createEvalBuilder(ProfileExecutor.Companion.getEXECUTOR_ID(), MarkLogicVersionKt.getMARKLOGIC_7()), is(Function.PROF_XSLT_EVAL_50));
+        assertThat(xslt.createEvalBuilder(ProfileExecutor.Companion.getEXECUTOR_ID(), MarkLogicVersionKt.getMARKLOGIC_8()), is(Function.PROF_XSLT_EVAL_50));
+        assertThat(xslt.createEvalBuilder(ProfileExecutor.Companion.getEXECUTOR_ID(), MarkLogicVersionKt.getMARKLOGIC_9()), is(Function.PROF_XSLT_EVAL_50));
     }
 
     public void testEvalDebug() {
@@ -72,11 +72,11 @@ public class XSLTBuilderTest extends TestCase {
     public void testInvokeProfile() {
         QueryBuilder xslt = XSLTBuilder.INSTANCE;
 
-        assertThat(xslt.createInvokeBuilder(ProfileExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_5()), is(Function.PROF_XSLT_INVOKE_50));
-        assertThat(xslt.createInvokeBuilder(ProfileExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_6()), is(Function.PROF_XSLT_INVOKE_50));
-        assertThat(xslt.createInvokeBuilder(ProfileExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_7()), is(Function.PROF_XSLT_INVOKE_50));
-        assertThat(xslt.createInvokeBuilder(ProfileExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_8()), is(Function.PROF_XSLT_INVOKE_50));
-        assertThat(xslt.createInvokeBuilder(ProfileExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_9()), is(Function.PROF_XSLT_INVOKE_50));
+        assertThat(xslt.createInvokeBuilder(ProfileExecutor.Companion.getEXECUTOR_ID(), MarkLogicVersionKt.getMARKLOGIC_5()), is(Function.PROF_XSLT_INVOKE_50));
+        assertThat(xslt.createInvokeBuilder(ProfileExecutor.Companion.getEXECUTOR_ID(), MarkLogicVersionKt.getMARKLOGIC_6()), is(Function.PROF_XSLT_INVOKE_50));
+        assertThat(xslt.createInvokeBuilder(ProfileExecutor.Companion.getEXECUTOR_ID(), MarkLogicVersionKt.getMARKLOGIC_7()), is(Function.PROF_XSLT_INVOKE_50));
+        assertThat(xslt.createInvokeBuilder(ProfileExecutor.Companion.getEXECUTOR_ID(), MarkLogicVersionKt.getMARKLOGIC_8()), is(Function.PROF_XSLT_INVOKE_50));
+        assertThat(xslt.createInvokeBuilder(ProfileExecutor.Companion.getEXECUTOR_ID(), MarkLogicVersionKt.getMARKLOGIC_9()), is(Function.PROF_XSLT_INVOKE_50));
     }
 
     public void testInvokeDebug() {

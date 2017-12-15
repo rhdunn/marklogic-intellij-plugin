@@ -62,7 +62,7 @@ public class MarkLogicProgramRunnerTest extends ConfigurationTestCase {
         assertThat(runner.canRun(DefaultRunExecutor.EXECUTOR_ID, profile), is(false));
         assertThat(runner.canRun(DefaultDebugExecutor.EXECUTOR_ID, profile), is(false));
         assertThat(runner.canRun(CoverageExecutor.EXECUTOR_ID, profile), is(false));
-        assertThat(runner.canRun(ProfileExecutor.EXECUTOR_ID, profile), is(false));
+        assertThat(runner.canRun(ProfileExecutor.Companion.getEXECUTOR_ID(), profile), is(false));
     }
 
     public void testDefaultRunConfiguration() {
@@ -72,7 +72,7 @@ public class MarkLogicProgramRunnerTest extends ConfigurationTestCase {
         assertThat(runner.canRun(DefaultRunExecutor.EXECUTOR_ID, profile), is(false));
         assertThat(runner.canRun(DefaultDebugExecutor.EXECUTOR_ID, profile), is(false));
         assertThat(runner.canRun(CoverageExecutor.EXECUTOR_ID, profile), is(false));
-        assertThat(runner.canRun(ProfileExecutor.EXECUTOR_ID, profile), is(false));
+        assertThat(runner.canRun(ProfileExecutor.Companion.getEXECUTOR_ID(), profile), is(false));
     }
 
     public void testNoActionsAvailable() {
@@ -84,7 +84,7 @@ public class MarkLogicProgramRunnerTest extends ConfigurationTestCase {
         assertThat(runner.canRun(DefaultRunExecutor.EXECUTOR_ID, profile), is(false));
         assertThat(runner.canRun(DefaultDebugExecutor.EXECUTOR_ID, profile), is(false));
         assertThat(runner.canRun(CoverageExecutor.EXECUTOR_ID, profile), is(false));
-        assertThat(runner.canRun(ProfileExecutor.EXECUTOR_ID, profile), is(false));
+        assertThat(runner.canRun(ProfileExecutor.Companion.getEXECUTOR_ID(), profile), is(false));
     }
 
     public void testRunOnly() {
@@ -96,7 +96,7 @@ public class MarkLogicProgramRunnerTest extends ConfigurationTestCase {
         assertThat(runner.canRun(DefaultRunExecutor.EXECUTOR_ID, profile), is(true));
         assertThat(runner.canRun(DefaultDebugExecutor.EXECUTOR_ID, profile), is(false));
         assertThat(runner.canRun(CoverageExecutor.EXECUTOR_ID, profile), is(false));
-        assertThat(runner.canRun(ProfileExecutor.EXECUTOR_ID, profile), is(false));
+        assertThat(runner.canRun(ProfileExecutor.Companion.getEXECUTOR_ID(), profile), is(false));
     }
 
     public void testRunAndProfile() {
@@ -108,7 +108,7 @@ public class MarkLogicProgramRunnerTest extends ConfigurationTestCase {
         assertThat(runner.canRun(DefaultRunExecutor.EXECUTOR_ID, profile), is(true));
         assertThat(runner.canRun(DefaultDebugExecutor.EXECUTOR_ID, profile), is(false));
         assertThat(runner.canRun(CoverageExecutor.EXECUTOR_ID, profile), is(false));
-        assertThat(runner.canRun(ProfileExecutor.EXECUTOR_ID, profile), is(true));
+        assertThat(runner.canRun(ProfileExecutor.Companion.getEXECUTOR_ID(), profile), is(true));
     }
 
     public void testRunProfileAndDebug() {
@@ -121,6 +121,6 @@ public class MarkLogicProgramRunnerTest extends ConfigurationTestCase {
         assertThat(runner.canRun(DefaultRunExecutor.EXECUTOR_ID, profile), is(true));
         assertThat(runner.canRun(DefaultDebugExecutor.EXECUTOR_ID, profile), is(false));
         assertThat(runner.canRun(CoverageExecutor.EXECUTOR_ID, profile), is(false));
-        assertThat(runner.canRun(ProfileExecutor.EXECUTOR_ID, profile), is(true));
+        assertThat(runner.canRun(ProfileExecutor.Companion.getEXECUTOR_ID(), profile), is(true));
     }
 }
