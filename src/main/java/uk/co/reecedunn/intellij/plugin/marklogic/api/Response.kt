@@ -13,15 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package uk.co.reecedunn.intellij.plugin.marklogic.api;
+package uk.co.reecedunn.intellij.plugin.marklogic.api
 
-import org.jetbrains.annotations.NotNull;
+interface Response {
+    val items: Array<Item>
 
-import java.io.IOException;
-
-public interface Response {
-    void close();
-
-    @NotNull
-    Item[] getItems() throws IOException;
+    fun close()
 }
