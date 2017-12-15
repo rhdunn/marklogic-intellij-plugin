@@ -30,10 +30,7 @@ object KeyValueVarsBuilder : VarsBuilder {
             builder.append(", ")
         }
 
-        builder.append("xs:QName(\"")
-        builder.append(key)
-        builder.append("\"), ")
-        builder.append(value)
+        builder.append("xs:QName(\"$key\"), $value")
     }
 
     override fun end(builder: StringBuilder) {
