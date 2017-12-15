@@ -163,7 +163,7 @@ public class MarkLogicRunConfiguration extends RunConfigurationBase implements P
     }
 
     public RDFFormat getTripleFormat() {
-        return RDFFormat.parse(data.tripleFormat);
+        return RDFFormat.Companion.parse(data.tripleFormat);
     }
 
     public void setTripleFormat(RDFFormat tripleFormat) {

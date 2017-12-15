@@ -13,12 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package uk.co.reecedunn.intellij.plugin.marklogic.api;
+package uk.co.reecedunn.intellij.plugin.marklogic.api
 
-import org.jetbrains.annotations.NotNull;
-import uk.co.reecedunn.intellij.plugin.marklogic.ui.resources.MarkLogicBundle;
+import uk.co.reecedunn.intellij.plugin.marklogic.ui.resources.MarkLogicBundle
 
-public enum RDFFormat {
+enum class RDFFormat private constructor(private val displayName: String, val markLogicName: String, val contentType: String, val fileExtension: String) {
     N3(MarkLogicBundle.message("format.n3"), "n3", "text/n3", "n3"),
     N_QUADS(MarkLogicBundle.message("format.n-quads"), "nquad", "application/n-quads", "nq"),
     N_TRIPLES(MarkLogicBundle.message("format.n-triples"), "ntriple", "application/n-triples", "nt"),
@@ -29,45 +28,21 @@ public enum RDFFormat {
     TRIPLES_XML(MarkLogicBundle.message("format.triples-xml"), "triplexml", "application/vnd.marklogic.triples+xml", "xml"),
     TURTLE(MarkLogicBundle.message("format.turtle"), "turtle", "text/turtle", "ttl");
 
-    private final String name;
-    private final String markLogicName;
-    private final String contentType;
-    private final String fileExtension;
+    override fun toString(): String =
+        displayName
 
-    RDFFormat(String name, String markLogicName, String contentType, String fileExtension) {
-        this.name = name;
-        this.markLogicName = markLogicName;
-        this.contentType = contentType;
-        this.fileExtension = fileExtension;
-    }
-
-    public static RDFFormat parse(@NotNull String value) {
-        if (value.equals("n3")) return N3;
-        if (value.equals("nquad")) return N_QUADS;
-        if (value.equals("ntriple")) return N_TRIPLES;
-        if (value.equals("rdfjson")) return RDF_JSON;
-        if (value.equals("rdfxml")) return RDF_XML;
-        if (value.equals("sem:triple")) return SEM_TRIPLE;
-        if (value.equals("trig")) return TRIG;
-        if (value.equals("triplexml")) return TRIPLES_XML;
-        if (value.equals("turtle")) return TURTLE;
-        return null;
-    }
-
-    @Override
-    public String toString() {
-        return name;
-    }
-
-    public String getMarkLogicName() {
-        return markLogicName;
-    }
-
-    public String getContentType() {
-        return contentType;
-    }
-
-    public String getFileExtension() {
-        return fileExtension;
+    companion object {
+        fun parse(value: String): RDFFormat? {
+            if (value == "n3") return N3
+            if (value == "nquad") return N_QUADS
+            if (value == "ntriple") return N_TRIPLES
+            if (value == "rdfjson") return RDF_JSON
+            if (value == "rdfxml") return RDF_XML
+            if (value == "sem:triple") return SEM_TRIPLE
+            if (value == "trig") return TRIG
+            if (value == "triplexml") return TRIPLES_XML
+            if (value == "turtle") return TURTLE
+            return null
+        }
     }
 }
