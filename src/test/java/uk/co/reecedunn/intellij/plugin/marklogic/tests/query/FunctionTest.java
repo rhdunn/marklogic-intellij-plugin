@@ -17,13 +17,9 @@ package uk.co.reecedunn.intellij.plugin.marklogic.tests.query;
 
 import com.intellij.execution.ExecutionException;
 import com.intellij.execution.executors.DefaultRunExecutor;
-import uk.co.reecedunn.intellij.plugin.marklogic.api.RDFFormat;
-import uk.co.reecedunn.intellij.plugin.marklogic.api.RDFFormatKt;
+import uk.co.reecedunn.intellij.plugin.marklogic.query.*;
 import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicVersionKt;
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.configuration.MarkLogicRunConfiguration;
-import uk.co.reecedunn.intellij.plugin.marklogic.query.Function;
-import uk.co.reecedunn.intellij.plugin.marklogic.query.QueryBuilder;
-import uk.co.reecedunn.intellij.plugin.marklogic.query.QueryBuilderFactory;
 import uk.co.reecedunn.intellij.plugin.marklogic.tests.configuration.ConfigurationTestCase;
 
 import static org.hamcrest.CoreMatchers.is;

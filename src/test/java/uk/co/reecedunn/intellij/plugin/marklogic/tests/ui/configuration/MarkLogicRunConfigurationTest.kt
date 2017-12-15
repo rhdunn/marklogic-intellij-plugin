@@ -18,7 +18,6 @@ package uk.co.reecedunn.intellij.plugin.marklogic.tests.ui.configuration
 import com.intellij.execution.configurations.RunConfiguration
 import com.intellij.openapi.vfs.VirtualFile
 import org.hamcrest.CoreMatchers.*
-import uk.co.reecedunn.intellij.plugin.marklogic.api.RDFFormat
 import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicServer
 import uk.co.reecedunn.intellij.plugin.marklogic.tests.configuration.ConfigurationTestCase
 
@@ -26,8 +25,8 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.jdom.Element
 import org.jdom.input.SAXBuilder
 import org.jdom.output.XMLOutputter
-import uk.co.reecedunn.intellij.plugin.marklogic.api.SEM_TRIPLE
-import uk.co.reecedunn.intellij.plugin.marklogic.api.TURTLE
+import uk.co.reecedunn.intellij.plugin.marklogic.query.SEM_TRIPLE
+import uk.co.reecedunn.intellij.plugin.marklogic.query.TURTLE
 import uk.co.reecedunn.intellij.plugin.marklogic.server.MARKLOGIC_9
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.configuration.MarkLogicRunConfiguration
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.settings.MarkLogicSettings

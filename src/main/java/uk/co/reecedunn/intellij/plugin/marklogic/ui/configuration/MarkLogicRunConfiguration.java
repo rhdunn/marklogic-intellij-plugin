@@ -28,7 +28,7 @@ import com.intellij.openapi.vfs.VirtualFileManager;
 import com.intellij.util.xmlb.XmlSerializerUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import uk.co.reecedunn.intellij.plugin.marklogic.api.RDFFormat;
+import uk.co.reecedunn.intellij.plugin.marklogic.query.RDFFormat;
 import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicServer;
 import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicVersion;
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.runner.MarkLogicResultsHandler;

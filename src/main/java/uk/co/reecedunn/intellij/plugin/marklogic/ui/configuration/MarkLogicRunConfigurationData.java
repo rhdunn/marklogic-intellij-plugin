@@ -20,7 +20,7 @@ import com.intellij.util.xmlb.annotations.OptionTag;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import uk.co.reecedunn.compat.intellij.execution.configurations.RunConfigurationOptions;
-import uk.co.reecedunn.intellij.plugin.marklogic.api.RDFFormatKt;
+import uk.co.reecedunn.intellij.plugin.marklogic.query.RDFFormatKt;
 import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicVersion;
 import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicVersionKt;
 
