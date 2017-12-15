@@ -13,16 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package uk.co.reecedunn.intellij.plugin.core.ui;
+package uk.co.reecedunn.intellij.plugin.core.ui
 
-import javax.swing.*;
-
-public interface SettingsUI<Configuration> {
-    JPanel getPanel();
-
-    boolean isModified(Configuration configuration);
-
-    void reset(Configuration configuration);
-
-    void apply(Configuration configuration);
+interface SettingsUIFactory<Configuration> {
+    fun createSettingsUI(): SettingsUI<Configuration>
 }

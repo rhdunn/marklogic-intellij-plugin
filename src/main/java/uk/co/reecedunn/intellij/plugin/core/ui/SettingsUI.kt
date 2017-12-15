@@ -13,8 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package uk.co.reecedunn.intellij.plugin.core.ui;
+package uk.co.reecedunn.intellij.plugin.core.ui
 
-public interface SettingsUIFactory<Configuration> {
-    SettingsUI<Configuration> createSettingsUI();
+import javax.swing.*
+
+interface SettingsUI<Configuration> {
+    val panel: JPanel
+
+    fun isModified(configuration: Configuration): Boolean
+
+    fun reset(configuration: Configuration)
+
+    fun apply(configuration: Configuration)
 }
