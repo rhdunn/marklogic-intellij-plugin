@@ -15,9 +15,12 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.query
 
+open class MimeType(val mimeType: String, val defaultExtensions: Array<String>)
+
 // region Query Types
 
-data class QueryType(val mimeType: String, val defaultExtensions: Array<String>)
+class QueryType(mimeType: String, defaultExtensions: Array<String>):
+    MimeType(mimeType, defaultExtensions)
 
 val XQueryType: QueryType = QueryType("application/xquery", arrayOf("xq", "xqy", "xquery", "xql", "xqu"))
 
