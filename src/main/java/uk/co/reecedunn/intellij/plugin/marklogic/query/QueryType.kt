@@ -15,19 +15,19 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.query
 
-data class QueryType(val mimeType: String, val defaultExtensions: Array<String>, val builder: QueryBuilder)
+data class QueryType(val mimeType: String, val defaultExtensions: List<String>, val builder: QueryBuilder)
 
-val XQUERY: QueryType = QueryType("application/xquery", arrayOf("xq", "xqy", "xquery", "xql", "xqu"), XQueryBuilder)
+val XQUERY: QueryType = QueryType("application/xquery", listOf("xq", "xqy", "xquery", "xql", "xqu"), XQueryBuilder)
 
-val JAVA_SCRIPT: QueryType = QueryType("application/javascript", arrayOf("js", "sjs"), JavaScriptBuilder)
+val JAVA_SCRIPT: QueryType = QueryType("application/javascript", listOf("js", "sjs"), JavaScriptBuilder)
 
-val SQL: QueryType = QueryType("application/sql", arrayOf("sql"), SQLBuilder)
+val SQL: QueryType = QueryType("application/sql", listOf("sql"), SQLBuilder)
 
-val SPARQL_QUERY: QueryType = QueryType("application/sparql-query", arrayOf("sparql", "rq"), SPARQLQueryBuilder)
+val SPARQL_QUERY: QueryType = QueryType("application/sparql-query", listOf("sparql", "rq"), SPARQLQueryBuilder)
 
-val SPARQL_UPDATE: QueryType = QueryType("application/sparql-update", arrayOf("ru"), SPARQLUpdateBuilder)
+val SPARQL_UPDATE: QueryType = QueryType("application/sparql-update", listOf("ru"), SPARQLUpdateBuilder)
 
-val XSLT: QueryType = QueryType("application/xml", arrayOf("xsl", "xslt"), XSLTBuilder)
+val XSLT: QueryType = QueryType("application/xml", listOf("xsl", "xslt"), XSLTBuilder)
 
 val QUERY_TYPES = listOf(
     XQUERY,
@@ -39,4 +39,4 @@ val QUERY_TYPES = listOf(
 
 val QUERY_EXTENSIONS get(): List<String> =
     // XSLT is not fully supported, so exclude from the list of supported extensions.
-    QUERY_TYPES.filter { type -> type !== XSLT }.flatMap { type -> type.defaultExtensions.toList() }
+    QUERY_TYPES.filter { type -> type !== XSLT }.flatMap { type -> type.defaultExtensions }
