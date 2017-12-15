@@ -22,13 +22,10 @@ import com.intellij.openapi.ui.ComboBox;
 import com.intellij.openapi.ui.ComponentWithBrowseButton;
 import com.intellij.openapi.ui.TextComponentAccessor;
 import org.jetbrains.annotations.NotNull;
-import uk.co.reecedunn.intellij.plugin.marklogic.query.MarkLogicQuery;
-import uk.co.reecedunn.intellij.plugin.marklogic.query.MarkLogicQueryKt;
-import uk.co.reecedunn.intellij.plugin.marklogic.query.RDFFormatKt;
+import uk.co.reecedunn.intellij.plugin.marklogic.query.*;
 import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicServer;
 import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicVersion;
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.resources.MarkLogicBundle;
-import uk.co.reecedunn.intellij.plugin.marklogic.query.RDFFormat;
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.runner.MarkLogicResultsHandler;
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.runner.MarkLogicQueryComboBox;
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.server.MarkLogicServerComboBox;
@@ -85,7 +82,7 @@ public class MarkLogicRunConfigurationEditorUI {
             MarkLogicBundle.message("browser.choose.main.module"),
             null,
             mProject,
-            new FileTypeDescriptor(MarkLogicBundle.message("browser.choose.main.module"), MarkLogicRunConfiguration.Companion.getEXTENSIONS()),
+            new FileTypeDescriptor(MarkLogicBundle.message("browser.choose.main.module"), (String[])QueryTypeKt.getQUERY_EXTENSIONS().toArray()),
             TextComponentAccessor.TEXT_FIELD_WHOLE_TEXT);
 
         ((MarkLogicServerComboBox)mServerHost).serversChanged();

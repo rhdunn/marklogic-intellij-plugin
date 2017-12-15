@@ -127,9 +127,5 @@ class MarkLogicRunConfiguration internal constructor(project: Project, factory: 
         }
     }
 
-    companion object {
-        val EXTENSIONS = arrayOf("xq", "xqy", "xquery", "xql", "xqu", "js", "sjs", "sql", "sparql", "rq", "ru")
-    }
-
     // endregion
 }

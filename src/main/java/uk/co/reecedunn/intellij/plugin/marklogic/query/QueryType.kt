@@ -36,3 +36,7 @@ val QUERY_TYPES = listOf(
     SPARQL_QUERY,
     SPARQL_UPDATE,
     XSLT)
+
+val QUERY_EXTENSIONS get(): List<String> =
+    // XSLT is not fully supported, so exclude from the list of supported extensions.
+    QUERY_TYPES.filter { type -> type !== XSLT }.flatMap { type -> type.defaultExtensions.toList() }
