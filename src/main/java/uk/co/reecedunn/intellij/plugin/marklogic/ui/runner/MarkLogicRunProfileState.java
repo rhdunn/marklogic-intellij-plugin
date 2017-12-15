@@ -50,7 +50,7 @@ public class MarkLogicRunProfileState extends CommandLineState {
     protected ProcessHandler startProcess() throws ExecutionException {
         MarkLogicRunConfiguration configuration = (MarkLogicRunConfiguration)getEnvironment().getRunProfile();
 
-        QueryBuilder queryBuilder = QueryBuilderFactory.createQueryBuilderForFile(configuration.getMainModulePath());
+        QueryBuilder queryBuilder = QueryBuilderFactory.INSTANCE.createQueryBuilderForFile(configuration.getMainModulePath());
         if (queryBuilder == null) {
             throw new ExecutionException("Unsupported query file: " + configuration.getMainModulePath());
         }

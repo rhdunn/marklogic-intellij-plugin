@@ -31,7 +31,7 @@ public class FunctionTest extends ConfigurationTestCase {
         final MarkLogicRunConfiguration configuration = createConfiguration();
         configuration.setMainModulePath("test-main-module-file-file-path-not-found.xqy");
 
-        QueryBuilder queryBuilder = QueryBuilderFactory.createQueryBuilderForFile(configuration.getMainModulePath());
+        QueryBuilder queryBuilder = QueryBuilderFactory.INSTANCE.createQueryBuilderForFile(configuration.getMainModulePath());
         Function function = queryBuilder.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_5());
 
         ExecutionException e = assertThrows(ExecutionException.class, () -> function.buildQuery(configuration));
@@ -43,7 +43,7 @@ public class FunctionTest extends ConfigurationTestCase {
         final MarkLogicRunConfiguration configuration = createConfiguration();
         configuration.setMainModuleFile(createVirtualFile("test.xqy", query));
 
-        QueryBuilder queryBuilder = QueryBuilderFactory.createQueryBuilderForFile(configuration.getMainModulePath());
+        QueryBuilder queryBuilder = QueryBuilderFactory.INSTANCE.createQueryBuilderForFile(configuration.getMainModulePath());
         Function function = queryBuilder.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_5());
 
         final String actual = function.buildQuery(configuration).replaceAll("\r\n", "\n");
@@ -60,7 +60,7 @@ public class FunctionTest extends ConfigurationTestCase {
         final MarkLogicRunConfiguration configuration = createConfiguration();
         configuration.setMainModuleFile(createVirtualFile("test.xqy", query));
 
-        QueryBuilder queryBuilder = QueryBuilderFactory.createQueryBuilderForFile(configuration.getMainModulePath());
+        QueryBuilder queryBuilder = QueryBuilderFactory.INSTANCE.createQueryBuilderForFile(configuration.getMainModulePath());
         Function function = queryBuilder.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_5());
 
         final String actual = function.buildQuery(configuration).replaceAll("\r\n", "\n");
@@ -77,7 +77,7 @@ public class FunctionTest extends ConfigurationTestCase {
         final MarkLogicRunConfiguration configuration = createConfiguration();
         configuration.setMainModuleFile(createVirtualFile("test.xqy", query));
 
-        QueryBuilder queryBuilder = QueryBuilderFactory.createQueryBuilderForFile(configuration.getMainModulePath());
+        QueryBuilder queryBuilder = QueryBuilderFactory.INSTANCE.createQueryBuilderForFile(configuration.getMainModulePath());
         Function function = queryBuilder.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_5());
 
         final String actual = function.buildQuery(configuration).replaceAll("\r\n", "\n");
@@ -97,7 +97,7 @@ public class FunctionTest extends ConfigurationTestCase {
         configuration.setModuleDatabase("ipsum");
         configuration.setModuleRoot("dolor");
 
-        QueryBuilder queryBuilder = QueryBuilderFactory.createQueryBuilderForFile(configuration.getMainModulePath());
+        QueryBuilder queryBuilder = QueryBuilderFactory.INSTANCE.createQueryBuilderForFile(configuration.getMainModulePath());
         Function function = queryBuilder.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_5());
 
         final String actual = function.buildQuery(configuration).replaceAll("\r\n", "\n");
@@ -119,7 +119,7 @@ public class FunctionTest extends ConfigurationTestCase {
         final MarkLogicRunConfiguration configuration = createConfiguration();
         configuration.setMainModuleFile(createVirtualFile("test.sql", query));
 
-        QueryBuilder queryBuilder = QueryBuilderFactory.createQueryBuilderForFile(configuration.getMainModulePath());
+        QueryBuilder queryBuilder = QueryBuilderFactory.INSTANCE.createQueryBuilderForFile(configuration.getMainModulePath());
         Function function = queryBuilder.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_8());
 
         final String actual = function.buildQuery(configuration).replaceAll("\r\n", "\n");
@@ -138,7 +138,7 @@ public class FunctionTest extends ConfigurationTestCase {
         configuration.setMarkLogicVersion(MarkLogicVersionKt.getMARKLOGIC_6());
         configuration.setTripleFormat(RDFFormatKt.getTURTLE());
 
-        QueryBuilder queryBuilder = QueryBuilderFactory.createQueryBuilderForFile(configuration.getMainModulePath());
+        QueryBuilder queryBuilder = QueryBuilderFactory.INSTANCE.createQueryBuilderForFile(configuration.getMainModulePath());
         Function function = queryBuilder.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_8());
 
         final String actual = function.buildQuery(configuration).replaceAll("\r\n", "\n");
@@ -157,7 +157,7 @@ public class FunctionTest extends ConfigurationTestCase {
         configuration.setMarkLogicVersion(MarkLogicVersionKt.getMARKLOGIC_7());
         configuration.setTripleFormat(RDFFormatKt.getTURTLE());
 
-        QueryBuilder queryBuilder = QueryBuilderFactory.createQueryBuilderForFile(configuration.getMainModulePath());
+        QueryBuilder queryBuilder = QueryBuilderFactory.INSTANCE.createQueryBuilderForFile(configuration.getMainModulePath());
         Function function = queryBuilder.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_8());
 
         final String actual = function.buildQuery(configuration).replaceAll("\r\n", "\n");
