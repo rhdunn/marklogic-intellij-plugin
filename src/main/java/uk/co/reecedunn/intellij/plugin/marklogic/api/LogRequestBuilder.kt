@@ -13,21 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package uk.co.reecedunn.intellij.plugin.marklogic.api;
+package uk.co.reecedunn.intellij.plugin.marklogic.api
 
-public abstract class LogRequestBuilder {
-    private String logfile = "ErrorLog.txt";
+abstract class LogRequestBuilder protected constructor() {
+    var logFile = "ErrorLog.txt"
 
-    protected LogRequestBuilder() {
-    }
-
-    public void setLogFile(String logfile) {
-        this.logfile = logfile;
-    }
-
-    public String getLogFile() {
-        return logfile;
-    }
-
-    public abstract Request build();
+    abstract fun build(): Request
 }
