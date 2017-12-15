@@ -20,7 +20,7 @@ import com.intellij.execution.executors.DefaultRunExecutor
 import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicVersion
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.profile.ProfileExecutor
 
-class XQueryBuilder private constructor() : QueryBuilder {
+object XQueryBuilder : QueryBuilder {
     override fun createEvalBuilder(executorId: String, markLogicVersion: MarkLogicVersion): Function? {
         return if (DefaultRunExecutor.EXECUTOR_ID == executorId) {
             if (markLogicVersion.major >= 7) Function.XDMP_EVAL_70 else Function.XDMP_EVAL_50
@@ -43,9 +43,5 @@ class XQueryBuilder private constructor() : QueryBuilder {
         } else {
             null
         }
-    }
-
-    companion object {
-        var INSTANCE: QueryBuilder = XQueryBuilder()
     }
 }

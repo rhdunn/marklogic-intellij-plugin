@@ -30,7 +30,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 @SuppressWarnings("ConstantConditions")
 public class JavaScriptBuilderTest extends TestCase {
     public void testEvalRun() {
-        QueryBuilder js = JavaScriptBuilder.Companion.getINSTANCE();
+        QueryBuilder js = JavaScriptBuilder.INSTANCE;
 
         assertThat(js.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_5()), is(nullValue()));
         assertThat(js.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_6()), is(nullValue()));
@@ -40,7 +40,7 @@ public class JavaScriptBuilderTest extends TestCase {
     }
 
     public void testEvalProfile() {
-        QueryBuilder js = JavaScriptBuilder.Companion.getINSTANCE();
+        QueryBuilder js = JavaScriptBuilder.INSTANCE;
 
         assertThat(js.createEvalBuilder(ProfileExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_5()), is(nullValue()));
         assertThat(js.createEvalBuilder(ProfileExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_6()), is(nullValue()));
@@ -50,7 +50,7 @@ public class JavaScriptBuilderTest extends TestCase {
     }
 
     public void testEvalDebug() {
-        QueryBuilder js = JavaScriptBuilder.Companion.getINSTANCE();
+        QueryBuilder js = JavaScriptBuilder.INSTANCE;
 
         assertThat(js.createEvalBuilder(DefaultDebugExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_5()), is(nullValue()));
         assertThat(js.createEvalBuilder(DefaultDebugExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_6()), is(nullValue()));
@@ -60,7 +60,7 @@ public class JavaScriptBuilderTest extends TestCase {
     }
 
     public void testInvokeRun() {
-        QueryBuilder js = JavaScriptBuilder.Companion.getINSTANCE();
+        QueryBuilder js = JavaScriptBuilder.INSTANCE;
 
         assertThat(js.createInvokeBuilder(DefaultRunExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_5()), is(nullValue()));
         assertThat(js.createInvokeBuilder(DefaultRunExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_6()), is(nullValue()));
@@ -70,7 +70,7 @@ public class JavaScriptBuilderTest extends TestCase {
     }
 
     public void testInvokeProfile() {
-        QueryBuilder js = JavaScriptBuilder.Companion.getINSTANCE();
+        QueryBuilder js = JavaScriptBuilder.INSTANCE;
 
         assertThat(js.createInvokeBuilder(ProfileExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_5()), is(nullValue()));
         assertThat(js.createInvokeBuilder(ProfileExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_6()), is(nullValue()));
@@ -80,7 +80,7 @@ public class JavaScriptBuilderTest extends TestCase {
     }
 
     public void testInvokeDebug() {
-        QueryBuilder js = JavaScriptBuilder.Companion.getINSTANCE();
+        QueryBuilder js = JavaScriptBuilder.INSTANCE;
 
         assertThat(js.createInvokeBuilder(DefaultDebugExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_5()), is(nullValue()));
         assertThat(js.createInvokeBuilder(DefaultDebugExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_6()), is(nullValue()));

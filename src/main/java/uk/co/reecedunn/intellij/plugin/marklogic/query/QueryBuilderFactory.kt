@@ -21,7 +21,13 @@ import com.intellij.util.PathUtil
 object QueryBuilderFactory {
     val EXTENSIONS = arrayOf("xq", "xqy", "xquery", "xql", "xqu", "js", "sjs", "sql", "sparql", "rq", "ru", "xsl", "xslt")
 
-    private val BUILDERS = arrayOf(XQueryBuilder.INSTANCE, XQueryBuilder.INSTANCE, XQueryBuilder.INSTANCE, XQueryBuilder.INSTANCE, XQueryBuilder.INSTANCE, JavaScriptBuilder.INSTANCE, JavaScriptBuilder.INSTANCE, SQLBuilder.INSTANCE, SPARQLQueryBuilder.INSTANCE, SPARQLQueryBuilder.INSTANCE, SPARQLUpdateBuilder.INSTANCE, XSLTBuilder.INSTANCE, XSLTBuilder.INSTANCE)
+    private val BUILDERS = arrayOf(
+        XQueryBuilder, XQueryBuilder, XQueryBuilder, XQueryBuilder, XQueryBuilder,
+        JavaScriptBuilder, JavaScriptBuilder,
+        SQLBuilder,
+        SPARQLQueryBuilder, SPARQLQueryBuilder,
+        SPARQLUpdateBuilder,
+        XSLTBuilder, XSLTBuilder)
 
     fun createQueryBuilderForFile(filename: String): QueryBuilder? {
         val ext = PathUtil.getFileExtension(filename)

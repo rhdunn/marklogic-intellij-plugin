@@ -19,7 +19,7 @@ import com.intellij.execution.executors.DefaultRunExecutor
 import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicVersion
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.profile.ProfileExecutor
 
-class XSLTBuilder private constructor() : QueryBuilder {
+object XSLTBuilder : QueryBuilder {
     override fun createEvalBuilder(executorId: String, markLogicVersion: MarkLogicVersion): Function? {
         return if (DefaultRunExecutor.EXECUTOR_ID == executorId) {
             Function.XDMP_XSLT_EVAL_50
@@ -38,9 +38,5 @@ class XSLTBuilder private constructor() : QueryBuilder {
         } else {
             null
         }
-    }
-
-    companion object {
-        var INSTANCE: QueryBuilder = XSLTBuilder()
     }
 }

@@ -18,7 +18,7 @@ package uk.co.reecedunn.intellij.plugin.marklogic.query
 import com.intellij.execution.executors.DefaultRunExecutor
 import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicVersion
 
-class JavaScriptBuilder private constructor() : QueryBuilder {
+object JavaScriptBuilder : QueryBuilder {
     override fun createEvalBuilder(executorId: String, markLogicVersion: MarkLogicVersion): Function? {
         return if (DefaultRunExecutor.EXECUTOR_ID == executorId && markLogicVersion.major >= 8) {
             Function.XDMP_JAVASCRIPT_EVAL_80
@@ -33,9 +33,5 @@ class JavaScriptBuilder private constructor() : QueryBuilder {
         } else {
             null
         }
-    }
-
-    companion object {
-        var INSTANCE: QueryBuilder = JavaScriptBuilder()
     }
 }

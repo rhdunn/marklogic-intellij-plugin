@@ -30,7 +30,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 @SuppressWarnings("ConstantConditions")
 public class XQueryBuilderTest extends TestCase {
     public void testEvalRun() {
-        QueryBuilder xquery = XQueryBuilder.Companion.getINSTANCE();
+        QueryBuilder xquery = XQueryBuilder.INSTANCE;
 
         assertThat(xquery.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_5()), is(Function.XDMP_EVAL_50));
         assertThat(xquery.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_6()), is(Function.XDMP_EVAL_50));
@@ -40,7 +40,7 @@ public class XQueryBuilderTest extends TestCase {
     }
 
     public void testEvalProfile() {
-        QueryBuilder xquery = XQueryBuilder.Companion.getINSTANCE();
+        QueryBuilder xquery = XQueryBuilder.INSTANCE;
 
         assertThat(xquery.createEvalBuilder(ProfileExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_5()), is(Function.PROF_EVAL_50));
         assertThat(xquery.createEvalBuilder(ProfileExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_6()), is(Function.PROF_EVAL_50));
@@ -50,7 +50,7 @@ public class XQueryBuilderTest extends TestCase {
     }
 
     public void testEvalDebug() {
-        QueryBuilder xquery = XQueryBuilder.Companion.getINSTANCE();
+        QueryBuilder xquery = XQueryBuilder.INSTANCE;
 
         assertThat(xquery.createEvalBuilder(DefaultDebugExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_5()), is(Function.DBG_EVAL_50));
         assertThat(xquery.createEvalBuilder(DefaultDebugExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_6()), is(Function.DBG_EVAL_50));
@@ -60,7 +60,7 @@ public class XQueryBuilderTest extends TestCase {
     }
 
     public void testInvokeRun() {
-        QueryBuilder xquery = XQueryBuilder.Companion.getINSTANCE();
+        QueryBuilder xquery = XQueryBuilder.INSTANCE;
 
         assertThat(xquery.createInvokeBuilder(DefaultRunExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_5()), is(Function.XDMP_INVOKE_50));
         assertThat(xquery.createInvokeBuilder(DefaultRunExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_6()), is(Function.XDMP_INVOKE_50));
@@ -70,7 +70,7 @@ public class XQueryBuilderTest extends TestCase {
     }
 
     public void testInvokeProfile() {
-        QueryBuilder xquery = XQueryBuilder.Companion.getINSTANCE();
+        QueryBuilder xquery = XQueryBuilder.INSTANCE;
 
         assertThat(xquery.createInvokeBuilder(ProfileExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_5()), is(Function.PROF_INVOKE_50));
         assertThat(xquery.createInvokeBuilder(ProfileExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_6()), is(Function.PROF_INVOKE_50));
@@ -80,7 +80,7 @@ public class XQueryBuilderTest extends TestCase {
     }
 
     public void testInvokeDebug() {
-        QueryBuilder xquery = XQueryBuilder.Companion.getINSTANCE();
+        QueryBuilder xquery = XQueryBuilder.INSTANCE;
 
         assertThat(xquery.createInvokeBuilder(DefaultDebugExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_5()), is(Function.DBG_INVOKE_50));
         assertThat(xquery.createInvokeBuilder(DefaultDebugExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_6()), is(Function.DBG_INVOKE_50));

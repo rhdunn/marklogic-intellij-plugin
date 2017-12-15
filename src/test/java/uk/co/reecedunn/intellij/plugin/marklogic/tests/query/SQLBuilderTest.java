@@ -30,7 +30,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 @SuppressWarnings("ConstantConditions")
 public class SQLBuilderTest extends TestCase {
     public void testEvalRun() {
-        QueryBuilder sql = SQLBuilder.Companion.getINSTANCE();
+        QueryBuilder sql = SQLBuilder.INSTANCE;
 
         assertThat(sql.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_5()), is(nullValue()));
         assertThat(sql.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_6()), is(nullValue()));
@@ -40,7 +40,7 @@ public class SQLBuilderTest extends TestCase {
     }
 
     public void testEvalProfile() {
-        QueryBuilder sql = SQLBuilder.Companion.getINSTANCE();
+        QueryBuilder sql = SQLBuilder.INSTANCE;
 
         assertThat(sql.createEvalBuilder(ProfileExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_5()), is(nullValue()));
         assertThat(sql.createEvalBuilder(ProfileExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_6()), is(nullValue()));
@@ -50,7 +50,7 @@ public class SQLBuilderTest extends TestCase {
     }
 
     public void testEvalDebug() {
-        QueryBuilder sql = SQLBuilder.Companion.getINSTANCE();
+        QueryBuilder sql = SQLBuilder.INSTANCE;
 
         assertThat(sql.createEvalBuilder(DefaultDebugExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_5()), is(nullValue()));
         assertThat(sql.createEvalBuilder(DefaultDebugExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_6()), is(nullValue()));
@@ -60,7 +60,7 @@ public class SQLBuilderTest extends TestCase {
     }
 
     public void testInvokeRun() {
-        QueryBuilder sql = SQLBuilder.Companion.getINSTANCE();
+        QueryBuilder sql = SQLBuilder.INSTANCE;
 
         assertThat(sql.createInvokeBuilder(DefaultRunExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_5()), is(nullValue()));
         assertThat(sql.createInvokeBuilder(DefaultRunExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_6()), is(nullValue()));
@@ -70,7 +70,7 @@ public class SQLBuilderTest extends TestCase {
     }
 
     public void testInvokeProfile() {
-        QueryBuilder sql = SQLBuilder.Companion.getINSTANCE();
+        QueryBuilder sql = SQLBuilder.INSTANCE;
 
         assertThat(sql.createInvokeBuilder(ProfileExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_5()), is(nullValue()));
         assertThat(sql.createInvokeBuilder(ProfileExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_6()), is(nullValue()));
@@ -80,7 +80,7 @@ public class SQLBuilderTest extends TestCase {
     }
 
     public void testInvokeDebug() {
-        QueryBuilder sql = SQLBuilder.Companion.getINSTANCE();
+        QueryBuilder sql = SQLBuilder.INSTANCE;
 
         assertThat(sql.createInvokeBuilder(DefaultDebugExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_5()), is(nullValue()));
         assertThat(sql.createInvokeBuilder(DefaultDebugExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_6()), is(nullValue()));

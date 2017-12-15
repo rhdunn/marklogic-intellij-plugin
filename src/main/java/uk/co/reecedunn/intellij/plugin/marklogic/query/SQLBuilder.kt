@@ -18,7 +18,7 @@ package uk.co.reecedunn.intellij.plugin.marklogic.query
 import com.intellij.execution.executors.DefaultRunExecutor
 import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicVersion
 
-class SQLBuilder private constructor() : QueryBuilder {
+object SQLBuilder : QueryBuilder {
     override fun createEvalBuilder(executorId: String, markLogicVersion: MarkLogicVersion): Function? {
         return if (DefaultRunExecutor.EXECUTOR_ID == executorId && markLogicVersion.major >= 8) {
             if (markLogicVersion.major >= 9) Function.XDMP_SQL_90 else Function.XDMP_SQL_80
@@ -29,9 +29,5 @@ class SQLBuilder private constructor() : QueryBuilder {
 
     override fun createInvokeBuilder(executorId: String, markLogicVersion: MarkLogicVersion): Function? {
         return null
-    }
-
-    companion object {
-        var INSTANCE: QueryBuilder = SQLBuilder()
     }
 }

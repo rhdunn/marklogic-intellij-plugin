@@ -18,7 +18,7 @@ package uk.co.reecedunn.intellij.plugin.marklogic.query
 import com.intellij.execution.executors.DefaultRunExecutor
 import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicVersion
 
-class SPARQLQueryBuilder private constructor() : QueryBuilder {
+object SPARQLQueryBuilder : QueryBuilder {
     override fun createEvalBuilder(executorId: String, markLogicVersion: MarkLogicVersion): Function? {
         return if (DefaultRunExecutor.EXECUTOR_ID == executorId && markLogicVersion.major >= 7) {
             Function.SEM_SPARQL_70
@@ -29,9 +29,5 @@ class SPARQLQueryBuilder private constructor() : QueryBuilder {
 
     override fun createInvokeBuilder(executorId: String, markLogicVersion: MarkLogicVersion): Function? {
         return null
-    }
-
-    companion object {
-        var INSTANCE: QueryBuilder = SPARQLQueryBuilder()
     }
 }

@@ -30,7 +30,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 @SuppressWarnings("ConstantConditions")
 public class XSLTBuilderTest extends TestCase {
     public void testEvalRun() {
-        QueryBuilder xslt = XSLTBuilder.Companion.getINSTANCE();
+        QueryBuilder xslt = XSLTBuilder.INSTANCE;
 
         assertThat(xslt.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_5()), is(Function.XDMP_XSLT_EVAL_50));
         assertThat(xslt.createEvalBuilder(DefaultRunExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_6()), is(Function.XDMP_XSLT_EVAL_50));
@@ -40,7 +40,7 @@ public class XSLTBuilderTest extends TestCase {
     }
 
     public void testEvalProfile() {
-        QueryBuilder xslt = XSLTBuilder.Companion.getINSTANCE();
+        QueryBuilder xslt = XSLTBuilder.INSTANCE;
 
         assertThat(xslt.createEvalBuilder(ProfileExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_5()), is(Function.PROF_XSLT_EVAL_50));
         assertThat(xslt.createEvalBuilder(ProfileExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_6()), is(Function.PROF_XSLT_EVAL_50));
@@ -50,7 +50,7 @@ public class XSLTBuilderTest extends TestCase {
     }
 
     public void testEvalDebug() {
-        QueryBuilder xslt = XSLTBuilder.Companion.getINSTANCE();
+        QueryBuilder xslt = XSLTBuilder.INSTANCE;
 
         assertThat(xslt.createEvalBuilder(DefaultDebugExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_5()), is(nullValue()));
         assertThat(xslt.createEvalBuilder(DefaultDebugExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_6()), is(nullValue()));
@@ -60,7 +60,7 @@ public class XSLTBuilderTest extends TestCase {
     }
 
     public void testInvokeRun() {
-        QueryBuilder xslt = XSLTBuilder.Companion.getINSTANCE();
+        QueryBuilder xslt = XSLTBuilder.INSTANCE;
 
         assertThat(xslt.createInvokeBuilder(DefaultRunExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_5()), is(Function.XDMP_XSLT_INVOKE_50));
         assertThat(xslt.createInvokeBuilder(DefaultRunExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_6()), is(Function.XDMP_XSLT_INVOKE_50));
@@ -70,7 +70,7 @@ public class XSLTBuilderTest extends TestCase {
     }
 
     public void testInvokeProfile() {
-        QueryBuilder xslt = XSLTBuilder.Companion.getINSTANCE();
+        QueryBuilder xslt = XSLTBuilder.INSTANCE;
 
         assertThat(xslt.createInvokeBuilder(ProfileExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_5()), is(Function.PROF_XSLT_INVOKE_50));
         assertThat(xslt.createInvokeBuilder(ProfileExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_6()), is(Function.PROF_XSLT_INVOKE_50));
@@ -80,7 +80,7 @@ public class XSLTBuilderTest extends TestCase {
     }
 
     public void testInvokeDebug() {
-        QueryBuilder xslt = XSLTBuilder.Companion.getINSTANCE();
+        QueryBuilder xslt = XSLTBuilder.INSTANCE;
 
         assertThat(xslt.createInvokeBuilder(DefaultDebugExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_5()), is(nullValue()));
         assertThat(xslt.createInvokeBuilder(DefaultDebugExecutor.EXECUTOR_ID, MarkLogicVersionKt.getMARKLOGIC_6()), is(nullValue()));
