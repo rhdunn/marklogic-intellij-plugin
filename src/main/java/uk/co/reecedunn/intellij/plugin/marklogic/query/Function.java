@@ -32,96 +32,96 @@ import java.io.*;
 public enum Function {
     DBG_EVAL_50(
         "dbg:eval($query, $vars, $options)",
-        KeyValueVarsBuilder.INSTANCE,
+            KeyValueVarsBuilder.Companion.getINSTANCE(),
             EvalOptionsBuilder.Companion.getINSTANCE(),
         Parameters.Eval),
     DBG_EVAL_80(
         "dbg:eval($query, $vars, $options)",
-        MapVarsBuilder.INSTANCE,
+            MapVarsBuilder.Companion.getINSTANCE(),
             EvalOptionsBuilder.Companion.getINSTANCE(),
         Parameters.Eval),
 
     DBG_INVOKE_50(
         "dbg:invoke($path, $vars, $options)",
-        KeyValueVarsBuilder.INSTANCE,
+            KeyValueVarsBuilder.Companion.getINSTANCE(),
             EvalOptionsBuilder.Companion.getINSTANCE(),
         Parameters.Invoke),
     DBG_INVOKE_80(
         "dbg:invoke($path, $vars, $options)",
-        MapVarsBuilder.INSTANCE,
+            MapVarsBuilder.Companion.getINSTANCE(),
             EvalOptionsBuilder.Companion.getINSTANCE(),
         Parameters.Invoke),
 
     PROF_EVAL_50(
         "prof:eval($query, $vars, $options)",
-        KeyValueVarsBuilder.INSTANCE,
+            KeyValueVarsBuilder.Companion.getINSTANCE(),
             EvalOptionsBuilder.Companion.getINSTANCE(),
         Parameters.Eval),
     PROF_EVAL_80(
         "prof:eval($query, $vars, $options)",
-        MapVarsBuilder.INSTANCE,
+            MapVarsBuilder.Companion.getINSTANCE(),
             EvalOptionsBuilder.Companion.getINSTANCE(),
         Parameters.Eval),
 
     PROF_INVOKE_50(
         "prof:invoke($path, $vars, $options)",
-        KeyValueVarsBuilder.INSTANCE,
+            KeyValueVarsBuilder.Companion.getINSTANCE(),
             EvalOptionsBuilder.Companion.getINSTANCE(),
         Parameters.Invoke),
     PROF_INVOKE_80(
         "prof:invoke($path, $vars, $options)",
-        MapVarsBuilder.INSTANCE,
+            MapVarsBuilder.Companion.getINSTANCE(),
             EvalOptionsBuilder.Companion.getINSTANCE(),
         Parameters.Invoke),
 
     PROF_XSLT_EVAL_50(
         "prof:xslt-eval($query, $input, $vars, $options)",
-        MapVarsBuilder.INSTANCE,
+            MapVarsBuilder.Companion.getINSTANCE(),
             EvalOptionsBuilder.Companion.getINSTANCE(),
         Parameters.EvalStylesheet),
     PROF_XSLT_INVOKE_50(
         "prof:xslt-invoke($path, $input, $vars, $options)",
-        MapVarsBuilder.INSTANCE,
+            MapVarsBuilder.Companion.getINSTANCE(),
             EvalOptionsBuilder.Companion.getINSTANCE(),
         Parameters.InvokeStylesheet),
 
     SEM_SPARQL_70(
         "sem:sparql($query, $vars)",
-        MapVarsBuilder.INSTANCE,
+            MapVarsBuilder.Companion.getINSTANCE(),
         null,
         Parameters.Eval),
 
     SEM_SPARQL_UPDATE_80(
         "sem:sparql-update($query, $vars)",
-        MapVarsBuilder.INSTANCE,
+            MapVarsBuilder.Companion.getINSTANCE(),
         null,
         Parameters.Eval),
 
     XDMP_EVAL_50(
         "xdmp:eval($query, $vars, $options)",
-        KeyValueVarsBuilder.INSTANCE,
+            KeyValueVarsBuilder.Companion.getINSTANCE(),
             EvalOptionsBuilder.Companion.getINSTANCE(),
         Parameters.Eval),
     XDMP_EVAL_70(
         "xdmp:eval($query, $vars, $options)",
-        MapVarsBuilder.INSTANCE,
+            MapVarsBuilder.Companion.getINSTANCE(),
             EvalOptionsBuilder.Companion.getINSTANCE(),
         Parameters.Eval),
 
     XDMP_INVOKE_50(
         "xdmp:invoke($path, $vars, $options)",
-        KeyValueVarsBuilder.INSTANCE,
+            KeyValueVarsBuilder.Companion.getINSTANCE(),
             EvalOptionsBuilder.Companion.getINSTANCE(),
         Parameters.Invoke),
     XDMP_INVOKE_70(
         "xdmp:invoke($path, $vars, $options)",
-        MapVarsBuilder.INSTANCE,
+            MapVarsBuilder.Companion.getINSTANCE(),
             EvalOptionsBuilder.Companion.getINSTANCE(),
         Parameters.Invoke),
 
     XDMP_JAVASCRIPT_EVAL_80(
         "xdmp:javascript-eval($query, $vars, $options)",
-        MapVarsBuilder.INSTANCE,
+            MapVarsBuilder.Companion.getINSTANCE(),
             EvalOptionsBuilder.Companion.getINSTANCE(),
         Parameters.Eval),
 
@@ -132,18 +132,18 @@ public enum Function {
         Parameters.Eval),
     XDMP_SQL_90(
         "xdmp:sql($query, (), $vars)",
-        MapVarsBuilder.INSTANCE,
+            MapVarsBuilder.Companion.getINSTANCE(),
         null,
         Parameters.Eval),
 
     XDMP_XSLT_EVAL_50(
         "xdmp:xslt-eval($query, $input, $vars, $options)",
-        MapVarsBuilder.INSTANCE,
+            MapVarsBuilder.Companion.getINSTANCE(),
             EvalOptionsBuilder.Companion.getINSTANCE(),
         Parameters.EvalStylesheet),
     XDMP_XSLT_INVOKE_50(
         "xdmp:xslt-invoke($path, $input, $vars, $options)",
-        MapVarsBuilder.INSTANCE,
+            MapVarsBuilder.Companion.getINSTANCE(),
             EvalOptionsBuilder.Companion.getINSTANCE(),
         Parameters.InvokeStylesheet);
 

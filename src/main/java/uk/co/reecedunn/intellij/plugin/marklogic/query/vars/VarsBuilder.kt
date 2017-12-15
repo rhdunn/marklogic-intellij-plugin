@@ -13,14 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package uk.co.reecedunn.intellij.plugin.marklogic.query.vars;
+package uk.co.reecedunn.intellij.plugin.marklogic.query.vars
 
-import org.jetbrains.annotations.NotNull;
+interface VarsBuilder {
+    fun start(builder: StringBuilder)
 
-public interface VarsBuilder {
-    void start(@NotNull StringBuilder builder);
+    fun add(builder: StringBuilder, key: String, value: String)
 
-    void add(@NotNull StringBuilder builder, String key, String value);
-
-    void end(@NotNull StringBuilder builder);
+    fun end(builder: StringBuilder)
 }
