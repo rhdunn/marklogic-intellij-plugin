@@ -85,7 +85,7 @@ public class MarkLogicRunConfigurationEditorUI {
             MarkLogicBundle.message("browser.choose.main.module"),
             null,
             mProject,
-            new FileTypeDescriptor(MarkLogicBundle.message("browser.choose.main.module"), MarkLogicRunConfiguration.EXTENSIONS),
+            new FileTypeDescriptor(MarkLogicBundle.message("browser.choose.main.module"), MarkLogicRunConfiguration.Companion.getEXTENSIONS()),
             TextComponentAccessor.TEXT_FIELD_WHOLE_TEXT);
 
         ((MarkLogicServerComboBox)mServerHost).serversChanged();

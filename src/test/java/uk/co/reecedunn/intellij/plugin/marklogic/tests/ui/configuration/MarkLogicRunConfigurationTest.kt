@@ -63,23 +63,23 @@ class MarkLogicRunConfigurationTest : ConfigurationTestCase() {
         val server = MarkLogicServer(null, "localhost.test", 8000, 8001, "testuser", "test")
         configuration.server = server
         assertThat(configuration.server, `is`(notNullValue()))
-        assertThat(configuration.server.displayName, `is`(nullValue()))
-        assertThat(configuration.server.hostname, `is`("localhost.test"))
-        assertThat(configuration.server.appServerPort, `is`(8000))
-        assertThat(configuration.server.adminPort, `is`(8001))
-        assertThat(configuration.server.username, `is`("testuser"))
-        assertThat(configuration.server.password, `is`("test"))
+        assertThat(configuration.server!!.displayName, `is`(nullValue()))
+        assertThat(configuration.server!!.hostname, `is`("localhost.test"))
+        assertThat(configuration.server!!.appServerPort, `is`(8000))
+        assertThat(configuration.server!!.adminPort, `is`(8001))
+        assertThat(configuration.server!!.username, `is`("testuser"))
+        assertThat(configuration.server!!.password, `is`("test"))
 
         assertThat(serialize(configuration), `is`(anyOf(equalTo(serializedCompact), equalTo(serializedFull))))
 
         configuration = deserialize(serializedCompact)
         assertThat(configuration.server, `is`(notNullValue()))
-        assertThat(configuration.server.displayName, `is`("ipsum"))
-        assertThat(configuration.server.hostname, `is`("localhost.test"))
-        assertThat(configuration.server.appServerPort, `is`(9000))
-        assertThat(configuration.server.adminPort, `is`(9001))
-        assertThat(configuration.server.username, `is`("testuser3"))
-        assertThat(configuration.server.password, `is`("test3"))
+        assertThat(configuration.server!!.displayName, `is`("ipsum"))
+        assertThat(configuration.server!!.hostname, `is`("localhost.test"))
+        assertThat(configuration.server!!.appServerPort, `is`(9000))
+        assertThat(configuration.server!!.adminPort, `is`(9001))
+        assertThat(configuration.server!!.username, `is`("testuser3"))
+        assertThat(configuration.server!!.password, `is`("test3"))
     }
 
     fun testMarkLogicVersion() {
@@ -221,14 +221,14 @@ class MarkLogicRunConfigurationTest : ConfigurationTestCase() {
         configuration.mainModulePath = "module/test.xqy"
         assertThat(configuration.mainModulePath, `is`("module/test.xqy"))
         assertThat<VirtualFile>(configuration.mainModuleFile, `is`(notNullValue()))
-        assertThat<String>(configuration.mainModuleFile.canonicalPath, `is`("/module/test.xqy"))
+        assertThat<String>(configuration.mainModuleFile!!.canonicalPath, `is`("/module/test.xqy"))
 
         assertThat(serialize(configuration), `is`(anyOf(equalTo(serializedCompact), equalTo(serializedFull))))
 
         configuration = deserialize(serializedCompact)
         assertThat(configuration.mainModulePath, `is`("module/test.xqy"))
         assertThat<VirtualFile>(configuration.mainModuleFile, `is`(notNullValue()))
-        assertThat<String>(configuration.mainModuleFile.canonicalPath, `is`("/module/test.xqy"))
+        assertThat<String>(configuration.mainModuleFile!!.canonicalPath, `is`("/module/test.xqy"))
     }
 
     fun testMainModuleFile() {
@@ -253,14 +253,14 @@ class MarkLogicRunConfigurationTest : ConfigurationTestCase() {
         configuration.mainModuleFile = createVirtualFile("module/test.xqy", "\"Lorem ipsum\"")
         assertThat(configuration.mainModulePath, `is`("/module/test.xqy"))
         assertThat<VirtualFile>(configuration.mainModuleFile, `is`(notNullValue()))
-        assertThat<String>(configuration.mainModuleFile.canonicalPath, `is`("/module/test.xqy"))
+        assertThat<String>(configuration.mainModuleFile!!.canonicalPath, `is`("/module/test.xqy"))
 
         assertThat(serialize(configuration), `is`(anyOf(equalTo(serializedCompact), equalTo(serializedFull))))
 
         configuration = deserialize(serializedCompact)
         assertThat(configuration.mainModulePath, `is`("/module/test.xqy"))
         assertThat<VirtualFile>(configuration.mainModuleFile, `is`(notNullValue()))
-        assertThat<String>(configuration.mainModuleFile.canonicalPath, `is`("/module/test.xqy"))
+        assertThat<String>(configuration.mainModuleFile!!.canonicalPath, `is`("/module/test.xqy"))
     }
 
     fun testTripleFormat() {
