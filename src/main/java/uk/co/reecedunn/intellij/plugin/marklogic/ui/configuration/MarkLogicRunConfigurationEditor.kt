@@ -35,6 +35,6 @@ class MarkLogicRunConfigurationEditor(private val mFactory: MarkLogicConfigurati
 
     override fun createEditor(): JComponent {
         mSettings = MarkLogicRunConfigurationEditorUI(mFactory, mProject)
-        return mSettings!!.panel
+        return mSettings?.panel!!
     }
 }
