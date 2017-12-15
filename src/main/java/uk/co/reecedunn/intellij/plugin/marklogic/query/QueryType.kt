@@ -28,3 +28,11 @@ val SPARQL_QUERY: QueryType = QueryType("application/sparql-query", arrayOf("spa
 val SPARQL_UPDATE: QueryType = QueryType("application/sparql-update", arrayOf("ru"), SPARQLUpdateBuilder)
 
 val XSLT: QueryType = QueryType("application/xml", arrayOf("xsl", "xslt"), XSLTBuilder)
+
+val QUERY_TYPES = listOf(
+    XQUERY,
+    JAVA_SCRIPT,
+    SQL,
+    SPARQL_QUERY,
+    SPARQL_UPDATE,
+    XSLT)

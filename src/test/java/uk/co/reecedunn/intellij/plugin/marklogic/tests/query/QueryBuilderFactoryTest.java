@@ -30,47 +30,35 @@ public class QueryBuilderFactoryTest extends TestCase {
     }
 
     public void testXQuery() {
-        assertThat(ArrayUtil.indexOf(QueryBuilderFactory.INSTANCE.getEXTENSIONS(), "xq"), is(not(-1)));
-        assertThat(ArrayUtil.indexOf(QueryBuilderFactory.INSTANCE.getEXTENSIONS(), "xqy"), is(not(-1)));
-        assertThat(ArrayUtil.indexOf(QueryBuilderFactory.INSTANCE.getEXTENSIONS(), "xquery"), is(not(-1)));
-        assertThat(ArrayUtil.indexOf(QueryBuilderFactory.INSTANCE.getEXTENSIONS(), "xql"), is(not(-1))); // XQuery Language File
-        assertThat(ArrayUtil.indexOf(QueryBuilderFactory.INSTANCE.getEXTENSIONS(), "xqm"), is(-1)); // XQuery Module File
-        assertThat(ArrayUtil.indexOf(QueryBuilderFactory.INSTANCE.getEXTENSIONS(), "xqu"), is(not(-1)));
-        assertThat(ArrayUtil.indexOf(QueryBuilderFactory.INSTANCE.getEXTENSIONS(), "xqws"), is(-1)); // XQuery Web Service
-
         assertThat(QueryBuilderFactory.INSTANCE.createQueryBuilderForFile("test.xq"),
                 is(instanceOf(XQueryBuilder.class)));
         assertThat(QueryBuilderFactory.INSTANCE.createQueryBuilderForFile("test.xqy"),
                 is(instanceOf(XQueryBuilder.class)));
         assertThat(QueryBuilderFactory.INSTANCE.createQueryBuilderForFile("test.xquery"),
                 is(instanceOf(XQueryBuilder.class)));
-        assertThat(QueryBuilderFactory.INSTANCE.createQueryBuilderForFile("test.xql"),
+        assertThat(QueryBuilderFactory.INSTANCE.createQueryBuilderForFile("test.xqm"), // XQuery Module File
+                is(nullValue()));
+        assertThat(QueryBuilderFactory.INSTANCE.createQueryBuilderForFile("test.xql"), // XQuery Language File
                 is(instanceOf(XQueryBuilder.class)));
         assertThat(QueryBuilderFactory.INSTANCE.createQueryBuilderForFile("test.xqu"),
                 is(instanceOf(XQueryBuilder.class)));
+        assertThat(QueryBuilderFactory.INSTANCE.createQueryBuilderForFile("test.xqws"), // XQuery Web Service
+                is(nullValue()));
     }
 
     public void testJavaScript() {
-        assertThat(ArrayUtil.indexOf(QueryBuilderFactory.INSTANCE.getEXTENSIONS(), "js"), is(not(-1)));
-        assertThat(ArrayUtil.indexOf(QueryBuilderFactory.INSTANCE.getEXTENSIONS(), "sjs"), is(not(-1))); // Server-side JavaScript
-
         assertThat(QueryBuilderFactory.INSTANCE.createQueryBuilderForFile("test.js"),
                 is(instanceOf(JavaScriptBuilder.class)));
-        assertThat(QueryBuilderFactory.INSTANCE.createQueryBuilderForFile("test.sjs"),
+        assertThat(QueryBuilderFactory.INSTANCE.createQueryBuilderForFile("test.sjs"), // Server-side JavaScript
                 is(instanceOf(JavaScriptBuilder.class)));
     }
 
     public void testSQL() {
-        assertThat(ArrayUtil.indexOf(QueryBuilderFactory.INSTANCE.getEXTENSIONS(), "sql"), is(not(-1)));
-
         assertThat(QueryBuilderFactory.INSTANCE.createQueryBuilderForFile("test.sql"),
                 is(instanceOf(SQLBuilder.class)));
     }
 
     public void testSPARQLQuery() {
-        assertThat(ArrayUtil.indexOf(QueryBuilderFactory.INSTANCE.getEXTENSIONS(), "sparql"), is(not(-1)));
-        assertThat(ArrayUtil.indexOf(QueryBuilderFactory.INSTANCE.getEXTENSIONS(), "rq"), is(not(-1)));
-
         assertThat(QueryBuilderFactory.INSTANCE.createQueryBuilderForFile("test.sparql"),
                 is(instanceOf(SPARQLQueryBuilder.class)));
         assertThat(QueryBuilderFactory.INSTANCE.createQueryBuilderForFile("test.rq"),
@@ -78,16 +66,11 @@ public class QueryBuilderFactoryTest extends TestCase {
     }
 
     public void testSPARQLUpdate() {
-        assertThat(ArrayUtil.indexOf(QueryBuilderFactory.INSTANCE.getEXTENSIONS(), "ru"), is(not(-1)));
-
         assertThat(QueryBuilderFactory.INSTANCE.createQueryBuilderForFile("test.ru"),
                 is(instanceOf(SPARQLUpdateBuilder.class)));
     }
 
     public void testXSLT() {
-        assertThat(ArrayUtil.indexOf(QueryBuilderFactory.INSTANCE.getEXTENSIONS(), "xsl"), is(not(-1)));
-        assertThat(ArrayUtil.indexOf(QueryBuilderFactory.INSTANCE.getEXTENSIONS(), "xslt"), is(not(-1)));
-
         assertThat(QueryBuilderFactory.INSTANCE.createQueryBuilderForFile("test.xsl"),
                 is(instanceOf(XSLTBuilder.class)));
         assertThat(QueryBuilderFactory.INSTANCE.createQueryBuilderForFile("test.xslt"),

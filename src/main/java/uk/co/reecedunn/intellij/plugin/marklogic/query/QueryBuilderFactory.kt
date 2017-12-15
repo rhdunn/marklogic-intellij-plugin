@@ -15,28 +15,11 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.query
 
-import com.intellij.util.ArrayUtil
 import com.intellij.util.PathUtil
 
 object QueryBuilderFactory {
-    val EXTENSIONS = arrayOf("xq", "xqy", "xquery", "xql", "xqu", "js", "sjs", "sql", "sparql", "rq", "ru", "xsl", "xslt")
-
-    private val BUILDERS = arrayOf(
-        XQueryBuilder, XQueryBuilder, XQueryBuilder, XQueryBuilder, XQueryBuilder,
-        JavaScriptBuilder, JavaScriptBuilder,
-        SQLBuilder,
-        SPARQLQueryBuilder, SPARQLQueryBuilder,
-        SPARQLUpdateBuilder,
-        XSLTBuilder, XSLTBuilder)
-
     fun createQueryBuilderForFile(filename: String): QueryBuilder? {
         val ext = PathUtil.getFileExtension(filename)
-        val index = ArrayUtil.indexOf(EXTENSIONS, ext)
-        return if (index < 0) {
-            null
-        } else {
-            BUILDERS[index]
-        }
-
+        return QUERY_TYPES.find { type -> type.defaultExtensions.contains(ext) }?.builder
     }
 }
