@@ -13,8 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package uk.co.reecedunn.intellij.plugin.marklogic.tests;
+package uk.co.reecedunn.intellij.plugin.marklogic.tests
 
-public @interface Query {
-    String value();
-}
+annotation class Query(val value: String)
