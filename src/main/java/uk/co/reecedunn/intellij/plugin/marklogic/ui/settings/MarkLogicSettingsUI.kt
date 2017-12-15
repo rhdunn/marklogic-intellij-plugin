@@ -21,7 +21,7 @@ import uk.co.reecedunn.intellij.plugin.marklogic.ui.server.MarkLogicServerTable
 import javax.swing.*
 
 class MarkLogicSettingsUI : SettingsUI<MarkLogicSettings> {
-    override val panel: JPanel? = null
+    override var panel: JPanel? = null
 
     private var mTableEditor: MarkLogicServerTable? = null
     private var mTable: JComponent? = null
