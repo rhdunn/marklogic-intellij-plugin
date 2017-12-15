@@ -55,12 +55,6 @@ object EvalOptionsBuilder : OptionsBuilder {
             return
         }
 
-        options.append('<')
-        options.append(option)
-        options.append('>')
-        options.append(value)
-        options.append("</")
-        options.append(option)
-        options.append('>')
+        options.append("<$option>$value</$option>")
     }
 }
