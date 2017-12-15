@@ -34,6 +34,6 @@ class SettingsEditorImpl<Configuration>(private val mSettingsFactory: SettingsUI
 
     override fun createEditor(): JComponent {
         mSettings = mSettingsFactory.createSettingsUI()
-        return mSettings!!.panel
+        return mSettings?.panel!!
     }
 }
