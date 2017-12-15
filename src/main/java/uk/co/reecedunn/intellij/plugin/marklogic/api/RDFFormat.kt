@@ -17,17 +17,7 @@ package uk.co.reecedunn.intellij.plugin.marklogic.api
 
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.resources.MarkLogicBundle
 
-enum class RDFFormat private constructor(private val displayName: String, val markLogicName: String, val contentType: String, val fileExtension: String) {
-    N3(MarkLogicBundle.message("format.n3"), "n3", "text/n3", "n3"),
-    N_QUADS(MarkLogicBundle.message("format.n-quads"), "nquad", "application/n-quads", "nq"),
-    N_TRIPLES(MarkLogicBundle.message("format.n-triples"), "ntriple", "application/n-triples", "nt"),
-    RDF_JSON(MarkLogicBundle.message("format.rdf-json"), "rdfjson", "application/rdf+json", "rj"),
-    RDF_XML(MarkLogicBundle.message("format.rdf-xml"), "rdfxml", "application/rdf+xml", "rdf"),
-    SEM_TRIPLE(MarkLogicBundle.message("format.sem.triple"), "sem:triple", "application/xquery", "xq"),
-    TRIG(MarkLogicBundle.message("format.trig"), "trig", "application/trig", "trig"),
-    TRIPLES_XML(MarkLogicBundle.message("format.triples-xml"), "triplexml", "application/vnd.marklogic.triples+xml", "xml"),
-    TURTLE(MarkLogicBundle.message("format.turtle"), "turtle", "text/turtle", "ttl");
-
+class RDFFormat constructor(private val displayName: String, val markLogicName: String, val contentType: String, val fileExtension: String) {
     override fun toString(): String =
         displayName
 
@@ -46,3 +36,24 @@ enum class RDFFormat private constructor(private val displayName: String, val ma
         }
     }
 }
+
+val N3 = RDFFormat(MarkLogicBundle.message("format.n3"), "n3", "text/n3", "n3")
+val N_QUADS = RDFFormat(MarkLogicBundle.message("format.n-quads"), "nquad", "application/n-quads", "nq")
+val N_TRIPLES = RDFFormat(MarkLogicBundle.message("format.n-triples"), "ntriple", "application/n-triples", "nt")
+val RDF_JSON = RDFFormat(MarkLogicBundle.message("format.rdf-json"), "rdfjson", "application/rdf+json", "rj")
+val RDF_XML = RDFFormat(MarkLogicBundle.message("format.rdf-xml"), "rdfxml", "application/rdf+xml", "rdf")
+val SEM_TRIPLE = RDFFormat(MarkLogicBundle.message("format.sem.triple"), "sem:triple", "application/xquery", "xq")
+val TRIG = RDFFormat(MarkLogicBundle.message("format.trig"), "trig", "application/trig", "trig")
+val TRIPLES_XML = RDFFormat(MarkLogicBundle.message("format.triples-xml"), "triplexml", "application/vnd.marklogic.triples+xml", "xml")
+val TURTLE = RDFFormat(MarkLogicBundle.message("format.turtle"), "turtle", "text/turtle", "ttl")
+
+val RDF_FORMATS: Array<RDFFormat> = arrayOf(
+    N3,
+    N_QUADS,
+    N_TRIPLES,
+    RDF_JSON,
+    RDF_XML,
+    SEM_TRIPLE,
+    TRIG,
+    TRIPLES_XML,
+    TURTLE)

@@ -22,6 +22,7 @@ import com.intellij.openapi.ui.ComboBox;
 import com.intellij.openapi.ui.ComponentWithBrowseButton;
 import com.intellij.openapi.ui.TextComponentAccessor;
 import org.jetbrains.annotations.NotNull;
+import uk.co.reecedunn.intellij.plugin.marklogic.api.RDFFormatKt;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.MarkLogicQuery;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.MarkLogicQueryKt;
 import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicServer;
@@ -68,7 +69,7 @@ public class MarkLogicRunConfigurationEditorUI {
         mModuleDatabase = new MarkLogicQueryComboBox(MarkLogicBundle.message("database.file.system"));
         mModuleRoot = new ComponentWithBrowseButton<>(new JTextField(), null);
         mMainModulePath = new ComponentWithBrowseButton<>(new JTextField(), null);
-        mTripleFormat = new ComboBox<>(RDFFormat.values());
+        mTripleFormat = new ComboBox<>(RDFFormatKt.getRDF_FORMATS());
 
         MarkLogicServerChangedListener listener = new MarkLogicServerChangedListener();
         mServerHost.addActionListener(listener);

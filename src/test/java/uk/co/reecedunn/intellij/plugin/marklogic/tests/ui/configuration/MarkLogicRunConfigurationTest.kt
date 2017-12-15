@@ -26,6 +26,8 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.jdom.Element
 import org.jdom.input.SAXBuilder
 import org.jdom.output.XMLOutputter
+import uk.co.reecedunn.intellij.plugin.marklogic.api.SEM_TRIPLE
+import uk.co.reecedunn.intellij.plugin.marklogic.api.TURTLE
 import uk.co.reecedunn.intellij.plugin.marklogic.server.MARKLOGIC_9
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.configuration.MarkLogicRunConfiguration
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.settings.MarkLogicSettings
@@ -278,15 +280,15 @@ class MarkLogicRunConfigurationTest : ConfigurationTestCase() {
         </test>""".replace("\n[ ]*".toRegex(), "")
 
         var configuration = createConfiguration()
-        assertThat(configuration.tripleFormat, `is`(RDFFormat.SEM_TRIPLE))
+        assertThat(configuration.tripleFormat, `is`(SEM_TRIPLE))
 
-        configuration.tripleFormat = RDFFormat.TURTLE
-        assertThat(configuration.tripleFormat, `is`(RDFFormat.TURTLE))
+        configuration.tripleFormat = TURTLE
+        assertThat(configuration.tripleFormat, `is`(TURTLE))
 
         assertThat(serialize(configuration), `is`(anyOf(equalTo(serializedCompact), equalTo(serializedFull))))
 
         configuration = deserialize(serializedCompact)
-        assertThat(configuration.tripleFormat, `is`(RDFFormat.TURTLE))
+        assertThat(configuration.tripleFormat, `is`(TURTLE))
     }
 
     // region Serialization Helpers

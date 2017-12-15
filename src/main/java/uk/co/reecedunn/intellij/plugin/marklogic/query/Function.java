@@ -20,6 +20,7 @@ import com.intellij.openapi.vfs.VirtualFile;
 import org.apache.xmlbeans.impl.common.IOUtil;
 import org.jetbrains.annotations.NotNull;
 import uk.co.reecedunn.intellij.plugin.marklogic.api.RDFFormat;
+import uk.co.reecedunn.intellij.plugin.marklogic.api.RDFFormatKt;
 import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicVersion;
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.configuration.MarkLogicRunConfiguration;
 import uk.co.reecedunn.intellij.plugin.marklogic.query.options.EvalOptionsBuilder;
@@ -186,7 +187,7 @@ public enum Function {
         RDFFormat tripleFormat = configuration.getTripleFormat();
         MarkLogicVersion markLogicVersion = configuration.getMarkLogicVersion();
 
-        if (tripleFormat == RDFFormat.SEM_TRIPLE || markLogicVersion.getMajor() < 7) {
+        if (tripleFormat == RDFFormatKt.getSEM_TRIPLE() || markLogicVersion.getMajor() < 7) {
             return MarkLogicQueryKt.getRUN_QUERY().getQuery()
                 .replace("$QUERY_STRING", asXQueryStringContent(query))
                 .replace("$OPTIONS",      options)

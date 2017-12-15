@@ -20,7 +20,7 @@ import com.intellij.util.xmlb.annotations.OptionTag;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import uk.co.reecedunn.compat.intellij.execution.configurations.RunConfigurationOptions;
-import uk.co.reecedunn.intellij.plugin.marklogic.api.RDFFormat;
+import uk.co.reecedunn.intellij.plugin.marklogic.api.RDFFormatKt;
 import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicVersion;
 import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicVersionKt;
 
@@ -52,5 +52,5 @@ public class MarkLogicRunConfigurationData extends RunConfigurationOptions {
 
     public String mainModulePath = "";
 
-    public String tripleFormat = RDFFormat.SEM_TRIPLE.getMarkLogicName();
+    public String tripleFormat = RDFFormatKt.getSEM_TRIPLE().getMarkLogicName();
 }
