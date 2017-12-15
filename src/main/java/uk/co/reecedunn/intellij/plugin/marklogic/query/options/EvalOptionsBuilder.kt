@@ -15,8 +15,6 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.query.options
 
-private val FILESYSTEM_MODULES_DB = "0"
-
 object EvalOptionsBuilder : OptionsBuilder {
     override var contentDatabase: String? = null
     override var modulesDatabase: String? = null
@@ -32,7 +30,7 @@ object EvalOptionsBuilder : OptionsBuilder {
         val builder = StringBuilder()
         builder.append("<options xmlns=\"xdmp:eval\">")
         buildDatabaseOption(builder, "database", contentDatabase, null)
-        buildDatabaseOption(builder, "modules", modulesDatabase, FILESYSTEM_MODULES_DB)
+        buildDatabaseOption(builder, "modules", modulesDatabase, "0") // 0 = (file system)
         buildOption(builder, "root", modulesRoot)
         builder.append("</options>")
         return builder.toString()
