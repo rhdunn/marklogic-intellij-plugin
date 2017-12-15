@@ -81,7 +81,7 @@ public class MarkLogicRunProfileState extends CommandLineState {
     }
 
     private Connection createConnection(MarkLogicRunConfiguration configuration) throws ExecutionException {
-        return Connection.newConnection(
+        return Connection.Companion.newConnection(
             configuration.getServer().getHostname(),
             configuration.getServer().getAppServerPort(),
             configuration.getServer().getUsername(),
