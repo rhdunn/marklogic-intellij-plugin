@@ -15,7 +15,9 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.query.options
 
-class EvalOptionsBuilder private constructor() : OptionsBuilder {
+private val FILESYSTEM_MODULES_DB = "0"
+
+object EvalOptionsBuilder : OptionsBuilder {
     override var contentDatabase: String? = null
     override var modulesDatabase: String? = null
     override var modulesRoot: String? = null
@@ -60,11 +62,5 @@ class EvalOptionsBuilder private constructor() : OptionsBuilder {
         options.append("</")
         options.append(option)
         options.append('>')
-    }
-
-    companion object {
-        private val FILESYSTEM_MODULES_DB = "0"
-
-        var INSTANCE: OptionsBuilder = EvalOptionsBuilder()
     }
 }
