@@ -25,7 +25,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 @SuppressWarnings("ConstantConditions")
 public class EvalOptionsBuilderTest extends TestCase {
     public void testNoOptions() {
-        OptionsBuilder builder = EvalOptionsBuilder.INSTANCE;
+        OptionsBuilder builder = EvalOptionsBuilder.Companion.getINSTANCE();
 
         builder.reset();
 
@@ -37,7 +37,7 @@ public class EvalOptionsBuilderTest extends TestCase {
     }
 
     public void testContentDatabaseOption() {
-        OptionsBuilder builder = EvalOptionsBuilder.INSTANCE;
+        OptionsBuilder builder = EvalOptionsBuilder.Companion.getINSTANCE();
 
         builder.reset();
         builder.setContentDatabase("lorem");
@@ -51,7 +51,7 @@ public class EvalOptionsBuilderTest extends TestCase {
     }
 
     public void testModulesDatabaseOption() {
-        OptionsBuilder builder = EvalOptionsBuilder.INSTANCE;
+        OptionsBuilder builder = EvalOptionsBuilder.Companion.getINSTANCE();
 
         builder.reset();
         builder.setModulesDatabase("lorem");
@@ -64,7 +64,7 @@ public class EvalOptionsBuilderTest extends TestCase {
     }
 
     public void testModulesRootOption() {
-        OptionsBuilder builder = EvalOptionsBuilder.INSTANCE;
+        OptionsBuilder builder = EvalOptionsBuilder.Companion.getINSTANCE();
 
         builder.reset();
         builder.setModulesRoot("lorem");
@@ -78,7 +78,7 @@ public class EvalOptionsBuilderTest extends TestCase {
     }
 
     public void testResetOptions() {
-        OptionsBuilder builder = EvalOptionsBuilder.INSTANCE;
+        OptionsBuilder builder = EvalOptionsBuilder.Companion.getINSTANCE();
 
         builder.reset();
         builder.setContentDatabase("lorem");

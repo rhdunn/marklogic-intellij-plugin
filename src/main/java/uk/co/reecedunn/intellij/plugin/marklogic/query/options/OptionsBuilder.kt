@@ -13,19 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package uk.co.reecedunn.intellij.plugin.marklogic.query.options;
+package uk.co.reecedunn.intellij.plugin.marklogic.query.options
 
-import org.jetbrains.annotations.NotNull;
+interface OptionsBuilder {
+    var contentDatabase: String?
 
-public interface OptionsBuilder {
-    void reset();
+    var modulesDatabase: String?
 
-    void setContentDatabase(String contentDatabase);
+    var modulesRoot: String?
 
-    void setModulesDatabase(String modulesDatabase);
+    fun reset()
 
-    void setModulesRoot(String modulesRoot);
-
-    @NotNull
-    String build();
+    fun build(): String
 }
