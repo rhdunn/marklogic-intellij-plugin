@@ -25,7 +25,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 @SuppressWarnings("ConstantConditions")
 public class MapVarsBuilderTest extends TestCase {
     public void testNoVars() {
-        VarsBuilder builder = MapVarsBuilder.Companion.getINSTANCE();
+        VarsBuilder builder = MapVarsBuilder.INSTANCE;
         StringBuilder vars = new StringBuilder();
 
         builder.start(vars);
@@ -38,7 +38,7 @@ public class MapVarsBuilderTest extends TestCase {
     }
 
     public void testVarsSingle() {
-        VarsBuilder builder = MapVarsBuilder.Companion.getINSTANCE();
+        VarsBuilder builder = MapVarsBuilder.INSTANCE;
         StringBuilder vars = new StringBuilder();
 
         builder.start(vars);
@@ -53,7 +53,7 @@ public class MapVarsBuilderTest extends TestCase {
     }
 
     public void testVarsMultiple() {
-        VarsBuilder builder = MapVarsBuilder.Companion.getINSTANCE();
+        VarsBuilder builder = MapVarsBuilder.INSTANCE;
         StringBuilder vars = new StringBuilder();
 
         builder.start(vars);

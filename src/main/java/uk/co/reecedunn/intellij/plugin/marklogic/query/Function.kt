@@ -39,7 +39,7 @@ enum class Function private constructor(
             Parameters.Eval),
     DBG_EVAL_80(
             "dbg:eval(\$query, \$vars, \$options)",
-            MapVarsBuilder.INSTANCE,
+            MapVarsBuilder,
             EvalOptionsBuilder,
             Parameters.Eval),
 
@@ -50,7 +50,7 @@ enum class Function private constructor(
             Parameters.Invoke),
     DBG_INVOKE_80(
             "dbg:invoke(\$path, \$vars, \$options)",
-            MapVarsBuilder.INSTANCE,
+            MapVarsBuilder,
             EvalOptionsBuilder,
             Parameters.Invoke),
 
@@ -61,7 +61,7 @@ enum class Function private constructor(
             Parameters.Eval),
     PROF_EVAL_80(
             "prof:eval(\$query, \$vars, \$options)",
-            MapVarsBuilder.INSTANCE,
+            MapVarsBuilder,
             EvalOptionsBuilder,
             Parameters.Eval),
 
@@ -72,29 +72,29 @@ enum class Function private constructor(
             Parameters.Invoke),
     PROF_INVOKE_80(
             "prof:invoke(\$path, \$vars, \$options)",
-            MapVarsBuilder.INSTANCE,
+            MapVarsBuilder,
             EvalOptionsBuilder,
             Parameters.Invoke),
 
     PROF_XSLT_EVAL_50(
             "prof:xslt-eval(\$query, \$input, \$vars, \$options)",
-            MapVarsBuilder.INSTANCE,
+            MapVarsBuilder,
             EvalOptionsBuilder,
             Parameters.EvalStylesheet),
     PROF_XSLT_INVOKE_50(
             "prof:xslt-invoke(\$path, \$input, \$vars, \$options)",
-            MapVarsBuilder.INSTANCE,
+            MapVarsBuilder,
             EvalOptionsBuilder,
             Parameters.InvokeStylesheet),
 
     SEM_SPARQL_70(
             "sem:sparql(\$query, \$vars)",
-            MapVarsBuilder.INSTANCE, null,
+            MapVarsBuilder, null,
             Parameters.Eval),
 
     SEM_SPARQL_UPDATE_80(
             "sem:sparql-update(\$query, \$vars)",
-            MapVarsBuilder.INSTANCE, null,
+            MapVarsBuilder, null,
             Parameters.Eval),
 
     XDMP_EVAL_50(
@@ -104,7 +104,7 @@ enum class Function private constructor(
             Parameters.Eval),
     XDMP_EVAL_70(
             "xdmp:eval(\$query, \$vars, \$options)",
-            MapVarsBuilder.INSTANCE,
+            MapVarsBuilder,
             EvalOptionsBuilder,
             Parameters.Eval),
 
@@ -115,13 +115,13 @@ enum class Function private constructor(
             Parameters.Invoke),
     XDMP_INVOKE_70(
             "xdmp:invoke(\$path, \$vars, \$options)",
-            MapVarsBuilder.INSTANCE,
+            MapVarsBuilder,
             EvalOptionsBuilder,
             Parameters.Invoke),
 
     XDMP_JAVASCRIPT_EVAL_80(
             "xdmp:javascript-eval(\$query, \$vars, \$options)",
-            MapVarsBuilder.INSTANCE,
+            MapVarsBuilder,
             EvalOptionsBuilder,
             Parameters.Eval),
 
@@ -130,17 +130,17 @@ enum class Function private constructor(
             Parameters.Eval),
     XDMP_SQL_90(
             "xdmp:sql(\$query, (), \$vars)",
-            MapVarsBuilder.INSTANCE, null,
+            MapVarsBuilder, null,
             Parameters.Eval),
 
     XDMP_XSLT_EVAL_50(
             "xdmp:xslt-eval(\$query, \$input, \$vars, \$options)",
-            MapVarsBuilder.INSTANCE,
+            MapVarsBuilder,
             EvalOptionsBuilder,
             Parameters.EvalStylesheet),
     XDMP_XSLT_INVOKE_50(
             "xdmp:xslt-invoke(\$path, \$input, \$vars, \$options)",
-            MapVarsBuilder.INSTANCE,
+            MapVarsBuilder,
             EvalOptionsBuilder,
             Parameters.InvokeStylesheet);
 

@@ -15,7 +15,7 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.query.vars
 
-class MapVarsBuilder private constructor() : VarsBuilder {
+object MapVarsBuilder : VarsBuilder {
     override fun start(builder: StringBuilder) {
         builder.append("let \$vars := map:map()\n")
     }
@@ -30,9 +30,5 @@ class MapVarsBuilder private constructor() : VarsBuilder {
 
     override fun end(builder: StringBuilder) {
         builder.append("return \$vars\n")
-    }
-
-    companion object {
-        var INSTANCE: VarsBuilder = MapVarsBuilder()
     }
 }
