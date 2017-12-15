@@ -13,16 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package uk.co.reecedunn.intellij.plugin.marklogic.query;
+package uk.co.reecedunn.intellij.plugin.marklogic.query
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicVersion;
+import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicVersion
 
-public interface QueryBuilder {
-    @Nullable
-    Function createEvalBuilder(@NotNull String executorId, @NotNull MarkLogicVersion markLogicVersion);
+interface QueryBuilder {
+    fun createEvalBuilder(executorId: String, markLogicVersion: MarkLogicVersion): Function?
 
-    @Nullable
-    Function createInvokeBuilder(@NotNull String executorId, @NotNull MarkLogicVersion markLogicVersion);
+    fun createInvokeBuilder(executorId: String, markLogicVersion: MarkLogicVersion): Function?
 }

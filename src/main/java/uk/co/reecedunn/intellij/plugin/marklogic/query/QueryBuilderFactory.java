@@ -31,12 +31,12 @@ public class QueryBuilderFactory {
     };
 
     private static final QueryBuilder[] BUILDERS = new QueryBuilder[] {
-        XQueryBuilder.INSTANCE, XQueryBuilder.INSTANCE, XQueryBuilder.INSTANCE, XQueryBuilder.INSTANCE, XQueryBuilder.INSTANCE,
-        JavaScriptBuilder.INSTANCE, JavaScriptBuilder.INSTANCE,
-        SQLBuilder.INSTANCE,
-        SPARQLQueryBuilder.INSTANCE, SPARQLQueryBuilder.INSTANCE,
-        SPARQLUpdateBuilder.INSTANCE,
-        XSLTBuilder.INSTANCE, XSLTBuilder.INSTANCE,
+            XQueryBuilder.Companion.getINSTANCE(), XQueryBuilder.Companion.getINSTANCE(), XQueryBuilder.Companion.getINSTANCE(), XQueryBuilder.Companion.getINSTANCE(), XQueryBuilder.Companion.getINSTANCE(),
+            JavaScriptBuilder.Companion.getINSTANCE(), JavaScriptBuilder.Companion.getINSTANCE(),
+            SQLBuilder.Companion.getINSTANCE(),
+            SPARQLQueryBuilder.Companion.getINSTANCE(), SPARQLQueryBuilder.Companion.getINSTANCE(),
+            SPARQLUpdateBuilder.Companion.getINSTANCE(),
+            XSLTBuilder.Companion.getINSTANCE(), XSLTBuilder.Companion.getINSTANCE(),
     };
 
     @Nullable
