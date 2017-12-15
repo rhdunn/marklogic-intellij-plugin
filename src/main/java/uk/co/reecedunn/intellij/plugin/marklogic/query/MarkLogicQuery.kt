@@ -17,15 +17,22 @@ package uk.co.reecedunn.intellij.plugin.marklogic.query
 
 import org.apache.commons.compress.utils.IOUtils
 
-val MARKLOGIC_VERSION_XQUERY = MarkLogicQuery("queries/marklogic-version.xqy")
+// region Server Queries
 
-val LIST_APPSERVERS_XQUERY = MarkLogicQuery("queries/list-appservers.xqy")
+val MARKLOGIC_VERSION_XQUERY = MarkLogicQuery("queries/server/marklogic-version.xqy")
 
-val LIST_DATABASES_XQUERY = MarkLogicQuery("queries/list-databases.xqy")
+val LIST_APPSERVERS_XQUERY = MarkLogicQuery("queries/server/list-appservers.xqy")
 
-val RUN_QUERY = MarkLogicQuery("queries/run-query.xqy")
+val LIST_DATABASES_XQUERY = MarkLogicQuery("queries/server/list-databases.xqy")
 
-val RUN_QUERY_AS_RDF = MarkLogicQuery("queries/run-query-as-rdf.xqy")
+// endregion
+// region Run Configuration Queries
+
+val RUN_QUERY = MarkLogicQuery("queries/run/run-query.xqy")
+
+val RUN_QUERY_AS_RDF = MarkLogicQuery("queries/run/run-query-as-rdf.xqy")
+
+// endregion
 
 class MarkLogicQuery(val path: String) {
     val query: String
