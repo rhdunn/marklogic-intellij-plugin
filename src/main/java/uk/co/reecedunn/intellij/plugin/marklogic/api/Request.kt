@@ -13,13 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package uk.co.reecedunn.intellij.plugin.marklogic.api;
+package uk.co.reecedunn.intellij.plugin.marklogic.api
 
-import org.jetbrains.annotations.NotNull;
-
-import java.io.IOException;
-
-public interface Request {
-    @NotNull
-    Response run() throws IOException;
+interface Request {
+    fun run(): Response
 }
