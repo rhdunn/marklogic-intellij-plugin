@@ -15,10 +15,18 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.query
 
+// region Query Types
+
 data class QueryType(val mimeType: String, val defaultExtensions: Array<String>)
 
 val XQueryType: QueryType = QueryType("application/xquery", arrayOf("xq", "xqy", "xquery", "xql", "xqu"))
+
 val JavaScriptType: QueryType = QueryType("application/javascript", arrayOf("js", "sjs"))
+
 val SQLType: QueryType = QueryType("application/sql", arrayOf("sql"))
+
 val SPARQLQueryType: QueryType = QueryType("application/sparql-query", arrayOf("sparql", "rq"))
+
 val SPARQLUpdateType: QueryType = QueryType("application/sparql-update", arrayOf("ru"))
+
+// endregion
