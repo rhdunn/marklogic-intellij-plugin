@@ -34,7 +34,7 @@ enum class Function private constructor(
 
     DBG_EVAL_50(
             "dbg:eval(\$query, \$vars, \$options)",
-            KeyValueVarsBuilder.INSTANCE,
+            KeyValueVarsBuilder,
             EvalOptionsBuilder,
             Parameters.Eval),
     DBG_EVAL_80(
@@ -45,7 +45,7 @@ enum class Function private constructor(
 
     DBG_INVOKE_50(
             "dbg:invoke(\$path, \$vars, \$options)",
-            KeyValueVarsBuilder.INSTANCE,
+            KeyValueVarsBuilder,
             EvalOptionsBuilder,
             Parameters.Invoke),
     DBG_INVOKE_80(
@@ -56,7 +56,7 @@ enum class Function private constructor(
 
     PROF_EVAL_50(
             "prof:eval(\$query, \$vars, \$options)",
-            KeyValueVarsBuilder.INSTANCE,
+            KeyValueVarsBuilder,
             EvalOptionsBuilder,
             Parameters.Eval),
     PROF_EVAL_80(
@@ -67,7 +67,7 @@ enum class Function private constructor(
 
     PROF_INVOKE_50(
             "prof:invoke(\$path, \$vars, \$options)",
-            KeyValueVarsBuilder.INSTANCE,
+            KeyValueVarsBuilder,
             EvalOptionsBuilder,
             Parameters.Invoke),
     PROF_INVOKE_80(
@@ -99,7 +99,7 @@ enum class Function private constructor(
 
     XDMP_EVAL_50(
             "xdmp:eval(\$query, \$vars, \$options)",
-            KeyValueVarsBuilder.INSTANCE,
+            KeyValueVarsBuilder,
             EvalOptionsBuilder,
             Parameters.Eval),
     XDMP_EVAL_70(
@@ -110,7 +110,7 @@ enum class Function private constructor(
 
     XDMP_INVOKE_50(
             "xdmp:invoke(\$path, \$vars, \$options)",
-            KeyValueVarsBuilder.INSTANCE,
+            KeyValueVarsBuilder,
             EvalOptionsBuilder,
             Parameters.Invoke),
     XDMP_INVOKE_70(

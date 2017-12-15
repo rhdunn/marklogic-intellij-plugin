@@ -15,7 +15,7 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.query.vars
 
-class KeyValueVarsBuilder private constructor() : VarsBuilder {
+object KeyValueVarsBuilder : VarsBuilder {
     private var isFirstItem = true
 
     override fun start(builder: StringBuilder) {
@@ -38,9 +38,5 @@ class KeyValueVarsBuilder private constructor() : VarsBuilder {
 
     override fun end(builder: StringBuilder) {
         builder.append(')')
-    }
-
-    companion object {
-        var INSTANCE: VarsBuilder = KeyValueVarsBuilder()
     }
 }
