@@ -15,14 +15,16 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.query
 
-data class QueryType(val mimeType: String, val defaultExtensions: Array<String>)
+data class QueryType(val mimeType: String, val defaultExtensions: Array<String>, val builder: QueryBuilder)
 
-val XQUERY: QueryType = QueryType("application/xquery", arrayOf("xq", "xqy", "xquery", "xql", "xqu"))
+val XQUERY: QueryType = QueryType("application/xquery", arrayOf("xq", "xqy", "xquery", "xql", "xqu"), XQueryBuilder)
 
-val JAVA_SCRIPT: QueryType = QueryType("application/javascript", arrayOf("js", "sjs"))
+val JAVA_SCRIPT: QueryType = QueryType("application/javascript", arrayOf("js", "sjs"), JavaScriptBuilder)
 
-val SQL: QueryType = QueryType("application/sql", arrayOf("sql"))
+val SQL: QueryType = QueryType("application/sql", arrayOf("sql"), SQLBuilder)
 
-val SPARQL_QUERY: QueryType = QueryType("application/sparql-query", arrayOf("sparql", "rq"))
+val SPARQL_QUERY: QueryType = QueryType("application/sparql-query", arrayOf("sparql", "rq"), SPARQLQueryBuilder)
 
-val SPARQL_UPDATE: QueryType = QueryType("application/sparql-update", arrayOf("ru"))
+val SPARQL_UPDATE: QueryType = QueryType("application/sparql-update", arrayOf("ru"), SPARQLUpdateBuilder)
+
+val XSLT: QueryType = QueryType("application/xml", arrayOf("xsl", "xslt"), XSLTBuilder)
