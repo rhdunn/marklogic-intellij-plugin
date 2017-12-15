@@ -13,37 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package uk.co.reecedunn.intellij.plugin.core.ui;
+package uk.co.reecedunn.intellij.plugin.core.ui
 
-import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
+import javax.swing.*
+import javax.swing.event.DocumentEvent
+import javax.swing.event.DocumentListener
 
 // https://stackoverflow.com/questions/3953208/value-change-listener-to-jtextfield
-public abstract class DocumentChangedListener implements DocumentListener {
-    private int lastChange = 0;
-    private int lastNotifiedChange = 0;
+abstract class DocumentChangedListener : DocumentListener {
+    private var lastChange = 0
+    private var lastNotifiedChange = 0
 
-    @Override
-    public void insertUpdate(DocumentEvent e) {
-        changedUpdate(e);
+    override fun insertUpdate(e: DocumentEvent) {
+        changedUpdate(e)
     }
 
-    @Override
-    public void removeUpdate(DocumentEvent e) {
-        changedUpdate(e);
+    override fun removeUpdate(e: DocumentEvent) {
+        changedUpdate(e)
     }
 
-    @Override
-    public void changedUpdate(DocumentEvent e) {
-        lastChange++;
-        SwingUtilities.invokeLater(() -> {
+    override fun changedUpdate(e: DocumentEvent) {
+        lastChange++
+        SwingUtilities.invokeLater {
             if (lastChange != lastNotifiedChange) {
-                lastNotifiedChange = lastChange;
-                changed();
+                lastNotifiedChange = lastChange
+                changed()
             }
-        });
+        }
     }
 
-    public abstract void changed();
+    abstract fun changed()
 }
