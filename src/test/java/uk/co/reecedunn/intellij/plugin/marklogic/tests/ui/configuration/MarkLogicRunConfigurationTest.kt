@@ -48,13 +48,13 @@ class MarkLogicRunConfigurationTest : ConfigurationTestCase() {
         </test>""".replace("\n[ ]*".toRegex(), "")
 
         val serializedFull = """<test>
-            <option name="serverHost" value="localhost.test" />
-            <option name="markLogicVersion" value="7.0" />
             <option name="contentDatabase" />
+            <option name="mainModulePath" value="" />
             <option name="moduleDatabase" />
             <option name="moduleRoot" value="/" />
-            <option name="mainModulePath" value="" />
+            <option name="serverHost" value="localhost.test" />
             <option name="tripleFormat" value="sem:triple" />
+            <option name="markLogicVersion" value="7.0" />
         </test>""".replace("\n[ ]*".toRegex(), "")
 
         var configuration = createConfiguration()
@@ -88,13 +88,13 @@ class MarkLogicRunConfigurationTest : ConfigurationTestCase() {
         </test>""".replace("\n[ ]*".toRegex(), "")
 
         val serializedFull = """<test>
-            <option name="serverHost" value="localhost" />
-            <option name="markLogicVersion" value="9.0" />
             <option name="contentDatabase" />
+            <option name="mainModulePath" value="" />
             <option name="moduleDatabase" />
             <option name="moduleRoot" value="/" />
-            <option name="mainModulePath" value="" />
+            <option name="serverHost" value="localhost" />
             <option name="tripleFormat" value="sem:triple" />
+            <option name="markLogicVersion" value="9.0" />
         </test>""".replace("\n[ ]*".toRegex(), "")
 
         var configuration = createConfiguration()
@@ -124,13 +124,13 @@ class MarkLogicRunConfigurationTest : ConfigurationTestCase() {
         </test>""".replace("\n[ ]*".toRegex(), "")
 
         val serializedFull = """<test>
-            <option name="serverHost" value="localhost" />
-            <option name="markLogicVersion" value="7.0" />
             <option name="contentDatabase" value="test-content" />
+            <option name="mainModulePath" value="" />
             <option name="moduleDatabase" />
             <option name="moduleRoot" value="/" />
-            <option name="mainModulePath" value="" />
+            <option name="serverHost" value="localhost" />
             <option name="tripleFormat" value="sem:triple" />
+            <option name="markLogicVersion" value="7.0" />
         </test>""".replace("\n[ ]*".toRegex(), "")
 
         var configuration = createConfiguration()
@@ -151,13 +151,13 @@ class MarkLogicRunConfigurationTest : ConfigurationTestCase() {
         </test>""".replace("\n[ ]*".toRegex(), "")
 
         val serializedFull = """<test>
-            <option name="serverHost" value="localhost" />
-            <option name="markLogicVersion" value="7.0" />
             <option name="contentDatabase" />
+            <option name="mainModulePath" value="" />
             <option name="moduleDatabase" value="test-modules" />
             <option name="moduleRoot" value="/" />
-            <option name="mainModulePath" value="" />
+            <option name="serverHost" value="localhost" />
             <option name="tripleFormat" value="sem:triple" />
+            <option name="markLogicVersion" value="7.0" />
         </test>""".replace("\n[ ]*".toRegex(), "")
 
         var configuration = createConfiguration()
@@ -178,13 +178,13 @@ class MarkLogicRunConfigurationTest : ConfigurationTestCase() {
         </test>""".replace("\n[ ]*".toRegex(), "")
 
         val serializedFull = """<test>
-            <option name="serverHost" value="localhost" />
-            <option name="markLogicVersion" value="7.0" />
             <option name="contentDatabase" />
+            <option name="mainModulePath" value="" />
             <option name="moduleDatabase" />
             <option name="moduleRoot" value="/lorem/ipsum" />
-            <option name="mainModulePath" value="" />
+            <option name="serverHost" value="localhost" />
             <option name="tripleFormat" value="sem:triple" />
+            <option name="markLogicVersion" value="7.0" />
         </test>""".replace("\n[ ]*".toRegex(), "")
 
         var configuration = createConfiguration()
@@ -205,13 +205,13 @@ class MarkLogicRunConfigurationTest : ConfigurationTestCase() {
         </test>""".replace("\n[ ]*".toRegex(), "")
 
         val serializedFull = """<test>
-            <option name="serverHost" value="localhost" />
-            <option name="markLogicVersion" value="7.0" />
             <option name="contentDatabase" />
+            <option name="mainModulePath" value="module/test.xqy" />
             <option name="moduleDatabase" />
             <option name="moduleRoot" value="/" />
-            <option name="mainModulePath" value="module/test.xqy" />
+            <option name="serverHost" value="localhost" />
             <option name="tripleFormat" value="sem:triple" />
+            <option name="markLogicVersion" value="7.0" />
         </test>""".replace("\n[ ]*".toRegex(), "")
 
         var configuration = createConfiguration()
@@ -237,13 +237,13 @@ class MarkLogicRunConfigurationTest : ConfigurationTestCase() {
         </test>""".replace("\n[ ]*".toRegex(), "")
 
         val serializedFull = """<test>
-            <option name="serverHost" value="localhost" />
-            <option name="markLogicVersion" value="7.0" />
             <option name="contentDatabase" />
+            <option name="mainModulePath" value="/module/test.xqy" />
             <option name="moduleDatabase" />
             <option name="moduleRoot" value="/" />
-            <option name="mainModulePath" value="/module/test.xqy" />
+            <option name="serverHost" value="localhost" />
             <option name="tripleFormat" value="sem:triple" />
+            <option name="markLogicVersion" value="7.0" />
         </test>""".replace("\n[ ]*".toRegex(), "")
 
         var configuration = createConfiguration()
@@ -269,13 +269,13 @@ class MarkLogicRunConfigurationTest : ConfigurationTestCase() {
         </test>""".replace("\n[ ]*".toRegex(), "")
 
         val serializedFull = """<test>
-            <option name="serverHost" value="localhost" />
-            <option name="markLogicVersion" value="7.0" />
             <option name="contentDatabase" />
+            <option name="mainModulePath" value="" />
             <option name="moduleDatabase" />
             <option name="moduleRoot" value="/" />
-            <option name="mainModulePath" value="" />
+            <option name="serverHost" value="localhost" />
             <option name="tripleFormat" value="turtle" />
+            <option name="markLogicVersion" value="7.0" />
         </test>""".replace("\n[ ]*".toRegex(), "")
 
         var configuration = createConfiguration()
