@@ -15,4 +15,7 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.api
 
-class QName(val namespace: String?, val localname: String)
+class QName(val namespace: String?, val localname: String) {
+    override fun toString(): String =
+        namespace?.let { "xs:QName(\"$it\", \"$localname\")" } ?: "xs:QName(\"$localname\")"
+}
