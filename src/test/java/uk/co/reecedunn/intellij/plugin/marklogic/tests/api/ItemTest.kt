@@ -267,18 +267,14 @@ class ItemTest : TestCase() {
 
     @Query("map:map()")
     fun testMapMap() {
-        // NOTE: Although this is JSON data, the REST API does not give enough
-        // information to identify it as JSON, and the XCC API does not identify
-        // it as a map:map.
-
         val xcc = Item.create("{}", "json:object")
         assertThat(xcc.content, `is`("{}"))
-        assertThat<String>(xcc.contentType, `is`("text/plain"))
+        assertThat<String>(xcc.contentType, `is`("application/json"))
         assertThat(xcc.itemType, `is`("json:object"))
 
         val rest = Item.create("{}", "text/plain", "map")
         assertThat(rest.content, `is`("{}"))
-        assertThat<String>(rest.contentType, `is`("text/plain"))
+        assertThat<String>(rest.contentType, `is`("application/json"))
         assertThat(rest.itemType, `is`("map"))
     }
 

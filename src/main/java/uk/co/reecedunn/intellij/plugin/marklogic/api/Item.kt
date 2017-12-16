@@ -34,11 +34,14 @@ private fun getContentTypeForItemType(itemType: String): String {
 class Item private constructor(val content: String, val contentType: String, val itemType: String) {
     companion object {
         fun create(content: String, contentType: String, itemType: String): Item {
-            if (contentType == "application/x-unknown-content-type") {
-                return Item(content, "application/octet-stream", itemType)
-            } else {
-                return Item(content, contentType, itemType)
-            }
+            val type =
+                if (contentType == "application/x-unknown-content-type")
+                    "application/octet-stream"
+                else if (itemType == "map" || itemType == "json:object")
+                    "application/json"
+                else
+                    contentType
+            return Item(content, type, itemType)
         }
 
         fun create(content: String, itemType: String): Item {
