@@ -20,7 +20,6 @@ import com.intellij.util.ArrayUtil
 private val BINARY_ITEM_TYPES = arrayOf("binary()")
 private val JSON_ITEM_TYPES = arrayOf("array-node()", "boolean-node()", "null-node()", "number-node()", "object-node()")
 private val XML_ITEM_TYPES = arrayOf("document-node()", "element()")
-private val UNKNOWN_CONTENT_TYPE = "application/x-unknown-content-type"
 
 private fun getContentTypeForItemType(itemType: String): String {
     if (ArrayUtil.contains(itemType, *BINARY_ITEM_TYPES)) {
@@ -32,25 +31,18 @@ private fun getContentTypeForItemType(itemType: String): String {
     return if (ArrayUtil.contains(itemType, *XML_ITEM_TYPES)) "application/xml" else "text/plain"
 }
 
-class Item private constructor(val content: String, contentType: String, val itemType: String) {
-    var contentType: String? = null
-        private set
-
-    init {
-        if (UNKNOWN_CONTENT_TYPE == contentType) {
-            this.contentType = "application/octet-stream"
-        } else {
-            this.contentType = contentType
-        }
-    }
-
+class Item private constructor(val content: String, val contentType: String, val itemType: String) {
     companion object {
         fun create(content: String, contentType: String, itemType: String): Item {
-            return Item(content, contentType, itemType)
+            if (contentType == "application/x-unknown-content-type") {
+                return Item(content, "application/octet-stream", itemType)
+            } else {
+                return Item(content, contentType, itemType)
+            }
         }
 
         fun create(content: String, itemType: String): Item {
-            return Item(content, getContentTypeForItemType(itemType), itemType)
+            return create(content, getContentTypeForItemType(itemType), itemType)
         }
     }
 }
