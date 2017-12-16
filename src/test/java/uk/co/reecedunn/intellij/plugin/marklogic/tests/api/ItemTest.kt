@@ -270,12 +270,12 @@ class ItemTest : TestCase() {
         val xcc = Item.create("{}", "json:object")
         assertThat(xcc.content, `is`("{}"))
         assertThat<String>(xcc.contentType, `is`("application/json"))
-        assertThat(xcc.itemType, `is`("json:object"))
+        assertThat(xcc.itemType, `is`("map:map"))
 
         val rest = Item.create("{}", "text/plain", "map")
         assertThat(rest.content, `is`("{}"))
         assertThat<String>(rest.contentType, `is`("application/json"))
-        assertThat(rest.itemType, `is`("map"))
+        assertThat(rest.itemType, `is`("map:map"))
     }
 
     // endregion

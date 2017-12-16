@@ -41,7 +41,12 @@ class Item private constructor(val content: String, val contentType: String, val
                     "application/json"
                 else
                     contentType
-            return Item(content, type, itemType)
+            val item =
+                if (itemType == "map" || itemType == "json:object")
+                    "map:map"
+                else
+                    itemType
+            return Item(content, type, item)
         }
 
         fun create(content: String, itemType: String): Item {
