@@ -20,6 +20,8 @@ import uk.co.reecedunn.intellij.plugin.marklogic.query.vars.MapVarsBuilder
 
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
+import uk.co.reecedunn.intellij.plugin.marklogic.api.Item
+import uk.co.reecedunn.intellij.plugin.marklogic.api.QName
 
 class MapVarsBuilderTest : TestCase() {
     fun testNoVars() {
@@ -38,7 +40,7 @@ class MapVarsBuilderTest : TestCase() {
         val vars = StringBuilder()
 
         builder.start(vars)
-        builder.add(vars, "x", "2")
+        builder.add(vars, QName(null, "x"), Item.create("2", "xs:integer"))
         builder.end(vars)
 
         val expected =
@@ -53,8 +55,8 @@ class MapVarsBuilderTest : TestCase() {
         val vars = StringBuilder()
 
         builder.start(vars)
-        builder.add(vars, "r", "5.7")
-        builder.add(vars, "theta", "0.5265")
+        builder.add(vars, QName(null, "r"), Item.create("5.7", "xs:double"))
+        builder.add(vars, QName(null, "theta"), Item.create("0.5265", "xs:double"))
         builder.end(vars)
 
         val expected =

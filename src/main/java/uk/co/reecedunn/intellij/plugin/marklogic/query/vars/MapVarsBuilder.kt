@@ -15,13 +15,16 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.query.vars
 
+import uk.co.reecedunn.intellij.plugin.marklogic.api.Item
+import uk.co.reecedunn.intellij.plugin.marklogic.api.QName
+
 object MapVarsBuilder : VarsBuilder {
     override fun start(builder: StringBuilder) {
         builder.append("let \$vars := map:map()\n")
     }
 
-    override fun add(builder: StringBuilder, key: String, value: String) {
-        builder.append("let \$_ := map:put(\$vars, xdmp:key-from-QName(xs:QName(\"$key\")), $value)\n")
+    override fun add(builder: StringBuilder, key: QName, value: Item) {
+        builder.append("let \$_ := map:put(\$vars, xdmp:key-from-QName($key), ${value.content})\n")
     }
 
     override fun end(builder: StringBuilder) {

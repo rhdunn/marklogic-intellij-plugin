@@ -15,6 +15,9 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.query.vars
 
+import uk.co.reecedunn.intellij.plugin.marklogic.api.Item
+import uk.co.reecedunn.intellij.plugin.marklogic.api.QName
+
 object KeyValueVarsBuilder : VarsBuilder {
     private var isFirstItem = true
 
@@ -23,14 +26,14 @@ object KeyValueVarsBuilder : VarsBuilder {
         isFirstItem = true
     }
 
-    override fun add(builder: StringBuilder, key: String, value: String) {
+    override fun add(builder: StringBuilder, key: QName, value: Item) {
         if (isFirstItem) {
             isFirstItem = false
         } else {
             builder.append(", ")
         }
 
-        builder.append("xs:QName(\"$key\"), $value")
+        builder.append("$key, ${value.content}")
     }
 
     override fun end(builder: StringBuilder) {

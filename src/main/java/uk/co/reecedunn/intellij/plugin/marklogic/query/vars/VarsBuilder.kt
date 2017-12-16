@@ -15,10 +15,13 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.query.vars
 
+import uk.co.reecedunn.intellij.plugin.marklogic.api.Item
+import uk.co.reecedunn.intellij.plugin.marklogic.api.QName
+
 interface VarsBuilder {
     fun start(builder: StringBuilder)
 
-    fun add(builder: StringBuilder, key: String, value: String)
+    fun add(builder: StringBuilder, key: QName, value: Item)
 
     fun end(builder: StringBuilder)
 }
