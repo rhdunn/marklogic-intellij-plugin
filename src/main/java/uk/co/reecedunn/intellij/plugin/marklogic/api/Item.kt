@@ -15,22 +15,6 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.api
 
-import com.intellij.util.ArrayUtil
-
-private val BINARY_ITEM_TYPES = arrayOf("binary()")
-private val JSON_ITEM_TYPES = arrayOf("array-node()", "boolean-node()", "null-node()", "number-node()", "object-node()")
-private val XML_ITEM_TYPES = arrayOf("document-node()", "element()")
-
-private fun getContentTypeForItemType(itemType: String): String {
-    if (ArrayUtil.contains(itemType, *BINARY_ITEM_TYPES)) {
-        return "application/x-unknown-content-type"
-    }
-    if (ArrayUtil.contains(itemType, *JSON_ITEM_TYPES)) {
-        return "application/json"
-    }
-    return if (ArrayUtil.contains(itemType, *XML_ITEM_TYPES)) "application/xml" else "text/plain"
-}
-
 class Item private constructor(val content: String, val contentType: String, val itemType: String) {
     override fun toString(): String {
         return content
@@ -38,23 +22,11 @@ class Item private constructor(val content: String, val contentType: String, val
 
     companion object {
         fun create(content: String, contentType: String, itemType: String): Item {
-            val type =
-                if (contentType == "application/x-unknown-content-type")
-                    "application/octet-stream"
-                else if (itemType == "map" || itemType == "json:object")
-                    "application/json"
-                else
-                    contentType
-            val item =
-                if (itemType == "map" || itemType == "json:object")
-                    "map:map"
-                else
-                    itemType
-            return Item(content, type, item)
+            return Item(content, contentType, itemType)
         }
 
         fun create(content: String, itemType: String): Item {
-            return create(content, getContentTypeForItemType(itemType), itemType)
+            return create(content, "text/plain", itemType)
         }
     }
 }
