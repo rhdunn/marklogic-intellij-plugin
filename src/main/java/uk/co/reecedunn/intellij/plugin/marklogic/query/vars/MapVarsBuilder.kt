@@ -24,7 +24,7 @@ object MapVarsBuilder : VarsBuilder {
     }
 
     override fun add(builder: StringBuilder, key: QName, value: Item) {
-        builder.append("let \$_ := map:put(\$vars, xdmp:key-from-QName($key), ${value.content})\n")
+        builder.append("let \$_ := map:put(\$vars, xdmp:key-from-QName($key), $value)\n")
     }
 
     override fun end(builder: StringBuilder) {

@@ -31,11 +31,13 @@ class ItemTest : TestCase() {
         assertThat(xcc.content, `is`("()"))
         assertThat<String>(xcc.contentType, `is`("text/plain"))
         assertThat(xcc.itemType, `is`("empty-sequence()"))
+        assertThat(xcc.toString(), `is`("()"))
 
         val rest = Item.create("()", "text/plain", "empty-sequence()")
         assertThat(rest.content, `is`("()"))
         assertThat<String>(rest.contentType, `is`("text/plain"))
         assertThat(rest.itemType, `is`("empty-sequence()"))
+        assertThat(rest.toString(), `is`("()"))
     }
 
     @Query("1.5")
@@ -44,11 +46,13 @@ class ItemTest : TestCase() {
         assertThat(xcc.content, `is`("1.5"))
         assertThat<String>(xcc.contentType, `is`("text/plain"))
         assertThat(xcc.itemType, `is`("xs:decimal"))
+        assertThat(xcc.toString(), `is`("1.5"))
 
         val rest = Item.create("1.5", "text/plain", "decimal")
         assertThat(rest.content, `is`("1.5"))
         assertThat<String>(rest.contentType, `is`("text/plain"))
         assertThat(rest.itemType, `is`("decimal"))
+        assertThat(rest.toString(), `is`("1.5"))
     }
 
     @Query("1e5")
@@ -57,11 +61,13 @@ class ItemTest : TestCase() {
         assertThat(xcc.content, `is`("1e5"))
         assertThat<String>(xcc.contentType, `is`("text/plain"))
         assertThat(xcc.itemType, `is`("xs:double"))
+        assertThat(xcc.toString(), `is`("1e5"))
 
         val rest = Item.create("1e5", "text/plain", "double")
         assertThat(rest.content, `is`("1e5"))
         assertThat<String>(rest.contentType, `is`("text/plain"))
         assertThat(rest.itemType, `is`("double"))
+        assertThat(rest.toString(), `is`("1e5"))
     }
 
     @Query("15")
@@ -70,11 +76,13 @@ class ItemTest : TestCase() {
         assertThat(xcc.content, `is`("15"))
         assertThat<String>(xcc.contentType, `is`("text/plain"))
         assertThat(xcc.itemType, `is`("xs:integer"))
+        assertThat(xcc.toString(), `is`("15"))
 
         val rest = Item.create("15", "text/plain", "integer")
         assertThat(rest.content, `is`("15"))
         assertThat<String>(rest.contentType, `is`("text/plain"))
         assertThat(rest.itemType, `is`("integer"))
+        assertThat(rest.toString(), `is`("15"))
     }
 
     @Query("'abc'")
@@ -83,11 +91,13 @@ class ItemTest : TestCase() {
         assertThat(xcc.content, `is`("abc"))
         assertThat<String>(xcc.contentType, `is`("text/plain"))
         assertThat(xcc.itemType, `is`("xs:string"))
+        assertThat(xcc.toString(), `is`("abc"))
 
         val rest = Item.create("abc", "text/plain", "string")
         assertThat(rest.content, `is`("abc"))
         assertThat<String>(rest.contentType, `is`("text/plain"))
         assertThat(rest.itemType, `is`("string"))
+        assertThat(rest.toString(), `is`("abc"))
     }
 
     // endregion
@@ -99,11 +109,13 @@ class ItemTest : TestCase() {
         assertThat(xcc.content, `is`("[1, 2]"))
         assertThat<String>(xcc.contentType, `is`("application/json"))
         assertThat(xcc.itemType, `is`("array-node()"))
+        assertThat(xcc.toString(), `is`("[1, 2]"))
 
         val rest = Item.create("[1, 2]", "application/json", "array-node()")
         assertThat(rest.content, `is`("[1, 2]"))
         assertThat<String>(rest.contentType, `is`("application/json"))
         assertThat(rest.itemType, `is`("array-node()"))
+        assertThat(rest.toString(), `is`("[1, 2]"))
     }
 
     @Query("<a b='c'/>/@*")
@@ -112,11 +124,13 @@ class ItemTest : TestCase() {
         assertThat(xcc.content, `is`("c"))
         assertThat<String>(xcc.contentType, `is`("text/plain"))
         assertThat(xcc.itemType, `is`("attribute()"))
+        assertThat(xcc.toString(), `is`("c"))
 
         val rest = Item.create("c", "text/plain", "attribute()")
         assertThat(rest.content, `is`("c"))
         assertThat<String>(rest.contentType, `is`("text/plain"))
         assertThat(rest.itemType, `is`("attribute()"))
+        assertThat(rest.toString(), `is`("c"))
     }
 
     @Query("binary { 'ab' }")
@@ -125,11 +139,13 @@ class ItemTest : TestCase() {
         assertThat(xcc.content, `is`("«"))
         assertThat<String>(xcc.contentType, `is`("application/octet-stream"))
         assertThat(xcc.itemType, `is`("binary()"))
+        assertThat(xcc.toString(), `is`("«"))
 
         val rest = Item.create("«", "application/x-unknown-content-type", "binary()")
         assertThat(rest.content, `is`("«"))
         assertThat<String>(rest.contentType, `is`("application/octet-stream"))
         assertThat(rest.itemType, `is`("binary()"))
+        assertThat(rest.toString(), `is`("«"))
     }
 
     @Query("boolean-node { true() }")
@@ -138,11 +154,13 @@ class ItemTest : TestCase() {
         assertThat(xcc.content, `is`("true"))
         assertThat<String>(xcc.contentType, `is`("application/json"))
         assertThat(xcc.itemType, `is`("boolean-node()"))
+        assertThat(xcc.toString(), `is`("true"))
 
         val rest = Item.create("true", "application/json", "boolean-node()")
         assertThat(rest.content, `is`("true"))
         assertThat<String>(rest.contentType, `is`("application/json"))
         assertThat(rest.itemType, `is`("boolean-node()"))
+        assertThat(rest.toString(), `is`("true"))
     }
 
     @Query("<!-- a -->")
@@ -151,11 +169,13 @@ class ItemTest : TestCase() {
         assertThat(xcc.content, `is`("<!-- a -->"))
         assertThat<String>(xcc.contentType, `is`("text/plain"))
         assertThat(xcc.itemType, `is`("comment()"))
+        assertThat(xcc.toString(), `is`("<!-- a -->"))
 
         val rest = Item.create("<!-- a -->", "text/plain", "comment()")
         assertThat(rest.content, `is`("<!-- a -->"))
         assertThat<String>(rest.contentType, `is`("text/plain"))
         assertThat(rest.itemType, `is`("comment()"))
+        assertThat(rest.toString(), `is`("<!-- a -->"))
     }
 
     @Query("document { <a/> }")
@@ -164,11 +184,13 @@ class ItemTest : TestCase() {
         assertThat(xcc.content, `is`("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<a/>"))
         assertThat<String>(xcc.contentType, `is`("application/xml"))
         assertThat(xcc.itemType, `is`("document-node()"))
+        assertThat(xcc.toString(), `is`("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<a/>"))
 
         val rest = Item.create("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<a/>", "application/xml", "document-node()")
         assertThat(rest.content, `is`("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<a/>"))
         assertThat<String>(rest.contentType, `is`("application/xml"))
         assertThat(rest.itemType, `is`("document-node()"))
+        assertThat(rest.toString(), `is`("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<a/>"))
     }
 
     @Query("<a/>")
@@ -177,11 +199,13 @@ class ItemTest : TestCase() {
         assertThat(xcc.content, `is`("<a/>"))
         assertThat<String>(xcc.contentType, `is`("application/xml"))
         assertThat(xcc.itemType, `is`("element()"))
+        assertThat(xcc.toString(), `is`("<a/>"))
 
         val rest = Item.create("<a/>", "application/xml", "element()")
         assertThat(rest.content, `is`("<a/>"))
         assertThat<String>(rest.contentType, `is`("application/xml"))
         assertThat(rest.itemType, `is`("element()"))
+        assertThat(rest.toString(), `is`("<a/>"))
     }
 
     @Query("null-node {}")
@@ -190,11 +214,13 @@ class ItemTest : TestCase() {
         assertThat(xcc.content, `is`("null"))
         assertThat<String>(xcc.contentType, `is`("application/json"))
         assertThat(xcc.itemType, `is`("null-node()"))
+        assertThat(xcc.toString(), `is`("null"))
 
         val rest = Item.create("null", "application/json", "null-node()")
         assertThat(rest.content, `is`("null"))
         assertThat<String>(rest.contentType, `is`("application/json"))
         assertThat(rest.itemType, `is`("null-node()"))
+        assertThat(rest.toString(), `is`("null"))
     }
 
     @Query("number-node { 2 }")
@@ -203,11 +229,13 @@ class ItemTest : TestCase() {
         assertThat(xcc.content, `is`("2"))
         assertThat<String>(xcc.contentType, `is`("application/json"))
         assertThat(xcc.itemType, `is`("number-node()"))
+        assertThat(xcc.toString(), `is`("2"))
 
         val rest = Item.create("2", "application/json", "number-node()")
         assertThat(rest.content, `is`("2"))
         assertThat<String>(rest.contentType, `is`("application/json"))
         assertThat(rest.itemType, `is`("number-node()"))
+        assertThat(rest.toString(), `is`("2"))
     }
 
     @Query("object-node { 1: 2 }")
@@ -216,11 +244,13 @@ class ItemTest : TestCase() {
         assertThat(xcc.content, `is`("{\"1\": 2}"))
         assertThat<String>(xcc.contentType, `is`("application/json"))
         assertThat(xcc.itemType, `is`("object-node()"))
+        assertThat(xcc.toString(), `is`("{\"1\": 2}"))
 
         val rest = Item.create("{\"1\": 2}", "application/json", "object-node()")
         assertThat(rest.content, `is`("{\"1\": 2}"))
         assertThat<String>(rest.contentType, `is`("application/json"))
         assertThat(rest.itemType, `is`("object-node()"))
+        assertThat(rest.toString(), `is`("{\"1\": 2}"))
     }
 
     @Query("<?a?>")
@@ -229,11 +259,13 @@ class ItemTest : TestCase() {
         assertThat(xcc.content, `is`("<?a?>"))
         assertThat<String>(xcc.contentType, `is`("text/plain"))
         assertThat(xcc.itemType, `is`("processing-instruction()"))
+        assertThat(xcc.toString(), `is`("<?a?>"))
 
         val rest = Item.create("<?a?>", "text/plain", "processing-instruction()")
         assertThat(rest.content, `is`("<?a?>"))
         assertThat<String>(rest.contentType, `is`("text/plain"))
         assertThat(rest.itemType, `is`("processing-instruction()"))
+        assertThat(rest.toString(), `is`("<?a?>"))
     }
 
     @Query("<a>abc</a>/text()")
@@ -242,11 +274,13 @@ class ItemTest : TestCase() {
         assertThat(xcc.content, `is`("abc"))
         assertThat<String>(xcc.contentType, `is`("text/plain"))
         assertThat(xcc.itemType, `is`("text()"))
+        assertThat(xcc.toString(), `is`("abc"))
 
         val rest = Item.create("abc", "text/plain", "text()")
         assertThat(rest.content, `is`("abc"))
         assertThat<String>(rest.contentType, `is`("text/plain"))
         assertThat(rest.itemType, `is`("text()"))
+        assertThat(rest.toString(), `is`("abc"))
     }
 
     // endregion
@@ -258,11 +292,13 @@ class ItemTest : TestCase() {
         assertThat(xcc.content, `is`("true"))
         assertThat<String>(xcc.contentType, `is`("text/plain"))
         assertThat(xcc.itemType, `is`("xs:boolean"))
+        assertThat(xcc.toString(), `is`("true"))
 
         val rest = Item.create("true", "text/plain", "boolean")
         assertThat(rest.content, `is`("true"))
         assertThat<String>(rest.contentType, `is`("text/plain"))
         assertThat(rest.itemType, `is`("boolean"))
+        assertThat(rest.toString(), `is`("true"))
     }
 
     @Query("map:map()")
@@ -271,11 +307,13 @@ class ItemTest : TestCase() {
         assertThat(xcc.content, `is`("{}"))
         assertThat<String>(xcc.contentType, `is`("application/json"))
         assertThat(xcc.itemType, `is`("map:map"))
+        assertThat(xcc.toString(), `is`("{}"))
 
         val rest = Item.create("{}", "text/plain", "map")
         assertThat(rest.content, `is`("{}"))
         assertThat<String>(rest.contentType, `is`("application/json"))
         assertThat(rest.itemType, `is`("map:map"))
+        assertThat(rest.toString(), `is`("{}"))
     }
 
     // endregion
@@ -287,11 +325,13 @@ class ItemTest : TestCase() {
         assertThat(xcc.content, `is`("1.5"))
         assertThat<String>(xcc.contentType, `is`("text/plain"))
         assertThat(xcc.itemType, `is`("xs:float"))
+        assertThat(xcc.toString(), `is`("1.5"))
 
         val rest = Item.create("1.5", "text/plain", "float")
         assertThat(rest.content, `is`("1.5"))
         assertThat<String>(rest.contentType, `is`("text/plain"))
         assertThat(rest.itemType, `is`("float"))
+        assertThat(xcc.toString(), `is`("1.5"))
     }
 
     @Query("xs:yearMonthDuration('P2Y')")
@@ -300,11 +340,13 @@ class ItemTest : TestCase() {
         assertThat(xcc.content, `is`("P2Y"))
         assertThat<String>(xcc.contentType, `is`("text/plain"))
         assertThat(xcc.itemType, `is`("xs:yearMonthDuration"))
+        assertThat(xcc.toString(), `is`("P2Y"))
 
         val rest = Item.create("P2Y", "text/plain", "yearMonthDuration")
         assertThat(rest.content, `is`("P2Y"))
         assertThat<String>(rest.contentType, `is`("text/plain"))
         assertThat(rest.itemType, `is`("yearMonthDuration"))
+        assertThat(xcc.toString(), `is`("P2Y"))
     }
 
     // endregion

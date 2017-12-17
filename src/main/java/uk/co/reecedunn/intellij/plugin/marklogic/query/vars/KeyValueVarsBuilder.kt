@@ -33,7 +33,7 @@ object KeyValueVarsBuilder : VarsBuilder {
             builder.append(", ")
         }
 
-        builder.append("$key, ${value.content}")
+        builder.append("$key, $value")
     }
 
     override fun end(builder: StringBuilder) {

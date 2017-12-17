@@ -32,6 +32,10 @@ private fun getContentTypeForItemType(itemType: String): String {
 }
 
 class Item private constructor(val content: String, val contentType: String, val itemType: String) {
+    override fun toString(): String {
+        return content
+    }
+
     companion object {
         fun create(content: String, contentType: String, itemType: String): Item {
             val type =
