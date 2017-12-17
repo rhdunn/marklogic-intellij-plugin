@@ -67,7 +67,7 @@ class RestResponseTest : TestCase() {
 
         assertThat(items[0].content, `is`("15"))
         assertThat<String>(items[0].contentType, `is`("text/plain"))
-        assertThat(items[0].itemType, `is`("integer"))
+        assertThat(items[0].itemType, `is`("xs:integer"))
     }
 
     @Query("(1, 5)")
@@ -95,11 +95,11 @@ class RestResponseTest : TestCase() {
 
         assertThat(items[0].content, `is`("1"))
         assertThat<String>(items[0].contentType, `is`("text/plain"))
-        assertThat(items[0].itemType, `is`("integer"))
+        assertThat(items[0].itemType, `is`("xs:integer"))
 
         assertThat(items[1].content, `is`("5"))
         assertThat<String>(items[1].contentType, `is`("text/plain"))
-        assertThat(items[1].itemType, `is`("integer"))
+        assertThat(items[1].itemType, `is`("xs:integer"))
     }
 
     @Query("DESCRIBE <>")

@@ -20,6 +20,23 @@ import java.math.BigInteger
 
 fun primitiveToItemType(primitive: String): String {
     return when (primitive) {
+        // XMLSchema types ======================
+        // - `xs:integer` includes other integer-like types, such as `xs:byte`.
+        // - `xs:string` includes other string-like types, such as `xs:language`.
+        "anyURI",
+        "base64Binary", "boolean",
+        "date", "dateTime", "dayTimeDuration", "decimal", "double", "duration",
+        "float",
+        "gDay", "gMonth", "gMonthDay", "gYear", "gYearMonth",
+        "hexBinary",
+        "integer",
+        "QName",
+        "string",
+        "time",
+        "untypedAtomic",
+        "yearMonthDuration" ->
+            "xs:$primitive"
+        // other types ==========================
         else -> primitive
     }
 }

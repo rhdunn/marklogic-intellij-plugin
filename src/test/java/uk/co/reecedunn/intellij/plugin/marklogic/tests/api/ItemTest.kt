@@ -26,7 +26,7 @@ import java.math.BigDecimal
 import java.math.BigInteger
 
 class ItemTest : TestCase() {
-    // region primitiveToItemType
+    // region primitiveToItemType :: node types
 
     fun testPrimitiveToItemType_NodeTypes() {
         assertThat(primitiveToItemType("array-node()"), `is`("array-node()"))
@@ -42,6 +42,34 @@ class ItemTest : TestCase() {
         assertThat(primitiveToItemType("object-node()"), `is`("object-node()"))
         assertThat(primitiveToItemType("processing-instruction()"), `is`("processing-instruction()"))
         assertThat(primitiveToItemType("text()"), `is`("text()"))
+    }
+
+    // endregion
+    // region primitiveToItemType :: XMLSchema
+
+    fun testPrimitiveToItemType_XMLSchema() {
+        assertThat(primitiveToItemType("anyURI"), `is`("xs:anyURI"))
+        assertThat(primitiveToItemType("base64Binary"), `is`("xs:base64Binary"))
+        assertThat(primitiveToItemType("boolean"), `is`("xs:boolean"))
+        assertThat(primitiveToItemType("date"), `is`("xs:date"))
+        assertThat(primitiveToItemType("dateTime"), `is`("xs:dateTime"))
+        assertThat(primitiveToItemType("dayTimeDuration"), `is`("xs:dayTimeDuration"))
+        assertThat(primitiveToItemType("decimal"), `is`("xs:decimal"))
+        assertThat(primitiveToItemType("double"), `is`("xs:double"))
+        assertThat(primitiveToItemType("duration"), `is`("xs:duration"))
+        assertThat(primitiveToItemType("float"), `is`("xs:float"))
+        assertThat(primitiveToItemType("gDay"), `is`("xs:gDay"))
+        assertThat(primitiveToItemType("gMonth"), `is`("xs:gMonth"))
+        assertThat(primitiveToItemType("gMonthDay"), `is`("xs:gMonthDay"))
+        assertThat(primitiveToItemType("gYear"), `is`("xs:gYear"))
+        assertThat(primitiveToItemType("gYearMonth"), `is`("xs:gYearMonth"))
+        assertThat(primitiveToItemType("hexBinary"), `is`("xs:hexBinary"))
+        assertThat(primitiveToItemType("integer"), `is`("xs:integer"))
+        assertThat(primitiveToItemType("QName"), `is`("xs:QName"))
+        assertThat(primitiveToItemType("string"), `is`("xs:string"))
+        assertThat(primitiveToItemType("time"), `is`("xs:time"))
+        assertThat(primitiveToItemType("untypedAtomic"), `is`("xs:untypedAtomic"))
+        assertThat(primitiveToItemType("yearMonthDuration"), `is`("xs:yearMonthDuration"))
     }
 
     // endregion
