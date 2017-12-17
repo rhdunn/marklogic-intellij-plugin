@@ -21,12 +21,12 @@ class Item private constructor(val content: String, val contentType: String, val
     }
 
     companion object {
-        fun create(content: String, contentType: String, itemType: String): Item {
-            return Item(content, contentType, itemType)
+        fun create(content: String, itemType: String): Item {
+            return Item(content, "text/plain", itemType)
         }
 
-        fun create(content: String, itemType: String): Item {
-            return create(content, "text/plain", itemType)
+        fun withMimeType(content: String, contentType: String): Item {
+            return Item(content, contentType, "string")
         }
     }
 }

@@ -92,7 +92,7 @@ object MarkLogicLogFile {
                     LogLevel.parse(groups[3]),
                     appserver,
                     groups[6] == "+",
-                    Item.create(message, "text/plain", "xs:string"))
+                    Item.create(message, "string"))
             } ?: return@map if (line.isEmpty())
                 null
             else

@@ -23,18 +23,27 @@ import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat
 
 class ItemTest : TestCase() {
+    // region Item.create :: empty-sequence()
+
     @Query("()")
     fun testEmptySequence() {
-        val xcc = Item.create("()", "empty-sequence()")
-        assertThat(xcc.content, `is`("()"))
-        assertThat<String>(xcc.contentType, `is`("text/plain"))
-        assertThat(xcc.itemType, `is`("empty-sequence()"))
-        assertThat(xcc.toString(), `is`("()"))
-
-        val rest = Item.create("()", "text/plain", "empty-sequence()")
-        assertThat(rest.content, `is`("()"))
-        assertThat<String>(rest.contentType, `is`("text/plain"))
-        assertThat(rest.itemType, `is`("empty-sequence()"))
-        assertThat(rest.toString(), `is`("()"))
+        val item = Item.create("()", "empty-sequence()")
+        assertThat(item.content, `is`("()"))
+        assertThat<String>(item.contentType, `is`("text/plain"))
+        assertThat(item.itemType, `is`("empty-sequence()"))
+        assertThat(item.toString(), `is`("()"))
     }
+
+    // endregion
+    // region Item.withMimeType
+
+    fun testWithMimeType() {
+        val item = Item.withMimeType("<>", "text/turtle")
+        assertThat(item.content, `is`("<>"))
+        assertThat<String>(item.contentType, `is`("text/turtle"))
+        assertThat(item.itemType, `is`("string"))
+        assertThat(item.toString(), `is`("<>"))
+    }
+
+    // endregion
 }

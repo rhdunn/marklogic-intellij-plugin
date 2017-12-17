@@ -30,7 +30,7 @@ class XCCResponse internal constructor(private val resultSequence: ResultSequenc
             items.add(Item.create(result.asString(), result.itemType.toString()))
         }
         if (items.isEmpty()) {
-            items.add(Item.create("()", "text/plain", "empty-sequence()"))
+            items.add(Item.create("()", "empty-sequence()"))
         }
         return items.toTypedArray()
     }

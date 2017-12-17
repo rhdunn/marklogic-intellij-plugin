@@ -28,7 +28,7 @@ class RestResponse(private val response: MimeResponse) : Response {
         val statusCode = response.status.statusCode
         if (statusCode != 200) {
             val part = response.parts[0]
-            val message = Item.create(part.body, part.getHeader("Content-Type")!!, "xs:string")
+            val message = Item.withMimeType(part.body, part.getHeader("Content-Type")!!)
             throw ResponseException(statusCode, response.status.reasonPhrase, message)
         }
 
@@ -36,16 +36,15 @@ class RestResponse(private val response: MimeResponse) : Response {
         val internalContentType = response.getHeader("X-Content-Type")
         for (part in response.parts) {
             val contentType = part.getHeader("Content-Type") ?: continue
-
-            val primitive = part.getHeader("X-Primitive")
             if (internalContentType == null) {
-                items.add(Item.create(part.body, contentType, primitive!!))
+                val primitive = part.getHeader("X-Primitive")
+                items.add(Item.create(part.body, primitive!!))
             } else {
-                items.add(Item.create(part.body, internalContentType, primitive!!))
+                items.add(Item.withMimeType(part.body, internalContentType))
             }
         }
         if (items.isEmpty()) {
-            items.add(Item.create("()", "text/plain", "empty-sequence()"))
+            items.add(Item.create("()", "empty-sequence()"))
         }
         return items.toTypedArray()
     }
