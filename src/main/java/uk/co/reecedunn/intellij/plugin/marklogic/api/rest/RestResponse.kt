@@ -19,6 +19,7 @@ import uk.co.reecedunn.intellij.plugin.marklogic.api.Item
 import uk.co.reecedunn.intellij.plugin.marklogic.api.Response
 import uk.co.reecedunn.intellij.plugin.marklogic.api.ResponseException
 import uk.co.reecedunn.intellij.plugin.marklogic.api.mime.MimeResponse
+import uk.co.reecedunn.intellij.plugin.marklogic.api.primitiveToItemType
 
 import java.io.IOException
 import java.util.ArrayList
@@ -38,7 +39,7 @@ class RestResponse(private val response: MimeResponse) : Response {
             val contentType = part.getHeader("Content-Type") ?: continue
             if (internalContentType == null) {
                 val primitive = part.getHeader("X-Primitive")
-                items.add(Item.create(part.body, primitive!!))
+                items.add(Item.create(part.body, primitiveToItemType(primitive!!)))
             } else {
                 items.add(Item.withMimeType(part.body, internalContentType))
             }

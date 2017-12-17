@@ -18,6 +18,12 @@ package uk.co.reecedunn.intellij.plugin.marklogic.api
 import java.math.BigDecimal
 import java.math.BigInteger
 
+fun primitiveToItemType(primitive: String): String {
+    return when (primitive) {
+        else -> primitive
+    }
+}
+
 class Item private constructor(val content: String, val contentType: String, val itemType: String) {
     override fun toString(): String {
         return content

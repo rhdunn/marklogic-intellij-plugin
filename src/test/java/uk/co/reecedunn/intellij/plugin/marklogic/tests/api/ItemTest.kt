@@ -21,10 +21,30 @@ import uk.co.reecedunn.intellij.plugin.marklogic.tests.Query
 
 import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat
+import uk.co.reecedunn.intellij.plugin.marklogic.api.primitiveToItemType
 import java.math.BigDecimal
 import java.math.BigInteger
 
 class ItemTest : TestCase() {
+    // region primitiveToItemType
+
+    fun testPrimitiveToItemType_NodeTypes() {
+        assertThat(primitiveToItemType("array-node()"), `is`("array-node()"))
+        assertThat(primitiveToItemType("attribute()"), `is`("attribute()"))
+        assertThat(primitiveToItemType("binary()"), `is`("binary()"))
+        assertThat(primitiveToItemType("boolean-node()"), `is`("boolean-node()"))
+        assertThat(primitiveToItemType("comment()"), `is`("comment()"))
+        assertThat(primitiveToItemType("document-node()"), `is`("document-node()"))
+        assertThat(primitiveToItemType("element()"), `is`("element()"))
+        assertThat(primitiveToItemType("node()"), `is`("node()"))
+        assertThat(primitiveToItemType("null-node()"), `is`("null-node()"))
+        assertThat(primitiveToItemType("number-node()"), `is`("number-node()"))
+        assertThat(primitiveToItemType("object-node()"), `is`("object-node()"))
+        assertThat(primitiveToItemType("processing-instruction()"), `is`("processing-instruction()"))
+        assertThat(primitiveToItemType("text()"), `is`("text()"))
+    }
+
+    // endregion
     // region Item.create :: empty-sequence()
 
     @Query("()")
