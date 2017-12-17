@@ -46,7 +46,7 @@ class MarkLogicLogFileTest : TestCase() {
         assertThat(entry.level, `is`(LogLevel.INFO))
         assertThat<String>(entry.appserver, `is`(nullValue()))
         assertThat(entry.continuation, `is`(false))
-        assertThat(entry.message.itemType, `is`("string"))
+        assertThat(entry.message.itemType, `is`("xs:string"))
         assertThat(entry.message.contentType, `is`("text/plain"))
         assertThat(entry.message.content, `is`("Lorem ipsum dolor"))
 
@@ -57,7 +57,7 @@ class MarkLogicLogFileTest : TestCase() {
         assertThat(entry.level, `is`(LogLevel.NOTICE))
         assertThat<String>(entry.appserver, `is`(nullValue()))
         assertThat(entry.continuation, `is`(false))
-        assertThat(entry.message.itemType, `is`("string"))
+        assertThat(entry.message.itemType, `is`("xs:string"))
         assertThat(entry.message.contentType, `is`("text/plain"))
         assertThat(entry.message.content, `is`("Alpha beta gamma"))
 
@@ -76,7 +76,7 @@ class MarkLogicLogFileTest : TestCase() {
         assertThat(entry.level, `is`(LogLevel.DEBUG))
         assertThat<String>(entry.appserver, `is`(MarkLogicAppServer.TASKSERVER.appserver))
         assertThat(entry.continuation, `is`(false))
-        assertThat(entry.message.itemType, `is`("string"))
+        assertThat(entry.message.itemType, `is`("xs:string"))
         assertThat(entry.message.contentType, `is`("text/plain"))
         assertThat(entry.message.content, `is`("Lorem ipsum dolor"))
 
@@ -95,7 +95,7 @@ class MarkLogicLogFileTest : TestCase() {
         assertThat(entry.level, `is`(LogLevel.DEBUG))
         assertThat<String>(entry.appserver, `is`("abc-2d_3e"))
         assertThat(entry.continuation, `is`(false))
-        assertThat(entry.message.itemType, `is`("string"))
+        assertThat(entry.message.itemType, `is`("xs:string"))
         assertThat(entry.message.contentType, `is`("text/plain"))
         assertThat(entry.message.content, `is`("Lorem ipsum dolor"))
 
@@ -114,7 +114,7 @@ class MarkLogicLogFileTest : TestCase() {
         assertThat(entry.level, `is`(LogLevel.INFO))
         assertThat<String>(entry.appserver, `is`(nullValue()))
         assertThat(entry.continuation, `is`(false))
-        assertThat(entry.message.itemType, `is`("string"))
+        assertThat(entry.message.itemType, `is`("xs:string"))
         assertThat(entry.message.contentType, `is`("text/plain"))
         assertThat(entry.message.content, `is`("Alpha"))
 
@@ -125,7 +125,7 @@ class MarkLogicLogFileTest : TestCase() {
         assertThat(entry.level, `is`(LogLevel.INFO))
         assertThat<String>(entry.appserver, `is`(nullValue()))
         assertThat(entry.continuation, `is`(true))
-        assertThat(entry.message.itemType, `is`("string"))
+        assertThat(entry.message.itemType, `is`("xs:string"))
         assertThat(entry.message.contentType, `is`("text/plain"))
         assertThat(entry.message.content, `is`("Beta"))
 

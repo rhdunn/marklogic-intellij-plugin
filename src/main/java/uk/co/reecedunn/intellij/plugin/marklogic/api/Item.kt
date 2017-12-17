@@ -15,6 +15,9 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.api
 
+import java.math.BigDecimal
+import java.math.BigInteger
+
 class Item private constructor(val content: String, val contentType: String, val itemType: String) {
     override fun toString(): String {
         return content
@@ -23,6 +26,22 @@ class Item private constructor(val content: String, val contentType: String, val
     companion object {
         fun create(content: String, itemType: String): Item {
             return Item(content, "text/plain", itemType)
+        }
+
+        fun fromType(value: Any): Item {
+            return when (value) {
+                is BigDecimal -> create(value.toString(), "xs:decimal")
+                is BigInteger -> create(value.toString(), "xs:integer")
+                is Boolean -> create(value.toString(), "xs:boolean")
+                is Byte -> create(value.toString(), "xs:byte")
+                is Double -> create(value.toString(), "xs:double")
+                is Float -> create(value.toString(), "xs:float")
+                is Int -> create(value.toString(), "xs:int")
+                is Long -> create(value.toString(), "xs:long")
+                is Short -> create(value.toString(), "xs:short")
+                is String -> create(value.toString(), "xs:string")
+                else -> throw RuntimeException("Unsupported type: ${value.javaClass.name}")
+            }
         }
 
         fun withMimeType(content: String, contentType: String): Item {

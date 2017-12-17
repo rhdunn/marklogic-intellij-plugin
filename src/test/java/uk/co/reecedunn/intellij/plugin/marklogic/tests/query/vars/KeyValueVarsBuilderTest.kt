@@ -39,7 +39,7 @@ class KeyValueVarsBuilderTest : TestCase() {
         val vars = StringBuilder()
 
         builder.start(vars)
-        builder.add(vars, QName(null, "x"), Item.create("2", "xs:integer"))
+        builder.add(vars, QName(null, "x"), Item.fromType(2))
         builder.end(vars)
 
         assertThat(vars.toString(), `is`("(xs:QName(\"x\"), 2)"))
@@ -50,8 +50,8 @@ class KeyValueVarsBuilderTest : TestCase() {
         val vars = StringBuilder()
 
         builder.start(vars)
-        builder.add(vars, QName(null, "r"), Item.create("5.7", "xs:double"))
-        builder.add(vars, QName(null, "theta"), Item.create("0.5265", "xs:double"))
+        builder.add(vars, QName(null, "r"), Item.fromType(5.7))
+        builder.add(vars, QName(null, "theta"), Item.fromType(0.5265))
         builder.end(vars)
 
         assertThat(vars.toString(), `is`("(xs:QName(\"r\"), 5.7, xs:QName(\"theta\"), 0.5265)"))
