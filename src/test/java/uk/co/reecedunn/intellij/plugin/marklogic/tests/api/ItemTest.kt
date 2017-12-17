@@ -153,7 +153,7 @@ class ItemTest : TestCase() {
         val item = Item.withMimeType("<>", "text/turtle")
         assertThat(item.content, `is`("<>"))
         assertThat<String>(item.contentType, `is`("text/turtle"))
-        assertThat(item.itemType, `is`("string"))
+        assertThat(item.itemType, `is`("xs:string"))
         assertThat(item.toString(), `is`("<>"))
     }
 

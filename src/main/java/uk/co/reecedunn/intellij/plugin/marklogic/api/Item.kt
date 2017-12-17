@@ -45,7 +45,7 @@ class Item private constructor(val content: String, val contentType: String, val
         }
 
         fun withMimeType(content: String, contentType: String): Item {
-            return Item(content, contentType, "string")
+            return Item(content, contentType, "xs:string")
         }
     }
 }

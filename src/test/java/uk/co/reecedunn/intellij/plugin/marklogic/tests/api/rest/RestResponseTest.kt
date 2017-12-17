@@ -131,6 +131,6 @@ class RestResponseTest : TestCase() {
             "p0:case a skos:Concept .\r\n"
         assertThat(items[0].content, `is`(triples))
         assertThat<String>(items[0].contentType, `is`("text/turtle"))
-        assertThat(items[0].itemType, `is`("string"))
+        assertThat(items[0].itemType, `is`("xs:string"))
     }
 }
