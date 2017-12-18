@@ -26,13 +26,13 @@ class QNameTest : TestCase() {
         val ncname = QName(null, "test")
         assertThat(ncname.namespace, `is`(nullValue()))
         assertThat(ncname.localname, `is`("test"))
-        assertThat(ncname.toString(), `is`("xs:QName(\"test\")"))
+        assertThat(ncname.toString(), `is`("fn:QName((), \"test\")"))
     }
 
     fun testQName() {
-        val qname = QName("xs", "string")
-        assertThat(qname.namespace, `is`("xs"))
+        val qname = QName("http://www.w3.org/2001/XMLSchema", "string")
+        assertThat(qname.namespace, `is`("http://www.w3.org/2001/XMLSchema"))
         assertThat(qname.localname, `is`("string"))
-        assertThat(qname.toString(), `is`("xs:QName(\"xs\", \"string\")"))
+        assertThat(qname.toString(), `is`("fn:QName(\"http://www.w3.org/2001/XMLSchema\", \"string\")"))
     }
 }

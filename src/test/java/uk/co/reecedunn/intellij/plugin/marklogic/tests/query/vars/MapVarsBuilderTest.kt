@@ -45,7 +45,7 @@ class MapVarsBuilderTest : TestCase() {
 
         val expected =
             "let \$vars := map:map()\n" +
-            "let \$_ := map:put(\$vars, xdmp:key-from-QName(xs:QName(\"x\")), 2)\n" +
+            "let \$_ := map:put(\$vars, xdmp:key-from-QName(fn:QName((), \"x\")), 2)\n" +
             "return \$vars\n"
         assertThat(vars.toString(), `is`(expected))
     }
@@ -61,8 +61,8 @@ class MapVarsBuilderTest : TestCase() {
 
         val expected =
             "let \$vars := map:map()\n" +
-            "let \$_ := map:put(\$vars, xdmp:key-from-QName(xs:QName(\"r\")), 5.7)\n" +
-            "let \$_ := map:put(\$vars, xdmp:key-from-QName(xs:QName(\"theta\")), 0.5265)\n" +
+            "let \$_ := map:put(\$vars, xdmp:key-from-QName(fn:QName((), \"r\")), 5.7)\n" +
+            "let \$_ := map:put(\$vars, xdmp:key-from-QName(fn:QName((), \"theta\")), 0.5265)\n" +
             "return \$vars\n"
         assertThat(vars.toString(), `is`(expected))
     }

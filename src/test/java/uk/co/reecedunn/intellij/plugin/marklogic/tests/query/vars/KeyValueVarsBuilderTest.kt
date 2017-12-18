@@ -42,7 +42,7 @@ class KeyValueVarsBuilderTest : TestCase() {
         builder.add(vars, QName(null, "x"), Item.fromType(2))
         builder.end(vars)
 
-        assertThat(vars.toString(), `is`("(xs:QName(\"x\"), 2)"))
+        assertThat(vars.toString(), `is`("(fn:QName((), \"x\"), 2)"))
     }
 
     fun testVarsMultiple() {
@@ -54,6 +54,6 @@ class KeyValueVarsBuilderTest : TestCase() {
         builder.add(vars, QName(null, "theta"), Item.fromType(0.5265))
         builder.end(vars)
 
-        assertThat(vars.toString(), `is`("(xs:QName(\"r\"), 5.7, xs:QName(\"theta\"), 0.5265)"))
+        assertThat(vars.toString(), `is`("(fn:QName((), \"r\"), 5.7, fn:QName((), \"theta\"), 0.5265)"))
     }
 }
