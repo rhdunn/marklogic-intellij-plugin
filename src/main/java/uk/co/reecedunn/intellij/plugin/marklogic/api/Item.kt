@@ -20,6 +20,13 @@ import java.math.BigInteger
 
 fun primitiveToItemType(primitive: String): String {
     return when (primitive) {
+        // JSON types ===========================
+        // - `json:null()` is equivalent to `()`, so is not returned as a primitive name.
+        "map" ->
+            "map:map"
+        "array",
+        "object" ->
+            "json:$primitive"
         // XMLSchema types ======================
         // - `xs:integer` includes other integer-like types, such as `xs:byte`.
         // - `xs:string` includes other string-like types, such as `xs:language`.
@@ -37,6 +44,10 @@ fun primitiveToItemType(primitive: String): String {
         "yearMonthDuration" ->
             "xs:$primitive"
         // other types ==========================
+        // - Don't throw an error here, so unknown types will still work
+        //   (unlike with the XCC API).
+        // - This also handles node types that have the same name as the
+        //   primitive.
         else -> primitive
     }
 }

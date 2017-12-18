@@ -45,6 +45,15 @@ class ItemTest : TestCase() {
     }
 
     // endregion
+    // region primitiveToItemType :: MarkLogic types
+
+    fun testPrimitiveToItemType_MarkLogicTypes() {
+        assertThat(primitiveToItemType("array"), `is`("json:array"))
+        assertThat(primitiveToItemType("map"), `is`("map:map"))
+        assertThat(primitiveToItemType("object"), `is`("json:object"))
+    }
+
+    // endregion
     // region primitiveToItemType :: XMLSchema
 
     fun testPrimitiveToItemType_XMLSchema() {
