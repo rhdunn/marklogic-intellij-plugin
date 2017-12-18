@@ -37,14 +37,21 @@ fun primitiveToItemType(primitive: String): String {
             "cts:$primitive"
         // JSON types ===========================
         // - `json:null()` is equivalent to `()`, so is not returned as a primitive name.
+        // - `map` includes other map-like types, such as `sem:binding`.
         "map" ->
             "map:map"
         "array",
         "object" ->
             "json:$primitive"
+        // Semantics types ======================
+        "store",
+        "triple" ->
+            "sem:$primitive"
         // XMLSchema types ======================
+        // - `xs:anyURI` includes other URI-like types, such as `sem:bnode` and `sem:iri`.
         // - `xs:integer` includes other integer-like types, such as `xs:byte`.
         // - `xs:string` includes other string-like types, such as `xs:language` and `cts:token`.
+        // - `xs:untypedAtomic` includes other atomic-like types, such as `sem:invalid` and `sem:unknown`.
         "anyURI",
         "base64Binary", "boolean",
         "date", "dateTime", "dayTimeDuration", "decimal", "double", "duration",

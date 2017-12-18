@@ -59,6 +59,8 @@ class ItemTest : TestCase() {
         assertThat(primitiveToItemType("point"), `is`("cts:point"))
         assertThat(primitiveToItemType("polygon"), `is`("cts:polygon"))
         assertThat(primitiveToItemType("region"), `is`("cts:region"))
+        assertThat(primitiveToItemType("store"), `is`("sem:store"))
+        assertThat(primitiveToItemType("triple"), `is`("sem:triple"))
 
         // CTS order types
         assertThat(primitiveToItemType("confidence-order"), `is`("cts:confidence-order"))
