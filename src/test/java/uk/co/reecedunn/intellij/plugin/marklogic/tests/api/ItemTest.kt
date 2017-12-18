@@ -49,8 +49,35 @@ class ItemTest : TestCase() {
 
     fun testPrimitiveToItemType_MarkLogicTypes() {
         assertThat(primitiveToItemType("array"), `is`("json:array"))
+        assertThat(primitiveToItemType("box"), `is`("cts:box"))
+        assertThat(primitiveToItemType("circle"), `is`("cts:circle"))
+        assertThat(primitiveToItemType("complex-polygon"), `is`("cts:complex-polygon"))
+        assertThat(primitiveToItemType("linestring"), `is`("cts:linestring"))
         assertThat(primitiveToItemType("map"), `is`("map:map"))
         assertThat(primitiveToItemType("object"), `is`("json:object"))
+        assertThat(primitiveToItemType("period"), `is`("cts:period"))
+        assertThat(primitiveToItemType("point"), `is`("cts:point"))
+        assertThat(primitiveToItemType("polygon"), `is`("cts:polygon"))
+        assertThat(primitiveToItemType("region"), `is`("cts:region"))
+
+        // CTS order types
+        assertThat(primitiveToItemType("confidence-order"), `is`("cts:confidence-order"))
+        assertThat(primitiveToItemType("document-order"), `is`("cts:document-order"))
+        assertThat(primitiveToItemType("fitness-order"), `is`("cts:fitness-order"))
+        assertThat(primitiveToItemType("index-order"), `is`("cts:index-order"))
+        assertThat(primitiveToItemType("quality-order"), `is`("cts:quality-order"))
+        assertThat(primitiveToItemType("score-order"), `is`("cts:score-order"))
+        assertThat(primitiveToItemType("unordered"), `is`("cts:unordered"))
+
+        // CTS query types (not a full list)
+        assertThat(primitiveToItemType("collection-query"), `is`("cts:collection-query"))
+        assertThat(primitiveToItemType("element-query"), `is`("cts:element-query"))
+        assertThat(primitiveToItemType("field-range-query"), `is`("cts:field-range-query"))
+
+        // CTS reference types (not a full list)
+        assertThat(primitiveToItemType("collection-reference"), `is`("cts:collection-reference"))
+        assertThat(primitiveToItemType("element-reference"), `is`("cts:element-reference"))
+        assertThat(primitiveToItemType("field-reference"), `is`("cts:field-reference"))
     }
 
     // endregion

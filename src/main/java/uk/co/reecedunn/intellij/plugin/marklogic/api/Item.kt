@@ -19,7 +19,22 @@ import java.math.BigDecimal
 import java.math.BigInteger
 
 fun primitiveToItemType(primitive: String): String {
-    return when (primitive) {
+    return if (primitive.endsWith("-order") ||
+               primitive.endsWith("-query") ||
+               primitive.endsWith("-reference"))
+        "cts:$primitive"
+    else when (primitive) {
+        // CTS types ============================
+        "box",
+        "circle",
+        "complex-polygon",
+        "linestring",
+        "period",
+        "point",
+        "polygon",
+        "region",
+        "unordered" ->
+            "cts:$primitive"
         // JSON types ===========================
         // - `json:null()` is equivalent to `()`, so is not returned as a primitive name.
         "map" ->
@@ -29,7 +44,7 @@ fun primitiveToItemType(primitive: String): String {
             "json:$primitive"
         // XMLSchema types ======================
         // - `xs:integer` includes other integer-like types, such as `xs:byte`.
-        // - `xs:string` includes other string-like types, such as `xs:language`.
+        // - `xs:string` includes other string-like types, such as `xs:language` and `cts:token`.
         "anyURI",
         "base64Binary", "boolean",
         "date", "dateTime", "dayTimeDuration", "decimal", "double", "duration",
