@@ -34,7 +34,8 @@ class RestResponseTest : TestCase() {
     @Query("()")
     fun testNoResults() {
         val body = ""
-        val headers = arrayOf<Header>(BasicHeader("Content-Length", Integer.toString(body.length)))
+        val headers = arrayOf<Header>(
+            BasicHeader("Content-Length", Integer.toString(body.length)))
 
         val response = RestResponse(MimeResponse(OK, headers, body))
         val items = response.items
@@ -57,7 +58,9 @@ class RestResponseTest : TestCase() {
             "\r\n" +
             "15\r\n" +
             "--10969f16ad1aac04--\r\n"
-        val headers = arrayOf<Header>(BasicHeader("Content-Length", Integer.toString(body.length)), BasicHeader("Content-Type", "multipart/mixed; boundary=10969f16ad1aac04"))
+        val headers = arrayOf<Header>(
+            BasicHeader("Content-Length", Integer.toString(body.length)),
+            BasicHeader("Content-Type", "multipart/mixed; boundary=10969f16ad1aac04"))
 
         val response = RestResponse(MimeResponse(OK, headers, body))
         val items = response.items
@@ -85,7 +88,9 @@ class RestResponseTest : TestCase() {
             "\r\n" +
             "5\r\n" +
             "--3cbb993599426124--\r\n"
-        val headers = arrayOf<Header>(BasicHeader("Content-Length", Integer.toString(body.length)), BasicHeader("Content-Type", "multipart/mixed; boundary=3cbb993599426124"))
+        val headers = arrayOf<Header>(
+            BasicHeader("Content-Length", Integer.toString(body.length)),
+            BasicHeader("Content-Type", "multipart/mixed; boundary=3cbb993599426124"))
 
         val response = RestResponse(MimeResponse(OK, headers, body))
         val items = response.items
@@ -116,7 +121,15 @@ class RestResponseTest : TestCase() {
             "p0:case a skos:Concept .\r\n" +
             "\r\n" +
             "--31c406fa29f12029--\r\n"
-        val headers = arrayOf<Header>(BasicHeader("Content-Length", Integer.toString(body.length)), BasicHeader("Content-Type", "multipart/mixed; boundary=31c406fa29f12029"), BasicHeader("X-Content-Type", "text/turtle"))
+        val headers = arrayOf<Header>(
+            BasicHeader("Content-Length", Integer.toString(body.length)),
+            BasicHeader("Content-Type", "multipart/mixed; boundary=31c406fa29f12029"),
+            // NOTE: The run-query-as-rdf.xqy script adds this 'X-Content-Type'
+            // header, since MarkLogic does not report the correct content type
+            // for the sem:rdf-serialize output, and setting the 'Content-Type'
+            // header overrides the above header, not the header of the part
+            // containing the RDF.
+            BasicHeader("X-Content-Type", "text/turtle"))
 
         val response = RestResponse(MimeResponse(OK, headers, body))
         val items = response.items
