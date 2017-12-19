@@ -23,7 +23,6 @@ class TestResource(val path: String) {
 
     val contents get(): String? =
         data?.let { String(IOUtils.toByteArray(it), Charsets.UTF_8) }
-        // String(IOUtils.toByteArray(data), Charsets.UTF_8)
 
     override fun toString(): String =
         contents!!

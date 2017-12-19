@@ -19,8 +19,17 @@
 
   <change-notes><![CDATA[
     <h3>Release 0.3-dev:</h3>
+    <p>Run Configuration:</p>
     <ol>
+      <li>Determine the MarkLogic version from the MarkLogic server.</li>
+    </ol>
+    <p>Bug Fixes:</p>
+    <ol>
+      <li>Report the correct namespace-qualified type names for types on MarkLogic &gt;= 8.0.</li>
       <li>Fix an exception when running queries with IntelliJ 2017.3.</li>
+      <li>Support MarkLogic version numbers like '9.0-3'.</li>
+      <li>Improve reporting various error conditions.</li>
+      <li>Add IntelliJ 2018.1 support.</li>
     </ol>
   ]]></change-notes>
 
