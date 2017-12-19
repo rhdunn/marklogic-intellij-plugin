@@ -116,9 +116,11 @@ class ItemTest : TestCase() {
     @Query("()")
     fun testEmptySequence() {
         val item = Item.create("()", "empty-sequence()")
+
         assertThat(item.content, `is`("()"))
         assertThat<String>(item.contentType, `is`("text/plain"))
         assertThat(item.itemType, `is`("empty-sequence()"))
+
         assertThat(item.toString(), `is`("()"))
     }
 
@@ -127,10 +129,10 @@ class ItemTest : TestCase() {
 
     fun testFromBigDecimal() {
         val item = Item.fromType(BigDecimal.valueOf(15, 1))
+
         assertThat(item.content, `is`("1.5"))
         assertThat<String>(item.contentType, `is`("text/plain"))
         assertThat(item.itemType, `is`("xs:decimal"))
-        assertThat(item.toString(), `is`("1.5"))
     }
 
     // endregion
@@ -138,10 +140,10 @@ class ItemTest : TestCase() {
 
     fun testFromBigInteger() {
         val item = Item.fromType(BigInteger.valueOf(15))
+
         assertThat(item.content, `is`("15"))
         assertThat<String>(item.contentType, `is`("text/plain"))
         assertThat(item.itemType, `is`("xs:integer"))
-        assertThat(item.toString(), `is`("15"))
     }
 
     // endregion
@@ -149,10 +151,10 @@ class ItemTest : TestCase() {
 
     fun testFromBoolean() {
         val item = Item.fromType(true)
+
         assertThat(item.content, `is`("true"))
         assertThat<String>(item.contentType, `is`("text/plain"))
         assertThat(item.itemType, `is`("xs:boolean"))
-        assertThat(item.toString(), `is`("true"))
     }
 
     // endregion
@@ -160,10 +162,10 @@ class ItemTest : TestCase() {
 
     fun testFromByte() {
         val item = Item.fromType(20.toByte())
+
         assertThat(item.content, `is`("20"))
         assertThat<String>(item.contentType, `is`("text/plain"))
         assertThat(item.itemType, `is`("xs:byte"))
-        assertThat(item.toString(), `is`("20"))
     }
 
     // endregion
@@ -171,10 +173,10 @@ class ItemTest : TestCase() {
 
     fun testFromDouble() {
         val item = Item.fromType(1.5)
+
         assertThat(item.content, `is`("1.5"))
         assertThat<String>(item.contentType, `is`("text/plain"))
         assertThat(item.itemType, `is`("xs:double"))
-        assertThat(item.toString(), `is`("1.5"))
     }
 
     // endregion
@@ -182,10 +184,10 @@ class ItemTest : TestCase() {
 
     fun testFromFloat() {
         val item = Item.fromType(1.5f)
+
         assertThat(item.content, `is`("1.5"))
         assertThat<String>(item.contentType, `is`("text/plain"))
         assertThat(item.itemType, `is`("xs:float"))
-        assertThat(item.toString(), `is`("1.5"))
     }
 
     // endregion
@@ -193,10 +195,10 @@ class ItemTest : TestCase() {
 
     fun testFromInteger() {
         val item = Item.fromType(15)
+
         assertThat(item.content, `is`("15"))
         assertThat<String>(item.contentType, `is`("text/plain"))
         assertThat(item.itemType, `is`("xs:int"))
-        assertThat(item.toString(), `is`("15"))
     }
 
     // endregion
@@ -204,10 +206,10 @@ class ItemTest : TestCase() {
 
     fun testFromLong() {
         val item = Item.fromType(15.toLong())
+
         assertThat(item.content, `is`("15"))
         assertThat<String>(item.contentType, `is`("text/plain"))
         assertThat(item.itemType, `is`("xs:long"))
-        assertThat(item.toString(), `is`("15"))
     }
 
     // endregion
@@ -215,10 +217,10 @@ class ItemTest : TestCase() {
 
     fun testFromShort() {
         val item = Item.fromType(15.toShort())
+
         assertThat(item.content, `is`("15"))
         assertThat<String>(item.contentType, `is`("text/plain"))
         assertThat(item.itemType, `is`("xs:short"))
-        assertThat(item.toString(), `is`("15"))
     }
 
     // endregion
@@ -226,10 +228,10 @@ class ItemTest : TestCase() {
 
     fun testFromString() {
         val item = Item.fromType("abc")
+
         assertThat(item.content, `is`("abc"))
         assertThat<String>(item.contentType, `is`("text/plain"))
         assertThat(item.itemType, `is`("xs:string"))
-        assertThat(item.toString(), `is`("abc"))
     }
 
     // endregion
@@ -237,10 +239,10 @@ class ItemTest : TestCase() {
 
     fun testWithMimeType() {
         val item = Item.withMimeType("<>", "text/turtle")
+
         assertThat(item.content, `is`("<>"))
         assertThat<String>(item.contentType, `is`("text/turtle"))
         assertThat(item.itemType, `is`("xs:string"))
-        assertThat(item.toString(), `is`("<>"))
     }
 
     // endregion
