@@ -57,10 +57,10 @@ class MarkLogicLogViewUI(private val mProject: Project) : LogViewActions {
         mLogText = MarkLogicLogView()
 
         mServer = MarkLogicServerComboBox()
-        mServer!!.addActionListener { e -> serverSelectionChanged() }
+        mServer!!.addActionListener { _ -> serverSelectionChanged() }
 
         mAppServer = ComboBox()
-        mAppServer!!.addActionListener { e -> appserverSelectionChanged() }
+        mAppServer!!.addActionListener { _ -> appserverSelectionChanged() }
 
         (mServer as? MarkLogicSettings.Listener)!!.serversChanged()
     }
