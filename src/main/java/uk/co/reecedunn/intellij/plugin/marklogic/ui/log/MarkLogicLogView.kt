@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Reece H. Dunn
+ * Copyright (C) 2017-2018 Reece H. Dunn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,11 +38,8 @@ private class LogViewFocusListener : FocusListener {
     }
 }
 
-class MarkLogicLogView: JTextPane() {
-    init {
-        isEditable = false
-        addFocusListener(LogViewFocusListener())
-    }
+class MarkLogicLogDocumentBuilder {
+    val doc = DefaultStyledDocument()
 
     private fun createTextAttributes(font: Font?, color: Color?): AttributeSet {
         val context = StyleContext.getDefaultStyleContext()
@@ -58,39 +55,42 @@ class MarkLogicLogView: JTextPane() {
         return attributes
     }
 
-    private fun appendLogEntry(doc: StyledDocument, entry: MarkLogicLogEntry, color: Color? = null) {
+    fun append(entry: MarkLogicLogEntry, color: Color? = null) {
         val separator = if (entry.continuation) '+' else ' '
-        doc.insertString(
-            doc.length,
-            "${entry.date} ${entry.time} ${entry.level.displayName}:${separator}${entry.message.content}\n",
-            createTextAttributes(UIManager.getFont("TextArea.font"), color))
+        append("${entry.date} ${entry.time} ${entry.level.displayName}:${separator}${entry.message.content}", color)
+    }
+
+    fun append(message: String, color: Color? = null) {
+        doc.insertString(0, "$message\n", createTextAttributes(UIManager.getFont("TextArea.font"), color))
+    }
+}
+
+class MarkLogicLogView: JTextPane() {
+    init {
+        isEditable = false
+        addFocusListener(LogViewFocusListener())
     }
 
     fun update(entries: Sequence<MarkLogicLogEntry>,
                appserverName: String?,
                marklogicVersion: MarkLogicVersion,
                settings: MarkLogicSettings?) {
-        val doc = styledDocument
-        doc.remove(0, doc.length)
+        val builder = MarkLogicLogDocumentBuilder()
         entries.forEach { entry ->
             val color = settings?.logColor(entry.level)
             if (marklogicVersion.major >= 9) {
-                appendLogEntry(doc, entry, color)
+                builder.append(entry, color)
             } else if (appserverName == entry.appserver) {
-                appendLogEntry(doc, entry, color)
+                builder.append(entry, color)
             }
         }
+        styledDocument = builder.doc
     }
 
     fun logException(e: Exception, settings: MarkLogicSettings?) {
-        val doc = styledDocument
-        doc.remove(0, doc.length)
-
-        val color = settings?.logColor(LogLevel.ERROR)
-        doc.insertString(
-            0,
-            "${e.message}\n",
-            createTextAttributes(UIManager.getFont("TextArea.font"), color))
+        val builder = MarkLogicLogDocumentBuilder()
+        e.message?.let { builder.append(it, settings?.logColor(LogLevel.ERROR)) }
+        styledDocument = builder.doc
     }
 
     // JTextComponent.getToolTipText can throw an NPE in some cases.
