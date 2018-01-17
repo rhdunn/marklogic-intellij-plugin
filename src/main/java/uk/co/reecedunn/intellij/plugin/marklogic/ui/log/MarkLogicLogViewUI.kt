@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Reece H. Dunn
+ * Copyright (C) 2017-2018 Reece H. Dunn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -73,7 +73,7 @@ class MarkLogicLogViewUI(private val mProject: Project) : LogViewActions {
         }
 
         ApplicationManager.getApplication().executeOnPooledThread {
-            (mAppServer as? ComboBox<MarkLogicAppServer>)!!.items = server.appservers
+            (mAppServer as? ComboBox<MarkLogicAppServer>)!!.items = server.appservers.toList()
         }
 
         mConnection = Connection.newConnection(

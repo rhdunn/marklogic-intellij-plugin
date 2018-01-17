@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Reece H. Dunn
+ * Copyright (C) 2017-2018 Reece H. Dunn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -72,7 +72,7 @@ class MarkLogicServerComboBox : ComboBox<MarkLogicServer>(), MarkLogicSettings.L
     override fun serversChanged() {
         val settings = MarkLogicSettings.getInstance()
         cache.clear()
-        items = settings.servers.asSequence()
+        items = settings.servers.asSequence().toList()
     }
 
     override fun dispose() {

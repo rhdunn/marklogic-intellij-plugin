@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Reece H. Dunn
+ * Copyright (C) 2017-2018 Reece H. Dunn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,12 +29,11 @@ private class ItemIterator<T>(val combobox: ComboBox<T>) : Iterator<T> {
 
     override fun next(): T =
         combobox.getItemAt(++current)
-
 }
 
 open class ComboBox<T>: ComboBox<T>() {
-    var items: Sequence<T>
-        get() = ItemIterator<T>(this).asSequence()
+    var items: List<T>
+        get() = ItemIterator(this).asSequence().toList()
         set(value) {
             removeAllItems()
             value.forEach { item ->
