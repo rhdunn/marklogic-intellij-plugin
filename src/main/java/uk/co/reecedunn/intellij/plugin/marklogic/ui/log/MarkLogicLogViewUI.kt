@@ -73,7 +73,10 @@ class MarkLogicLogViewUI(private val mProject: Project) : LogViewActions {
         }
 
         ApplicationManager.getApplication().executeOnPooledThread {
-            (mAppServer as? ComboBox<MarkLogicAppServer>)!!.items = server.appservers.toList()
+            val appservers = server.appservers.toList()
+            SwingUtilities.invokeLater {
+                (mAppServer as? ComboBox<MarkLogicAppServer>)!!.items = appservers
+            }
         }
 
         mConnection = Connection.newConnection(
