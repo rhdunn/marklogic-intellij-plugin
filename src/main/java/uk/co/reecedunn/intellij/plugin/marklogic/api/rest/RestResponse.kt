@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Reece H. Dunn
+ * Copyright (C) 2017-2018 Reece H. Dunn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,10 +36,9 @@ class RestResponse(private val response: MimeResponse) : Response {
         val items = ArrayList<Item>()
         val internalContentType = response.getHeader("X-Content-Type")
         for (part in response.parts) {
-            val contentType = part.getHeader("Content-Type") ?: continue
             if (internalContentType == null) {
                 val primitive = part.getHeader("X-Primitive")
-                items.add(Item.create(part.body, primitiveToItemType(primitive!!)))
+                items.add(Item.create(part.body, primitive?.let { primitiveToItemType(it) } ?: "xs:string"))
             } else {
                 items.add(Item.withMimeType(part.body, internalContentType))
             }
