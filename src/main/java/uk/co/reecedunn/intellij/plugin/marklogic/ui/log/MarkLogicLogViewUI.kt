@@ -92,13 +92,13 @@ class MarkLogicLogViewUI(private val mProject: Project) : LogViewActions {
 
     private fun appserverSelectionChanged() {
         if (mLogBuilder == null) return
-        ApplicationManager.getApplication().executeOnPooledThread(refreshAction())
+        ApplicationManager.getApplication().executeOnPooledThread(refreshLog())
     }
 
     // region LogViewActions
 
     @CalledInBackground
-    override fun refreshAction(): Runnable {
+    override fun refreshLog(): Runnable {
         return Runnable {
             if (mLogText!!.isEditable) return@Runnable // Another refresh action is in progress.
             mLogText!!.isEditable = true // Required for replaceSelection in appendLogEntry to work.
