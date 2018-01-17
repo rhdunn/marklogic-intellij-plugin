@@ -31,6 +31,7 @@ import uk.co.reecedunn.intellij.plugin.marklogic.ui.server.MarkLogicServerComboB
 
 import javax.swing.*
 import java.io.IOException
+import javax.swing.text.StyledDocument
 
 class MarkLogicLogViewUI(private val mProject: Project) : LogViewActions {
     private var mSettings: MarkLogicSettings? = null
@@ -97,44 +98,44 @@ class MarkLogicLogViewUI(private val mProject: Project) : LogViewActions {
 
     // region LogViewActions
 
-    @CalledInBackground
-    override fun refreshLog(): Runnable {
-        return Runnable {
-            if (mLogText!!.isEditable) return@Runnable // Another refresh action is in progress.
-            mLogText!!.isEditable = true // Required for replaceSelection in appendLogEntry to work.
+    private fun updateLog(): StyledDocument {
+        try {
+            val appserver = (mAppServer?.selectedItem as? MarkLogicAppServer) ?: MarkLogicAppServer.SYSTEM
+            val appserverName = appserver.let {
+                if (it === MarkLogicAppServer.SYSTEM) null else it.appserver
+            }
 
-            val position = mLogText!!.caretPosition
-            val scrollToEnd = scrollToEnd
-
-            try {
-                val appserver = (mAppServer?.selectedItem as? MarkLogicAppServer) ?: MarkLogicAppServer.SYSTEM
-                val appserverName = appserver.let {
-                    if (it === MarkLogicAppServer.SYSTEM) null else it.appserver
-                }
-
-                val marklogicVersion =
+            val marklogicVersion =
                     (mServer?.selectedItem as? MarkLogicServer)?.version ?: MarkLogicVersion(6, 0)
 
-                mLogBuilder!!.logFile = appserver.logfile(LogType.ERROR_LOG, 0, marklogicVersion)
-                val items = mLogBuilder!!.build().run().items
+            mLogBuilder!!.logFile = appserver.logfile(LogType.ERROR_LOG, 0, marklogicVersion)
+            val items = mLogBuilder!!.build().run().items
 
-                (mLogText as? MarkLogicLogView)!!.update(
+            return (mLogText as? MarkLogicLogView)!!.update(
                     MarkLogicLogFile.parse(items[0].content, marklogicVersion),
                     appserverName,
                     marklogicVersion,
                     mSettings)
-            } catch (e: IOException) {
-                (mLogText as? MarkLogicLogView)!!.logException(e, mSettings)
-            }
+        } catch (e: IOException) {
+            return (mLogText as? MarkLogicLogView)!!.logException(e, mSettings)
+        }
+    }
 
-            try { // Just in case updating the caret position fails, so isEditable is set in that case.
+    @CalledInBackground
+    override fun refreshLog(): Runnable {
+        return Runnable {
+            val doc = updateLog()
+            SwingUtilities.invokeLater {
+                val position = mLogText!!.caretPosition
+                val scrollToEnd = scrollToEnd
+
+                mLogText!!.styledDocument = doc
+
                 val length = mLogText!!.document.length
                 mLogText!!.caretPosition = if (scrollToEnd) length else Math.min(position, length)
                 if (mLogText!!.hasFocus()) {
                     mLogText!!.caret.isVisible = true
                 }
-            } finally {
-                mLogText!!.isEditable = false
             }
         }
     }

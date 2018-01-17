@@ -74,7 +74,7 @@ class MarkLogicLogView: JTextPane() {
     fun update(entries: Sequence<MarkLogicLogEntry>,
                appserverName: String?,
                marklogicVersion: MarkLogicVersion,
-               settings: MarkLogicSettings?) {
+               settings: MarkLogicSettings?): StyledDocument {
         val builder = MarkLogicLogDocumentBuilder()
         entries.forEach { entry ->
             val color = settings?.logColor(entry.level)
@@ -84,13 +84,13 @@ class MarkLogicLogView: JTextPane() {
                 builder.append(entry, color)
             }
         }
-        styledDocument = builder.doc
+        return builder.doc
     }
 
-    fun logException(e: Exception, settings: MarkLogicSettings?) {
+    fun logException(e: Exception, settings: MarkLogicSettings?): StyledDocument {
         val builder = MarkLogicLogDocumentBuilder()
         e.message?.let { builder.append(it, settings?.logColor(LogLevel.ERROR)) }
-        styledDocument = builder.doc
+        return builder.doc
     }
 
     // JTextComponent.getToolTipText can throw an NPE in some cases.
