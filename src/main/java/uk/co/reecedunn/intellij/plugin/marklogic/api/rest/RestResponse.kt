@@ -36,6 +36,9 @@ class RestResponse(private val response: MimeResponse) : Response {
         val items = ArrayList<Item>()
         val internalContentType = response.getHeader("X-Content-Type")
         for (part in response.parts) {
+            if (part.getHeader("Content-Length")?.toInt() == 0)
+                continue
+
             if (internalContentType == null) {
                 val primitive = part.getHeader("X-Primitive")
                 items.add(Item.create(part.body, primitive?.let { primitiveToItemType(it) } ?: "xs:string"))
