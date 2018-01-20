@@ -47,7 +47,7 @@ private class MarkLogicServerCellRenderer(val cache: HashMap<MarkLogicServer, An
 }
 
 class MarkLogicServerComboBox : ComboBox<MarkLogicServer>(), MarkLogicSettings.Listener, Disposable {
-    val cache: HashMap<MarkLogicServer, Any?> = HashMap()
+    private val cache: HashMap<MarkLogicServer, Any?> = HashMap()
 
     init {
         setRenderer(MarkLogicServerCellRenderer(cache))

@@ -56,7 +56,7 @@ data class MarkLogicLogEntry(
 class ParseException(message: String) : RuntimeException(message)
 
 object MarkLogicLogFile {
-    val logline: Regex = """^
+    private val logline: Regex = """^
         ([0-9\-]+)                               # 1: date
         [\ ]                                     #
         ([0-9:.]+)                               # 2: time

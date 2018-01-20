@@ -89,7 +89,7 @@ class MarkLogicErrorXml internal constructor(private val doc: XmlDocument):
     // endregion
 }
 
-class MarkLogicErrorXmlFrame internal constructor(val frame: Element): XStackFrame(), MarkLogicFrame {
+class MarkLogicErrorXmlFrame internal constructor(private val frame: Element): XStackFrame(), MarkLogicFrame {
     // region MarkLogicFrame
 
     override val uri get(): String? = frame.child(ERROR_URI).text().firstOrNull()

@@ -57,11 +57,11 @@ private class ScrollToEndAction(val actions: LogViewActions) : ToggleAction() {
 }
 
 class MarkLogicLogViewToolbar(actions: LogViewActions) {
-    val group: ActionGroup = DefaultActionGroup(
+    private val group: ActionGroup = DefaultActionGroup(
         RefreshAction(actions),
         ScrollToEndAction(actions))
 
-    val toolbar: ActionToolbar = ActionManager.getInstance().createActionToolbar(ActionPlaces.TOOLBAR, group, false)
+    private val toolbar: ActionToolbar = ActionManager.getInstance().createActionToolbar(ActionPlaces.TOOLBAR, group, false)
 
     val component get(): JComponent = toolbar.component
 }

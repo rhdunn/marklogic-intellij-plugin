@@ -28,7 +28,7 @@ import com.intellij.xdebugger.evaluation.EvaluationMode
 import com.intellij.xdebugger.evaluation.XDebuggerEditorsProvider
 
 open class MimeTypeDebuggerEditorsProvider(private var mimeType: String): XDebuggerEditorsProvider() {
-    fun setupFile(file: PsiFile) {
+    private fun setupFile(file: PsiFile) {
     }
 
     override fun createDocument(project: Project, text: String, sourcePosition: XSourcePosition?, mode: EvaluationMode): Document {
