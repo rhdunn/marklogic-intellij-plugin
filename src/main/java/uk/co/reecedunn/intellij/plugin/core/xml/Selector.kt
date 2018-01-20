@@ -22,10 +22,11 @@ import org.w3c.dom.Text
 // region child:: axis
 
 fun Element.child(ref: XmlElementName?): Sequence<Element> {
-    val nodes: NodeList =
-        if (ref == null)                childNodes
-        else if (ref.namespace == null) getElementsByTagName(ref.localName)
-        else                            getElementsByTagNameNS(ref.namespace, ref.localName)
+    val nodes: NodeList = when {
+        ref == null -> childNodes
+        ref.namespace == null -> getElementsByTagName(ref.localName)
+        else -> getElementsByTagNameNS(ref.namespace, ref.localName)
+    }
     return nodes.asSequence().filterIsInstance<Element>()
 }
 

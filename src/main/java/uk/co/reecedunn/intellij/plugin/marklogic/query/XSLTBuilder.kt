@@ -21,22 +21,18 @@ import uk.co.reecedunn.intellij.plugin.marklogic.ui.profile.ProfileExecutor
 
 object XSLTBuilder : QueryBuilder {
     override fun createEvalBuilder(executorId: String, markLogicVersion: MarkLogicVersion): Function? {
-        return if (DefaultRunExecutor.EXECUTOR_ID == executorId) {
-            Function.XDMP_XSLT_EVAL_50
-        } else if (ProfileExecutor.EXECUTOR_ID == executorId) {
-            Function.PROF_XSLT_EVAL_50
-        } else {
-            null
+        return when (executorId) {
+            DefaultRunExecutor.EXECUTOR_ID -> Function.XDMP_XSLT_EVAL_50
+            ProfileExecutor.EXECUTOR_ID -> Function.PROF_XSLT_EVAL_50
+            else -> null
         }
     }
 
     override fun createInvokeBuilder(executorId: String, markLogicVersion: MarkLogicVersion): Function? {
-        return if (DefaultRunExecutor.EXECUTOR_ID == executorId) {
-            Function.XDMP_XSLT_INVOKE_50
-        } else if (ProfileExecutor.EXECUTOR_ID == executorId) {
-            Function.PROF_XSLT_INVOKE_50
-        } else {
-            null
+        return when (executorId) {
+            DefaultRunExecutor.EXECUTOR_ID -> Function.XDMP_XSLT_INVOKE_50
+            ProfileExecutor.EXECUTOR_ID -> Function.PROF_XSLT_INVOKE_50
+            else -> null
         }
     }
 }
