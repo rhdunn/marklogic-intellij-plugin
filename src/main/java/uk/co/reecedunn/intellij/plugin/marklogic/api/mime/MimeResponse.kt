@@ -22,12 +22,10 @@ import org.apache.http.message.BasicHeader
 import java.util.ArrayList
 
 class MimeResponse(val status: StatusLine, headers: Array<Header>, body: String) {
-    private val message: Message
+    private val message: Message = Message(headers, body)
     val parts: Array<Message>
 
     init {
-        this.message = Message(headers, body)
-
         val messages = ArrayList<Message>()
         val contentType = message.getHeader("Content-Type")
         if (contentType != null && contentType.startsWith("multipart/mixed; boundary=")) {

@@ -24,6 +24,7 @@ import org.hamcrest.CoreMatchers.nullValue
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.jupiter.api.Assertions.assertThrows
 
+@Suppress("JoinDeclarationAndAssignment")
 class MarkLogicVersionTest : TestCase() {
     fun testApiWithPatch() {
         val version = MarkLogicVersion.parse("8.0-6.3")

@@ -18,11 +18,8 @@ package uk.co.reecedunn.intellij.plugin.core.ui
 import com.intellij.openapi.ui.ComboBox
 
 private class ItemIterator<T>(val combobox: ComboBox<T>) : Iterator<T> {
-    private val length: Int
+    private val length: Int = combobox.itemCount
     private var current: Int = 0
-    init {
-        length = combobox.itemCount
-    }
 
     override fun hasNext(): Boolean =
         current != length
