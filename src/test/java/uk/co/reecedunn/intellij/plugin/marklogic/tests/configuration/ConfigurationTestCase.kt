@@ -101,11 +101,11 @@ abstract class ConfigurationTestCase : PlatformLiteFixture() {
         if (configuration is PersistentStateComponent<*>) {
             try {
                 // IntelliJ 2017.3 and later implements serializeStateInto, and deprecates serializeInto.
-                val method = XmlSerializer::class.java!!.getMethod("serializeStateInto", PersistentStateComponent::class.java, Element::class.java)
+                val method = XmlSerializer::class.java.getMethod("serializeStateInto", PersistentStateComponent::class.java, Element::class.java)
                 method.invoke(null, configuration as PersistentStateComponent<*>, element)
             } catch (e: NoSuchMethodException) {
                 // IntelliJ 2017.2 and earlier don't implement serializeStateInto.
-                val method = XmlSerializer::class.java!!.getMethod("serializeInto", Any::class.java, Element::class.java)
+                val method = XmlSerializer::class.java.getMethod("serializeInto", Any::class.java, Element::class.java)
                 method.invoke(null, (configuration as PersistentStateComponent<*>).state, element)
             }
 
