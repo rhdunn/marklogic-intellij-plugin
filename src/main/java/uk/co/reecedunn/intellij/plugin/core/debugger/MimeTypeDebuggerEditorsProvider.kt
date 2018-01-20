@@ -34,7 +34,7 @@ open class MimeTypeDebuggerEditorsProvider(private var mimeType: String): XDebug
     override fun createDocument(project: Project, text: String, sourcePosition: XSourcePosition?, mode: EvaluationMode): Document {
         val type = fileType
         val file = PsiFileFactory.getInstance(project).createFileFromText(
-            "debug." + type.getDefaultExtension(),
+            "debug.${type.defaultExtension}",
             type,
             text,
             LocalTimeCounter.currentTime(),
