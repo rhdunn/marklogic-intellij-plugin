@@ -34,7 +34,7 @@ val RUN_QUERY_AS_RDF = MarkLogicQuery("queries/run/run-query-as-rdf.xqy")
 
 // endregion
 
-class MarkLogicQuery(val path: String) {
+class MarkLogicQuery(path: String) {
     val query: String
 
     init {

@@ -18,7 +18,7 @@ package uk.co.reecedunn.intellij.plugin.marklogic.tests
 import org.apache.commons.compress.utils.IOUtils
 import java.io.InputStream
 
-class TestResource(val path: String) {
+class TestResource(path: String) {
     val data: InputStream?
 
     val contents get(): String? =

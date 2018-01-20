@@ -118,7 +118,7 @@ class MarkLogicErrorXmlFrame internal constructor(val frame: Element): XStackFra
     // endregion
 }
 
-class MarkLogicErrorXmlVariable internal constructor(private val variable: Element):
+class MarkLogicErrorXmlVariable internal constructor(variable: Element):
         XNamedValue(variable.child(ERROR_NAME).text().first()),
         MarkLogicVariable {
     // region MarkLogicVariable
