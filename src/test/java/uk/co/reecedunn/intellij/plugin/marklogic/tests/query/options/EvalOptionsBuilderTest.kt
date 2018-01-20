@@ -17,7 +17,6 @@ package uk.co.reecedunn.intellij.plugin.marklogic.tests.query.options
 
 import junit.framework.TestCase
 import uk.co.reecedunn.intellij.plugin.marklogic.query.options.EvalOptionsBuilder
-import uk.co.reecedunn.intellij.plugin.marklogic.query.options.OptionsBuilder
 
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat

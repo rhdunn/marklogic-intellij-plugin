@@ -21,7 +21,6 @@ import uk.co.reecedunn.intellij.plugin.marklogic.api.ResponseException
 import uk.co.reecedunn.intellij.plugin.marklogic.api.mime.MimeResponse
 import uk.co.reecedunn.intellij.plugin.marklogic.api.primitiveToItemType
 
-import java.io.IOException
 import java.util.ArrayList
 
 class RestResponse(private val response: MimeResponse) : Response {
