@@ -47,7 +47,6 @@ class MarkLogicSettings : PersistentStateComponent<MarkLogicSettings> {
     // region Settings Data
 
     var servers: List<MarkLogicServer> = ArrayList()
-        get() = field
         set(value) {
             field = value
             eventDispatcher.multicaster.serversChanged()
