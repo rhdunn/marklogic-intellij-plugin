@@ -53,6 +53,6 @@ class ProfileExecutor : DefaultRunExecutor() {
         null
 
     companion object {
-        val EXECUTOR_ID = "MarkLogicProfile"
+        const val EXECUTOR_ID = "MarkLogicProfile"
     }
 }
