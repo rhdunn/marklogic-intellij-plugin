@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Reece H. Dunn
+ * Copyright (C) 2017-2018 Reece H. Dunn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -57,6 +57,7 @@ class MarkLogicErrorXml internal constructor(private val doc: XmlDocument):
 
     override val name get(): String = doc.child(ERROR_NAME).text().first()
 
+    @Suppress("PropertyName")
     override val XQueryVersion get(): String = doc.child(ERROR_XQUERY_VERSION).text().first()
 
     override val message get(): String = doc.child(ERROR_MESSAGE).text().first()
@@ -99,6 +100,7 @@ class MarkLogicErrorXmlFrame internal constructor(val frame: Element): XStackFra
 
     override val operation get(): String? = frame.child(ERROR_OPERATION).text().firstOrNull()
 
+    @Suppress("PropertyName")
     override val XQueryVersion get(): String = frame.child(ERROR_XQUERY_VERSION).text().first()
 
     override val variables get(): Sequence<MarkLogicVariable> =

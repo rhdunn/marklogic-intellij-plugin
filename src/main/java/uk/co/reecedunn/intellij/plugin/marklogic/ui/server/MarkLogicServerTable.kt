@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Reece H. Dunn
+ * Copyright (C) 2017-2018 Reece H. Dunn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,6 +26,7 @@ import com.intellij.util.ui.table.TableModelEditor.EditableColumnInfo
 import uk.co.reecedunn.intellij.plugin.marklogic.server.MarkLogicServer
 import uk.co.reecedunn.intellij.plugin.marklogic.ui.resources.MarkLogicBundle
 
+@Suppress("ClassName")
 private object DISPLAY_NAME_COLUMN_INFO: EditableColumnInfo<MarkLogicServer, String>(
         MarkLogicBundle.message("marklogic.settings.server.name")) {
     override fun valueOf(item: MarkLogicServer?): String? =
@@ -36,6 +37,7 @@ private object DISPLAY_NAME_COLUMN_INFO: EditableColumnInfo<MarkLogicServer, Str
     }
 }
 
+@Suppress("ClassName")
 private object HOSTNAME_COLUMN_INFO: EditableColumnInfo<MarkLogicServer, String>(
         MarkLogicBundle.message("marklogic.settings.server.hostname")) {
     override fun valueOf(item: MarkLogicServer?): String? =
@@ -46,7 +48,7 @@ private object HOSTNAME_COLUMN_INFO: EditableColumnInfo<MarkLogicServer, String>
     }
 }
 
-@Suppress("PLATFORM_CLASS_MAPPED_TO_KOTLIN")
+@Suppress("ClassName", "PLATFORM_CLASS_MAPPED_TO_KOTLIN")
 private object APPSERVER_PORT_COLUMN_INFO: EditableColumnInfo<MarkLogicServer, Integer>(
         MarkLogicBundle.message("marklogic.settings.server.appserver-port")) {
     override fun getColumnClass(): Class<*> =
@@ -60,7 +62,7 @@ private object APPSERVER_PORT_COLUMN_INFO: EditableColumnInfo<MarkLogicServer, I
     }
 }
 
-@Suppress("PLATFORM_CLASS_MAPPED_TO_KOTLIN")
+@Suppress("ClassName", "PLATFORM_CLASS_MAPPED_TO_KOTLIN")
 private object ADMIN_PORT_COLUMN_INFO: EditableColumnInfo<MarkLogicServer, Integer>(
         MarkLogicBundle.message("marklogic.settings.server.admin-port")) {
     override fun getColumnClass(): Class<*> =

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Reece H. Dunn
+ * Copyright (C) 2017-2018 Reece H. Dunn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ abstract class EvalRequestBuilder protected constructor() {
     var transactionID: String? = null
 
     private var xquery: String? = null
+    @Suppress("PropertyName")
     var XQuery: String?
         get() = xquery
         set(xquery) {
