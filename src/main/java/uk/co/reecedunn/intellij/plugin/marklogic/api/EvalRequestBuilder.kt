@@ -49,7 +49,7 @@ abstract class EvalRequestBuilder protected constructor() {
     }
 
     fun addVariable(name: QName, value: Item) {
-        vars.put(name, value)
+        vars[name] = value
     }
 
     fun getVariable(name: QName): Item {

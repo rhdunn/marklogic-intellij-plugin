@@ -38,7 +38,7 @@ private class MarkLogicServerCellRenderer(val cache: HashMap<MarkLogicServer, An
             val cachedVersion = cache[value]
             cachedVersion?.let { format(value, cachedVersion) } ?: ApplicationManager.getApplication().executeOnPooledThread({
                 val version: Any? = try { value.version } catch (e: Exception) { e }
-                cache.put(value, version)
+                cache[value] = version
                 format(value, version)
             })
         }
