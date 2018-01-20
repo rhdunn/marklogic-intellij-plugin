@@ -26,7 +26,7 @@ import uk.co.reecedunn.intellij.plugin.marklogic.query.vars.VarsBuilder
 
 import java.io.*
 
-enum class Function private constructor(
+enum class Function constructor(
         private val function: String,
         private val varsBuilder: VarsBuilder?,
         private val optionsBuilder: OptionsBuilder?,
