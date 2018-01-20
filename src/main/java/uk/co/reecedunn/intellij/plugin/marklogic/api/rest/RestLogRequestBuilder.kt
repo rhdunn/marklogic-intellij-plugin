@@ -21,7 +21,7 @@ import uk.co.reecedunn.intellij.plugin.marklogic.api.Request
 
 class RestLogRequestBuilder internal constructor(private val connection: RestConnection) : LogRequestBuilder() {
     override fun build(): Request {
-        val builder = RequestBuilder.get("${connection.baseUri}/get-error-log.xqy?filename=${logFile}")
+        val builder = RequestBuilder.get("${connection.baseUri}/get-error-log.xqy?filename=$logFile")
         return RestRequest(builder.build(), connection)
     }
 }

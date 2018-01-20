@@ -26,7 +26,7 @@ val MARKLOGIC_9 = MarkLogicVersion(9, 0, null, null)
 data class MarkLogicVersion(val major: Int, val minor: Int, val api: Int? = null, val patch: Int? = null) {
 
     override fun toString(): String =
-        api?.let { patch?.let { "${major}.${minor}-${api}.${patch}" } ?: "${major}.${minor}-${api}" } ?: "${major}.${minor}"
+        api?.let { patch?.let { "$major.$minor-$api.$patch" } ?: "$major.$minor-$api" } ?: "$major.$minor"
 
     companion object {
         fun parse(version: String): MarkLogicVersion {

@@ -34,15 +34,15 @@ data class MarkLogicAppServer(
         group?.let { "$group :: $appserver : $port [$type]" } ?: appserver
 
     fun logfile(logtype: LogType, generation: Int, version: MarkLogicVersion): String {
-        val suffix = if (generation == 0) "" else "_${generation}"
+        val suffix = if (generation == 0) "" else "_$generation"
         return if (version.major <= 8 && logtype === LogType.ERROR_LOG)
-            "${logtype.type}${suffix}.txt"
+            "${logtype.type}$suffix.txt"
         else if (this === TASKSERVER)
-            "TaskServer_${logtype.type}${suffix}.txt"
+            "TaskServer_${logtype.type}$suffix.txt"
         else if (port == 0)
-            "${logtype.type}${suffix}.txt"
+            "${logtype.type}$suffix.txt"
         else
-            "${port}_${logtype.type}${suffix}.txt"
+            "${port}_${logtype.type}$suffix.txt"
     }
 
     companion object {
