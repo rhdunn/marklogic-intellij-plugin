@@ -294,7 +294,7 @@ class MarkLogicRunConfigurationTest : ConfigurationTestCase() {
 
     private fun serialize(configuration: RunConfiguration): String {
         val element = Element("test")
-        serializeStateInto(configuration, element);
+        serializeStateInto(configuration, element)
         return XMLOutputter().outputString(element)
     }
 
