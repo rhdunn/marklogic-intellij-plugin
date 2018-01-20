@@ -53,15 +53,15 @@ class MarkLogicRunProfileState(environment: ExecutionEnvironment?) : CommandLine
     }
 
     fun run(query: String, handler: MarkLogicResultsHandler, configuration: MarkLogicRunConfiguration): Boolean {
-        try {
+        return try {
             val connection = createConnection(configuration)
             val builder = connection.createEvalRequestBuilder()
             builder.contentDatabase = configuration.contentDatabase
             builder.XQuery = query
             val restHandler = MarkLogicRequestHandler(builder.build(), "/eval")
-            return restHandler.run(handler)
+            restHandler.run(handler)
         } catch (e: Exception) {
-            return false
+            false
         }
     }
 
