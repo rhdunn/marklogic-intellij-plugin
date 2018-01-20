@@ -29,14 +29,10 @@ class MimeResponse(val status: StatusLine, headers: Array<Header>, body: String)
         val messages = ArrayList<Message>()
         val contentType = message.getHeader("Content-Type")
         if (contentType != null && contentType.startsWith("multipart/mixed; boundary=")) {
-            for (part in body.split(("\r\n--" + contentType.split("boundary=".toRegex())[1]).toRegex())) {
-                if (part.isEmpty() || part == "--\r\n") {
-                    continue
-                }
-
-                val headersContent = part.split("\r\n\r\n".toRegex(), 2)
-                messages.add(Message(parseHeaders(headersContent[0]), headersContent[1]))
-            }
+            body.split(("\r\n--" + contentType.split("boundary=".toRegex())[1]).toRegex())
+                .filter { !it.isEmpty() && it != "--\r\n" }
+                .map { it.split("\r\n\r\n".toRegex(), 2) }
+                .mapTo(messages) { Message(parseHeaders(it[0]), it[1]) }
         } else {
             messages.add(message)
         }
