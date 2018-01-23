@@ -61,7 +61,7 @@ class MarkLogicLogDocumentBuilder {
     }
 
     fun append(message: String, color: Color? = null) {
-        doc.insertString(0, "$message\n", createTextAttributes(UIManager.getFont("TextArea.font"), color))
+        doc.insertString(doc.length, "$message\n", createTextAttributes(UIManager.getFont("TextArea.font"), color))
     }
 }
 
