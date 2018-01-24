@@ -14,7 +14,7 @@ This project provides MarkLogic integration for the IntelliJ IDE.
 _Supported IntelliJ Platforms:_ IntelliJ IDEA Community, IntelliJ IDEA Ultimate,
 PhpStorm, WebStorm, PyCharm, RubyMine, AppCode, CLion, Rider, Android Studio
 
-_Supported IntelliJ Versions:_ 2017.1 - 2017.3
+_Supported IntelliJ Versions:_ 2017.1 - 2018.1
 
 _Supported MarkLogic Versions:_ 5.0 - 9.0
 
