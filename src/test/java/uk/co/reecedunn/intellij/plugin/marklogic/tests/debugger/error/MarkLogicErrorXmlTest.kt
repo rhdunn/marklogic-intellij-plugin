@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Reece H. Dunn
+ * Copyright (C) 2017-2018 Reece H. Dunn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -90,7 +90,7 @@ class MarkLogicErrorXmlTest : TestCase() {
         assertThat(frame.XQueryVersion, `is`("1.0-ml"))
     }
 
-    fun testVariables() {
+    fun testVariables_NCName() {
         val xml = TestResource("debugger/error/eval-divide-by-zero.xml").toString()
         val frames = StackFrameContainer()
         MarkLogicErrorXml(xml).computeStackFrames(1, frames)
@@ -105,14 +105,44 @@ class MarkLogicErrorXmlTest : TestCase() {
         assertThat(child1.name, `is`("query"))
         assertThat(child1.evaluationExpression, `is`("\"2 div 0\""))
 
+        assertThat(child1.namespace, `is`(nullValue()))
+        assertThat(child1.localName, `is`("query"))
+        assertThat(child1.value, `is`("\"2 div 0\""))
+
         val child2 = node.children.getValue(1) as MarkLogicErrorXmlVariable
         assertThat(node.children.getName(1), `is`("vars"))
         assertThat(child2.name, `is`("vars"))
         assertThat(child2.evaluationExpression, `is`("()"))
 
+        assertThat(child2.namespace, `is`(nullValue()))
+        assertThat(child2.localName, `is`("vars"))
+        assertThat(child2.value, `is`("()"))
+
         val child3 = node.children.getValue(2) as MarkLogicErrorXmlVariable
         assertThat(node.children.getName(2), `is`("options"))
         assertThat(child3.name, `is`("options"))
         assertThat(child3.evaluationExpression, `is`("<options xmlns=\"xdmp:eval\"><database>1598436954797797328</database>...</options>"))
+
+        assertThat(child3.namespace, `is`(nullValue()))
+        assertThat(child3.localName, `is`("options"))
+        assertThat(child3.value, `is`("<options xmlns=\"xdmp:eval\"><database>1598436954797797328</database>...</options>"))
+    }
+
+    fun testVariables_QName() {
+        val xml = TestResource("debugger/error/cast-as-var-qname.xml").toString()
+        val frame = MarkLogicErrorXml(xml).topFrame!!
+
+        val node = CompositeNode()
+        frame.computeChildren(node)
+        assertThat(node.children.size(), `is`(1))
+
+        val child1 = node.children.getValue(0) as MarkLogicErrorXmlVariable
+        assertThat(node.children.getName(0), `is`("x"))
+        assertThat(child1.name, `is`("x"))
+        assertThat(child1.evaluationExpression, `is`("()"))
+
+        assertThat(child1.namespace, `is`("http://www.w3.org/2005/xquery-local-functions"))
+        assertThat(child1.localName, `is`("x"))
+        assertThat(child1.value, `is`("()"))
     }
 }

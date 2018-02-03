@@ -107,7 +107,7 @@ class MarkLogicErrorXmlFrame internal constructor(private val frame: Element): X
         frame.child(ERROR_VARIABLES).child(ERROR_VARIABLE).map { variable -> MarkLogicErrorXmlVariable(variable) }
 
     // endregion
-    // reion XStackFrame
+    // region XStackFrame
 
     override fun computeChildren(node: XCompositeNode) {
         val vars = XValueChildrenList()
@@ -123,15 +123,16 @@ class MarkLogicErrorXmlVariable internal constructor(variable: Element):
         MarkLogicVariable {
     // region MarkLogicVariable
 
-    override val localName get(): String = super.getName()
+    override val namespace: String? = variable.child(ERROR_NAME).firstOrNull()?.lookupNamespaceURI(null)
+
+    override val localName: String = variable.child(ERROR_NAME).text().first()
 
     override val value: String = variable.child(ERROR_VALUE).text().first()
 
     // endregion
     // region XValue
 
-    override fun getEvaluationExpression(): String? =
-        value
+    override fun getEvaluationExpression(): String? = value
 
     override fun computePresentation(node: XValueNode, place: XValuePlace) {
     }

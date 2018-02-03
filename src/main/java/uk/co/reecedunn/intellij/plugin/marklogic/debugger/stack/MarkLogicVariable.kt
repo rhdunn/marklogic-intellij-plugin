@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Reece H. Dunn
+ * Copyright (C) 2017-2018 Reece H. Dunn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,8 @@
 package uk.co.reecedunn.intellij.plugin.marklogic.debugger.stack
 
 interface MarkLogicVariable {
+    val namespace: String?
+
     val localName: String
 
     val value: String
