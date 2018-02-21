@@ -21,7 +21,6 @@ import uk.co.reecedunn.intellij.plugin.core.xml.*
 import uk.co.reecedunn.intellij.plugin.marklogic.debugger.stack.MarkLogicError
 import uk.co.reecedunn.intellij.plugin.marklogic.debugger.stack.MarkLogicFrame
 import uk.co.reecedunn.intellij.plugin.marklogic.debugger.stack.MarkLogicVariable
-import uk.co.reecedunn.intellij.plugin.marklogic.ui.resources.MarkLogicBundle
 
 private val ERROR_CODE = XmlElementName("code", "http://marklogic.com/xdmp/error")
 private val ERROR_COLUMN = XmlElementName("column", "http://marklogic.com/xdmp/error")
@@ -42,11 +41,10 @@ private val ERROR_VARIABLE = XmlElementName("variable", "http://marklogic.com/xd
 private val ERROR_VARIABLES = XmlElementName("variables", "http://marklogic.com/xdmp/error")
 private val ERROR_XQUERY_VERSION = XmlElementName("xquery-version", "http://marklogic.com/xdmp/error")
 
-class MarkLogicErrorXml internal constructor(private val doc: XmlDocument):
-        XExecutionStack(MarkLogicBundle.message("debugger.thread.error")),
-        MarkLogicError {
+class MarkLogicErrorXml internal constructor(private val doc: XmlDocument) :
+    MarkLogicError {
 
-    constructor(errorXml: String): this(XmlDocument.parse(errorXml)) {
+    constructor(errorXml: String) : this(XmlDocument.parse(errorXml)) {
         if (doc.root.name != ERROR_ERROR)
             throw RuntimeException("${doc.root.name} is not a MarkLogic error XML document.")
     }
@@ -66,30 +64,18 @@ class MarkLogicErrorXml internal constructor(private val doc: XmlDocument):
 
     override val expr get(): String = doc.child(ERROR_EXPR).text().first()
 
-    override val data get(): Sequence<String> =
-        doc.child(ERROR_DATA).child(ERROR_DATUM).text()
+    override val data
+        get(): Sequence<String> =
+            doc.child(ERROR_DATA).child(ERROR_DATUM).text()
 
-    override val frames get(): Sequence<MarkLogicFrame> =
-        doc.child(ERROR_STACK).child(ERROR_FRAME).map { frame -> MarkLogicErrorXmlFrame(frame) }
-
-    // endregion
-    // region XExecutionStack
-
-    override fun getTopFrame(): XStackFrame? {
-        return frames.firstOrNull() as? XStackFrame
-    }
-
-    override fun computeStackFrames(firstFrameIndex: Int, container: XStackFrameContainer?) {
-        container?.let {
-            val frames = frames.drop(firstFrameIndex).map { frame -> frame as XStackFrame }
-            it.addStackFrames(frames.toMutableList(), true)
-        }
-    }
+    override val frames
+        get(): Sequence<MarkLogicFrame> =
+            doc.child(ERROR_STACK).child(ERROR_FRAME).map { frame -> MarkLogicErrorXmlFrame(frame) }
 
     // endregion
 }
 
-class MarkLogicErrorXmlFrame internal constructor(private val frame: Element): XStackFrame(), MarkLogicFrame {
+class MarkLogicErrorXmlFrame internal constructor(private val frame: Element) : MarkLogicFrame {
     // region MarkLogicFrame
 
     override val uri get(): String? = frame.child(ERROR_URI).text().firstOrNull()
@@ -103,24 +89,16 @@ class MarkLogicErrorXmlFrame internal constructor(private val frame: Element): X
     @Suppress("PropertyName")
     override val XQueryVersion get(): String = frame.child(ERROR_XQUERY_VERSION).text().first()
 
-    override val variables get(): Sequence<MarkLogicVariable> =
-        frame.child(ERROR_VARIABLES).child(ERROR_VARIABLE).map { variable -> MarkLogicErrorXmlVariable(variable) }
-
-    // endregion
-    // region XStackFrame
-
-    override fun computeChildren(node: XCompositeNode) {
-        val vars = XValueChildrenList()
-        variables.forEach { variable -> vars.add(variable as XNamedValue) }
-        node.addChildren(vars, true)
-    }
+    override val variables
+        get(): Sequence<MarkLogicVariable> =
+            frame.child(ERROR_VARIABLES).child(ERROR_VARIABLE).map { variable -> MarkLogicErrorXmlVariable(variable) }
 
     // endregion
 }
 
-class MarkLogicErrorXmlVariable internal constructor(variable: Element):
-        XNamedValue(variable.child(ERROR_NAME).text().first()),
-        MarkLogicVariable {
+class MarkLogicErrorXmlVariable internal constructor(variable: Element) :
+    MarkLogicVariable {
+
     // region MarkLogicVariable
 
     override val namespace: String? = variable.child(ERROR_NAME).firstOrNull()?.lookupNamespaceURI(null)
@@ -128,14 +106,6 @@ class MarkLogicErrorXmlVariable internal constructor(variable: Element):
     override val localName: String = variable.child(ERROR_NAME).text().first()
 
     override val value: String = variable.child(ERROR_VALUE).text().first()
-
-    // endregion
-    // region XValue
-
-    override fun getEvaluationExpression(): String? = value
-
-    override fun computePresentation(node: XValueNode, place: XValuePlace) {
-    }
 
     // endregion
 }
