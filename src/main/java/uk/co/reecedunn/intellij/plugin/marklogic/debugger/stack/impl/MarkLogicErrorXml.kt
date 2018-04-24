@@ -15,7 +15,6 @@
  */
 package uk.co.reecedunn.intellij.plugin.marklogic.debugger.stack.impl
 
-import com.intellij.xdebugger.frame.*
 import org.w3c.dom.Element
 import uk.co.reecedunn.intellij.plugin.core.xml.*
 import uk.co.reecedunn.intellij.plugin.marklogic.debugger.stack.MarkLogicError
