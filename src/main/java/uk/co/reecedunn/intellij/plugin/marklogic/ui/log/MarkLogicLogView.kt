@@ -56,8 +56,7 @@ class MarkLogicLogDocumentBuilder {
     }
 
     fun append(entry: MarkLogicLogEntry, color: Color? = null) {
-        val separator = if (entry.continuation) '+' else ' '
-        append("${entry.date} ${entry.time} ${entry.level.displayName}:$separator${entry.message.content}", color)
+        append(entry.toString(), color)
     }
 
     fun append(message: String, color: Color? = null) {

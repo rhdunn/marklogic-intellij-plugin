@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Reece H. Dunn
+ * Copyright (C) 2017-2018 Reece H. Dunn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -51,6 +51,7 @@ class MarkLogicLogFileTest : TestCase() {
         assertThat(entry.message.itemType, `is`("xs:string"))
         assertThat(entry.message.contentType, `is`("text/plain"))
         assertThat(entry.message.content, `is`("Lorem ipsum dolor"))
+        assertThat(entry.toString(), `is`("2001-01-10 12:34:56.789 Info: Lorem ipsum dolor"))
 
         assertThat(entries.hasNext(), `is`(true))
         entry = entries.next()
@@ -62,6 +63,7 @@ class MarkLogicLogFileTest : TestCase() {
         assertThat(entry.message.itemType, `is`("xs:string"))
         assertThat(entry.message.contentType, `is`("text/plain"))
         assertThat(entry.message.content, `is`("Alpha beta gamma"))
+        assertThat(entry.toString(), `is`("2001-01-10 12:34:56.800 Notice: Alpha beta gamma"))
 
         assertThat(entries.hasNext(), `is`(false))
     }
@@ -81,6 +83,7 @@ class MarkLogicLogFileTest : TestCase() {
         assertThat(entry.message.itemType, `is`("xs:string"))
         assertThat(entry.message.contentType, `is`("text/plain"))
         assertThat(entry.message.content, `is`("Lorem ipsum dolor"))
+        assertThat(entry.toString(), `is`("2001-01-10 12:34:56.789 Debug: Lorem ipsum dolor"))
 
         assertThat(entries.hasNext(), `is`(false))
     }
@@ -100,6 +103,7 @@ class MarkLogicLogFileTest : TestCase() {
         assertThat(entry.message.itemType, `is`("xs:string"))
         assertThat(entry.message.contentType, `is`("text/plain"))
         assertThat(entry.message.content, `is`("Lorem ipsum dolor"))
+        assertThat(entry.toString(), `is`("2001-01-10 12:34:56.789 Debug: Lorem ipsum dolor"))
 
         assertThat(entries.hasNext(), `is`(false))
     }
@@ -121,6 +125,7 @@ class MarkLogicLogFileTest : TestCase() {
         assertThat(entry.message.itemType, `is`("xs:string"))
         assertThat(entry.message.contentType, `is`("text/plain"))
         assertThat(entry.message.content, `is`("Alpha"))
+        assertThat(entry.toString(), `is`("2001-01-10 12:34:56.789 Info: Alpha"))
 
         assertThat(entries.hasNext(), `is`(true))
         entry = entries.next()
@@ -132,6 +137,7 @@ class MarkLogicLogFileTest : TestCase() {
         assertThat(entry.message.itemType, `is`("xs:string"))
         assertThat(entry.message.contentType, `is`("text/plain"))
         assertThat(entry.message.content, `is`("Beta"))
+        assertThat(entry.toString(), `is`("2001-01-10 12:34:56.789 Info:+Beta"))
 
         assertThat(entries.hasNext(), `is`(false))
     }
@@ -154,6 +160,7 @@ class MarkLogicLogFileTest : TestCase() {
         assertThat(entry.message.itemType, `is`("xs:string"))
         assertThat(entry.message.contentType, `is`("text/plain"))
         assertThat(entry.message.content, `is`("JNI local refs: zu, exceeds capacity: zu"))
+        assertThat(entry.toString(), `is`("null null Warning: JNI local refs: zu, exceeds capacity: zu"))
 
         assertThat(entries.hasNext(), `is`(true))
         entry = entries.next()
@@ -165,6 +172,7 @@ class MarkLogicLogFileTest : TestCase() {
         assertThat(entry.message.itemType, `is`("xs:string"))
         assertThat(entry.message.contentType, `is`("text/plain"))
         assertThat(entry.message.content, `is`("\tat java.lang.System.initProperties(Native Method)"))
+        assertThat(entry.toString(), `is`("null null Warning:+\tat java.lang.System.initProperties(Native Method)"))
 
         assertThat(entries.hasNext(), `is`(true))
         entry = entries.next()
@@ -176,6 +184,7 @@ class MarkLogicLogFileTest : TestCase() {
         assertThat(entry.message.itemType, `is`("xs:string"))
         assertThat(entry.message.contentType, `is`("text/plain"))
         assertThat(entry.message.content, `is`("\tat java.lang.System.initializeSystemClass(System.java:1166)"))
+        assertThat(entry.toString(), `is`("null null Warning:+\tat java.lang.System.initializeSystemClass(System.java:1166)"))
 
         assertThat(entries.hasNext(), `is`(false))
     }

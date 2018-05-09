@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Reece H. Dunn
+ * Copyright (C) 2017-2018 Reece H. Dunn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -51,7 +51,13 @@ data class MarkLogicLogEntry(
     val level: LogLevel,
     val appserver: String?,
     val continuation: Boolean,
-    val message: Item)
+    val message: Item) {
+
+    override fun toString(): String {
+        val separator = if (continuation) '+' else ' '
+        return "$date $time ${level.displayName}:$separator${message.content}"
+    }
+}
 
 class ParseException(message: String) : RuntimeException(message)
 
