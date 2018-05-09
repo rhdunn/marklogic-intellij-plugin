@@ -46,8 +46,8 @@ enum class LogLevel(val displayName: String, val rank: Int, val defaultColor: Co
 }
 
 data class MarkLogicLogEntry(
-    val date: String,
-    val time: String,
+    val date: String?,
+    val time: String?,
     val level: LogLevel,
     val appserver: String?,
     val continuation: Boolean,
@@ -68,6 +68,7 @@ object MarkLogicLogFile {
     $""".trimMargin().toRegex(RegexOption.COMMENTS)
 
     fun parse(logfile: String, version: MarkLogicVersion): Sequence<MarkLogicLogEntry> {
+        var level: LogLevel? = null
         return logfile.lineSequence().map { line ->
             logline.matchEntire(line)?.let {
                 val groups = it.groupValues
@@ -86,6 +87,7 @@ object MarkLogicLogFile {
                     else
                         groups[5]
 
+                level = null
                 MarkLogicLogEntry(
                     groups[1],
                     groups[2],
@@ -93,10 +95,31 @@ object MarkLogicLogFile {
                     appserver,
                     groups[6] == "+",
                     Item.fromType(message))
-            } ?: return@map if (line.isEmpty())
+            } ?: return@map if (line.isEmpty()) {
+                level = null
                 null
-            else
+            } else if (line.startsWith("\tat ") && level != null) {
+                MarkLogicLogEntry(
+                    null,
+                    null,
+                    level!!,
+                    null,
+                    true, // Continued from the previous Java exception line.
+                    Item.fromType(line)
+                )
+            } else if (line.startsWith("WARNING: ")) {
+                level = LogLevel.WARNING
+                MarkLogicLogEntry(
+                    null,
+                    null,
+                    level!!,
+                    null,
+                    false,
+                    Item.fromType(line.substringAfter("WARNING: "))
+                )
+            } else {
                 throw ParseException("Cannot parse line: $line")
+            }
         }.filterNotNull()
     }
 }

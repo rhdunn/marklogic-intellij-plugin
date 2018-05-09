@@ -36,7 +36,9 @@ class MarkLogicLogFileTest : TestCase() {
 
     fun testSimpleMessages() {
         var entry: MarkLogicLogEntry
-        val logfile = "2001-01-10 12:34:56.789 Info: Lorem ipsum dolor\n" + "2001-01-10 12:34:56.800 Notice: Alpha beta gamma\n"
+        val logfile =
+                "2001-01-10 12:34:56.789 Info: Lorem ipsum dolor\n" +
+                "2001-01-10 12:34:56.800 Notice: Alpha beta gamma\n"
         val entries = MarkLogicLogFile.parse(logfile, MARKLOGIC_5).iterator()
 
         assertThat(entries.hasNext(), `is`(true))
@@ -104,7 +106,9 @@ class MarkLogicLogFileTest : TestCase() {
 
     fun testMarkLogic9_MessageContinuation() {
         var entry: MarkLogicLogEntry
-        val logfile = "2001-01-10 12:34:56.789 Info: Alpha\n" + "2001-01-10 12:34:56.789 Info:+Beta\n"
+        val logfile =
+                "2001-01-10 12:34:56.789 Info: Alpha\n" +
+                "2001-01-10 12:34:56.789 Info:+Beta\n"
         val entries = MarkLogicLogFile.parse(logfile, MARKLOGIC_9).iterator()
 
         assertThat(entries.hasNext(), `is`(true))
@@ -128,6 +132,50 @@ class MarkLogicLogFileTest : TestCase() {
         assertThat(entry.message.itemType, `is`("xs:string"))
         assertThat(entry.message.contentType, `is`("text/plain"))
         assertThat(entry.message.content, `is`("Beta"))
+
+        assertThat(entries.hasNext(), `is`(false))
+    }
+
+    fun testMarkLogic_JavaException() {
+        var entry: MarkLogicLogEntry
+        val logfile =
+                "WARNING: JNI local refs: zu, exceeds capacity: zu\n" +
+                "\tat java.lang.System.initProperties(Native Method)\n" +
+                "\tat java.lang.System.initializeSystemClass(System.java:1166)\n"
+        val entries = MarkLogicLogFile.parse(logfile, MARKLOGIC_9).iterator()
+
+        assertThat(entries.hasNext(), `is`(true))
+        entry = entries.next()
+        assertThat(entry.date, `is`(nullValue()))
+        assertThat(entry.time, `is`(nullValue()))
+        assertThat(entry.level, `is`(LogLevel.WARNING))
+        assertThat<String>(entry.appserver, `is`(nullValue()))
+        assertThat(entry.continuation, `is`(false))
+        assertThat(entry.message.itemType, `is`("xs:string"))
+        assertThat(entry.message.contentType, `is`("text/plain"))
+        assertThat(entry.message.content, `is`("JNI local refs: zu, exceeds capacity: zu"))
+
+        assertThat(entries.hasNext(), `is`(true))
+        entry = entries.next()
+        assertThat(entry.date, `is`(nullValue()))
+        assertThat(entry.time, `is`(nullValue()))
+        assertThat(entry.level, `is`(LogLevel.WARNING))
+        assertThat<String>(entry.appserver, `is`(nullValue()))
+        assertThat(entry.continuation, `is`(true))
+        assertThat(entry.message.itemType, `is`("xs:string"))
+        assertThat(entry.message.contentType, `is`("text/plain"))
+        assertThat(entry.message.content, `is`("\tat java.lang.System.initProperties(Native Method)"))
+
+        assertThat(entries.hasNext(), `is`(true))
+        entry = entries.next()
+        assertThat(entry.date, `is`(nullValue()))
+        assertThat(entry.time, `is`(nullValue()))
+        assertThat(entry.level, `is`(LogLevel.WARNING))
+        assertThat<String>(entry.appserver, `is`(nullValue()))
+        assertThat(entry.continuation, `is`(true))
+        assertThat(entry.message.itemType, `is`("xs:string"))
+        assertThat(entry.message.contentType, `is`("text/plain"))
+        assertThat(entry.message.content, `is`("\tat java.lang.System.initializeSystemClass(System.java:1166)"))
 
         assertThat(entries.hasNext(), `is`(false))
     }
