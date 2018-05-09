@@ -55,7 +55,9 @@ data class MarkLogicLogEntry(
 
     override fun toString(): String {
         val separator = if (continuation) '+' else ' '
-        return "$date $time ${level.displayName}:$separator${message.content}"
+        return date?.let {
+            "$it ${time!!} ${level.displayName}:$separator${message.content}"
+        } ?: "${level.displayName}:$separator${message.content}"
     }
 }
 

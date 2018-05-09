@@ -160,7 +160,7 @@ class MarkLogicLogFileTest : TestCase() {
         assertThat(entry.message.itemType, `is`("xs:string"))
         assertThat(entry.message.contentType, `is`("text/plain"))
         assertThat(entry.message.content, `is`("JNI local refs: zu, exceeds capacity: zu"))
-        assertThat(entry.toString(), `is`("null null Warning: JNI local refs: zu, exceeds capacity: zu"))
+        assertThat(entry.toString(), `is`("Warning: JNI local refs: zu, exceeds capacity: zu"))
 
         assertThat(entries.hasNext(), `is`(true))
         entry = entries.next()
@@ -172,7 +172,7 @@ class MarkLogicLogFileTest : TestCase() {
         assertThat(entry.message.itemType, `is`("xs:string"))
         assertThat(entry.message.contentType, `is`("text/plain"))
         assertThat(entry.message.content, `is`("\tat java.lang.System.initProperties(Native Method)"))
-        assertThat(entry.toString(), `is`("null null Warning:+\tat java.lang.System.initProperties(Native Method)"))
+        assertThat(entry.toString(), `is`("Warning:+\tat java.lang.System.initProperties(Native Method)"))
 
         assertThat(entries.hasNext(), `is`(true))
         entry = entries.next()
@@ -184,7 +184,7 @@ class MarkLogicLogFileTest : TestCase() {
         assertThat(entry.message.itemType, `is`("xs:string"))
         assertThat(entry.message.contentType, `is`("text/plain"))
         assertThat(entry.message.content, `is`("\tat java.lang.System.initializeSystemClass(System.java:1166)"))
-        assertThat(entry.toString(), `is`("null null Warning:+\tat java.lang.System.initializeSystemClass(System.java:1166)"))
+        assertThat(entry.toString(), `is`("Warning:+\tat java.lang.System.initializeSystemClass(System.java:1166)"))
 
         assertThat(entries.hasNext(), `is`(false))
     }
